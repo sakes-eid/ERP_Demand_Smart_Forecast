@@ -1,0 +1,8 @@
+supplier_id,supplier_name,country,status,base_reliability_score,payment_terms,priority_class
+SUP-001,Budget Global Export,India,active,0.58,Net 60,C
+SUP-002,EuroSource Precision,Germany,active,0.96,Net 30,A
+SUP-003,Rapid Local Supply,Lebanon,active,0.74,Net 15,B
+SUP-004,Nordic Stable Logistics,Denmark,active,0.92,Net 45,A
+SUP-005,Fallback Trade Partners,Turkey,probation,0.64,Net 45,C
+SUP-006,MegaBulk Manufacturing,China,active,0.79,Net 75,B
+SUP-007,FlexiSource Express,Italy,active,0.84,Net 30,B

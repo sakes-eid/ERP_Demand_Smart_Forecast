@@ -1,0 +1,11 @@
+sku_id,sku_name,category,subcategory,unit,status,launch_date,end_date,is_perishable,shelf_life_days
+SKU-COF-001,House Blend Coffee 1kg,Grocery,Coffee,bag,active,2024-03-15,,False,365.0
+SKU-TEA-002,Iced Tea Peach 500ml,Beverages,Ready to Drink Tea,bottle,active,2025-04-01,,True,180.0
+SKU-SUN-003,SPF 50 Sunscreen 200ml,Personal Care,Sun Care,tube,active,2024-05-01,,False,730.0
+SKU-SUP-004,Winter Soup Mix 400g,Grocery,Soup,box,active,2023-10-01,,False,540.0
+SKU-CHC-005,Valentine Chocolate Box 250g,Confectionery,Chocolate,box,active,2024-01-10,,True,270.0
+SKU-BBQ-006,BBQ Charcoal 5kg,Outdoor,Grilling,bag,active,2024-04-01,,False,
+SKU-UMR-007,Compact Umbrella,Accessories,Rain Gear,each,active,2023-09-01,,False,
+SKU-BAT-008,Lithium Coin Battery CR2032,Electronics,Batteries,pack,active,2022-06-01,,False,1460.0
+SKU-FIL-009,Replacement Water Filter,Home,Appliance Parts,each,active,2023-01-20,,False,
+SKU-GFT-010,Premium Gift Wrap Roll,Stationery,Gift Supplies,roll,active,2024-11-01,,False,
