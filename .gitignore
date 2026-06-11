@@ -1,0 +1,26 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environment/secrets
+.env
+*.env
+
+# OS/editor junk
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Notebook cache
+.ipynb_checkpoints/
+
+# Logs/temp
+*.log
+*.tmp
+*.bak

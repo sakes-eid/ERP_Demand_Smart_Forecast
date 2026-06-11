@@ -1,0 +1,20 @@
+visual_color_group,visual_color_name,meaning,typical_action,priority_rank
+STOCKOUT,RED,SKU has negative or unavailable stock.,Expedite or review order signal.,1
+ZERO_STOCK,RED,SKU has zero stock.,Review replenishment trigger.,2
+CRITICAL_LOW_STOCK,ORANGE,Inventory is at or below safety stock / critical low level.,"Replenish, expedite, or monitor urgently.",3
+REORDER_NOW,ORANGE,Inventory position is at or below reorder point.,Order recommended quantity.,4
+APPROACHING_REORDER_POINT,YELLOW,Inventory is close to reorder point.,Monitor closely.,5
+OVERSTOCK,ORANGE,Inventory exceeds policy or days-of-supply limits.,Reduce future orders.,6
+PRIMARY_STORAGE,GREEN,Normal sellable inventory storage.,Maintain assigned location.,7
+REPLENISHMENT_STAGING,BLUE,Recommended order is staged through receiving.,Review staging capacity.,8
+QUARANTINE_EXPIRED,PURPLE,Expired active batches are isolated.,Scrap or quarantine.,9
+FEFO_NEAR_EXPIRY,YELLOW,Near-expiry active batches need FEFO attention.,Prioritize FEFO picking.,10
+TRACE_ONLY_BATCH,GRAY,Zero-quantity batch retained for history.,Show only on traceability layer.,11
+CURRENT_OVER_CAPACITY,RED,Location is currently over capacity.,Review capacity immediately.,12
+PROJECTED_OVER_CAPACITY,ORANGE,Location becomes over capacity after planned replenishment.,Review before order.,13
+CAPACITY_PRESSURE,YELLOW,Location is near capacity.,Monitor capacity.,14
+TRAVEL_RISK,ORANGE,SKU has travel-distance risk.,Review travel or pick-face placement.,15
+Z_LEVEL_WARNING,YELLOW,SKU has shelf-height or ergonomic risk.,Review vertical slotting.,16
+NO_FEASIBLE_LOCATION,RED,No compatible warehouse location was found.,Manual slotting review.,17
+NORMAL,GREEN,No major visual issue.,No visual action.,18
+UNKNOWN,GRAY,Missing or unclear visual status.,Review source data.,19

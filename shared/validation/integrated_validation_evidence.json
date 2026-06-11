@@ -1,0 +1,3602 @@
+{
+  "validation_metadata": {
+    "validation_version": "1.0",
+    "generated_at": "2026-06-11T19:48:23Z",
+    "run_id": "INTEGRATED-20260611194759",
+    "final_iteration": 1,
+    "validator_git_or_code_version": "LOCAL",
+    "project_root": "C:\\Users\\iTECH\\OneDrive - Beirut Arab University\\Desktop\\apps i made\\SC project",
+    "operating_mode": "INTEGRATED_BRIDGE_VALIDATION"
+  },
+  "overall_result": {
+    "status": "WARNING",
+    "pass_count": 58,
+    "warning_count": 3,
+    "fail_count": 0,
+    "skipped_count": 0,
+    "convergence_status": "CONVERGED_WITH_REVIEW",
+    "safe_for_analytical_downstream_use": true,
+    "safe_for_planning_downstream_use": false,
+    "safe_for_execution_downstream_use": false,
+    "auto_apply_allowed": false,
+    "purchase_order_creation_allowed": false
+  },
+  "pipeline_snapshot": {
+    "phase1_rows": 10,
+    "phase2_supply_rows": 40,
+    "phase3_requirement_rows": 10,
+    "phase2_allocation_rows": 16,
+    "phase3_validation_rows": 10,
+    "integrated_decision_rows": 10
+  },
+  "schema_contracts": {
+    "phase2_supply_capability_context": {
+      "required_columns": [
+        "schema_version",
+        "run_id",
+        "planning_iteration",
+        "generated_at",
+        "source_phase",
+        "target_phase",
+        "data_as_of_date",
+        "sku_id",
+        "supplier_id",
+        "supplier_name",
+        "supplier_status",
+        "base_supplier_feasible_flag",
+        "supplier_active_flag",
+        "supplier_history_status",
+        "supplier_evidence_status",
+        "supplier_requires_review",
+        "supplier_watchlist_flag",
+        "supplier_risk_score",
+        "supplier_risk_class",
+        "supplier_reliability_score",
+        "expected_lead_time_days",
+        "lead_time_std_days",
+        "minimum_lead_time_days",
+        "maximum_lead_time_days",
+        "unit_cost",
+        "landed_cost_per_unit",
+        "quality_adjusted_unit_cost",
+        "moq",
+        "order_multiple",
+        "batch_size",
+        "minimum_order_value",
+        "fixed_order_cost",
+        "delivery_cost",
+        "yield_rate",
+        "defect_rate",
+        "expected_quality_loss_rate",
+        "supplier_capacity_period_unit",
+        "supplier_capacity_period_days",
+        "supplier_capacity_per_day",
+        "supplier_capacity_7d",
+        "supplier_capacity_30d",
+        "supplier_per_order_capacity_units",
+        "order_acceptance_probability",
+        "expedite_available",
+        "expedite_eligible",
+        "expedite_lead_time_days",
+        "expedite_capacity_limit",
+        "expedite_reliability",
+        "split_delivery_available",
+        "split_delivery_eligible",
+        "minimum_split_quantity",
+        "maximum_split_shipments",
+        "first_shipment_lead_time_days",
+        "remaining_shipment_lead_time_days",
+        "accepts_returns",
+        "return_eligible",
+        "near_expiry_return_possible",
+        "expired_return_possible",
+        "expected_return_recovery_rate",
+        "open_po_confirmed_units_7d",
+        "open_po_confirmed_units_30d",
+        "open_po_confirmed_units_60d",
+        "open_po_confirmed_units_90d",
+        "uncertain_inbound_units",
+        "next_confirmed_receipt_date",
+        "inbound_data_quality_flag",
+        "inbound_warning_codes"
+      ],
+      "present_columns": [
+        "schema_version",
+        "run_id",
+        "planning_iteration",
+        "generated_at",
+        "source_phase",
+        "target_phase",
+        "data_as_of_date",
+        "sku_id",
+        "supplier_id",
+        "supplier_name",
+        "supplier_status",
+        "base_supplier_feasible_flag",
+        "supplier_active_flag",
+        "supplier_history_status",
+        "supplier_evidence_status",
+        "supplier_requires_review",
+        "supplier_watchlist_flag",
+        "supplier_risk_score",
+        "supplier_risk_class",
+        "supplier_reliability_score",
+        "expected_lead_time_days",
+        "lead_time_std_days",
+        "minimum_lead_time_days",
+        "maximum_lead_time_days",
+        "unit_cost",
+        "landed_cost_per_unit",
+        "quality_adjusted_unit_cost",
+        "moq",
+        "order_multiple",
+        "batch_size",
+        "minimum_order_value",
+        "fixed_order_cost",
+        "delivery_cost",
+        "yield_rate",
+        "defect_rate",
+        "expected_quality_loss_rate",
+        "supplier_capacity_period_unit",
+        "supplier_capacity_period_days",
+        "supplier_capacity_per_day",
+        "supplier_capacity_7d",
+        "supplier_capacity_30d",
+        "supplier_per_order_capacity_units",
+        "order_acceptance_probability",
+        "expedite_available",
+        "expedite_eligible",
+        "expedite_lead_time_days",
+        "expedite_capacity_limit",
+        "expedite_reliability",
+        "split_delivery_available",
+        "split_delivery_eligible",
+        "minimum_split_quantity",
+        "maximum_split_shipments",
+        "first_shipment_lead_time_days",
+        "remaining_shipment_lead_time_days",
+        "accepts_returns",
+        "return_eligible",
+        "near_expiry_return_possible",
+        "expired_return_possible",
+        "expected_return_recovery_rate",
+        "open_po_confirmed_units_7d",
+        "open_po_confirmed_units_30d",
+        "open_po_confirmed_units_60d",
+        "open_po_confirmed_units_90d",
+        "uncertain_inbound_units",
+        "next_confirmed_receipt_date",
+        "inbound_data_quality_flag",
+        "inbound_warning_codes"
+      ],
+      "missing_columns": [],
+      "extra_columns": [],
+      "schema_status": "PASS",
+      "primary_key": [
+        "sku_id",
+        "supplier_id"
+      ],
+      "duplicate_count": 0
+    },
+    "phase2_inbound_supply_summary": {
+      "required_columns": [
+        "schema_version",
+        "run_id",
+        "planning_iteration",
+        "generated_at",
+        "source_phase",
+        "target_phase",
+        "data_as_of_date",
+        "sku_id",
+        "confirmed_inbound_units_7d",
+        "confirmed_inbound_units_30d",
+        "confirmed_inbound_units_60d",
+        "confirmed_inbound_units_90d",
+        "confirmed_inbound_before_need_date_units",
+        "uncertain_inbound_units",
+        "next_confirmed_receipt_date",
+        "inbound_confidence",
+        "inbound_warning_codes"
+      ],
+      "present_columns": [
+        "schema_version",
+        "run_id",
+        "planning_iteration",
+        "generated_at",
+        "source_phase",
+        "target_phase",
+        "data_as_of_date",
+        "sku_id",
+        "confirmed_inbound_units_7d",
+        "confirmed_inbound_units_30d",
+        "confirmed_inbound_units_60d",
+        "confirmed_inbound_units_90d",
+        "confirmed_inbound_before_need_date_units",
+        "uncertain_inbound_units",
+        "next_confirmed_receipt_date",
+        "inbound_confidence",
+        "inbound_warning_codes"
+      ],
+      "missing_columns": [],
+      "extra_columns": [],
+      "schema_status": "PASS",
+      "primary_key": [
+        "sku_id"
+      ],
+      "duplicate_count": 0
+    },
+    "phase3_procurement_requirement_context": {
+      "required_columns": [
+        "schema_version",
+        "run_id",
+        "planning_iteration",
+        "generated_at",
+        "source_phase",
+        "target_phase",
+        "data_as_of_date",
+        "sku_id",
+        "gross_forecast_demand_7d",
+        "gross_forecast_demand_30d",
+        "gross_forecast_demand_60d",
+        "gross_forecast_demand_90d",
+        "average_daily_forecast_demand",
+        "forecast_uncertainty_level",
+        "underforecast_risk_flag",
+        "stockout_censored_demand_flag",
+        "demand_urgency_score",
+        "current_inventory_units",
+        "reserved_inventory_units",
+        "available_inventory_units",
+        "usable_on_hand_inventory_units",
+        "available_to_promise_units",
+        "expired_inventory_units",
+        "near_expiry_inventory_units",
+        "quarantined_inventory_units",
+        "unusable_inventory_units",
+        "batch_inventory_reconciliation_difference",
+        "batch_inventory_reconciliation_flag",
+        "inventory_source_used",
+        "inventory_model_type",
+        "review_policy",
+        "review_period_days",
+        "service_level_target",
+        "safety_stock_units",
+        "reorder_point_units",
+        "min_stock_level_units",
+        "max_stock_level_units",
+        "base_stock_level_units",
+        "order_up_to_level_units",
+        "policy_order_quantity_units",
+        "confirmed_inbound_units_7d",
+        "confirmed_inbound_units_30d",
+        "confirmed_inbound_before_need_date_units",
+        "uncertain_inbound_units",
+        "active_backorder_units",
+        "reserved_or_committed_demand_units",
+        "current_inventory_position_units",
+        "pre_clipped_inventory_position_units",
+        "inventory_position_clipped_flag",
+        "integrated_inventory_position_units",
+        "inventory_position_method",
+        "backorder_in_inventory_position_flag",
+        "commitment_definition",
+        "double_count_prevention_flag",
+        "replenishment_triggered_flag",
+        "gross_replenishment_requirement_units",
+        "net_replenishment_requirement_units",
+        "immediate_shortage_units",
+        "remaining_horizon_shortage_units",
+        "minimum_required_order_units",
+        "order_quantity_before_supplier_constraints",
+        "maximum_safe_order_units",
+        "expiry_constrained_max_order_units",
+        "movement_constrained_max_order_units",
+        "existing_inventory_constrained_max_order_units",
+        "warehouse_constrained_max_order_units",
+        "final_inventory_constraint_cap_units",
+        "main_inventory_status",
+        "primary_action",
+        "action_priority",
+        "inventory_priority_class",
+        "vitality_class",
+        "perishability_class",
+        "replenishment_urgency",
+        "supplier_capability_requirement",
+        "preferred_delivery_strategy",
+        "split_sourcing_allowed",
+        "expedite_allowed",
+        "return_to_supplier_review_required",
+        "requirement_source",
+        "requirement_confidence",
+        "requirement_warning_codes",
+        "inventory_context_complete_flag"
+      ],
+      "present_columns": [
+        "schema_version",
+        "run_id",
+        "planning_iteration",
+        "generated_at",
+        "source_phase",
+        "target_phase",
+        "data_as_of_date",
+        "sku_id",
+        "gross_forecast_demand_7d",
+        "gross_forecast_demand_30d",
+        "gross_forecast_demand_60d",
+        "gross_forecast_demand_90d",
+        "average_daily_forecast_demand",
+        "forecast_uncertainty_level",
+        "underforecast_risk_flag",
+        "stockout_censored_demand_flag",
+        "demand_urgency_score",
+        "current_inventory_units",
+        "reserved_inventory_units",
+        "available_inventory_units",
+        "usable_on_hand_inventory_units",
+        "available_to_promise_units",
+        "expired_inventory_units",
+        "near_expiry_inventory_units",
+        "quarantined_inventory_units",
+        "unusable_inventory_units",
+        "batch_inventory_reconciliation_difference",
+        "batch_inventory_reconciliation_flag",
+        "inventory_source_used",
+        "inventory_model_type",
+        "review_policy",
+        "review_period_days",
+        "service_level_target",
+        "safety_stock_units",
+        "reorder_point_units",
+        "min_stock_level_units",
+        "max_stock_level_units",
+        "base_stock_level_units",
+        "order_up_to_level_units",
+        "policy_order_quantity_units",
+        "confirmed_inbound_units_7d",
+        "confirmed_inbound_units_30d",
+        "confirmed_inbound_before_need_date_units",
+        "uncertain_inbound_units",
+        "active_backorder_units",
+        "reserved_or_committed_demand_units",
+        "current_inventory_position_units",
+        "pre_clipped_inventory_position_units",
+        "inventory_position_clipped_flag",
+        "integrated_inventory_position_units",
+        "inventory_position_method",
+        "backorder_in_inventory_position_flag",
+        "commitment_definition",
+        "double_count_prevention_flag",
+        "replenishment_triggered_flag",
+        "gross_replenishment_requirement_units",
+        "net_replenishment_requirement_units",
+        "immediate_shortage_units",
+        "remaining_horizon_shortage_units",
+        "minimum_required_order_units",
+        "order_quantity_before_supplier_constraints",
+        "maximum_safe_order_units",
+        "expiry_constrained_max_order_units",
+        "movement_constrained_max_order_units",
+        "existing_inventory_constrained_max_order_units",
+        "warehouse_constrained_max_order_units",
+        "final_inventory_constraint_cap_units",
+        "main_inventory_status",
+        "primary_action",
+        "action_priority",
+        "inventory_priority_class",
+        "vitality_class",
+        "perishability_class",
+        "replenishment_urgency",
+        "supplier_capability_requirement",
+        "preferred_delivery_strategy",
+        "split_sourcing_allowed",
+        "expedite_allowed",
+        "return_to_supplier_review_required",
+        "requirement_source",
+        "requirement_confidence",
+        "requirement_warning_codes",
+        "inventory_context_complete_flag"
+      ],
+      "missing_columns": [],
+      "extra_columns": [],
+      "schema_status": "PASS",
+      "primary_key": [
+        "sku_id"
+      ],
+      "duplicate_count": 0
+    },
+    "phase2_procurement_allocation_context": {
+      "required_columns": [
+        "schema_version",
+        "run_id",
+        "planning_iteration",
+        "generated_at",
+        "source_phase",
+        "target_phase",
+        "data_as_of_date",
+        "sku_id",
+        "allocation_id",
+        "supplier_id",
+        "supplier_role",
+        "requested_usable_quantity_units",
+        "allocated_usable_quantity_units",
+        "unallocated_requirement_units",
+        "yield_adjusted_purchase_quantity",
+        "moq_adjusted_purchase_quantity",
+        "batch_rounded_purchase_quantity",
+        "final_supplier_purchase_quantity",
+        "normal_delivery_quantity",
+        "expedite_quantity",
+        "split_delivery_quantity",
+        "first_shipment_quantity",
+        "remaining_shipment_quantity",
+        "expected_first_arrival_date",
+        "expected_final_arrival_date",
+        "supplier_per_order_capacity_units",
+        "supplier_horizon_capacity_units",
+        "capacity_used_units",
+        "capacity_remaining_units",
+        "per_order_capacity_feasible_flag",
+        "horizon_capacity_feasible_flag",
+        "allocation_capacity_feasible_flag",
+        "unit_cost",
+        "landed_cost_per_unit",
+        "quality_adjusted_unit_cost",
+        "estimated_product_cost",
+        "estimated_fixed_order_cost",
+        "estimated_delivery_cost",
+        "estimated_expedite_cost",
+        "estimated_delay_cost",
+        "estimated_quality_cost",
+        "estimated_total_procurement_cost",
+        "supplier_reliability_score",
+        "supplier_risk_score",
+        "supplier_risk_class",
+        "return_eligible",
+        "expedite_used_flag",
+        "split_delivery_used_flag",
+        "allocation_feasible_flag",
+        "allocation_execution_allowed",
+        "human_review_required",
+        "allocation_warning_codes",
+        "allocation_reason"
+      ],
+      "present_columns": [
+        "schema_version",
+        "run_id",
+        "planning_iteration",
+        "generated_at",
+        "source_phase",
+        "target_phase",
+        "data_as_of_date",
+        "sku_id",
+        "allocation_id",
+        "supplier_id",
+        "supplier_role",
+        "requested_usable_quantity_units",
+        "allocated_usable_quantity_units",
+        "unallocated_requirement_units",
+        "yield_adjusted_purchase_quantity",
+        "moq_adjusted_purchase_quantity",
+        "batch_rounded_purchase_quantity",
+        "final_supplier_purchase_quantity",
+        "normal_delivery_quantity",
+        "expedite_quantity",
+        "split_delivery_quantity",
+        "first_shipment_quantity",
+        "remaining_shipment_quantity",
+        "expected_first_arrival_date",
+        "expected_final_arrival_date",
+        "supplier_per_order_capacity_units",
+        "supplier_horizon_capacity_units",
+        "capacity_used_units",
+        "capacity_remaining_units",
+        "per_order_capacity_feasible_flag",
+        "horizon_capacity_feasible_flag",
+        "allocation_capacity_feasible_flag",
+        "unit_cost",
+        "landed_cost_per_unit",
+        "quality_adjusted_unit_cost",
+        "estimated_product_cost",
+        "estimated_fixed_order_cost",
+        "estimated_delivery_cost",
+        "estimated_expedite_cost",
+        "estimated_delay_cost",
+        "estimated_quality_cost",
+        "estimated_total_procurement_cost",
+        "supplier_reliability_score",
+        "supplier_risk_score",
+        "supplier_risk_class",
+        "return_eligible",
+        "expedite_used_flag",
+        "split_delivery_used_flag",
+        "allocation_feasible_flag",
+        "allocation_execution_allowed",
+        "human_review_required",
+        "allocation_warning_codes",
+        "allocation_reason",
+        "supplier_capacity_utilization_rate",
+        "supplier_capacity_utilization_status",
+        "capacity_utilization_availability",
+        "total_procurement_cost_kpi_numerator",
+        "total_procurement_cost_kpi_denominator_units",
+        "total_procurement_cost_per_usable_unit",
+        "total_procurement_cost_basis",
+        "total_procurement_cost_warning_codes"
+      ],
+      "missing_columns": [],
+      "extra_columns": [
+        "supplier_capacity_utilization_rate",
+        "supplier_capacity_utilization_status",
+        "capacity_utilization_availability",
+        "total_procurement_cost_kpi_numerator",
+        "total_procurement_cost_kpi_denominator_units",
+        "total_procurement_cost_per_usable_unit",
+        "total_procurement_cost_basis",
+        "total_procurement_cost_warning_codes"
+      ],
+      "schema_status": "PASS",
+      "primary_key": [
+        "allocation_id"
+      ],
+      "duplicate_count": 0
+    },
+    "phase2_procurement_allocation_summary": {
+      "required_columns": [
+        "schema_version",
+        "run_id",
+        "planning_iteration",
+        "generated_at",
+        "source_phase",
+        "target_phase",
+        "data_as_of_date",
+        "sku_id",
+        "requested_requirement_units",
+        "total_allocated_usable_quantity",
+        "total_supplier_purchase_quantity",
+        "allocation_coverage_rate",
+        "primary_supplier_id",
+        "backup_supplier_id",
+        "supplier_count",
+        "split_sourcing_used_flag",
+        "expedite_used_flag",
+        "earliest_arrival_date",
+        "final_arrival_date",
+        "total_procurement_cost",
+        "total_risk_adjusted_procurement_cost",
+        "allocation_feasible_flag",
+        "unallocated_requirement_units",
+        "human_review_required",
+        "allocation_warning_codes"
+      ],
+      "present_columns": [
+        "schema_version",
+        "run_id",
+        "planning_iteration",
+        "generated_at",
+        "source_phase",
+        "target_phase",
+        "data_as_of_date",
+        "sku_id",
+        "requested_requirement_units",
+        "total_allocated_usable_quantity",
+        "total_supplier_purchase_quantity",
+        "allocation_coverage_rate",
+        "primary_supplier_id",
+        "backup_supplier_id",
+        "supplier_count",
+        "split_sourcing_used_flag",
+        "expedite_used_flag",
+        "earliest_arrival_date",
+        "final_arrival_date",
+        "total_procurement_cost",
+        "total_risk_adjusted_procurement_cost",
+        "allocation_feasible_flag",
+        "unallocated_requirement_units",
+        "human_review_required",
+        "allocation_warning_codes",
+        "requirement_coverage_rate",
+        "unallocated_requirement_rate",
+        "top_supplier_allocation_share",
+        "supplier_concentration_risk_status"
+      ],
+      "missing_columns": [],
+      "extra_columns": [
+        "requirement_coverage_rate",
+        "unallocated_requirement_rate",
+        "top_supplier_allocation_share",
+        "supplier_concentration_risk_status"
+      ],
+      "schema_status": "PASS",
+      "primary_key": [
+        "sku_id"
+      ],
+      "duplicate_count": 0
+    },
+    "phase3_allocation_validation": {
+      "required_columns": [
+        "schema_version",
+        "run_id",
+        "planning_iteration",
+        "generated_at",
+        "source_phase",
+        "target_phase",
+        "data_as_of_date",
+        "sku_id",
+        "requested_requirement_units",
+        "allocated_usable_quantity_units",
+        "accepted_allocated_quantity_units",
+        "projected_usable_inventory_after_allocation",
+        "projected_inventory_position_after_allocation",
+        "projected_overstock_units",
+        "projected_stockout_units",
+        "warehouse_capacity_feasible_flag",
+        "receiving_capacity_feasible_flag",
+        "service_level_guardrail_feasible_flag",
+        "inventory_policy_feasible_flag",
+        "allocation_accepted_flag",
+        "adjustment_required_flag",
+        "requested_adjusted_quantity_units",
+        "validation_severity",
+        "validation_warning_codes",
+        "validation_reason"
+      ],
+      "present_columns": [
+        "schema_version",
+        "run_id",
+        "planning_iteration",
+        "generated_at",
+        "source_phase",
+        "target_phase",
+        "data_as_of_date",
+        "sku_id",
+        "requested_requirement_units",
+        "allocated_usable_quantity_units",
+        "accepted_allocated_quantity_units",
+        "projected_usable_inventory_after_allocation",
+        "projected_inventory_position_after_allocation",
+        "projected_overstock_units",
+        "projected_stockout_units",
+        "warehouse_capacity_feasible_flag",
+        "receiving_capacity_feasible_flag",
+        "service_level_guardrail_feasible_flag",
+        "inventory_policy_feasible_flag",
+        "allocation_accepted_flag",
+        "adjustment_required_flag",
+        "requested_adjusted_quantity_units",
+        "validation_severity",
+        "validation_warning_codes",
+        "validation_reason"
+      ],
+      "missing_columns": [],
+      "extra_columns": [],
+      "schema_status": "PASS",
+      "primary_key": [
+        "sku_id"
+      ],
+      "duplicate_count": 0
+    },
+    "integrated_replenishment_decisions": {
+      "required_columns": [
+        "schema_version",
+        "run_id",
+        "sku_id",
+        "final_iteration",
+        "convergence_status",
+        "forecast_demand_30d",
+        "demand_urgency_score",
+        "forecast_uncertainty_level",
+        "usable_on_hand_inventory_units",
+        "integrated_inventory_position_units",
+        "safety_stock_units",
+        "reorder_point_units",
+        "main_inventory_status",
+        "net_replenishment_requirement_units",
+        "maximum_safe_order_units",
+        "selected_supplier_ids",
+        "supplier_allocation_plan",
+        "total_allocated_usable_quantity",
+        "total_supplier_purchase_quantity",
+        "split_sourcing_used_flag",
+        "expedite_used_flag",
+        "earliest_arrival_date",
+        "final_arrival_date",
+        "total_procurement_cost",
+        "projected_holding_cost",
+        "projected_stockout_cost",
+        "projected_expiry_cost",
+        "projected_warehouse_cost",
+        "projected_total_relevant_cost",
+        "procurement_capacity_feasible_flag",
+        "inventory_policy_feasible_flag",
+        "warehouse_capacity_feasible_flag",
+        "service_level_feasible_flag",
+        "allocation_accepted_flag",
+        "final_recommendation",
+        "final_action_owner",
+        "final_priority",
+        "final_review_required",
+        "final_review_reason",
+        "auto_apply_allowed",
+        "purchase_order_creation_allowed",
+        "procurement_execution_ready_flag",
+        "approval_status",
+        "approval_owner"
+      ],
+      "present_columns": [
+        "schema_version",
+        "run_id",
+        "sku_id",
+        "final_iteration",
+        "convergence_status",
+        "forecast_demand_30d",
+        "demand_urgency_score",
+        "forecast_uncertainty_level",
+        "usable_on_hand_inventory_units",
+        "integrated_inventory_position_units",
+        "safety_stock_units",
+        "reorder_point_units",
+        "main_inventory_status",
+        "net_replenishment_requirement_units",
+        "maximum_safe_order_units",
+        "selected_supplier_ids",
+        "supplier_allocation_plan",
+        "total_allocated_usable_quantity",
+        "total_supplier_purchase_quantity",
+        "split_sourcing_used_flag",
+        "expedite_used_flag",
+        "earliest_arrival_date",
+        "final_arrival_date",
+        "total_procurement_cost",
+        "projected_holding_cost",
+        "projected_stockout_cost",
+        "projected_expiry_cost",
+        "projected_warehouse_cost",
+        "projected_total_relevant_cost",
+        "procurement_capacity_feasible_flag",
+        "inventory_policy_feasible_flag",
+        "warehouse_capacity_feasible_flag",
+        "service_level_feasible_flag",
+        "allocation_accepted_flag",
+        "final_recommendation",
+        "final_action_owner",
+        "final_priority",
+        "final_review_required",
+        "final_review_reason",
+        "auto_apply_allowed",
+        "purchase_order_creation_allowed",
+        "procurement_execution_ready_flag",
+        "approval_status",
+        "approval_owner"
+      ],
+      "missing_columns": [],
+      "extra_columns": [],
+      "schema_status": "PASS",
+      "primary_key": [
+        "sku_id"
+      ],
+      "duplicate_count": 0
+    }
+  },
+  "file_manifest": [
+    {
+      "logical_name": "phase1_demand_context",
+      "path": "C:\\Users\\iTECH\\OneDrive - Beirut Arab University\\Desktop\\apps i made\\SC project\\phase 1\\outputs\\phase1_demand_planning_context.csv",
+      "exists": true,
+      "row_count": 10,
+      "column_count": 83,
+      "sha256": "5181be0d28d56264e25860a7d18335536fa8799540dfd8c5953aac12aea0224e",
+      "modified_at": "2026-06-11T13:20:35",
+      "schema_version": "",
+      "source_phase": "",
+      "required_or_optional": "optional"
+    },
+    {
+      "logical_name": "phase2_supply_capability_context",
+      "path": "C:\\Users\\iTECH\\OneDrive - Beirut Arab University\\Desktop\\apps i made\\SC project\\shared\\outputs\\phase2_supply_capability_context.csv",
+      "exists": true,
+      "row_count": 40,
+      "column_count": 67,
+      "sha256": "177e7a51e05470c87f992bb58d3a5bc8d20c93cfa2b23477ce66af490c0acd5f",
+      "modified_at": "2026-06-11T21:48:09",
+      "schema_version": "1.0",
+      "source_phase": "PHASE_2",
+      "required_or_optional": "required"
+    },
+    {
+      "logical_name": "phase2_inbound_supply_summary",
+      "path": "C:\\Users\\iTECH\\OneDrive - Beirut Arab University\\Desktop\\apps i made\\SC project\\shared\\outputs\\phase2_inbound_supply_summary.csv",
+      "exists": true,
+      "row_count": 10,
+      "column_count": 17,
+      "sha256": "ae838afd47aff4072b7db00b308e0a22ef11a1fc99109397ef6cfb82398e858c",
+      "modified_at": "2026-06-11T21:48:09",
+      "schema_version": "1.0",
+      "source_phase": "PHASE_2",
+      "required_or_optional": "required"
+    },
+    {
+      "logical_name": "phase3_procurement_requirement_context",
+      "path": "C:\\Users\\iTECH\\OneDrive - Beirut Arab University\\Desktop\\apps i made\\SC project\\shared\\outputs\\phase3_procurement_requirement_context.csv",
+      "exists": true,
+      "row_count": 10,
+      "column_count": 83,
+      "sha256": "ec72efd8bac8abe5ce2619f5901df32c44855db1e5e7678de157918685263a21",
+      "modified_at": "2026-06-11T21:48:10",
+      "schema_version": "1.0",
+      "source_phase": "PHASE_3",
+      "required_or_optional": "required"
+    },
+    {
+      "logical_name": "phase2_procurement_allocation_context",
+      "path": "C:\\Users\\iTECH\\OneDrive - Beirut Arab University\\Desktop\\apps i made\\SC project\\shared\\outputs\\phase2_procurement_allocation_context.csv",
+      "exists": true,
+      "row_count": 16,
+      "column_count": 61,
+      "sha256": "b333b8762b53de4e366e37d43de72feb44282df2da9c449e02365d84acce96c5",
+      "modified_at": "2026-06-11T21:48:09",
+      "schema_version": "1.0",
+      "source_phase": "PHASE_2",
+      "required_or_optional": "required"
+    },
+    {
+      "logical_name": "phase2_procurement_allocation_summary",
+      "path": "C:\\Users\\iTECH\\OneDrive - Beirut Arab University\\Desktop\\apps i made\\SC project\\shared\\outputs\\phase2_procurement_allocation_summary.csv",
+      "exists": true,
+      "row_count": 10,
+      "column_count": 29,
+      "sha256": "e102c53e41434bd6c798e4bc5881fac8900321e2170e212c8fc16d3e7d42d1bd",
+      "modified_at": "2026-06-11T21:48:09",
+      "schema_version": "1.0",
+      "source_phase": "PHASE_2",
+      "required_or_optional": "required"
+    },
+    {
+      "logical_name": "phase3_allocation_validation",
+      "path": "C:\\Users\\iTECH\\OneDrive - Beirut Arab University\\Desktop\\apps i made\\SC project\\shared\\outputs\\phase3_allocation_validation.csv",
+      "exists": true,
+      "row_count": 10,
+      "column_count": 25,
+      "sha256": "71a42149cc31fec508b5f8d2a478fc18d4e7d479398863e9d0b2b7265f41e993",
+      "modified_at": "2026-06-11T21:48:10",
+      "schema_version": "1.0",
+      "source_phase": "PHASE_3",
+      "required_or_optional": "required"
+    },
+    {
+      "logical_name": "integrated_replenishment_decisions",
+      "path": "C:\\Users\\iTECH\\OneDrive - Beirut Arab University\\Desktop\\apps i made\\SC project\\shared\\outputs\\integrated_replenishment_decisions.csv",
+      "exists": true,
+      "row_count": 10,
+      "column_count": 44,
+      "sha256": "aef0ff18daff6ffe74a5c72083ee2bfee25b68e4e22910af06236f29a1c1e9df",
+      "modified_at": "2026-06-11T21:48:11",
+      "schema_version": "1.0",
+      "source_phase": "",
+      "required_or_optional": "required"
+    },
+    {
+      "logical_name": "phase2_strategy_summary",
+      "path": "C:\\Users\\iTECH\\OneDrive - Beirut Arab University\\Desktop\\apps i made\\SC project\\phase 2\\outputs\\phase2_supplier_strategy_summary.csv",
+      "exists": true,
+      "row_count": 10,
+      "column_count": 102,
+      "sha256": "8c2bd237f0f3f8828ca1cf89f07da36f737740a1ae5b2344a7a77484ed2108dc",
+      "modified_at": "2026-06-11T21:48:09",
+      "schema_version": "",
+      "source_phase": "",
+      "required_or_optional": "optional"
+    },
+    {
+      "logical_name": "phase3_master_decisions",
+      "path": "C:\\Users\\iTECH\\OneDrive - Beirut Arab University\\Desktop\\apps i made\\SC project\\phase 3\\outputs\\inventory_control_master_decisions.csv",
+      "exists": true,
+      "row_count": 10,
+      "column_count": 98,
+      "sha256": "16585cee5dfb54b49a3550b09dde3b1caee7d3ea1a2a6cb2c97fb423dc9cd922",
+      "modified_at": "2026-06-11T21:48:10",
+      "schema_version": "",
+      "source_phase": "",
+      "required_or_optional": "optional"
+    }
+  ],
+  "phase_summaries": {
+    "phase1": {
+      "sku_count": 10
+    },
+    "phase2": {
+      "supplier_option_rows": 40
+    },
+    "phase3": {
+      "requirement_sku_count": 10
+    }
+  },
+  "cross_phase_reconciliations": {
+    "demand_reconciliation": {
+      "phase3_gross_30d_total": 5532.17
+    },
+    "inbound_reconciliation": {
+      "phase3_confirmed_inbound_30d_total": 548.0
+    },
+    "inventory_reconciliation": {
+      "usable_on_hand_total": 1554.0
+    },
+    "requirement_reconciliation": {
+      "net_requirement_total": 4758.0
+    },
+    "allocation_reconciliation": {
+      "allocated_usable_total": 4303.71
+    },
+    "yield_reconciliation": {
+      "supplier_purchase_total": 4686.0
+    },
+    "capacity_reconciliation": {
+      "unallocated_requirement_total": 454.29
+    },
+    "final_inventory_reconciliation": {
+      "accepted_allocation_total": 4303.71
+    },
+    "cost_reconciliation": {
+      "integrated_procurement_cost_total": 26509.37
+    },
+    "review_execution_reconciliation": {
+      "review_required_count": 7
+    }
+  },
+  "validation_checks": [
+    {
+      "check_id": "SCHEMA_phase2_supply_capability_context",
+      "category": "SCHEMA",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "phase2_supply_capability_context required columns are present",
+      "expected": "no missing columns",
+      "actual": {
+        "missing_columns": []
+      },
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": {
+          "missing_columns": []
+        }
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "SCHEMA_VERSION_phase2_supply_capability_context",
+      "category": "SCHEMA",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "phase2_supply_capability_context schema version is supported",
+      "expected": "1.0",
+      "actual": {
+        "actual_versions": [
+          "1.0"
+        ],
+        "mismatch_count": 0
+      },
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": {
+          "actual_versions": [
+            "1.0"
+          ],
+          "mismatch_count": 0
+        }
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "SCHEMA_phase2_inbound_supply_summary",
+      "category": "SCHEMA",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "phase2_inbound_supply_summary required columns are present",
+      "expected": "no missing columns",
+      "actual": {
+        "missing_columns": []
+      },
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": {
+          "missing_columns": []
+        }
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "SCHEMA_VERSION_phase2_inbound_supply_summary",
+      "category": "SCHEMA",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "phase2_inbound_supply_summary schema version is supported",
+      "expected": "1.0",
+      "actual": {
+        "actual_versions": [
+          "1.0"
+        ],
+        "mismatch_count": 0
+      },
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": {
+          "actual_versions": [
+            "1.0"
+          ],
+          "mismatch_count": 0
+        }
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "SCHEMA_phase3_procurement_requirement_context",
+      "category": "SCHEMA",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "phase3_procurement_requirement_context required columns are present",
+      "expected": "no missing columns",
+      "actual": {
+        "missing_columns": []
+      },
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": {
+          "missing_columns": []
+        }
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "SCHEMA_VERSION_phase3_procurement_requirement_context",
+      "category": "SCHEMA",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "phase3_procurement_requirement_context schema version is supported",
+      "expected": "1.0",
+      "actual": {
+        "actual_versions": [
+          "1.0"
+        ],
+        "mismatch_count": 0
+      },
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": {
+          "actual_versions": [
+            "1.0"
+          ],
+          "mismatch_count": 0
+        }
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "SCHEMA_phase2_procurement_allocation_context",
+      "category": "SCHEMA",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "phase2_procurement_allocation_context required columns are present",
+      "expected": "no missing columns",
+      "actual": {
+        "missing_columns": []
+      },
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": {
+          "missing_columns": []
+        }
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "SCHEMA_VERSION_phase2_procurement_allocation_context",
+      "category": "SCHEMA",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "phase2_procurement_allocation_context schema version is supported",
+      "expected": "1.0",
+      "actual": {
+        "actual_versions": [
+          "1.0"
+        ],
+        "mismatch_count": 0
+      },
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": {
+          "actual_versions": [
+            "1.0"
+          ],
+          "mismatch_count": 0
+        }
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "SCHEMA_phase2_procurement_allocation_summary",
+      "category": "SCHEMA",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "phase2_procurement_allocation_summary required columns are present",
+      "expected": "no missing columns",
+      "actual": {
+        "missing_columns": []
+      },
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": {
+          "missing_columns": []
+        }
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "SCHEMA_VERSION_phase2_procurement_allocation_summary",
+      "category": "SCHEMA",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "phase2_procurement_allocation_summary schema version is supported",
+      "expected": "1.0",
+      "actual": {
+        "actual_versions": [
+          "1.0"
+        ],
+        "mismatch_count": 0
+      },
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": {
+          "actual_versions": [
+            "1.0"
+          ],
+          "mismatch_count": 0
+        }
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "SCHEMA_phase3_allocation_validation",
+      "category": "SCHEMA",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "phase3_allocation_validation required columns are present",
+      "expected": "no missing columns",
+      "actual": {
+        "missing_columns": []
+      },
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": {
+          "missing_columns": []
+        }
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "SCHEMA_VERSION_phase3_allocation_validation",
+      "category": "SCHEMA",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "phase3_allocation_validation schema version is supported",
+      "expected": "1.0",
+      "actual": {
+        "actual_versions": [
+          "1.0"
+        ],
+        "mismatch_count": 0
+      },
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": {
+          "actual_versions": [
+            "1.0"
+          ],
+          "mismatch_count": 0
+        }
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "SCHEMA_integrated_replenishment_decisions",
+      "category": "SCHEMA",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "integrated_replenishment_decisions required columns are present",
+      "expected": "no missing columns",
+      "actual": {
+        "missing_columns": []
+      },
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": {
+          "missing_columns": []
+        }
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "SCHEMA_VERSION_integrated_replenishment_decisions",
+      "category": "SCHEMA",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "integrated_replenishment_decisions schema version is supported",
+      "expected": "1.0",
+      "actual": {
+        "actual_versions": [
+          "1.0"
+        ],
+        "mismatch_count": 0
+      },
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": {
+          "actual_versions": [
+            "1.0"
+          ],
+          "mismatch_count": 0
+        }
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "PRIMARY_KEY_phase2_supply_capability_context",
+      "category": "IDENTITY",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "phase2_supply_capability_context primary key is unique",
+      "expected": 0,
+      "actual": {
+        "primary_key": [
+          "sku_id",
+          "supplier_id"
+        ],
+        "duplicate_count": 0,
+        "missing_key_columns": []
+      },
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": {
+          "primary_key": [
+            "sku_id",
+            "supplier_id"
+          ],
+          "duplicate_count": 0,
+          "missing_key_columns": []
+        }
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "PRIMARY_KEY_phase2_inbound_supply_summary",
+      "category": "IDENTITY",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "phase2_inbound_supply_summary primary key is unique",
+      "expected": 0,
+      "actual": {
+        "primary_key": [
+          "sku_id"
+        ],
+        "duplicate_count": 0,
+        "missing_key_columns": []
+      },
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": {
+          "primary_key": [
+            "sku_id"
+          ],
+          "duplicate_count": 0,
+          "missing_key_columns": []
+        }
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "PRIMARY_KEY_phase3_procurement_requirement_context",
+      "category": "IDENTITY",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "phase3_procurement_requirement_context primary key is unique",
+      "expected": 0,
+      "actual": {
+        "primary_key": [
+          "sku_id"
+        ],
+        "duplicate_count": 0,
+        "missing_key_columns": []
+      },
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": {
+          "primary_key": [
+            "sku_id"
+          ],
+          "duplicate_count": 0,
+          "missing_key_columns": []
+        }
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "PRIMARY_KEY_phase2_procurement_allocation_context",
+      "category": "IDENTITY",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "phase2_procurement_allocation_context primary key is unique",
+      "expected": 0,
+      "actual": {
+        "primary_key": [
+          "allocation_id"
+        ],
+        "duplicate_count": 0,
+        "missing_key_columns": []
+      },
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": {
+          "primary_key": [
+            "allocation_id"
+          ],
+          "duplicate_count": 0,
+          "missing_key_columns": []
+        }
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "PRIMARY_KEY_phase2_procurement_allocation_summary",
+      "category": "IDENTITY",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "phase2_procurement_allocation_summary primary key is unique",
+      "expected": 0,
+      "actual": {
+        "primary_key": [
+          "sku_id"
+        ],
+        "duplicate_count": 0,
+        "missing_key_columns": []
+      },
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": {
+          "primary_key": [
+            "sku_id"
+          ],
+          "duplicate_count": 0,
+          "missing_key_columns": []
+        }
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "PRIMARY_KEY_phase3_allocation_validation",
+      "category": "IDENTITY",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "phase3_allocation_validation primary key is unique",
+      "expected": 0,
+      "actual": {
+        "primary_key": [
+          "sku_id"
+        ],
+        "duplicate_count": 0,
+        "missing_key_columns": []
+      },
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": {
+          "primary_key": [
+            "sku_id"
+          ],
+          "duplicate_count": 0,
+          "missing_key_columns": []
+        }
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "PRIMARY_KEY_integrated_replenishment_decisions",
+      "category": "IDENTITY",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "integrated_replenishment_decisions primary key is unique",
+      "expected": 0,
+      "actual": {
+        "primary_key": [
+          "sku_id"
+        ],
+        "duplicate_count": 0,
+        "missing_key_columns": []
+      },
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": {
+          "primary_key": [
+            "sku_id"
+          ],
+          "duplicate_count": 0,
+          "missing_key_columns": []
+        }
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "NON_NEGATIVE_phase3_procurement_requirement_context_gross_forecast_demand_30d",
+      "category": "NUMERIC",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "gross_forecast_demand_30d is non-negative",
+      "expected": 0,
+      "actual": 0,
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": 0
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "NON_NEGATIVE_phase3_procurement_requirement_context_usable_on_hand_inventory_units",
+      "category": "NUMERIC",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "usable_on_hand_inventory_units is non-negative",
+      "expected": 0,
+      "actual": 0,
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": 0
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "NON_NEGATIVE_phase3_procurement_requirement_context_net_replenishment_requirement_units",
+      "category": "NUMERIC",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "net_replenishment_requirement_units is non-negative",
+      "expected": 0,
+      "actual": 0,
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": 0
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "NON_NEGATIVE_phase2_procurement_allocation_context_allocated_usable_quantity_units",
+      "category": "NUMERIC",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "allocated_usable_quantity_units is non-negative",
+      "expected": 0,
+      "actual": 0,
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": 0
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "NON_NEGATIVE_phase2_procurement_allocation_context_final_supplier_purchase_quantity",
+      "category": "NUMERIC",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "final_supplier_purchase_quantity is non-negative",
+      "expected": 0,
+      "actual": 0,
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": 0
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "NON_NEGATIVE_phase2_procurement_allocation_context_estimated_total_procurement_cost",
+      "category": "NUMERIC",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "estimated_total_procurement_cost is non-negative",
+      "expected": 0,
+      "actual": 0,
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": 0
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "NON_NEGATIVE_phase2_procurement_allocation_summary_requested_requirement_units",
+      "category": "NUMERIC",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "requested_requirement_units is non-negative",
+      "expected": 0,
+      "actual": 0,
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": 0
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "NON_NEGATIVE_phase2_procurement_allocation_summary_total_allocated_usable_quantity",
+      "category": "NUMERIC",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "total_allocated_usable_quantity is non-negative",
+      "expected": 0,
+      "actual": 0,
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": 0
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "NON_NEGATIVE_phase2_procurement_allocation_summary_unallocated_requirement_units",
+      "category": "NUMERIC",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "unallocated_requirement_units is non-negative",
+      "expected": 0,
+      "actual": 0,
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": 0
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "UNALLOCATED_REQUIREMENT_REMAINS",
+      "category": "ACTIVE_ISSUES",
+      "severity": "WARNING",
+      "status": "WARNING",
+      "description": "Unallocated requirement remains and must be reviewed.",
+      "expected": "0 affected rows",
+      "actual": [
+        {
+          "sku_id": "SKU-COF-001",
+          "unallocated_requirement_units": 388.57
+        },
+        {
+          "sku_id": "SKU-TEA-002",
+          "unallocated_requirement_units": 65.72
+        }
+      ],
+      "affected_row_count": 2,
+      "affected_unique_key_count": 2,
+      "affected_keys": [
+        "SKU-COF-001",
+        "SKU-TEA-002"
+      ],
+      "evidence": {
+        "actual": [
+          {
+            "sku_id": "SKU-COF-001",
+            "unallocated_requirement_units": 388.57
+          },
+          {
+            "sku_id": "SKU-TEA-002",
+            "unallocated_requirement_units": 65.72
+          }
+        ]
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "ALLOCATION_ADJUSTMENT_REQUIRED",
+      "category": "ACTIVE_ISSUES",
+      "severity": "WARNING",
+      "status": "WARNING",
+      "description": "Phase 3 requested allocation adjustment.",
+      "expected": "0 affected rows",
+      "actual": [
+        {
+          "sku_id": "SKU-COF-001",
+          "adjustment_required_flag": true,
+          "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
+        },
+        {
+          "sku_id": "SKU-TEA-002",
+          "adjustment_required_flag": true,
+          "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
+        }
+      ],
+      "affected_row_count": 2,
+      "affected_unique_key_count": 2,
+      "affected_keys": [
+        "SKU-COF-001",
+        "SKU-TEA-002"
+      ],
+      "evidence": {
+        "actual": [
+          {
+            "sku_id": "SKU-COF-001",
+            "adjustment_required_flag": true,
+            "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
+          },
+          {
+            "sku_id": "SKU-TEA-002",
+            "adjustment_required_flag": true,
+            "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
+          }
+        ]
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "BATCH_INVENTORY_RECONCILIATION_REVIEW",
+      "category": "ACTIVE_ISSUES",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "Batch inventory reconciliation review is surfaced.",
+      "expected": "0 active reconciliation warnings",
+      "actual": [],
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": []
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "ARRIVAL_DATE_MISSING",
+      "category": "ACTIVE_ISSUES",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "Active allocation rows have populated arrival dates for logistics readiness.",
+      "expected": "arrival dates populated for active allocations",
+      "actual": {
+        "affected_rows": 0,
+        "missing_date_columns": [
+          "expected_first_arrival_date",
+          "expected_final_arrival_date"
+        ],
+        "missing_cells": 0,
+        "rows": []
+      },
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": {
+          "affected_rows": 0,
+          "missing_date_columns": [
+            "expected_first_arrival_date",
+            "expected_final_arrival_date"
+          ],
+          "missing_cells": 0,
+          "rows": []
+        }
+      },
+      "suggested_fix": "Populate expected arrival dates before using accepted allocations for logistics or committed planning."
+    },
+    {
+      "check_id": "DATA_AS_OF_DATE_MISSING",
+      "category": "ACTIVE_ISSUES",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "Bridge rows identify the source data_as_of_date used for planning evidence.",
+      "expected": "all bridge rows have data_as_of_date",
+      "actual": {
+        "affected_rows": 0,
+        "unique_sku_count": 0,
+        "affected_files": [],
+        "affected_columns": [
+          "data_as_of_date"
+        ],
+        "affected_cells": 0,
+        "sample_rows": []
+      },
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": {
+          "affected_rows": 0,
+          "unique_sku_count": 0,
+          "affected_files": [],
+          "affected_columns": [
+            "data_as_of_date"
+          ],
+          "affected_cells": 0,
+          "sample_rows": []
+        }
+      },
+      "suggested_fix": "Populate data_as_of_date in bridge outputs so managers can distinguish stale and current planning evidence."
+    },
+    {
+      "check_id": "FALLBACK_COST_OR_TIMING_ASSUMPTIONS",
+      "category": "ACTIVE_ISSUES",
+      "severity": "WARNING",
+      "status": "WARNING",
+      "description": "Fallback cost or timing assumptions are surfaced with affected fields.",
+      "expected": "no active fallback assumptions",
+      "actual": {
+        "affected_rows": 49,
+        "affected_files": [
+          "phase2_strategy_summary",
+          "phase3_master_decisions"
+        ],
+        "affected_columns": [
+          "consolidated_manager_warning_codes",
+          "final_review_reason",
+          "review_candidate_warning_codes",
+          "selected_option_warning_codes",
+          "sku_option_pool_warning_codes",
+          "warning_codes"
+        ],
+        "sample_rows": [
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 0,
+            "sku_id": "SKU-BAT-008",
+            "affected_column": "selected_option_warning_codes",
+            "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 4,
+            "sku_id": "SKU-FIL-009",
+            "affected_column": "selected_option_warning_codes",
+            "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 5,
+            "sku_id": "SKU-GFT-010",
+            "affected_column": "selected_option_warning_codes",
+            "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 7,
+            "sku_id": "SKU-SUP-004",
+            "affected_column": "selected_option_warning_codes",
+            "value": "PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 9,
+            "sku_id": "SKU-UMR-007",
+            "affected_column": "selected_option_warning_codes",
+            "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 0,
+            "sku_id": "SKU-BAT-008",
+            "affected_column": "sku_option_pool_warning_codes",
+            "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 1,
+            "sku_id": "SKU-BBQ-006",
+            "affected_column": "sku_option_pool_warning_codes",
+            "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 2,
+            "sku_id": "SKU-CHC-005",
+            "affected_column": "sku_option_pool_warning_codes",
+            "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 3,
+            "sku_id": "SKU-COF-001",
+            "affected_column": "sku_option_pool_warning_codes",
+            "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 4,
+            "sku_id": "SKU-FIL-009",
+            "affected_column": "sku_option_pool_warning_codes",
+            "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 5,
+            "sku_id": "SKU-GFT-010",
+            "affected_column": "sku_option_pool_warning_codes",
+            "value": "CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 6,
+            "sku_id": "SKU-SUN-003",
+            "affected_column": "sku_option_pool_warning_codes",
+            "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 7,
+            "sku_id": "SKU-SUP-004",
+            "affected_column": "sku_option_pool_warning_codes",
+            "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 8,
+            "sku_id": "SKU-TEA-002",
+            "affected_column": "sku_option_pool_warning_codes",
+            "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 9,
+            "sku_id": "SKU-UMR-007",
+            "affected_column": "sku_option_pool_warning_codes",
+            "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 0,
+            "sku_id": "SKU-BAT-008",
+            "affected_column": "review_candidate_warning_codes",
+            "value": "BASE_SUPPLIER_OPTION_INFEASIBLE;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 1,
+            "sku_id": "SKU-BBQ-006",
+            "affected_column": "review_candidate_warning_codes",
+            "value": "BASE_SUPPLIER_OPTION_INFEASIBLE;CAPACITY_SHORTFALL;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 2,
+            "sku_id": "SKU-CHC-005",
+            "affected_column": "review_candidate_warning_codes",
+            "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 3,
+            "sku_id": "SKU-COF-001",
+            "affected_column": "review_candidate_warning_codes",
+            "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 4,
+            "sku_id": "SKU-FIL-009",
+            "affected_column": "review_candidate_warning_codes",
+            "value": "BASE_SUPPLIER_OPTION_INFEASIBLE;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 5,
+            "sku_id": "SKU-GFT-010",
+            "affected_column": "review_candidate_warning_codes",
+            "value": "CUSTOMS_COST_FALLBACK_USED;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 6,
+            "sku_id": "SKU-SUN-003",
+            "affected_column": "review_candidate_warning_codes",
+            "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 7,
+            "sku_id": "SKU-SUP-004",
+            "affected_column": "review_candidate_warning_codes",
+            "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 8,
+            "sku_id": "SKU-TEA-002",
+            "affected_column": "review_candidate_warning_codes",
+            "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 9,
+            "sku_id": "SKU-UMR-007",
+            "affected_column": "review_candidate_warning_codes",
+            "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
+          }
+        ]
+      },
+      "affected_row_count": 49,
+      "affected_unique_key_count": 10,
+      "affected_keys": [
+        "SKU-BAT-008",
+        "SKU-BBQ-006",
+        "SKU-CHC-005",
+        "SKU-COF-001",
+        "SKU-FIL-009",
+        "SKU-GFT-010",
+        "SKU-SUN-003",
+        "SKU-SUP-004",
+        "SKU-TEA-002",
+        "SKU-UMR-007"
+      ],
+      "evidence": {
+        "actual": {
+          "affected_rows": 49,
+          "affected_files": [
+            "phase2_strategy_summary",
+            "phase3_master_decisions"
+          ],
+          "affected_columns": [
+            "consolidated_manager_warning_codes",
+            "final_review_reason",
+            "review_candidate_warning_codes",
+            "selected_option_warning_codes",
+            "sku_option_pool_warning_codes",
+            "warning_codes"
+          ],
+          "sample_rows": [
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 0,
+              "sku_id": "SKU-BAT-008",
+              "affected_column": "selected_option_warning_codes",
+              "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 4,
+              "sku_id": "SKU-FIL-009",
+              "affected_column": "selected_option_warning_codes",
+              "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 5,
+              "sku_id": "SKU-GFT-010",
+              "affected_column": "selected_option_warning_codes",
+              "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 7,
+              "sku_id": "SKU-SUP-004",
+              "affected_column": "selected_option_warning_codes",
+              "value": "PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 9,
+              "sku_id": "SKU-UMR-007",
+              "affected_column": "selected_option_warning_codes",
+              "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 0,
+              "sku_id": "SKU-BAT-008",
+              "affected_column": "sku_option_pool_warning_codes",
+              "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 1,
+              "sku_id": "SKU-BBQ-006",
+              "affected_column": "sku_option_pool_warning_codes",
+              "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 2,
+              "sku_id": "SKU-CHC-005",
+              "affected_column": "sku_option_pool_warning_codes",
+              "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 3,
+              "sku_id": "SKU-COF-001",
+              "affected_column": "sku_option_pool_warning_codes",
+              "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 4,
+              "sku_id": "SKU-FIL-009",
+              "affected_column": "sku_option_pool_warning_codes",
+              "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 5,
+              "sku_id": "SKU-GFT-010",
+              "affected_column": "sku_option_pool_warning_codes",
+              "value": "CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 6,
+              "sku_id": "SKU-SUN-003",
+              "affected_column": "sku_option_pool_warning_codes",
+              "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 7,
+              "sku_id": "SKU-SUP-004",
+              "affected_column": "sku_option_pool_warning_codes",
+              "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 8,
+              "sku_id": "SKU-TEA-002",
+              "affected_column": "sku_option_pool_warning_codes",
+              "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 9,
+              "sku_id": "SKU-UMR-007",
+              "affected_column": "sku_option_pool_warning_codes",
+              "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 0,
+              "sku_id": "SKU-BAT-008",
+              "affected_column": "review_candidate_warning_codes",
+              "value": "BASE_SUPPLIER_OPTION_INFEASIBLE;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 1,
+              "sku_id": "SKU-BBQ-006",
+              "affected_column": "review_candidate_warning_codes",
+              "value": "BASE_SUPPLIER_OPTION_INFEASIBLE;CAPACITY_SHORTFALL;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 2,
+              "sku_id": "SKU-CHC-005",
+              "affected_column": "review_candidate_warning_codes",
+              "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 3,
+              "sku_id": "SKU-COF-001",
+              "affected_column": "review_candidate_warning_codes",
+              "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 4,
+              "sku_id": "SKU-FIL-009",
+              "affected_column": "review_candidate_warning_codes",
+              "value": "BASE_SUPPLIER_OPTION_INFEASIBLE;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 5,
+              "sku_id": "SKU-GFT-010",
+              "affected_column": "review_candidate_warning_codes",
+              "value": "CUSTOMS_COST_FALLBACK_USED;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 6,
+              "sku_id": "SKU-SUN-003",
+              "affected_column": "review_candidate_warning_codes",
+              "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 7,
+              "sku_id": "SKU-SUP-004",
+              "affected_column": "review_candidate_warning_codes",
+              "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 8,
+              "sku_id": "SKU-TEA-002",
+              "affected_column": "review_candidate_warning_codes",
+              "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 9,
+              "sku_id": "SKU-UMR-007",
+              "affected_column": "review_candidate_warning_codes",
+              "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
+            }
+          ]
+        }
+      },
+      "suggested_fix": "Replace fallback assumptions with explicit cost, timing, or policy source fields when available."
+    },
+    {
+      "check_id": "ALLOCATION_INFEASIBLE",
+      "category": "ACTIVE_ISSUES",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "Infeasible allocations are blocked/reviewed.",
+      "expected": "0 infeasible allocation rows",
+      "actual": [],
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": []
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "INFEASIBLE_ALLOCATION_WARNING_MEANINGFUL",
+      "category": "ACTIVE_ISSUES",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "Every infeasible allocation row carries a meaningful warning code.",
+      "expected": "allocation_warning_codes is not NONE/blank for infeasible rows",
+      "actual": [],
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": []
+      },
+      "suggested_fix": "Assign a specific infeasibility warning, such as CAPACITY_SHORTFALL, SPLIT_SOURCE_REVIEW_REQUIRED, or ALLOCATION_REQUIRES_REVIEW."
+    },
+    {
+      "check_id": "INVENTORY_CONTEXT_INCOMPLETE",
+      "category": "ACTIVE_ISSUES",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "Inventory context completeness is explicit.",
+      "expected": "all inventory context rows complete",
+      "actual": [],
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": []
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "ZERO_REQUIREMENT_RECOMMENDATION_SEMANTICS",
+      "category": "DECISION_QUALITY",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "Zero requirement rows use no-action recommendation.",
+      "expected": "NO_PROCUREMENT_ACTION_REQUIRED",
+      "actual": [],
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": []
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "DEMAND_RECONCILIATION_PHASE1_TO_PHASE3",
+      "category": "RECONCILIATION",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "Phase 1 30-day demand reconciles to Phase 3 gross demand",
+      "expected": "<= 0.01 difference",
+      "actual": 0,
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": 0
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "INBOUND_RECONCILIATION_PHASE2_TO_PHASE3",
+      "category": "RECONCILIATION",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "Phase 2 inbound reconciles to Phase 3 inbound use",
+      "expected": "<= 0.01 difference",
+      "actual": 0,
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": 0
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "ALLOCATION_DETAIL_SUMMARY_RECONCILIATION",
+      "category": "RECONCILIATION",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "Allocation detail sums reconcile to allocation summary",
+      "expected": "<= 0.01 difference",
+      "actual": 0,
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": 0
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "PHASE3_VALIDATION_ALLOCATION_RECONCILIATION",
+      "category": "RECONCILIATION",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "Phase 3 validation uses Phase 2 allocated quantity",
+      "expected": "<= 0.01 difference",
+      "actual": 0,
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": 0
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "INTEGRATED_INVENTORY_POSITION_FORMULA",
+      "category": "RECONCILIATION",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "Integrated inventory position formula reconciles.",
+      "expected": "usable + inbound - reserved - backorders, clipped at zero",
+      "actual": [],
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": []
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "INVENTORY_POSITION_CLIPPING_TRANSPARENCY",
+      "category": "RECONCILIATION",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "Inventory position clipping is visible when pre-clipped value is negative.",
+      "expected": "clipping flag/pre-clipped value present or no clipping required",
+      "actual": {
+        "affected_rows": 0,
+        "clipped_rows": 2,
+        "transparency_fields_present": true,
+        "rows": [
+          {
+            "sku_id": "SKU-SUP-004",
+            "pre_clipped_inventory_position_units": -1.0,
+            "inventory_position_clipped_flag": true,
+            "integrated_inventory_position_units": 0.0,
+            "inventory_position_method": "USABLE_ON_HAND_PLUS_CONFIRMED_INBOUND_MINUS_RESERVED"
+          },
+          {
+            "sku_id": "SKU-CHC-005",
+            "pre_clipped_inventory_position_units": -3.0,
+            "inventory_position_clipped_flag": true,
+            "integrated_inventory_position_units": 0.0,
+            "inventory_position_method": "USABLE_ON_HAND_PLUS_CONFIRMED_INBOUND_MINUS_RESERVED"
+          }
+        ]
+      },
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": {
+          "affected_rows": 0,
+          "clipped_rows": 2,
+          "transparency_fields_present": true,
+          "rows": [
+            {
+              "sku_id": "SKU-SUP-004",
+              "pre_clipped_inventory_position_units": -1.0,
+              "inventory_position_clipped_flag": true,
+              "integrated_inventory_position_units": 0.0,
+              "inventory_position_method": "USABLE_ON_HAND_PLUS_CONFIRMED_INBOUND_MINUS_RESERVED"
+            },
+            {
+              "sku_id": "SKU-CHC-005",
+              "pre_clipped_inventory_position_units": -3.0,
+              "inventory_position_clipped_flag": true,
+              "integrated_inventory_position_units": 0.0,
+              "inventory_position_method": "USABLE_ON_HAND_PLUS_CONFIRMED_INBOUND_MINUS_RESERVED"
+            }
+          ]
+        }
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "NO_DOUBLE_SUBTRACTION_BACKORDERS",
+      "category": "RECONCILIATION",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "Backorders are not double-subtracted from inventory position.",
+      "expected": "double_count_prevention_flag true when backorders are included",
+      "actual": [],
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": []
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "EXPIRED_QUARANTINED_EXCLUDED_FROM_USABLE",
+      "category": "INVENTORY",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "Expired and quarantined stock are excluded from usable inventory.",
+      "expected": "usable inventory <= current inventory when unusable stock exists",
+      "actual": [],
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": []
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "REQUESTED_EQUALS_ALLOCATED_PLUS_UNALLOCATED",
+      "category": "RECONCILIATION",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "Requested requirement reconciles to allocated plus unallocated quantity.",
+      "expected": "requested = allocated + unallocated",
+      "actual": [],
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": []
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "PURCHASE_QUANTITY_RECONCILES_WITH_YIELD",
+      "category": "RECONCILIATION",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "Purchase quantity has valid yield basis.",
+      "expected": "yield-adjusted purchase quantity populated for positive allocations",
+      "actual": [],
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": []
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "MOQ_ROUNDING_VALID",
+      "category": "RECONCILIATION",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "MOQ-adjusted quantity is not below yield-adjusted quantity.",
+      "expected": "moq_adjusted >= yield_adjusted",
+      "actual": [],
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": []
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "BATCH_ROUNDING_VALID",
+      "category": "RECONCILIATION",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "Batch-rounded quantity is not below MOQ-adjusted quantity.",
+      "expected": "batch_rounded >= moq_adjusted",
+      "actual": [],
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": []
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "ALLOCATION_DOES_NOT_EXCEED_SUPPLIER_CAPACITY",
+      "category": "CAPACITY",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "Allocation does not exceed supplier capacity.",
+      "expected": "capacity_used <= supplier_horizon_capacity",
+      "actual": [],
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": []
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "SPLIT_QUANTITIES_NON_NEGATIVE",
+      "category": "CAPACITY",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "Split allocation quantities are non-negative.",
+      "expected": ">= 0",
+      "actual": [],
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": []
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "PROCUREMENT_COST_COMPONENTS_RECONCILE",
+      "category": "COST",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "Allocation cost components reconcile to total procurement cost.",
+      "expected": "component sum = total cost",
+      "actual": [],
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": []
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "ACCEPTED_ALLOCATIONS_RESPECT_PHASE3_CAPS",
+      "category": "PHASE3_VALIDATION",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "Accepted allocations respect Phase 3 caps.",
+      "expected": "accepted quantity equals allocated quantity for accepted rows",
+      "actual": [],
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": []
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "AUTO_APPLY_ALWAYS_FALSE",
+      "category": "SAFETY",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "auto_apply_allowed is False everywhere",
+      "expected": 0,
+      "actual": 0,
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": 0
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "PO_CREATION_ALWAYS_FALSE",
+      "category": "SAFETY",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "purchase_order_creation_allowed is False everywhere",
+      "expected": 0,
+      "actual": 0,
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": 0
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "BLOCKED_ROWS_NOT_EXECUTION_READY",
+      "category": "SAFETY",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "Rows requiring review or adjustment are not execution-ready.",
+      "expected": "procurement_execution_ready_flag false for blocked rows",
+      "actual": [],
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": []
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "DOWNSTREAM_SAFETY_FLAGS_CONSISTENT",
+      "category": "SAFETY",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "Overall downstream safety flags align with active warnings and row-level review/execution state.",
+      "expected": "planning/execution safety false when blockers are active",
+      "actual": {
+        "inconsistencies": [],
+        "planning_blockers": [
+          "ALLOCATION_ADJUSTMENT_REQUIRED",
+          "ALLOCATION_INFEASIBLE_SUMMARY_ROWS",
+          "UNALLOCATED_REQUIREMENT_REMAINS"
+        ],
+        "review_required": true
+      },
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": {
+          "inconsistencies": [],
+          "planning_blockers": [
+            "ALLOCATION_ADJUSTMENT_REQUIRED",
+            "ALLOCATION_INFEASIBLE_SUMMARY_ROWS",
+            "UNALLOCATED_REQUIREMENT_REMAINS"
+          ],
+          "review_required": true
+        }
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "AFFECTED_ROW_COUNT_EVIDENCE_CONSISTENCY",
+      "category": "EVIDENCE_INTEGRITY",
+      "severity": "PASS",
+      "status": "PASS",
+      "description": "Each check's affected_row_count matches the row count stated in its actual evidence where applicable.",
+      "expected": "affected_row_count equals actual.affected_rows or actual list length",
+      "actual": {
+        "affected_rows": 0,
+        "mismatches": []
+      },
+      "affected_row_count": 0,
+      "affected_unique_key_count": 0,
+      "affected_keys": [],
+      "evidence": {
+        "actual": {
+          "affected_rows": 0,
+          "mismatches": []
+        }
+      },
+      "suggested_fix": "Fix validator evidence construction so affected row counts are not inferred from deduplicated keys."
+    }
+  ],
+  "issues": [
+    {
+      "check_id": "UNALLOCATED_REQUIREMENT_REMAINS",
+      "category": "ACTIVE_ISSUES",
+      "severity": "WARNING",
+      "status": "WARNING",
+      "description": "Unallocated requirement remains and must be reviewed.",
+      "expected": "0 affected rows",
+      "actual": [
+        {
+          "sku_id": "SKU-COF-001",
+          "unallocated_requirement_units": 388.57
+        },
+        {
+          "sku_id": "SKU-TEA-002",
+          "unallocated_requirement_units": 65.72
+        }
+      ],
+      "affected_row_count": 2,
+      "affected_unique_key_count": 2,
+      "affected_keys": [
+        "SKU-COF-001",
+        "SKU-TEA-002"
+      ],
+      "evidence": {
+        "actual": [
+          {
+            "sku_id": "SKU-COF-001",
+            "unallocated_requirement_units": 388.57
+          },
+          {
+            "sku_id": "SKU-TEA-002",
+            "unallocated_requirement_units": 65.72
+          }
+        ]
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "ALLOCATION_ADJUSTMENT_REQUIRED",
+      "category": "ACTIVE_ISSUES",
+      "severity": "WARNING",
+      "status": "WARNING",
+      "description": "Phase 3 requested allocation adjustment.",
+      "expected": "0 affected rows",
+      "actual": [
+        {
+          "sku_id": "SKU-COF-001",
+          "adjustment_required_flag": true,
+          "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
+        },
+        {
+          "sku_id": "SKU-TEA-002",
+          "adjustment_required_flag": true,
+          "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
+        }
+      ],
+      "affected_row_count": 2,
+      "affected_unique_key_count": 2,
+      "affected_keys": [
+        "SKU-COF-001",
+        "SKU-TEA-002"
+      ],
+      "evidence": {
+        "actual": [
+          {
+            "sku_id": "SKU-COF-001",
+            "adjustment_required_flag": true,
+            "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
+          },
+          {
+            "sku_id": "SKU-TEA-002",
+            "adjustment_required_flag": true,
+            "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
+          }
+        ]
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "FALLBACK_COST_OR_TIMING_ASSUMPTIONS",
+      "category": "ACTIVE_ISSUES",
+      "severity": "WARNING",
+      "status": "WARNING",
+      "description": "Fallback cost or timing assumptions are surfaced with affected fields.",
+      "expected": "no active fallback assumptions",
+      "actual": {
+        "affected_rows": 49,
+        "affected_files": [
+          "phase2_strategy_summary",
+          "phase3_master_decisions"
+        ],
+        "affected_columns": [
+          "consolidated_manager_warning_codes",
+          "final_review_reason",
+          "review_candidate_warning_codes",
+          "selected_option_warning_codes",
+          "sku_option_pool_warning_codes",
+          "warning_codes"
+        ],
+        "sample_rows": [
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 0,
+            "sku_id": "SKU-BAT-008",
+            "affected_column": "selected_option_warning_codes",
+            "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 4,
+            "sku_id": "SKU-FIL-009",
+            "affected_column": "selected_option_warning_codes",
+            "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 5,
+            "sku_id": "SKU-GFT-010",
+            "affected_column": "selected_option_warning_codes",
+            "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 7,
+            "sku_id": "SKU-SUP-004",
+            "affected_column": "selected_option_warning_codes",
+            "value": "PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 9,
+            "sku_id": "SKU-UMR-007",
+            "affected_column": "selected_option_warning_codes",
+            "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 0,
+            "sku_id": "SKU-BAT-008",
+            "affected_column": "sku_option_pool_warning_codes",
+            "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 1,
+            "sku_id": "SKU-BBQ-006",
+            "affected_column": "sku_option_pool_warning_codes",
+            "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 2,
+            "sku_id": "SKU-CHC-005",
+            "affected_column": "sku_option_pool_warning_codes",
+            "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 3,
+            "sku_id": "SKU-COF-001",
+            "affected_column": "sku_option_pool_warning_codes",
+            "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 4,
+            "sku_id": "SKU-FIL-009",
+            "affected_column": "sku_option_pool_warning_codes",
+            "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 5,
+            "sku_id": "SKU-GFT-010",
+            "affected_column": "sku_option_pool_warning_codes",
+            "value": "CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 6,
+            "sku_id": "SKU-SUN-003",
+            "affected_column": "sku_option_pool_warning_codes",
+            "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 7,
+            "sku_id": "SKU-SUP-004",
+            "affected_column": "sku_option_pool_warning_codes",
+            "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 8,
+            "sku_id": "SKU-TEA-002",
+            "affected_column": "sku_option_pool_warning_codes",
+            "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 9,
+            "sku_id": "SKU-UMR-007",
+            "affected_column": "sku_option_pool_warning_codes",
+            "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 0,
+            "sku_id": "SKU-BAT-008",
+            "affected_column": "review_candidate_warning_codes",
+            "value": "BASE_SUPPLIER_OPTION_INFEASIBLE;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 1,
+            "sku_id": "SKU-BBQ-006",
+            "affected_column": "review_candidate_warning_codes",
+            "value": "BASE_SUPPLIER_OPTION_INFEASIBLE;CAPACITY_SHORTFALL;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 2,
+            "sku_id": "SKU-CHC-005",
+            "affected_column": "review_candidate_warning_codes",
+            "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 3,
+            "sku_id": "SKU-COF-001",
+            "affected_column": "review_candidate_warning_codes",
+            "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 4,
+            "sku_id": "SKU-FIL-009",
+            "affected_column": "review_candidate_warning_codes",
+            "value": "BASE_SUPPLIER_OPTION_INFEASIBLE;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 5,
+            "sku_id": "SKU-GFT-010",
+            "affected_column": "review_candidate_warning_codes",
+            "value": "CUSTOMS_COST_FALLBACK_USED;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 6,
+            "sku_id": "SKU-SUN-003",
+            "affected_column": "review_candidate_warning_codes",
+            "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 7,
+            "sku_id": "SKU-SUP-004",
+            "affected_column": "review_candidate_warning_codes",
+            "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 8,
+            "sku_id": "SKU-TEA-002",
+            "affected_column": "review_candidate_warning_codes",
+            "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 9,
+            "sku_id": "SKU-UMR-007",
+            "affected_column": "review_candidate_warning_codes",
+            "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
+          }
+        ]
+      },
+      "affected_row_count": 49,
+      "affected_unique_key_count": 10,
+      "affected_keys": [
+        "SKU-BAT-008",
+        "SKU-BBQ-006",
+        "SKU-CHC-005",
+        "SKU-COF-001",
+        "SKU-FIL-009",
+        "SKU-GFT-010",
+        "SKU-SUN-003",
+        "SKU-SUP-004",
+        "SKU-TEA-002",
+        "SKU-UMR-007"
+      ],
+      "evidence": {
+        "actual": {
+          "affected_rows": 49,
+          "affected_files": [
+            "phase2_strategy_summary",
+            "phase3_master_decisions"
+          ],
+          "affected_columns": [
+            "consolidated_manager_warning_codes",
+            "final_review_reason",
+            "review_candidate_warning_codes",
+            "selected_option_warning_codes",
+            "sku_option_pool_warning_codes",
+            "warning_codes"
+          ],
+          "sample_rows": [
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 0,
+              "sku_id": "SKU-BAT-008",
+              "affected_column": "selected_option_warning_codes",
+              "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 4,
+              "sku_id": "SKU-FIL-009",
+              "affected_column": "selected_option_warning_codes",
+              "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 5,
+              "sku_id": "SKU-GFT-010",
+              "affected_column": "selected_option_warning_codes",
+              "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 7,
+              "sku_id": "SKU-SUP-004",
+              "affected_column": "selected_option_warning_codes",
+              "value": "PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 9,
+              "sku_id": "SKU-UMR-007",
+              "affected_column": "selected_option_warning_codes",
+              "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 0,
+              "sku_id": "SKU-BAT-008",
+              "affected_column": "sku_option_pool_warning_codes",
+              "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 1,
+              "sku_id": "SKU-BBQ-006",
+              "affected_column": "sku_option_pool_warning_codes",
+              "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 2,
+              "sku_id": "SKU-CHC-005",
+              "affected_column": "sku_option_pool_warning_codes",
+              "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 3,
+              "sku_id": "SKU-COF-001",
+              "affected_column": "sku_option_pool_warning_codes",
+              "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 4,
+              "sku_id": "SKU-FIL-009",
+              "affected_column": "sku_option_pool_warning_codes",
+              "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 5,
+              "sku_id": "SKU-GFT-010",
+              "affected_column": "sku_option_pool_warning_codes",
+              "value": "CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 6,
+              "sku_id": "SKU-SUN-003",
+              "affected_column": "sku_option_pool_warning_codes",
+              "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 7,
+              "sku_id": "SKU-SUP-004",
+              "affected_column": "sku_option_pool_warning_codes",
+              "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 8,
+              "sku_id": "SKU-TEA-002",
+              "affected_column": "sku_option_pool_warning_codes",
+              "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 9,
+              "sku_id": "SKU-UMR-007",
+              "affected_column": "sku_option_pool_warning_codes",
+              "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 0,
+              "sku_id": "SKU-BAT-008",
+              "affected_column": "review_candidate_warning_codes",
+              "value": "BASE_SUPPLIER_OPTION_INFEASIBLE;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 1,
+              "sku_id": "SKU-BBQ-006",
+              "affected_column": "review_candidate_warning_codes",
+              "value": "BASE_SUPPLIER_OPTION_INFEASIBLE;CAPACITY_SHORTFALL;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 2,
+              "sku_id": "SKU-CHC-005",
+              "affected_column": "review_candidate_warning_codes",
+              "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 3,
+              "sku_id": "SKU-COF-001",
+              "affected_column": "review_candidate_warning_codes",
+              "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 4,
+              "sku_id": "SKU-FIL-009",
+              "affected_column": "review_candidate_warning_codes",
+              "value": "BASE_SUPPLIER_OPTION_INFEASIBLE;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 5,
+              "sku_id": "SKU-GFT-010",
+              "affected_column": "review_candidate_warning_codes",
+              "value": "CUSTOMS_COST_FALLBACK_USED;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 6,
+              "sku_id": "SKU-SUN-003",
+              "affected_column": "review_candidate_warning_codes",
+              "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 7,
+              "sku_id": "SKU-SUP-004",
+              "affected_column": "review_candidate_warning_codes",
+              "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 8,
+              "sku_id": "SKU-TEA-002",
+              "affected_column": "review_candidate_warning_codes",
+              "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 9,
+              "sku_id": "SKU-UMR-007",
+              "affected_column": "review_candidate_warning_codes",
+              "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
+            }
+          ]
+        }
+      },
+      "suggested_fix": "Replace fallback assumptions with explicit cost, timing, or policy source fields when available."
+    }
+  ],
+  "warning_catalog": [
+    {
+      "warning_code": "No automatic purchase order creation.",
+      "scope": "KNOWN_LIMITATION"
+    },
+    {
+      "warning_code": "No automatic supplier mutation.",
+      "scope": "KNOWN_LIMITATION"
+    },
+    {
+      "warning_code": "No automatic inventory mutation.",
+      "scope": "KNOWN_LIMITATION"
+    },
+    {
+      "warning_code": "No execution workflow.",
+      "scope": "KNOWN_LIMITATION"
+    },
+    {
+      "warning_code": "No production integration yet.",
+      "scope": "KNOWN_LIMITATION"
+    },
+    {
+      "warning_code": "No logistics optimization yet.",
+      "scope": "KNOWN_LIMITATION"
+    },
+    {
+      "warning_code": "No finance/cash-flow constraint yet.",
+      "scope": "KNOWN_LIMITATION"
+    },
+    {
+      "warning_code": "No simulation.",
+      "scope": "KNOWN_LIMITATION"
+    },
+    {
+      "warning_code": "No final UI.",
+      "scope": "KNOWN_LIMITATION"
+    },
+    {
+      "warning_code": "Some cost and timing assumptions remain fallback-based.",
+      "scope": "KNOWN_LIMITATION"
+    }
+  ],
+  "key_metrics": {
+    "sku_count": 10,
+    "net_requirement_total": 4758.0,
+    "allocated_usable_total": 4303.71,
+    "end_to_end_requirement_coverage_rate": 0.904521,
+    "planning_exception_rate": 0.7,
+    "split_sourcing_count": 3,
+    "auto_apply_true_count": 0
+  },
+  "strategy_counts": {
+    "phase2_supplier_strategy_counts": {
+      "REVIEW_SPLIT_SOURCING_PLAN": 4,
+      "BALANCED_SUPPLIER": 2,
+      "CURRENT_SUPPLIER": 1,
+      "SPLIT_DELIVERY_CURRENT_SUPPLIER": 1,
+      "REVIEW_AGGREGATE_CAPACITY_SHORTFALL": 1,
+      "EXPEDITE_ALTERNATIVE_SUPPLIER": 1
+    },
+    "integrated_recommendation_counts": {
+      "REVIEW_BEFORE_ACTION": 7,
+      "NO_PROCUREMENT_ACTION_REQUIRED": 3
+    },
+    "integrated_priority_counts": {
+      "HIGH": 5,
+      "LOW": 3,
+      "URGENT": 2
+    }
+  },
+  "representative_rows": {
+    "healthy_or_no_order_sku": {
+      "schema_version": 1.0,
+      "run_id": "INTEGRATED-20260611194759",
+      "sku_id": "SKU-BBQ-006",
+      "final_iteration": 1,
+      "convergence_status": "CONVERGED_WITH_REVIEW",
+      "forecast_demand_30d": 750.1829,
+      "demand_urgency_score": 55.0,
+      "forecast_uncertainty_level": "LOW",
+      "usable_on_hand_inventory_units": 671.0,
+      "integrated_inventory_position_units": 803.0,
+      "safety_stock_units": 84.0,
+      "reorder_point_units": 327.0,
+      "main_inventory_status": "OVERSTOCK",
+      "net_replenishment_requirement_units": 0.0,
+      "maximum_safe_order_units": 49.0,
+      "selected_supplier_ids": null,
+      "supplier_allocation_plan": null,
+      "total_allocated_usable_quantity": 0.0,
+      "total_supplier_purchase_quantity": 0.0,
+      "split_sourcing_used_flag": false,
+      "expedite_used_flag": false,
+      "earliest_arrival_date": null,
+      "final_arrival_date": null,
+      "total_procurement_cost": 0.0,
+      "projected_holding_cost": 0.0,
+      "projected_stockout_cost": 0.0,
+      "projected_expiry_cost": 0.0,
+      "projected_warehouse_cost": 0.0,
+      "projected_total_relevant_cost": 0.0,
+      "procurement_capacity_feasible_flag": true,
+      "inventory_policy_feasible_flag": true,
+      "warehouse_capacity_feasible_flag": true,
+      "service_level_feasible_flag": true,
+      "allocation_accepted_flag": true,
+      "final_recommendation": "NO_PROCUREMENT_ACTION_REQUIRED",
+      "final_action_owner": "NO_OWNER_REQUIRED",
+      "final_priority": "LOW",
+      "final_review_required": false,
+      "final_review_reason": "NO_REPLENISHMENT_REQUIREMENT",
+      "auto_apply_allowed": false,
+      "purchase_order_creation_allowed": false,
+      "procurement_execution_ready_flag": false,
+      "approval_status": "NOT_REQUESTED",
+      "approval_owner": "HUMAN_MANAGER"
+    },
+    "stockout_sku": {
+      "schema_version": 1.0,
+      "run_id": "INTEGRATED-20260611194759",
+      "planning_iteration": 1,
+      "generated_at": "2026-06-11T19:48:10Z",
+      "source_phase": "PHASE_3",
+      "target_phase": "PHASE_2",
+      "data_as_of_date": "2026-06-11",
+      "sku_id": "SKU-SUP-004",
+      "gross_forecast_demand_7d": 53.5958,
+      "gross_forecast_demand_30d": 229.3571,
+      "gross_forecast_demand_60d": 458.6437,
+      "gross_forecast_demand_90d": 687.9307,
+      "average_daily_forecast_demand": 7.6452,
+      "forecast_uncertainty_level": "MEDIUM",
+      "underforecast_risk_flag": false,
+      "stockout_censored_demand_flag": false,
+      "demand_urgency_score": 6.16,
+      "current_inventory_units": -18.0,
+      "reserved_inventory_units": 1.0,
+      "available_inventory_units": -19.0,
+      "usable_on_hand_inventory_units": 0.0,
+      "available_to_promise_units": 0.0,
+      "expired_inventory_units": 0.0,
+      "near_expiry_inventory_units": 0.0,
+      "quarantined_inventory_units": 0.0,
+      "unusable_inventory_units": 0.0,
+      "batch_inventory_reconciliation_difference": 0.0,
+      "batch_inventory_reconciliation_flag": "RECONCILED_NEGATIVE_INVENTORY_AS_SHORTAGE",
+      "inventory_source_used": "BATCH_LAYER",
+      "inventory_model_type": "CONTINUOUS_REVIEW_sQ",
+      "review_policy": "CONTINUOUS_REVIEW",
+      "review_period_days": 1.0,
+      "service_level_target": 0.99,
+      "safety_stock_units": 327.0,
+      "reorder_point_units": 924.0,
+      "min_stock_level_units": 327.0,
+      "max_stock_level_units": 2124.0,
+      "base_stock_level_units": 0.0,
+      "order_up_to_level_units": 0.0,
+      "policy_order_quantity_units": 1200.0,
+      "confirmed_inbound_units_7d": 0.0,
+      "confirmed_inbound_units_30d": 0.0,
+      "confirmed_inbound_before_need_date_units": 0.0,
+      "uncertain_inbound_units": 0.0,
+      "active_backorder_units": 0.0,
+      "reserved_or_committed_demand_units": 1.0,
+      "current_inventory_position_units": -18.0,
+      "pre_clipped_inventory_position_units": -1.0,
+      "inventory_position_clipped_flag": true,
+      "integrated_inventory_position_units": 0.0,
+      "inventory_position_method": "USABLE_ON_HAND_PLUS_CONFIRMED_INBOUND_MINUS_RESERVED",
+      "backorder_in_inventory_position_flag": false,
+      "commitment_definition": "RESERVED_INVENTORY_ONLY",
+      "double_count_prevention_flag": true,
+      "replenishment_triggered_flag": true,
+      "gross_replenishment_requirement_units": 1200.0,
+      "net_replenishment_requirement_units": 1200.0,
+      "immediate_shortage_units": 18.0,
+      "remaining_horizon_shortage_units": 1182.0,
+      "minimum_required_order_units": 1200.0,
+      "order_quantity_before_supplier_constraints": 1200.0,
+      "maximum_safe_order_units": 2124.0,
+      "expiry_constrained_max_order_units": 0,
+      "movement_constrained_max_order_units": 0,
+      "existing_inventory_constrained_max_order_units": 2124.0,
+      "warehouse_constrained_max_order_units": 2124.0,
+      "final_inventory_constraint_cap_units": 2124.0,
+      "main_inventory_status": "STOCKOUT",
+      "primary_action": "EXPEDITE_ORDER",
+      "action_priority": "URGENT",
+      "inventory_priority_class": "CRITICAL_PRIORITY",
+      "vitality_class": "VITAL",
+      "perishability_class": "EXPIRY_TRACKED",
+      "replenishment_urgency": "URGENT",
+      "supplier_capability_requirement": "RELIABLE_SUPPLIER_REQUIRED",
+      "preferred_delivery_strategy": "STANDARD_DELIVERY",
+      "split_sourcing_allowed": true,
+      "expedite_allowed": false,
+      "return_to_supplier_review_required": false,
+      "requirement_source": "PHASE3_POLICY_AND_USABLE_INVENTORY",
+      "requirement_confidence": "HIGH",
+      "requirement_warning_codes": "NONE",
+      "inventory_context_complete_flag": true
+    },
+    "split_sourcing_sku": {
+      "schema_version": 1.0,
+      "run_id": "INTEGRATED-20260611194759",
+      "planning_iteration": 1,
+      "generated_at": "2026-06-11T19:48:09Z",
+      "source_phase": "PHASE_2",
+      "target_phase": "PHASE_3",
+      "data_as_of_date": "2026-06-11",
+      "sku_id": "SKU-COF-001",
+      "requested_requirement_units": 1880.0,
+      "total_allocated_usable_quantity": 1491.43,
+      "total_supplier_purchase_quantity": 1628.0,
+      "allocation_coverage_rate": 0.7933,
+      "primary_supplier_id": "SUP-006",
+      "backup_supplier_id": "SUP-001",
+      "supplier_count": 4,
+      "split_sourcing_used_flag": true,
+      "expedite_used_flag": false,
+      "earliest_arrival_date": "2026-06-13",
+      "final_arrival_date": "2026-06-27",
+      "total_procurement_cost": 4511.55,
+      "total_risk_adjusted_procurement_cost": 4737.13,
+      "allocation_feasible_flag": false,
+      "unallocated_requirement_units": 388.57,
+      "human_review_required": true,
+      "allocation_warning_codes": "SPLIT_SOURCE_REVIEW_REQUIRED;REQUIREMENT_NOT_FULLY_ALLOCATED;AGGREGATE_CAPACITY_SHORTFALL",
+      "requirement_coverage_rate": 0.7933138297872341,
+      "unallocated_requirement_rate": 0.2066861702127659,
+      "top_supplier_allocation_share": 0.488504321356014,
+      "supplier_concentration_risk_status": "LOW"
+    },
+    "aggregate_capacity_shortfall_sku": {
+      "schema_version": 1.0,
+      "run_id": "INTEGRATED-20260611194759",
+      "planning_iteration": 1,
+      "generated_at": "2026-06-11T19:48:09Z",
+      "source_phase": "PHASE_2",
+      "target_phase": "PHASE_3",
+      "data_as_of_date": "2026-06-11",
+      "sku_id": "SKU-COF-001",
+      "requested_requirement_units": 1880.0,
+      "total_allocated_usable_quantity": 1491.43,
+      "total_supplier_purchase_quantity": 1628.0,
+      "allocation_coverage_rate": 0.7933,
+      "primary_supplier_id": "SUP-006",
+      "backup_supplier_id": "SUP-001",
+      "supplier_count": 4,
+      "split_sourcing_used_flag": true,
+      "expedite_used_flag": false,
+      "earliest_arrival_date": "2026-06-13",
+      "final_arrival_date": "2026-06-27",
+      "total_procurement_cost": 4511.55,
+      "total_risk_adjusted_procurement_cost": 4737.13,
+      "allocation_feasible_flag": false,
+      "unallocated_requirement_units": 388.57,
+      "human_review_required": true,
+      "allocation_warning_codes": "SPLIT_SOURCE_REVIEW_REQUIRED;REQUIREMENT_NOT_FULLY_ALLOCATED;AGGREGATE_CAPACITY_SHORTFALL",
+      "requirement_coverage_rate": 0.7933138297872341,
+      "unallocated_requirement_rate": 0.2066861702127659,
+      "top_supplier_allocation_share": 0.488504321356014,
+      "supplier_concentration_risk_status": "LOW"
+    },
+    "phase4_review_sku": {
+      "sku_id": "SKU-SUP-004",
+      "product_name": "Winter Soup Mix 400g",
+      "category": "Grocery",
+      "current_inventory": -18,
+      "available_inventory": -19,
+      "inventory_position": -18,
+      "main_inventory_status": "STOCKOUT",
+      "secondary_status_flags": "SUPPLIER_REVIEW_REQUIRED;WATCHLIST_SUPPLIER;PHASE4_REVIEW_REQUIRED;POLICY_REVIEW_REQUIRED;QUANTITY_CONSTRAINT_ACTIVE;HIGH_MOQ_OVERSTOCK_RISK",
+      "primary_action": "EXPEDITE_ORDER",
+      "action_priority": "URGENT",
+      "abc_class": "A",
+      "xyz_class": "Y",
+      "fsn_class": "F",
+      "movement_class": "FAST_MOVING",
+      "vitality_class": "VITAL",
+      "perishability_class": "EXPIRY_TRACKED",
+      "seasonality_class": "NON_SEASONAL",
+      "inventory_priority_class": "CRITICAL_PRIORITY",
+      "inventory_model_type": "CONTINUOUS_REVIEW_sQ",
+      "review_policy": "CONTINUOUS_REVIEW",
+      "service_level_target": 0.99,
+      "safety_stock": 327,
+      "reorder_point": 924,
+      "eoq": 1393.8,
+      "recommended_order_quantity": 1200,
+      "selected_scenario_id": "SKU-SUP-004-SCN-017",
+      "selected_scenario_name": "INCREASE_BUFFER__FAST_RELIABLE_SUPPLIER__SPLIT_DELIVERY",
+      "selected_buffer_strategy": "INCREASE_BUFFER",
+      "selected_supplier_strategy": "FAST_RELIABLE_SUPPLIER",
+      "selected_delivery_strategy": "SPLIT_DELIVERY",
+      "selected_order_cap_strategy": "CURRENT_ORDER_CAP",
+      "selected_expiry_strategy": "NO_EXPIRY_ACTION",
+      "selected_warehouse_strategy": "CURRENT_WAREHOUSE_PLAN",
+      "selected_service_level": 0.98,
+      "selected_safety_stock": 376.05,
+      "selected_reorder_point": 1062.6,
+      "selected_order_quantity": 1200.0,
+      "baseline_operational_cost": 13974.34,
+      "selected_operational_cost": 11831.72,
+      "operational_cost_saving_vs_baseline": 2142.62,
+      "baseline_total_penalty_adjusted_cost": 18524.34,
+      "selected_total_penalty_adjusted_cost": 13125.47,
+      "penalty_adjusted_saving_vs_baseline": 5398.87,
+      "saving_interpretation_type": "REVIEW_REQUIRED",
+      "saving_interpretation_reason": "Selected scenario requires human review; cost and penalty changes are recommendation-only and not direct cash savings.",
+      "penalty_driven_saving_flag": true,
+      "selected_feasibility_status": "FEASIBLE_WITH_REVIEW",
+      "selected_feasibility_severity": "REVIEW_REQUIRED",
+      "selected_requires_human_review": true,
+      "selected_major_risk_count": 0,
+      "selected_review_required_count": 2,
+      "selected_soft_warning_count": 2,
+      "final_risk_level": "CRITICAL",
+      "final_risk_types": "STOCKOUT_RISK; OVERSTOCK_RISK; SUPPLIER_RISK; RECEIVING_STAGING_RISK; WAREHOUSE_CAPACITY_RISK; POLICY_RISK; PHASE4_PRODUCTION_RISK; COST_RISK",
+      "final_risk_reason": "STOCKOUT status creates shortage risk. Overstock or days-of-supply risk exists. Supplier review signal exists. Warehouse capacity or staging risk exists.",
+      "final_review_required": true,
+      "final_mandatory_review_required": true,
+      "final_advisory_review_required": false,
+      "final_info_warning_only": false,
+      "final_review_severity": "MANDATORY",
+      "final_review_type": "MANDATORY_MULTI_DEPARTMENT_REVIEW",
+      "primary_review_type": "POLICY_REVIEW",
+      "secondary_review_types": "PHASE4_REVIEW; SUPPLIER_REVIEW; WAREHOUSE_REVIEW; FINANCE_COST_REVIEW",
+      "mandatory_review_gates": "SELECTED_SCENARIO_REVIEW_GATE; PHASE4_GATE; SUPPLIER_CHANGE_GATE; RECEIVING_CAPACITY_GATE; POLICY_PARAMETER_GATE",
+      "advisory_review_gates": "ADVISORY_COST_SIGNAL",
+      "info_review_gates": null,
+      "review_gate_count": 6,
+      "mandatory_review_gate_count": 5,
+      "advisory_review_gate_count": 1,
+      "info_review_gate_count": 0,
+      "final_review_reason": "Selected scenario is feasible only with human review. Selected action changes policy/order assumptions for a Phase 4-related SKU. Selected scenario changes supplier while supplier review is active. Selected split delivery depends on receiving/staging capacity review.",
+      "final_review_owner": "MULTI_DEPARTMENT_REVIEW",
+      "final_decision_priority": "URGENT",
+      "final_priority_score": 106.0,
+      "final_priority_reason": "STOCKOUT inventory status. Underlying action priority is urgent. CRITICAL cost risk. Mandatory review blocks direct action. Projected receiving or staging pressure exists. Vital/critical SKU is stocked out or at zero stock.",
+      "final_recommended_action": "REVIEW_PHASE4_PRODUCTION_LOGIC",
+      "final_action_reason": "Selected scenario proposes split delivery to reduce receiving pressure. REVIEW_PHASE4_PRODUCTION_LOGIC is the blocking step. Proposed operational action after review: SPLIT_DELIVERY.",
+      "final_action_owner": "MULTI_DEPARTMENT_REVIEW",
+      "final_manager_status": "REVIEW_BEFORE_ACTION",
+      "action_blocked_by_mandatory_review": true,
+      "advisory_review_exists": false,
+      "action_readiness": "REVIEW_REQUIRED_BEFORE_ACTION",
+      "blocking_review_action": "REVIEW_PHASE4_PRODUCTION_LOGIC",
+      "proposed_operational_action": "SPLIT_DELIVERY",
+      "proposed_operational_owner": "PROCUREMENT_TEAM; WAREHOUSE_TEAM",
+      "execution_owner": "PROCUREMENT_TEAM; WAREHOUSE_TEAM",
+      "review_owner": "MULTI_DEPARTMENT_REVIEW",
+      "owner_assignment_reason": "Split delivery requires procurement scheduling and warehouse receiving-capacity confirmation.",
+      "action_visibility_note": "Final action shows the blocking review gate; proposed operational action is listed separately.",
+      "auto_apply_allowed": false,
+      "source_inventory_status": "STOCKOUT",
+      "source_re_evaluation_direction": "MIXED_SIGNALS",
+      "source_optimization_selection_status": "SELECTED_LOWEST_COST_WITH_HUMAN_REVIEW",
+      "source_selected_scenario_status": "FEASIBLE_WITH_REVIEW",
+      "source_main_cost_driver": "PURCHASE_COST",
+      "source_warehouse_review": "REVIEW_RECEIVING_CAPACITY",
+      "source_supplier_review": "REVIEW_WATCHLIST_SUPPLIER",
+      "source_policy_review": "REVIEW_PHASE4_PRODUCTION_POLICY"
+    }
+  },
+  "configuration_snapshot": {
+    "max_iterations": 3,
+    "quantity_tolerance_units": 1.0,
+    "auto_apply_allowed": false,
+    "purchase_order_creation_allowed": false
+  },
+  "future_phase_readiness": {
+    "phase4_production_planning": {
+      "status": "PARTIAL",
+      "available_fields": [
+        "phase4 review flags",
+        "net requirement"
+      ],
+      "missing_fields": [
+        "BOM",
+        "production capacity"
+      ],
+      "blockers": [
+        "No Phase 4 model yet"
+      ],
+      "suggested_next_step": "Add BOM and make/buy contracts."
+    },
+    "logistics_planning": {
+      "status": "PARTIAL",
+      "available_fields": [
+        "arrival-date schema fields",
+        "shipment placeholders"
+      ],
+      "missing_fields": [
+        "populated active-allocation arrival dates",
+        "lanes",
+        "carrier costs"
+      ],
+      "blockers": [
+        "Active allocation arrival-date fields are present but currently blank",
+        "No logistics optimizer"
+      ],
+      "suggested_next_step": "Populate expected arrival dates before committed logistics planning."
+    },
+    "finance_planning": {
+      "status": "PARTIAL",
+      "available_fields": [
+        "procurement cost",
+        "payment terms"
+      ],
+      "missing_fields": [
+        "cash constraints"
+      ],
+      "blockers": [
+        "No cash-flow engine"
+      ],
+      "suggested_next_step": "Add finance constraints."
+    },
+    "execution_po_generation": {
+      "status": "BLOCKED_BY_DESIGN",
+      "available_fields": [
+        "allocation plan"
+      ],
+      "missing_fields": [
+        "approval workflow"
+      ],
+      "blockers": [
+        "PO creation disabled"
+      ],
+      "suggested_next_step": "Build approval and execution workflow later."
+    },
+    "manager_ui": {
+      "status": "READY_FOR_PROTOTYPE",
+      "available_fields": [
+        "final decisions",
+        "validation evidence"
+      ],
+      "missing_fields": [
+        "UI screens"
+      ],
+      "blockers": [
+        "No UI in this step"
+      ],
+      "suggested_next_step": "Build dashboard later."
+    },
+    "total_cost_engine": {
+      "status": "PARTIAL",
+      "available_fields": [
+        "procurement cost"
+      ],
+      "missing_fields": [
+        "logistics, finance, production costs"
+      ],
+      "blockers": [
+        "Later phases missing"
+      ],
+      "suggested_next_step": "Extend cost contracts by phase."
+    }
+  },
+  "known_limitations": [
+    "No automatic purchase order creation.",
+    "No automatic supplier mutation.",
+    "No automatic inventory mutation.",
+    "No execution workflow.",
+    "No production integration yet.",
+    "No logistics optimization yet.",
+    "No finance/cash-flow constraint yet.",
+    "No simulation.",
+    "No final UI.",
+    "Some cost and timing assumptions remain fallback-based."
+  ]
+}

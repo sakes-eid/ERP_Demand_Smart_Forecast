@@ -1,0 +1,74 @@
+Phase 3 Validation Report
+===========================
+Timestamp: 2026-06-11T21:48:35
+Project path: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 3
+Outputs path: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 3\outputs
+
+Overall Status
+- WARNING
+
+Summary Counts
+- Total checks: 220
+- PASS: 208
+- WARNING: 11
+- FAIL: 0
+- SKIPPED: 1
+
+Critical Failures
+- None
+
+Warnings / Known Limitations
+KNOWN_LIMITATIONS:
+- [KNO-0206] No purchase order creation yet.: No purchase order creation yet.
+- [KNO-0207] Supplier return-policy fields are available through Phase 2 bridges, but automated return execution is not implemented.: Supplier return-policy fields are available through Phase 2 bridges, but automated return execution is not implemented.
+- [KNO-0208] Backorder aging foundation exists in Phase 2, but deeper batch/inventory/forecast feedback integration remains future work.: Backorder aging foundation exists in Phase 2, but deeper batch/inventory/forecast feedback integration remains future work.
+- [KNO-0209] No Phase 4 BOM/production logic yet.: No Phase 4 BOM/production logic yet.
+- [KNO-0210] No stockout-censored demand correction yet.: No stockout-censored demand correction yet.
+- [KNO-0211] No automatic policy application yet.: No automatic policy application yet.
+- [KNO-0212] Role-based Streamlit UI foundation exists, but approved execution workflows are not implemented.: Role-based Streamlit UI foundation exists, but approved execution workflows are not implemented.
+- [KNO-0213] Cost assumptions still partly fallback-based.: Cost assumptions still partly fallback-based.
+- [KNO-0214] Phase 3 internal scenario labels remain strategy-level; integrated supplier IDs and quantities come from Phase 2 allocation bridges.: Phase 3 internal scenario labels remain strategy-level; integrated supplier IDs and quantities come from Phase 2 allocation bridges.
+- [KNO-0215] Scenario optimizer is rule-based, not simulation-based.: Scenario optimizer is rule-based, not simulation-based.
+- [KNO-0216] Re-evaluation engine is rule-based, not historical learning loop.: Re-evaluation engine is rule-based, not historical learning loop.
+
+Key Reconciliations
+- SKU count: 10
+- Master decisions row count: 10
+- Manager dashboard row count: 10
+- Mandatory review queue count: 5
+- Advisory review queue count: 5
+- Operational saving total: 9972.42
+- Penalty-adjusted saving total: 16884.92
+- Auto-apply true count: 0
+- Selected hard blocker count: 0
+
+Final Manager Output Snapshot
+- Priority counts: HIGH=4, URGENT=3, MEDIUM=3
+- Manager status counts: REVIEW_BEFORE_ACTION=5, TAKE_ACTION_NOW=3, MONITOR=2
+- Review severity counts: ADVISORY=5, MANDATORY=5
+- Proposed operational action counts: LIQUIDATE_DEAD_STOCK=3, USE_SELECTED_OPTIMIZED_SCENARIO=2, ORDER_RECOMMENDED_QUANTITY=2, SPLIT_DELIVERY=2, TIGHTEN_ORDER_CAP=1
+- Blocking review action counts: NO_BLOCKING_REVIEW=5, REVIEW_PHASE4_PRODUCTION_LOGIC=4, REVIEW_EXPIRY_DISPOSITION=1
+- Execution owner counts: INVENTORY_PLANNER=3, OPERATIONS_MANAGER=3, PROCUREMENT_TEAM=2, PROCUREMENT_TEAM; WAREHOUSE_TEAM=2
+
+Scenario Optimization Snapshot
+- Scenario count: 144
+- Average scenarios per SKU: 14.40
+- Max scenarios per SKU: 21
+- Feasible/infeasible counts: FEASIBLE_WITH_REVIEW=96, FEASIBLE=42, BASELINE_ONLY=6
+- Selected hard blocker count: 0
+- Selected review-required count: 5
+- Selected soft warning count: 22
+
+Warehouse Snapshot
+- Batch slotting rows: 23
+- Trace-only batch count: 10
+- Physical-map batch count: 13
+- Active quarantine count: 2
+- Active FEFO count: 1
+- Current overcapacity count: 0
+- Projected overcapacity count: 0
+
+Recommended Next Steps
+- Phase 3 validation passed structurally.
+- Review warnings/limitations.
+- Next: decide whether to document Phase 3 or begin revisiting Phase 1/2 improvements.

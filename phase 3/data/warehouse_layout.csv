@@ -1,0 +1,2 @@
+warehouse_id,warehouse_name,warehouse_length_m,warehouse_width_m,total_floor_area_m2,storage_area_m2,receiving_area_m2,shipping_area_m2,crossdock_area_m2,returns_area_m2,aisle_width_m,minimum_required_aisle_width_m,forklift_accessible,dock_x,dock_y,entrance_x,entrance_y,exit_x,exit_y
+WH-001,Main Inventory Control Warehouse,60,35,2100,1380,180,170,120,65,3.4,3.0,True,4,3,2,2,58,3

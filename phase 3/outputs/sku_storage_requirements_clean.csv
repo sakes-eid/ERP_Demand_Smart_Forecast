@@ -1,0 +1,11 @@
+sku_id,unit_volume_m3,unit_weight_kg,stackable,fragile,perishable,temperature_required,security_required,handling_unit,units_per_case,cases_per_pallet,handling_cost_per_unit,handling_cost_per_case,handling_cost_per_pallet,preferred_zone,max_stack_height,heavy_low_storage_required,expiry_tracking_required,fefo_required,invalid_unit_volume_flag,invalid_unit_weight_flag,invalid_handling_unit_flag
+SKU-COF-001,0.004,0.35,True,False,False,False,False,CASE,12,80,5.0,2.5,1.0,FAST_PICK,5,False,False,False,False,False,False
+SKU-TEA-002,0.003,0.25,True,True,True,True,False,CASE,24,60,5.0,2.5,1.0,CASE_PICKING,4,False,True,True,False,False,False
+SKU-SUN-003,0.002,0.18,True,False,True,True,False,EACH,12,80,5.0,2.5,1.0,CASE_PICKING,4,False,True,True,False,False,False
+SKU-SUP-004,0.006,0.55,True,False,True,True,False,CASE,10,50,5.0,2.5,1.0,PALLET_STORAGE,4,False,True,True,False,False,False
+SKU-CHC-005,0.0015,0.09,False,True,True,True,False,EACH,24,70,5.0,2.5,1.0,EACH_PICKING,3,False,True,True,False,False,False
+SKU-BBQ-006,0.025,2.4,True,False,False,False,False,PALLET,6,40,5.0,2.5,1.0,BULK_STORAGE,3,True,False,False,False,False,False
+SKU-UMR-007,0.03,1.1,True,False,False,False,False,EACH,4,30,5.0,2.5,1.0,SLOW_PICK,3,False,False,False,False,False,False
+SKU-BAT-008,0.002,0.22,True,False,False,False,True,EACH,20,100,5.0,2.5,1.0,EACH_PICKING,4,False,False,False,False,False,False
+SKU-FIL-009,0.018,1.8,True,False,False,False,False,CASE,8,36,5.0,2.5,1.0,EACH_PICKING,3,True,False,False,False,False,False
+SKU-GFT-010,0.015,0.65,False,True,False,False,True,EACH,6,48,5.0,2.5,1.0,SLOW_PICK,2,False,False,False,False,False,False

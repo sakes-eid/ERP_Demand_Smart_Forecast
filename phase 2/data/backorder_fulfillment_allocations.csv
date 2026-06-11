@@ -1,0 +1,11 @@
+allocation_id,backorder_id,sku_id,batch_id,allocated_quantity,allocation_date,warehouse_id,location_id,allocation_method,fefo_compliant_flag,fifo_compliant_flag,allocation_status,notes
+BOA-00001,BO-00002,SKU-TEA-002,DEMO-BATCH-SKU-TEA-002-1,13,2026-06-04,WH-DEMO-01,DEMO-LOC-01,FEFO,True,True,ALLOCATED,Demo batch allocation for backorder fulfillment traceability.
+BOA-00002,BO-00002,SKU-TEA-002,DEMO-BATCH-SKU-TEA-002-2,7,2026-06-03,WH-DEMO-01,DEMO-LOC-02,PRIORITY_ALLOCATION,False,True,ALLOCATED,Demo batch allocation for backorder fulfillment traceability.
+BOA-00003,BO-00004,SKU-SUP-004,DEMO-BATCH-SKU-SUP-004-1,16,2026-06-02,WH-DEMO-01,DEMO-LOC-01,FEFO,True,True,ALLOCATED,Demo batch allocation for backorder fulfillment traceability.
+BOA-00004,BO-00004,SKU-SUP-004,DEMO-BATCH-SKU-SUP-004-2,8,2026-06-01,WH-DEMO-01,DEMO-LOC-02,PRIORITY_ALLOCATION,False,True,ALLOCATED,Demo batch allocation for backorder fulfillment traceability.
+BOA-00005,BO-00005,SKU-CHC-005,DEMO-BATCH-SKU-CHC-005-1,21,2026-06-01,WH-DEMO-01,DEMO-LOC-01,FEFO,True,True,ALLOCATED,Demo batch allocation for backorder fulfillment traceability.
+BOA-00006,BO-00005,SKU-CHC-005,DEMO-BATCH-SKU-CHC-005-2,12,2026-05-31,WH-DEMO-01,DEMO-LOC-02,PRIORITY_ALLOCATION,False,True,ALLOCATED,Demo batch allocation for backorder fulfillment traceability.
+BOA-00007,BO-00007,SKU-UMR-007,DEMO-BATCH-SKU-UMR-007-1,23,2026-05-30,WH-DEMO-01,DEMO-LOC-01,FEFO,True,True,ALLOCATED,Demo batch allocation for backorder fulfillment traceability.
+BOA-00008,BO-00007,SKU-UMR-007,DEMO-BATCH-SKU-UMR-007-2,12,2026-05-29,WH-DEMO-01,DEMO-LOC-02,PRIORITY_ALLOCATION,False,True,ALLOCATED,Demo batch allocation for backorder fulfillment traceability.
+BOA-00009,BO-00008,SKU-BAT-008,DEMO-BATCH-SKU-BAT-008-1,85,2026-05-29,WH-DEMO-01,DEMO-LOC-01,FEFO,True,True,ALLOCATED,Demo batch allocation for backorder fulfillment traceability.
+BOA-00010,BO-00008,SKU-BAT-008,DEMO-BATCH-SKU-BAT-008-2,46,2026-05-28,WH-DEMO-01,DEMO-LOC-02,PRIORITY_ALLOCATION,False,True,ALLOCATED,Demo batch allocation for backorder fulfillment traceability.

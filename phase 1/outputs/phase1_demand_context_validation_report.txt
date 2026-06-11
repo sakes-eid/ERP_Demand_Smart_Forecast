@@ -1,0 +1,11 @@
+Phase 1 Demand Planning Context Validation
+===========================================
+Timestamp: 2026-06-11T13:20:45
+Output file: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 1\outputs\phase1_demand_planning_context.csv
+Overall status: WARNING
+PASS: 25
+WARNING: 1
+FAIL: 0
+
+Issues:
+- WARNING [P1CTX-026] FORECAST_WAPE_90D_UNAVAILABLE: 90-day backtest WAPE is unavailable because the current comparable backtest window is shorter than 90 days.

@@ -1,0 +1,27 @@
+check_id,check_group,check_name,severity,details,affected_file,affected_column,affected_rows
+P1CTX-001,FILE,Demand planning context loads,PASS,Loaded 10 rows.,phase1_demand_planning_context.csv,,
+P1CTX-002,FILE,Future forecast output loads,PASS,Loaded 900 rows.,future_forecast_results.csv,,
+P1CTX-003,FILE,Forecast KPI output loads,PASS,Loaded 10 rows.,phase1_forecast_kpis.csv,,
+P1CTX-004,MODEL_PERSISTENCE,Model output folder exists,PASS,Folder: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 1\outputs\models,C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 1\outputs\models,,
+P1CTX-005,MODEL_PERSISTENCE,Model registry persistence columns exist,PASS,All persistence columns present.,model_registry.csv,,0
+P1CTX-006,MODEL_PERSISTENCE,Persisted model artifacts exist,PASS,Persisted models=8; missing artifact/metadata paths=0.,model_registry.csv,model_artifact_path; model_metadata_path,0
+P1CTX-007,FUTURE_FORECAST,Future forecast required columns exist,PASS,All required columns are present.,future_forecast_results.csv,,0
+P1CTX-008,FUTURE_FORECAST,Future forecast expected row count,PASS,"Rows=900, expected=900.",future_forecast_results.csv,,0
+P1CTX-009,FUTURE_FORECAST,Each SKU has horizon days 1 to 90,PASS,SKUs with incomplete horizon coverage: 0.,future_forecast_results.csv,horizon_day,0
+P1CTX-010,FUTURE_FORECAST,Future forecast dates are future-only,PASS,Invalid date/horizon rows: 0.,future_forecast_results.csv,forecast_date; horizon_day,0
+P1CTX-011,FUTURE_FORECAST,Future forecast numeric values are non-negative,PASS,Invalid numeric rows: 0.,future_forecast_results.csv,forecast_quantity; p10; p50; p90,0
+P1CTX-012,FUTURE_FORECAST,Future forecast intervals are ordered,PASS,Bad interval rows=0; p50 mismatch rows=0.,future_forecast_results.csv,forecast_quantity; p10; p50; p90,0
+P1CTX-013,SCHEMA,Required columns exist,PASS,All required columns are present.,phase1_demand_planning_context.csv,,
+P1CTX-014,ROW_COUNT,One row per SKU,PASS,Rows and unique SKU count match products: 10.,phase1_demand_planning_context.csv,sku_id,
+P1CTX-015,QUALITY,No missing sku_id,PASS,Missing sku_id rows: 0.,phase1_demand_planning_context.csv,sku_id,0
+P1CTX-016,NUMERIC,Forecast horizon and uncertainty fields are non-negative,PASS,Checked columns: forecast_demand_7d; forecast_demand_14d; forecast_demand_30d; forecast_demand_60d; forecast_demand_90d; forecast_uncertainty_ratio_30d. Invalid rows: 0.,phase1_demand_planning_context.csv,forecast_demand_7d; forecast_demand_14d; forecast_demand_30d; forecast_demand_60d; forecast_demand_90d; forecast_uncertainty_ratio_30d,0
+P1CTX-017,NUMERIC,model_confidence_score range,PASS,"Values outside [0, 1] or missing: 0.",phase1_demand_planning_context.csv,model_confidence_score,0
+P1CTX-018,NUMERIC,demand_data_quality_score range,PASS,"Values outside [0, 1] or missing: 0.",phase1_demand_planning_context.csv,demand_data_quality_score,0
+P1CTX-019,CENSORING,Stockout censor confidence values,PASS,Invalid rows: 0.,phase1_demand_planning_context.csv,stockout_censor_confidence,0
+P1CTX-020,WARNINGS,Warning code field is safe,PASS,Null warning-code cells: 0. Blank strings are acceptable.,phase1_demand_planning_context.csv,demand_planning_warning_codes,0
+P1CTX-021,CONTEXT,Demand context uses true future forecasts,PASS,True future marker count=10; old approximation count=0.,phase1_demand_planning_context.csv,demand_planning_warning_codes,
+P1CTX-022,FORECAST_KPIS,Demand context includes concise forecast KPI fields,PASS,Forecast KPI fields are present.,phase1_demand_planning_context.csv,,0
+P1CTX-023,FORECAST_KPIS,Forecast KPI required columns exist,PASS,All required KPI columns are present.,phase1_forecast_kpis.csv,,0
+P1CTX-024,FORECAST_KPIS,Forecast KPI bounds and statuses,PASS,Negative/out-of-range KPI values=0; invalid FVA statuses=0.,phase1_forecast_kpis.csv,forecast_value_added_pct; forecast_wape_7d; forecast_wape_30d; forecast_wape_90d; prediction_interval_coverage_rate; forecast_stability_pct,0
+P1CTX-025,FORECAST_KPIS,Forecast stability uses distinct forecast quantity vectors,PASS,Available stability rows with missing/distinctness/method issues=0.,phase1_forecast_kpis.csv,forecast_stability_*,0
+P1CTX-026,KNOWN_WARNINGS,FORECAST_WAPE_90D_UNAVAILABLE,WARNING,90-day backtest WAPE is unavailable because the current comparable backtest window is shorter than 90 days.,phase1_forecast_kpis.csv,forecast_kpi_warning_codes,
