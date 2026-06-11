@@ -1,0 +1,24 @@
+Phase 2 Procurement Capability Validation Report
+Timestamp: 2026-06-11T13:23:48
+Project path: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 2
+Outputs path: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 2\outputs
+
+Overall status: WARNING
+PASS: 102
+WARNING: 10
+FAIL: 0
+
+Critical Failures:
+None.
+
+Warnings:
+- WARNINGS / FALLBACK_COST_WARNINGS: Rows with fallback cost warning codes: 5.
+- WARNINGS / PLACEHOLDER_BATCH_TRACEABILITY: Placeholder/demo batch references: 10.
+- STRATEGY_WARNINGS / REVIEW_CANDIDATE_INFEASIBLE: Affected rows: 10.
+- STRATEGY_WARNINGS / ALTERNATIVE_SUPPLIER_SWITCH: Affected rows: 3.
+- STRATEGY_WARNINGS / BACKORDER_RISK_WITHOUT_FAST_OPTION: Affected rows: 5.
+- KNOWN_LIMITATIONS / KNOWN_LIMITATION_1: Some suppliers do not support returns.
+- KNOWN_LIMITATIONS / KNOWN_LIMITATION_2: Some suppliers do not support expedite.
+- KNOWN_LIMITATIONS / KNOWN_LIMITATION_3: Some suppliers do not support split delivery.
+- KNOWN_LIMITATIONS / KNOWN_LIMITATION_4: Payment terms cost is noted but not financially modeled.
+- KNOWN_LIMITATIONS / KNOWN_LIMITATION_5: No automatic supplier selection or purchase order creation is performed.
