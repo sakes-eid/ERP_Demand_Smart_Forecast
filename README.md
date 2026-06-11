@@ -1,129 +1,177 @@
-[README.md](https://github.com/user-attachments/files/28854138/README.md)
-# ERP-Like Supply Chain Planning Project
+# Phase 3 - Inventory Control Engine
 
-This project is an advisory supply chain planning prototype organized into independently runnable phases. The current implementation connects demand planning, supplier capability, inventory requirements, supplier-constrained allocation, warehouse validation, and integrated replenishment decisions through explicit bridge files.
+Phase 3 provides inventory control and manager decision support for the integrated planning system. It combines physical inventory, usable inventory, batch expiry, warehouse constraints, inventory policy, scenario optimization, and final manager-facing decisions.
 
-## Current Integrated Architecture
+Phase 3 is a validated advisory backend module. It does not create purchase orders, mutate inventory quantities, change suppliers, overwrite policy parameters, or execute warehouse changes.
 
-```text
-Phase 1 Demand Planning
--> Phase 2 Supply Capability and Inbound Bridge
--> Phase 3 Authoritative Inventory Requirement
--> Phase 2 Supplier-Constrained Allocation
--> Phase 3 Inventory and Warehouse Validation
--> Integrated Advisory Replenishment Decisions
+## Current Capabilities
+
+- Physical and usable inventory calculation.
+- Batch expiry and traceability handling.
+- Quarantine and near-expiry treatment.
+- ABC, XYZ, FSN, vitality, perishability, and seasonality classification.
+- SKU-specific service levels.
+- Safety stock, reorder point, EOQ, and inventory policy outputs.
+- Warehouse slotting and capacity analysis.
+- FEFO and space-utilization logic.
+- Scenario optimization with operational, risk, and constraint cost layers.
+- Manager decision outputs with mandatory and advisory review separation.
+- Authoritative replenishment requirement bridge for integrated planning.
+- Validation of Phase 2 allocations against inventory, warehouse, service, and policy constraints.
+- Essential inventory KPI output for future UI use.
+- Polished role-based Streamlit dashboard for manager and employee/warehouse-staff views.
+
+## Local Validation Result
+
+Latest Phase 3 validation:
+
+- Overall: `WARNING`
+- PASS: `208`
+- WARNING: `11`
+- FAIL: `0`
+- SKIPPED: `1`
+
+The `WARNING` status reflects known limitations and planned improvements. There are no failed Phase 3 validation checks.
+
+## Key Outputs
+
+| Output | Purpose |
+| --- | --- |
+| `outputs/inventory_control_master_decisions.csv` | Main final SKU decision output |
+| `outputs/inventory_control_manager_dashboard.csv` | Flat manager dashboard data |
+| `outputs/inventory_control_human_review_queue.csv` | Mandatory review queue |
+| `outputs/inventory_control_advisory_review_queue.csv` | Non-blocking advisory review queue |
+| `outputs/inventory_control_action_plan.csv` | Action-oriented advisory planning output |
+| `outputs/inventory_control_risk_register.csv` | One row per SKU-risk pair |
+| `outputs/inventory_control_executive_summary.csv` | Management summary metrics |
+| `outputs/inventory_control_kpi_summary.csv` | KPI table |
+| `outputs/inventory_kpi_summary.csv` | One row per SKU inventory KPI summary |
+| `outputs/inventory_employee_task_view.csv` | Shared operational task dataset for manager and employee UI views |
+| `outputs/phase3_validation_report.txt` | Local validation report |
+| `outputs/phase3_wrap_up_summary.txt` | Concise Phase 3 closure note |
+| `shared/outputs/phase3_procurement_requirement_context.csv` | Authoritative replenishment requirement bridge |
+| `shared/outputs/phase3_allocation_validation.csv` | Validation of Phase 2 supplier allocations |
+
+## Integrated Role
+
+Phase 3 owns the authoritative inventory-side requirement:
+
+- physical inventory
+- usable inventory
+- expired, quarantined, near-expiry, and trace-only inventory treatment
+- safety stock, reorder point, policy, and service constraints
+- warehouse receiving and capacity validation
+- net replenishment requirement
+
+Phase 2 owns supplier capability and allocation. In integrated mode, Phase 3 sends its requested usable replenishment requirement to Phase 2, then validates Phase 2 allocation outputs before the orchestrator produces consolidated advisory decisions.
+
+## Manager Decision Support
+
+The final manager-facing layer separates:
+
+- blocking review actions
+- proposed operational actions
+- review owners
+- execution owners
+- advisory warnings
+- action readiness
+
+Outputs remain advisory. `auto_apply_allowed` remains `False`.
+
+## Role-Based Streamlit UI
+
+Run the dashboard from the Phase 3 folder:
+
+```bash
+streamlit run app.py
 ```
 
-The phases do not directly execute each other. Integration is coordinated by `planning_orchestrator.py`, shared CSV bridge files in `shared/outputs/`, and validation evidence in `shared/validation/`.
+Or from the project root:
 
-## Phase Ownership
-
-| Component | Owns |
-| --- | --- |
-| Phase 1 Demand Planning | Forecasts, uncertainty, bias, urgency, seasonality, events, and stockout-censored demand signals |
-| Phase 2 Supply Capability | Supplier capability, inbound POs, MOQ, yield, capacity, cost, lead time, and supplier allocation |
-| Phase 3 Inventory Control | Physical inventory, usable inventory, expiry, inventory policies, safety stock, reorder point, warehouse constraints, and net replenishment requirement |
-| Orchestrator | Cross-phase sequencing and consolidated advisory replenishment decisions |
-
-## Key Bridge Outputs
-
-| File | Purpose |
-| --- | --- |
-| `shared/outputs/phase2_supply_capability_context.csv` | SKU-supplier capability, cost, lead time, capacity, and inbound context |
-| `shared/outputs/phase2_inbound_supply_summary.csv` | SKU-level confirmed and uncertain inbound supply |
-| `shared/outputs/phase3_procurement_requirement_context.csv` | Phase 3 authoritative net replenishment requirement |
-| `shared/outputs/phase2_procurement_allocation_context.csv` | Supplier-constrained allocation detail |
-| `shared/outputs/phase2_procurement_allocation_summary.csv` | SKU-level allocation summary |
-| `shared/outputs/phase3_allocation_validation.csv` | Inventory, warehouse, policy, and service validation of allocations |
-| `shared/outputs/integrated_replenishment_decisions.csv` | Consolidated advisory replenishment decisions |
-
-The main external validation artifact is:
-
-```text
-shared/validation/integrated_validation_evidence.json
+```powershell
+streamlit run "phase 3/app.py"
 ```
 
-## Phase 3 Role-Based UI
+The first screen is a simple role selector. It does not implement authentication, passwords, or user accounts. The dashboard header shows the selected role, latest integrated run status where available, last generated timestamp where available, and read-only advisory mode.
 
-Phase 3 includes a polished Streamlit advisory dashboard with simple role selection, a run-status header, role-aware column visibility, task cards, manager overview metrics, validation summaries, and persistent safety messaging:
+- Manager view: executive overview, operational task view, inventory decisions, replenishment and allocation, review queues, expiry/dead-stock/overstock, warehouse/location, and validation/data-quality pages. Manager pages include planning, cost, risk, allocation, and validation detail in tables and expanders.
+- Employee / Warehouse Staff view: product lookup, operational tasks, expiry/stock checks, and delivery/receiving pages. Employee pages show task cards, simplified status labels, operational instructions, location, stock, next delivery, and review flags.
 
-- `Manager`: operational task view plus planning, cost, risk, review queue, allocation, warehouse, and validation details.
-- `Employee / Warehouse Staff`: simplified operational views for product lookup, tasks, expiry checks, and delivery/receiving.
+Both roles use `outputs/inventory_employee_task_view.csv` as the shared operational task base. Manager pages expose additional planning, cost, risk, validation, and decision details. Employee pages hide supplier scoring, cost, validation internals, scenario optimizer details, and policy formulas.
 
-Both roles use the same shared task dataset, `phase 3/outputs/inventory_employee_task_view.csv`; the UI changes column visibility by role rather than creating contradictory datasets. The dashboard is advisory only and does not execute purchase orders, supplier changes, inventory updates, policy changes, or warehouse changes.
+The UI is read-only and advisory. It does not include Create PO, Apply Policy, Change Supplier, Update Inventory, Change Warehouse Assignment, or similar execution controls.
 
-## Essential KPI Additions
+## Inventory KPIs
 
-The current KPI layer adds decision-useful metrics without changing planning decisions:
+Phase 3 now publishes `outputs/inventory_kpi_summary.csv`, one row per SKU. The most manager-relevant fields are also merged into `inventory_control_manager_dashboard.csv` for the future UI contract.
 
-| Area | Added KPIs | Main outputs |
-| --- | --- | --- |
-| Phase 1 | Forecast value added, 7/30/90-day backtest WAPE, prediction interval coverage, forecast stability from distinct future-forecast quantity snapshots | `phase 1/outputs/phase1_forecast_kpis.csv`, `phase 1/outputs/phase1_demand_planning_context.csv` |
-| Phase 2 | PO-level OTIF, PO-level fill rate, weighted procurement cost per usable unit, requirement coverage, weighted capacity utilization, supplier concentration risk | `phase 2/outputs/supplier_performance.csv`, `phase 2/outputs/phase2_procurement_kpi_summary.csv`, shared allocation outputs |
-| Phase 3 | 90-day outbound-to-current-inventory proxy, days inventory on hand, policy-threshold excess/dead-stock/expiry exposure rates, reconciliation accuracy, unavailable formal fill-rate/stockout/FEFO flags | `phase 3/outputs/inventory_kpi_summary.csv`, `phase 3/outputs/inventory_control_manager_dashboard.csv` |
-| Integrated | End-to-end requirement coverage rate and planning exception rate | `shared/validation/integrated_validation_evidence.json` |
+Added KPIs:
 
-The KPI layer is reporting-only. It does not alter forecasts, supplier choices, allocation logic, inventory policy, or execution safety flags. Unavailable KPI values are marked with explicit method or data-quality fields instead of silent fallback values.
+- 90-day outbound-to-current-inventory proxy, exposed as `outbound_to_current_inventory_ratio_90d`.
+- Days inventory on hand and status.
+- Excess inventory rate only when a valid positive policy max-stock threshold exists.
+- Dead-stock rate.
+- 30-day expiry exposure rate.
+- Inventory reconciliation accuracy rate.
+- Unit fill-rate, stockout-rate, and FEFO-compliance availability fields.
 
-## Latest Integrated Validation
+The outbound/current-inventory ratio is not formal financial inventory turnover because average inventory and COGS history are not yet available. The compatibility turnover field is marked `PROXY_NOT_FORMAL_TURNOVER`.
 
-| Metric | Value |
-| --- | --- |
-| Overall status | `WARNING` |
-| PASS | `58` |
-| WARNING | `3` |
-| FAIL | `0` |
-| SKIPPED | `0` |
-| Convergence | `CONVERGED_WITH_REVIEW` |
-| Analytical downstream safe | `True` |
-| Planning downstream safe | `False` |
-| Execution downstream safe | `False` |
+Formal unit fill rate, historical stockout rate, and FEFO compliance are marked unavailable where event-level fulfillment, stockout, or expiry-controlled issue evidence is not present. Excess inventory is also unavailable when no valid max-stock policy threshold exists. The system does not infer these KPIs from current stock alone.
 
-The remaining integrated warnings are intentional review conditions, not hidden allocator defects:
+## Current Integrated Context
 
-| Warning | Affected SKUs | Meaning |
-| --- | --- | --- |
-| `UNALLOCATED_REQUIREMENT_REMAINS` | `SKU-COF-001`, `SKU-TEA-002` | Supplier capacity cannot cover the full requested quantity |
-| `ALLOCATION_ADJUSTMENT_REQUIRED` | `SKU-COF-001`, `SKU-TEA-002` | Phase 3 keeps the shortage visible for review |
-| `FALLBACK_COST_OR_TIMING_ASSUMPTIONS` | all 10 SKUs | Some cost or timing assumptions remain fallback-based |
+The integrated project currently validates with:
 
-Current genuine aggregate supplier-capacity shortfalls:
+- Overall status: `WARNING`
+- Convergence: `CONVERGED_WITH_REVIEW`
+- Integrated FAIL count: `0`
+- Analytical downstream safe: `True`
+- Planning downstream safe: `False`
+- Execution downstream safe: `False`
 
-| SKU | Requested | Allocated | Unallocated |
-| --- | ---: | ---: | ---: |
-| `SKU-COF-001` | `1880.00` | `1491.43` | `388.57` |
-| `SKU-TEA-002` | `880.00` | `814.28` | `65.72` |
+The remaining integrated unallocated requirements for `SKU-COF-001` and `SKU-TEA-002` are genuine aggregate supplier-capacity shortfalls from Phase 2, not Phase 3 allocator defects. Phase 3 preserves them as review conditions.
 
-These shortages are preserved as review conditions. The system does not force allocation by hiding capacity limits.
+## Updated Limitations
 
-## Safety Rules
+- Supplier return-policy fields are available through Phase 2 bridges, but automated return execution is not implemented.
+- Backorder aging exists in Phase 2, but deeper batch, inventory, and forecast feedback integration remains future work.
+- Phase 3 internal scenario labels may remain strategy-level, while supplier IDs and quantities come from Phase 2 allocation bridges.
+- Stockout-censored demand correction using operational evidence is not yet implemented.
+- Scenario optimization is rule-based, not simulation-based.
+- Re-evaluation is rule-based, not yet a historical learning loop.
+- Formal fill-rate, stockout-rate, and FEFO-compliance KPIs require deeper operational event history.
+- No Phase 4 BOM or production logic exists yet.
+- Phase 3 UI is a read-only Streamlit advisory dashboard; execution workflows are not implemented.
+- No automatic policy, inventory, warehouse, supplier, or purchase-order mutation occurs.
 
-- `auto_apply_allowed = False`
-- `purchase_order_creation_allowed = False`
-- `procurement_execution_ready_flag = False`
-- `allocation_execution_allowed = False`
-- Allocation outputs are advisory only.
-- No supplier, inventory, policy, warehouse, or purchase-order mutation occurs.
-- Feasibility fields describe technical feasibility, not execution permission.
+Phase 3 is wrapped as a stable advisory backend plus role-based UI foundation. Remaining warnings and deferred features stay visible in the UI, validation report, and `outputs/phase3_wrap_up_summary.txt`.
 
 ## How To Run
+
+From the Phase 3 folder:
+
+```bash
+python main.py
+python validate_phase3.py
+python -m compileall .
+```
 
 From the project root:
 
 ```powershell
-python "phase 1/main.py"
-python "phase 2/main.py"
 python "phase 3/main.py"
-python planning_orchestrator.py
-python validate_integrated_planning.py
-python "phase 2/validate_phase2_procurement_context.py"
 python "phase 3/validate_phase3.py"
-python -m compileall .
+python validate_integrated_planning.py
+streamlit run "phase 3/app.py"
 ```
 
-## Current Roadmap
+## Safety Rules
 
-1. Treat Phase 3 as wrapped as an advisory backend plus role-based UI foundation.
-2. Revisit remaining Phase 1, Phase 2, and Phase 3 improvements.
-3. Begin Phase 4 production/BOM planning.
-4. Later add logistics, finance, approved execution workflow, and the final total-cost engine.
+- No automatic purchase order creation.
+- No inventory quantity mutation.
+- No automatic supplier changes.
+- No automatic service-level or policy overwrite.
+- No automatic warehouse assignment mutation.
+- Mandatory and advisory review logic remains explicit.
+- `auto_apply_allowed` remains `False`.
