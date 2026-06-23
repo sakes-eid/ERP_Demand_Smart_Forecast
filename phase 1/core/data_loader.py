@@ -82,22 +82,60 @@ def _example_products() -> pd.DataFrame:
                 "is_perishable": False,
                 "shelf_life_days": "",
             },
+            {
+                "sku_id": "SKU-BIKE-ROAD-001",
+                "sku_name": "Road Bike",
+                "category": "Bicycles",
+                "unit": "each",
+                "status": "active",
+                "subcategory": "Road Bikes",
+                "launch_date": "2026-01-01",
+                "end_date": "",
+                "is_perishable": False,
+                "shelf_life_days": "",
+            },
+            {
+                "sku_id": "SKU-BIKE-MT-001",
+                "sku_name": "Mountain Bike",
+                "category": "Bicycles",
+                "unit": "each",
+                "status": "active",
+                "subcategory": "Mountain Bikes",
+                "launch_date": "2026-01-01",
+                "end_date": "",
+                "is_perishable": False,
+                "shelf_life_days": "",
+            },
         ]
     )
 
 
 def _example_demand() -> pd.DataFrame:
     """Return demand history with one gap and one anomaly for validation."""
-    return pd.DataFrame(
-        [
-            {"date": "2026-01-01", "sku_id": "SKU-001", "quantity_demanded": 12},
-            {"date": "2026-01-02", "sku_id": "SKU-001", "quantity_demanded": 14},
-            {"date": "2026-01-04", "sku_id": "SKU-001", "quantity_demanded": 75},
-            {"date": "2026-01-01", "sku_id": "SKU-002", "quantity_demanded": 7},
-            {"date": "2026-01-02", "sku_id": "SKU-002", "quantity_demanded": -2},
-            {"date": "2026-01-03", "sku_id": "SKU-002", "quantity_demanded": 8},
-        ]
-    )
+    rows = [
+        {"date": "2026-01-01", "sku_id": "SKU-001", "quantity_demanded": 12},
+        {"date": "2026-01-02", "sku_id": "SKU-001", "quantity_demanded": 14},
+        {"date": "2026-01-04", "sku_id": "SKU-001", "quantity_demanded": 75},
+        {"date": "2026-01-01", "sku_id": "SKU-002", "quantity_demanded": 7},
+        {"date": "2026-01-02", "sku_id": "SKU-002", "quantity_demanded": -2},
+        {"date": "2026-01-03", "sku_id": "SKU-002", "quantity_demanded": 8},
+    ]
+    for index, date in enumerate(pd.date_range("2026-01-01", periods=60, freq="D")):
+        rows.extend(
+            [
+                {
+                    "date": date.strftime("%Y-%m-%d"),
+                    "sku_id": "SKU-BIKE-ROAD-001",
+                    "quantity_demanded": 8 + (index % 7) + (2 if date.dayofweek >= 5 else 0),
+                },
+                {
+                    "date": date.strftime("%Y-%m-%d"),
+                    "sku_id": "SKU-BIKE-MT-001",
+                    "quantity_demanded": 6 + (index % 6) + (3 if date.dayofweek >= 5 else 0),
+                },
+            ]
+        )
+    return pd.DataFrame(rows)
 
 
 def _example_events() -> pd.DataFrame:
@@ -118,4 +156,3 @@ def _example_events() -> pd.DataFrame:
             }
         ]
     )
-

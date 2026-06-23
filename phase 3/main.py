@@ -1,5 +1,6 @@
 """Run Phase 3 Inventory Control data foundation pipeline."""
 
+import importlib.util
 import os
 from datetime import datetime
 from pathlib import Path
@@ -37,6 +38,38 @@ from core.procurement_requirement_bridge import (
 from core.service_level import build_inventory_service_levels
 from core.warehouse_slotting import build_warehouse_slotting
 from core.warehouse_visualization import build_warehouse_visualization
+
+
+PHASE4_COMPONENT_INVENTORY_BRIDGE = (
+    Path(__file__).resolve().parents[1] / "phase 4" / "core" / "component_inventory_bridge.py"
+)
+
+
+def _run_phase4_component_inventory_bridge(inventory: pd.DataFrame) -> pd.DataFrame:
+    """Run the optional Phase 4 component inventory bridge without blocking Phase 3."""
+    if not PHASE4_COMPONENT_INVENTORY_BRIDGE.exists():
+        print(f"Warning: Phase 4 component inventory bridge missing; skipping: {PHASE4_COMPONENT_INVENTORY_BRIDGE}")
+        return pd.DataFrame()
+    try:
+        bridge = _load_phase4_bridge_function(
+            PHASE4_COMPONENT_INVENTORY_BRIDGE,
+            "phase4_component_inventory_bridge",
+            "build_phase4_component_inventory_check",
+        )
+        return bridge(inventory)
+    except Exception as exc:
+        print(f"Warning: Phase 4 component inventory bridge failed; continuing Phase 3 core pipeline. Error: {exc}")
+        return pd.DataFrame()
+
+
+def _load_phase4_bridge_function(path: Path, module_name: str, function_name: str):
+    """Load a Phase 4 bridge function from the Phase 4 initialization folder."""
+    spec = importlib.util.spec_from_file_location(module_name, path)
+    if spec is None or spec.loader is None:
+        raise ImportError(f"Unable to load Phase 4 bridge module: {path}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return getattr(module, function_name)
 
 
 def run_pipeline() -> None:
@@ -324,6 +357,8 @@ def run_pipeline() -> None:
         allocation_summary,
     )
     save_output(inventory_employee_task_view, "inventory_employee_task_view.csv")
+    phase4_component_inventory_check = _run_phase4_component_inventory_bridge(inventory)
+    print(f"Phase 4 component inventory check rows: {len(phase4_component_inventory_check)}")
 
     print_summary(
         inventory,

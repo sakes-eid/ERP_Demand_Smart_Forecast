@@ -1,0 +1,15 @@
+finished_sku,finished_product_name,component_sku,component_name,quantity_per_finished_unit,component_type,critical_component_flag,phase4_active_flag
+SKU-BIKE-ROAD-001,Road Bike,SKU-COMP-FRAME-ROAD-001,Road Bike Aluminum Frame,1,FRAME,True,True
+SKU-BIKE-ROAD-001,Road Bike,SKU-COMP-WHEEL-ROAD-700C,Road Bike 700C Wheel,2,WHEEL,True,True
+SKU-BIKE-ROAD-001,Road Bike,SKU-COMP-TIRE-ROAD-700C,Road Bike 700C Tire,2,TIRE,True,True
+SKU-BIKE-ROAD-001,Road Bike,SKU-COMP-BRAKE-FRONT-001,Front Brake Assembly,1,BRAKE,True,True
+SKU-BIKE-ROAD-001,Road Bike,SKU-COMP-BRAKE-REAR-001,Rear Brake Assembly,1,BRAKE,True,True
+SKU-BIKE-ROAD-001,Road Bike,SKU-COMP-PEDAL-SET-001,Pedal Set,1,DRIVETRAIN,False,True
+SKU-BIKE-ROAD-001,Road Bike,SKU-COMP-BOLT-KIT-001,Bolts and Nuts Kit,1,HARDWARE,False,True
+SKU-BIKE-MT-001,Mountain Bike,SKU-COMP-FRAME-MT-001,Mountain Bike Reinforced Frame,1,FRAME,True,True
+SKU-BIKE-MT-001,Mountain Bike,SKU-COMP-WHEEL-MT-29,Mountain Bike 29 Inch Wheel,2,WHEEL,True,True
+SKU-BIKE-MT-001,Mountain Bike,SKU-COMP-TIRE-MT-29,Mountain Bike 29 Inch Tire,2,TIRE,True,True
+SKU-BIKE-MT-001,Mountain Bike,SKU-COMP-BRAKE-FRONT-001,Front Brake Assembly,1,BRAKE,True,True
+SKU-BIKE-MT-001,Mountain Bike,SKU-COMP-BRAKE-REAR-001,Rear Brake Assembly,1,BRAKE,True,True
+SKU-BIKE-MT-001,Mountain Bike,SKU-COMP-PEDAL-SET-001,Pedal Set,1,DRIVETRAIN,False,True
+SKU-BIKE-MT-001,Mountain Bike,SKU-COMP-BOLT-KIT-001,Bolts and Nuts Kit,1,HARDWARE,False,True

@@ -25,8 +25,10 @@ from shared.contracts.cross_phase_contracts import (
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent
+PHASE1_DIR = PROJECT_ROOT / "phase 1"
 PHASE2_DIR = PROJECT_ROOT / "phase 2"
 PHASE3_DIR = PROJECT_ROOT / "phase 3"
+PHASE4_DIR = PROJECT_ROOT / "phase 4"
 
 INTEGRATED_PLANNING_CONFIG = {
     "enabled": True,
@@ -46,6 +48,11 @@ def main() -> None:
     planning_data_as_of_date = os.environ.get("PLANNING_DATA_AS_OF_DATE") or datetime.utcnow().date().isoformat()
     SHARED_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     print(f"Integrated run id: {run_id}")
+
+    _run_phase(PHASE1_DIR / "main.py", os.environ.copy(), "Phase 1 forecast preflight")
+    _run_optional_phase(PHASE4_DIR / "main.py", os.environ.copy(), "Phase 4 BOM explosion preflight")
+    _run_phase(PHASE3_DIR / "main.py", os.environ.copy(), "Phase 3 Phase 4 component inventory preflight")
+    _run_phase(PHASE2_DIR / "main.py", os.environ.copy(), "Phase 2 Phase 4 supplier coverage preflight")
 
     convergence_status = "NOT_EVALUATED"
     final_iteration = 0
@@ -175,6 +182,13 @@ def build_integrated_decisions(run_id: str, final_iteration: int, convergence_st
 def _run_phase(script: Path, env: dict, label: str) -> None:
     print(f"Running {label}: {script}")
     subprocess.run([sys.executable, str(script)], cwd=str(script.parent), env=env, check=True)
+
+
+def _run_optional_phase(script: Path, env: dict, label: str) -> None:
+    if not script.exists():
+        print(f"Warning: optional phase script missing; skipping {label}: {script}")
+        return
+    _run_phase(script, env, label)
 
 
 def _read_shared(filename: str) -> pd.DataFrame:

@@ -1,0 +1,79 @@
+{
+  "validation_name": "phase4_initialization_validation",
+  "generated_at_utc": "2026-06-23T12:03:41+00:00",
+  "overall_status": "PASS",
+  "fail_count": 0,
+  "warning_count": 3,
+  "checks": [
+    {
+      "check": "phase1",
+      "status": "PASS",
+      "message": "Exists and no fail values were found."
+    },
+    {
+      "check": "phase2",
+      "status": "WARNING",
+      "message": "WARNING = 10; evidence exists and no fail values were found."
+    },
+    {
+      "check": "phase3",
+      "status": "WARNING",
+      "message": "WARNING = 13; evidence exists and no fail values were found."
+    },
+    {
+      "check": "integrated",
+      "status": "WARNING",
+      "message": "Integrated status is WARNING with fail_count 0 and execution safety disabled."
+    },
+    {
+      "check": "bike_forecasts",
+      "status": "PASS",
+      "message": "Road Bike and Mountain Bike appear in Phase 1 future forecasts."
+    },
+    {
+      "check": "bom_master",
+      "status": "PASS",
+      "message": "BOM exists with 14 valid seed rows."
+    },
+    {
+      "check": "bom_explosion",
+      "status": "PASS",
+      "message": "BOM explosion produced 1260 requirement rows."
+    },
+    {
+      "check": "phase3_component_inventory",
+      "status": "PASS",
+      "message": "Phase 3 checked inventory for 10 components."
+    },
+    {
+      "check": "phase2_component_supplier",
+      "status": "PASS",
+      "message": "Phase 2 checked supplier coverage for 10 shortage rows; missing coverage rows: 0."
+    },
+    {
+      "check": "phase4_run_id_consistency",
+      "status": "PASS",
+      "message": "Consistent planning_run_id across Phase 4 outputs: PHASE4-INIT-20260623120228"
+    },
+    {
+      "check": "phase4_advisory_only",
+      "status": "PASS",
+      "message": "All checked Phase 4 advisory flags are true: ['bom_component_requirements', 'component_inventory_check', 'component_supplier_check']"
+    },
+    {
+      "check": "existing_outputs",
+      "status": "PASS",
+      "message": "Existing Phase 1/2/3 outputs exist."
+    },
+    {
+      "check": "safety_flags",
+      "status": "PASS",
+      "message": "No enabled execution flags found across 5 checked columns."
+    },
+    {
+      "check": "no_execution_outputs",
+      "status": "PASS",
+      "message": "No Phase 4 production/purchase/release/reservation output files found."
+    }
+  ]
+}

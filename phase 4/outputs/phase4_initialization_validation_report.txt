@@ -1,0 +1,21 @@
+Phase 4 Initialization Validation
+Generated at UTC: 2026-06-23T12:03:41+00:00
+Overall status: PASS
+Fail count: 0
+Warning count: 3
+
+Checks:
+- PASS: phase1 - Exists and no fail values were found.
+- WARNING: phase2 - WARNING = 10; evidence exists and no fail values were found.
+- WARNING: phase3 - WARNING = 13; evidence exists and no fail values were found.
+- WARNING: integrated - Integrated status is WARNING with fail_count 0 and execution safety disabled.
+- PASS: bike_forecasts - Road Bike and Mountain Bike appear in Phase 1 future forecasts.
+- PASS: bom_master - BOM exists with 14 valid seed rows.
+- PASS: bom_explosion - BOM explosion produced 1260 requirement rows.
+- PASS: phase3_component_inventory - Phase 3 checked inventory for 10 components.
+- PASS: phase2_component_supplier - Phase 2 checked supplier coverage for 10 shortage rows; missing coverage rows: 0.
+- PASS: phase4_run_id_consistency - Consistent planning_run_id across Phase 4 outputs: PHASE4-INIT-20260623120228
+- PASS: phase4_advisory_only - All checked Phase 4 advisory flags are true: ['bom_component_requirements', 'component_inventory_check', 'component_supplier_check']
+- PASS: existing_outputs - Existing Phase 1/2/3 outputs exist.
+- PASS: safety_flags - No enabled execution flags found across 5 checked columns.
+- PASS: no_execution_outputs - No Phase 4 production/purchase/release/reservation output files found.

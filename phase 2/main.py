@@ -1,5 +1,6 @@
 """Run Phase 2 Supply & Procurement data foundation and scoring."""
 
+import importlib.util
 import os
 from datetime import datetime
 from pathlib import Path
@@ -32,6 +33,38 @@ from core.supply_cleaner import (
     load_supply_inputs,
 )
 from core.supply_generator import create_sample_supply_files
+
+
+PHASE4_COMPONENT_SUPPLIER_BRIDGE = (
+    Path(__file__).resolve().parents[1] / "phase 4" / "core" / "component_supplier_bridge.py"
+)
+
+
+def _run_phase4_component_supplier_bridge(supplier_sku_scores: pd.DataFrame) -> pd.DataFrame:
+    """Run the optional Phase 4 component supplier bridge without blocking Phase 2."""
+    if not PHASE4_COMPONENT_SUPPLIER_BRIDGE.exists():
+        print(f"Warning: Phase 4 component supplier bridge missing; skipping: {PHASE4_COMPONENT_SUPPLIER_BRIDGE}")
+        return pd.DataFrame()
+    try:
+        bridge = _load_phase4_bridge_function(
+            PHASE4_COMPONENT_SUPPLIER_BRIDGE,
+            "phase4_component_supplier_bridge",
+            "build_phase4_component_supplier_check",
+        )
+        return bridge(supplier_sku_scores)
+    except Exception as exc:
+        print(f"Warning: Phase 4 component supplier bridge failed; continuing Phase 2 core pipeline. Error: {exc}")
+        return pd.DataFrame()
+
+
+def _load_phase4_bridge_function(path: Path, module_name: str, function_name: str):
+    """Load a Phase 4 bridge function from the Phase 4 initialization folder."""
+    spec = importlib.util.spec_from_file_location(module_name, path)
+    if spec is None or spec.loader is None:
+        raise ImportError(f"Unable to load Phase 4 bridge module: {path}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return getattr(module, function_name)
 
 
 def run_pipeline() -> None:
@@ -135,6 +168,8 @@ def run_pipeline() -> None:
             index=False,
         )
     save_output(procurement_kpi_summary, "phase2_procurement_kpi_summary.csv")
+    phase4_component_supplier_check = _run_phase4_component_supplier_bridge(supplier_sku_scores)
+    print(f"Phase 4 component supplier check rows: {len(phase4_component_supplier_check)}")
 
     print_summary(
         suppliers,

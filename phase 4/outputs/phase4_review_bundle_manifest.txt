@@ -1,0 +1,54 @@
+Phase 4 Review Bundle Manifest
+Generated zip path: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase4_init_review_bundle.zip
+Generated timestamp UTC: 2026-06-23T12:11:29+00:00
+Included file count: 28
+Missing file count: 0
+Excluded file count: 0
+Final zip size MB: 0.089
+Verification status: PASS
+
+Verification messages:
+- PASS: phase 2/main.py exists inside the zip
+- PASS: phase 3/main.py exists inside the zip
+- PASS: Phase 4 BOM requirements output exists inside the zip
+- PASS: Phase 4 validation JSON exists inside the zip
+- PASS: Phase 4 validation report exists inside the zip
+- PASS: no duplicate flattened root-level main.py found.
+- PASS: no __pycache__ or .pyc files found.
+- PASS: no duplicate archive names found.
+
+Missing files:
+- none
+
+Excluded files:
+- none
+
+Included files:
+- phase 4/README.md
+- phase 4/validate_phase4_initialization.py
+- phase 4/create_phase4_review_bundle.py
+- phase 4/main.py
+- phase 4/data/phase4_bom.csv
+- phase 4/core/bom_explosion_bridge.py
+- phase 4/core/component_inventory_bridge.py
+- phase 4/core/component_supplier_bridge.py
+- phase 4/outputs/phase4_bom_component_requirements.csv
+- phase 4/outputs/phase4_initialization_validation.json
+- phase 4/outputs/phase4_initialization_validation_report.txt
+- phase 4/outputs/phase4_review_bundle_manifest.txt
+- phase 1/core/data_loader.py
+- phase 1/outputs/future_forecast_results.csv
+- phase 1/outputs/phase1_demand_context_validation_report.txt
+- phase 1/outputs/phase1_demand_context_validation_summary.csv
+- phase 2/main.py
+- phase 2/data/supplier_sku.csv
+- phase 2/outputs/phase4_component_supplier_check.csv
+- phase 2/outputs/phase2_procurement_validation_summary.csv
+- phase 2/outputs/phase2_procurement_validation_report.txt
+- phase 3/main.py
+- phase 3/data/inventory.csv
+- phase 3/outputs/phase4_component_inventory_check.csv
+- phase 3/outputs/phase3_validation_summary.csv
+- phase 3/outputs/phase3_validation_report.txt
+- shared/validation/integrated_validation_evidence.json
+- shared/validation/integrated_validation_report.txt
