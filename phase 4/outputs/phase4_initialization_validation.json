@@ -1,6 +1,6 @@
 {
   "validation_name": "phase4_initialization_validation",
-  "generated_at_utc": "2026-06-23T13:03:09+00:00",
+  "generated_at_utc": "2026-06-23T13:33:31+00:00",
   "overall_status": "PASS",
   "fail_count": 0,
   "warning_count": 3,
@@ -46,6 +46,21 @@
       "message": "BOM explosion produced 196 requirement rows; basis = ['MPS_PLANNED_PRODUCTION']."
     },
     {
+      "check": "mrp_step2",
+      "status": "PASS",
+      "message": "MRP Step 2 netted 196 component requirement rows."
+    },
+    {
+      "check": "mrp_step2b_summary",
+      "status": "PASS",
+      "message": "Component-period MRP summary contains 140 advisory rows."
+    },
+    {
+      "check": "mrp_step2b_pegging",
+      "status": "PASS",
+      "message": "MRP pegging detail contains 196 advisory rows with valid pegging sums."
+    },
+    {
       "check": "phase3_component_inventory",
       "status": "PASS",
       "message": "Phase 3 checked inventory for 10 components."
@@ -58,12 +73,12 @@
     {
       "check": "phase4_run_id_consistency",
       "status": "PASS",
-      "message": "Consistent planning_run_id across Phase 4 outputs: PHASE4-MPS-20260623130233"
+      "message": "Consistent planning_run_id across Phase 4 outputs: PHASE4-MPS-20260623133255"
     },
     {
       "check": "phase4_advisory_only",
       "status": "PASS",
-      "message": "All checked Phase 4 advisory flags are true: ['master_production_schedule', 'bom_component_requirements', 'component_inventory_check', 'component_supplier_check']"
+      "message": "All checked Phase 4 advisory flags are true: ['master_production_schedule', 'bom_component_requirements', 'mrp_net_component_requirements', 'mrp_component_period_summary', 'mrp_pegging_detail', 'component_inventory_check', 'component_supplier_check']"
     },
     {
       "check": "existing_outputs",

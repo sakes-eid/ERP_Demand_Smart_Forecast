@@ -30,8 +30,9 @@ def build_phase4_component_supplier_check(
     if missing:
         raise ValueError(f"Phase 4 inventory shortage file missing columns: {sorted(missing)}")
 
+    shortages["supplier_check_requirement_qty"] = _preferred_shortage_quantity(shortages)
     shortage_rows = shortages[
-        (pd.to_numeric(shortages["shortage_qty"], errors="coerce").fillna(0) > 0)
+        (shortages["supplier_check_requirement_qty"] > 0)
         | (shortages["inventory_status"].astype(str) == "MISSING_INVENTORY_RECORD")
     ].copy()
     if shortage_rows.empty:
@@ -56,7 +57,11 @@ def build_phase4_component_supplier_check(
                 "planning_run_id": shortage["planning_run_id"],
                 "component_sku": component_sku,
                 "component_name": shortage["component_name"],
-                "shortage_qty": shortage["shortage_qty"],
+                "shortage_qty": shortage["supplier_check_requirement_qty"],
+                "net_component_requirement_qty": shortage.get("net_component_requirement_qty", shortage["supplier_check_requirement_qty"]),
+                "component_requirement_basis": shortage.get("component_requirement_basis", ""),
+                "mrp_planning_basis": shortage.get("mrp_planning_basis", ""),
+                "component_period_summary_used_flag": shortage.get("component_period_summary_used_flag", False),
                 "supplier_available_flag": True,
                 "eligible_supplier_count": int(len(eligible)),
                 "recommended_supplier_id": selected.get("supplier_id", ""),
@@ -85,12 +90,22 @@ def _eligible_options(options: pd.DataFrame) -> pd.DataFrame:
     return eligible
 
 
+def _preferred_shortage_quantity(shortages: pd.DataFrame) -> pd.Series:
+    if "net_component_requirement_qty" in shortages.columns:
+        return pd.to_numeric(shortages["net_component_requirement_qty"], errors="coerce").fillna(0).clip(lower=0)
+    return pd.to_numeric(shortages["shortage_qty"], errors="coerce").fillna(0).clip(lower=0)
+
+
 def _missing_supplier_row(shortage: pd.Series) -> dict:
     return {
         "planning_run_id": shortage["planning_run_id"],
         "component_sku": shortage["component_sku"],
         "component_name": shortage["component_name"],
-        "shortage_qty": shortage["shortage_qty"],
+        "shortage_qty": shortage["supplier_check_requirement_qty"],
+        "net_component_requirement_qty": shortage.get("net_component_requirement_qty", shortage["supplier_check_requirement_qty"]),
+        "component_requirement_basis": shortage.get("component_requirement_basis", ""),
+        "mrp_planning_basis": shortage.get("mrp_planning_basis", ""),
+        "component_period_summary_used_flag": shortage.get("component_period_summary_used_flag", False),
         "supplier_available_flag": False,
         "eligible_supplier_count": 0,
         "recommended_supplier_id": "",
@@ -119,6 +134,10 @@ def _output_columns() -> list[str]:
         "component_sku",
         "component_name",
         "shortage_qty",
+        "net_component_requirement_qty",
+        "component_requirement_basis",
+        "mrp_planning_basis",
+        "component_period_summary_used_flag",
         "supplier_available_flag",
         "eligible_supplier_count",
         "recommended_supplier_id",

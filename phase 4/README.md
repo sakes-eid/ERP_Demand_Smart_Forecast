@@ -1,6 +1,6 @@
-# Phase 4 Initialization and MPS Step 1B
+# Phase 4 Initialization, MPS, and MRP Step 2B
 
-Phase 4 production planning preparation has started, and Step 1B now includes a simple advisory Master Production Schedule (MPS) with a rolling finished-goods inventory balance. This is still not the full production planning engine.
+Phase 4 production planning preparation has started. It now includes a simple advisory Master Production Schedule (MPS), MRP net component requirements, component-period MRP summary, and pegging detail. This is still not the full production planning engine.
 
 Current initialization scope:
 
@@ -11,9 +11,13 @@ Current initialization scope:
 - The MPS now rolls projected finished-goods inventory forward by SKU and period, so the same opening inventory is not repeatedly subtracted every week.
 - Planned production is based on weekly net finished-goods requirements from that rolling projected balance.
 - `core/bom_explosion_bridge.py` converts MPS planned production into advisory component requirements when MPS output is available.
+- `core/mrp_net_requirements.py` nets gross BOM component requirements against component inventory.
+- MRP produces advisory net component requirements before procurement review.
+- Component-period MRP summary prevents shared component inventory from being allocated based only on finished-SKU row order.
+- MRP pegging detail shows which finished product demand caused each component requirement.
 - If MPS output is missing or empty, BOM explosion falls back to the original forecast-based initialization bridge.
-- Phase 3 can produce an advisory inventory availability check for BOM components.
-- Phase 2 can produce an advisory supplier coverage check for BOM component shortages.
+- Phase 3 can produce an advisory inventory availability check using component-period MRP summary when available.
+- Phase 2 preserves the component-period basis in advisory supplier coverage checks.
 - Phase 4 validation writes JSON evidence and a text report under `outputs/`.
 
 Run order:
@@ -21,8 +25,9 @@ Run order:
 1. Run Phase 1 forecasts.
 2. Run Phase 4 MPS.
 3. Run Phase 4 BOM explosion from MPS planned production.
-4. Run Phase 3 component inventory checks.
-5. Run Phase 2 component supplier checks.
+4. Run Phase 4 MRP net component requirements, component-period summary, and pegging detail.
+5. Run Phase 3 component inventory checks.
+6. Run Phase 2 component supplier checks.
 
 The Phase 4 bridges are optional-safe. If a bridge file is missing or fails, Phase 2 and Phase 3 print a warning and continue their existing core pipelines.
 
@@ -38,15 +43,15 @@ Guardrails:
 Not implemented yet:
 
 - Full MPS governance beyond the advisory rolling-balance calculation.
-- MRP/netting.
+- Full MRP execution, order release, and procurement execution.
 - Routing, machines, queues, quality, maintenance, scheduling, layout, or simulation.
 - Production order release.
 
 Next likely Phase 4 feature:
 
-- The next real feature after this rolling-balance hardening step is a richer MPS layer, but it is not implemented here.
+- The next real feature after this MRP summary and pegging step is still future Phase 4 production planning detail, but it is not implemented here.
 
 Review bundle:
 
-- `create_phase4_review_bundle.py` generates `phase4_mps_step1b_review_bundle.zip` at the project root for external review.
+- `create_phase4_review_bundle.py` generates `phase4_mrp_step2b_review_bundle.zip` at the project root for external review.
 - The bundle preserves project-relative folder structure and excludes cache, bytecode, virtual environment, and zip artifacts.

@@ -16,6 +16,9 @@ BIKE_SKUS = {"SKU-BIKE-ROAD-001", "SKU-BIKE-MT-001"}
 PHASE4_OUTPUTS = {
     "master_production_schedule": PHASE4_DIR / "outputs" / "phase4_master_production_schedule.csv",
     "bom_component_requirements": PHASE4_DIR / "outputs" / "phase4_bom_component_requirements.csv",
+    "mrp_net_component_requirements": PHASE4_DIR / "outputs" / "phase4_mrp_net_component_requirements.csv",
+    "mrp_component_period_summary": PHASE4_DIR / "outputs" / "phase4_mrp_component_period_summary.csv",
+    "mrp_pegging_detail": PHASE4_DIR / "outputs" / "phase4_mrp_pegging_detail.csv",
     "component_inventory_check": PROJECT_ROOT / "phase 3" / "outputs" / "phase4_component_inventory_check.csv",
     "component_supplier_check": PROJECT_ROOT / "phase 2" / "outputs" / "phase4_component_supplier_check.csv",
 }
@@ -54,6 +57,9 @@ def main() -> None:
     checks.append(_check_bom())
     checks.append(_check_mps_output())
     checks.append(_check_bom_explosion())
+    checks.append(_check_mrp_net_requirements())
+    checks.append(_check_mrp_component_period_summary())
+    checks.append(_check_mrp_pegging_detail())
     checks.append(_check_phase3_inventory_check())
     checks.append(_check_phase2_supplier_check())
     checks.append(_check_phase4_run_id_consistency())
@@ -267,6 +273,155 @@ def _check_bom_explosion() -> dict:
     return _result("bom_explosion", "PASS", f"BOM explosion produced {len(requirements)} requirement rows{basis_message}.")
 
 
+def _check_mrp_net_requirements() -> dict:
+    path = PHASE4_OUTPUTS["mrp_net_component_requirements"]
+    if not path.exists():
+        return _result("mrp_step2", "FAIL", "MRP net component requirements output is missing.")
+    mrp = pd.read_csv(path)
+    if mrp.empty:
+        return _result("mrp_step2", "FAIL", "MRP net component requirements output has no rows.")
+    required = {
+        "planning_run_id",
+        "period_start",
+        "period_end",
+        "component_sku",
+        "gross_component_requirement_qty",
+        "component_available_qty",
+        "period_starting_component_inventory_qty",
+        "net_component_requirement_qty",
+        "projected_component_ending_inventory_qty",
+        "projected_component_shortage_qty",
+        "mrp_recommendation_status",
+        "advisory_only_flag",
+    }
+    missing = sorted(required.difference(mrp.columns))
+    if missing:
+        return _result("mrp_step2", "FAIL", f"MRP output missing columns: {missing}")
+    numeric_non_negative = [
+        "net_component_requirement_qty",
+        "projected_component_shortage_qty",
+    ]
+    for column in numeric_non_negative:
+        values = pd.to_numeric(mrp[column], errors="coerce")
+        if values.isna().any() or (values < 0).any():
+            return _result("mrp_step2", "FAIL", f"MRP {column} must be numeric and non-negative.")
+    ending = pd.to_numeric(mrp["projected_component_ending_inventory_qty"], errors="coerce")
+    if ending.isna().any() or (ending < 0).any():
+        return _result("mrp_step2", "FAIL", "MRP projected component ending inventory must be numeric and non-negative.")
+    if not _all_true(mrp, "advisory_only_flag"):
+        return _result("mrp_step2", "FAIL", "MRP output contains non-advisory rows.")
+    basis_values = set(mrp.get("mrp_planning_basis", pd.Series(dtype=str)).dropna().astype(str).str.strip())
+    if basis_values != {"MPS_BOM_COMPONENT_NETTING"}:
+        return _result("mrp_step2", "FAIL", f"Unexpected MRP planning basis values: {sorted(basis_values)}")
+    return _result("mrp_step2", "PASS", f"MRP Step 2 netted {len(mrp)} component requirement rows.")
+
+
+def _check_mrp_component_period_summary() -> dict:
+    path = PHASE4_OUTPUTS["mrp_component_period_summary"]
+    if not path.exists():
+        return _result("mrp_step2b_summary", "FAIL", "MRP component-period summary output is missing.")
+    summary = pd.read_csv(path)
+    if summary.empty:
+        return _result("mrp_step2b_summary", "FAIL", "MRP component-period summary output has no rows.")
+    required = {
+        "planning_run_id",
+        "period_start",
+        "period_end",
+        "component_sku",
+        "gross_component_requirement_qty",
+        "component_available_qty",
+        "period_starting_component_inventory_qty",
+        "net_component_requirement_qty",
+        "projected_component_ending_inventory_qty",
+        "projected_component_shortage_qty",
+        "mrp_recommendation_status",
+        "mrp_planning_basis",
+        "component_period_summary_flag",
+        "advisory_only_flag",
+    }
+    missing = sorted(required.difference(summary.columns))
+    if missing:
+        return _result("mrp_step2b_summary", "FAIL", f"Component-period summary missing columns: {missing}")
+    duplicate_count = int(summary.duplicated(["planning_run_id", "period_start", "period_end", "component_sku"]).sum())
+    if duplicate_count:
+        return _result("mrp_step2b_summary", "FAIL", f"Component-period summary has duplicate component-period rows: {duplicate_count}")
+    for column in ["net_component_requirement_qty", "projected_component_shortage_qty", "projected_component_ending_inventory_qty"]:
+        values = pd.to_numeric(summary[column], errors="coerce")
+        if values.isna().any() or (values < 0).any():
+            return _result("mrp_step2b_summary", "FAIL", f"Component-period summary {column} must be numeric and non-negative.")
+    if not _all_true(summary, "component_period_summary_flag"):
+        return _result("mrp_step2b_summary", "FAIL", "component_period_summary_flag must be true for all summary rows.")
+    basis_values = set(summary["mrp_planning_basis"].dropna().astype(str).str.strip())
+    if basis_values != {"MPS_BOM_COMPONENT_NETTING_COMPONENT_PERIOD"}:
+        return _result("mrp_step2b_summary", "FAIL", f"Unexpected component-period MRP basis values: {sorted(basis_values)}")
+    if not _all_true(summary, "advisory_only_flag"):
+        return _result("mrp_step2b_summary", "FAIL", "Component-period summary contains non-advisory rows.")
+    return _result("mrp_step2b_summary", "PASS", f"Component-period MRP summary contains {len(summary)} advisory rows.")
+
+
+def _check_mrp_pegging_detail() -> dict:
+    path = PHASE4_OUTPUTS["mrp_pegging_detail"]
+    if not path.exists():
+        return _result("mrp_step2b_pegging", "FAIL", "MRP pegging detail output is missing.")
+    pegging = pd.read_csv(path)
+    if pegging.empty:
+        return _result("mrp_step2b_pegging", "FAIL", "MRP pegging detail output has no rows.")
+    required = {
+        "planning_run_id",
+        "period_start",
+        "period_end",
+        "component_sku",
+        "finished_sku",
+        "pegged_gross_component_requirement_qty",
+        "component_period_gross_requirement_qty",
+        "pegged_requirement_share_pct",
+        "component_period_net_requirement_qty",
+        "pegged_net_requirement_qty",
+        "pegging_type",
+        "advisory_only_flag",
+    }
+    missing = sorted(required.difference(pegging.columns))
+    if missing:
+        return _result("mrp_step2b_pegging", "FAIL", f"Pegging detail missing columns: {missing}")
+    shares = pd.to_numeric(pegging["pegged_requirement_share_pct"], errors="coerce")
+    if shares.isna().any() or (shares < -0.000001).any() or (shares > 1.000001).any():
+        return _result("mrp_step2b_pegging", "FAIL", "Pegging shares must be between 0 and 1.")
+    pegged_net = pd.to_numeric(pegging["pegged_net_requirement_qty"], errors="coerce")
+    if pegged_net.isna().any() or (pegged_net < -0.000001).any():
+        return _result("mrp_step2b_pegging", "FAIL", "Pegged net requirement quantities must be non-negative.")
+    for column in [
+        "pegged_gross_component_requirement_qty",
+        "component_period_gross_requirement_qty",
+        "component_period_net_requirement_qty",
+    ]:
+        pegging[column] = pd.to_numeric(pegging[column], errors="coerce")
+        if pegging[column].isna().any():
+            return _result("mrp_step2b_pegging", "FAIL", f"Pegging {column} must be numeric.")
+    pegging["pegged_requirement_share_pct"] = shares
+    pegging["pegged_net_requirement_qty"] = pegged_net
+    if not _all_true(pegging, "advisory_only_flag"):
+        return _result("mrp_step2b_pegging", "FAIL", "Pegging detail contains non-advisory rows.")
+    if set(pegging["pegging_type"].dropna().astype(str).str.strip()) != {"SOFT_PEGGING_FINISHED_GOODS_DEMAND"}:
+        return _result("mrp_step2b_pegging", "FAIL", "Unexpected pegging_type values.")
+
+    keys = ["planning_run_id", "period_start", "period_end", "component_sku"]
+    grouped = pegging.groupby(keys, as_index=False).agg(
+        share_sum=("pegged_requirement_share_pct", "sum"),
+        pegged_gross_sum=("pegged_gross_component_requirement_qty", "sum"),
+        pegged_net_sum=("pegged_net_requirement_qty", "sum"),
+        gross=("component_period_gross_requirement_qty", "max"),
+        net=("component_period_net_requirement_qty", "max"),
+    )
+    nonzero_gross = grouped["gross"] > 0
+    if ((grouped.loc[nonzero_gross, "share_sum"] - 1).abs() > 0.0001).any():
+        return _result("mrp_step2b_pegging", "FAIL", "Pegging shares do not sum to 1 for all nonzero component-period groups.")
+    if ((grouped["pegged_gross_sum"] - grouped["gross"]).abs() > 0.01).any():
+        return _result("mrp_step2b_pegging", "FAIL", "Pegged gross requirements do not sum back to component-period gross requirements.")
+    if ((grouped["pegged_net_sum"] - grouped["net"]).abs() > 0.05).any():
+        return _result("mrp_step2b_pegging", "FAIL", "Pegged net requirements do not sum back to component-period net requirements.")
+    return _result("mrp_step2b_pegging", "PASS", f"MRP pegging detail contains {len(pegging)} advisory rows with valid pegging sums.")
+
+
 def _check_phase3_inventory_check() -> dict:
     path = PHASE4_OUTPUTS["component_inventory_check"]
     if not path.exists():
@@ -274,6 +429,22 @@ def _check_phase3_inventory_check() -> dict:
     check = pd.read_csv(path)
     if check.empty:
         return _result("phase3_component_inventory", "FAIL", "Phase 3 component inventory check has no rows.")
+    summary_path = PHASE4_OUTPUTS["mrp_component_period_summary"]
+    mrp_path = PHASE4_OUTPUTS["mrp_net_component_requirements"]
+    if summary_path.exists() and not pd.read_csv(summary_path).empty:
+        if "component_requirement_basis" not in check.columns:
+            return _result("phase3_component_inventory", "FAIL", "Phase 3 output missing component_requirement_basis while component-period summary exists.")
+        basis_values = set(check["component_requirement_basis"].dropna().astype(str).str.strip())
+        if basis_values != {"MRP_COMPONENT_PERIOD_SUMMARY"}:
+            return _result("phase3_component_inventory", "FAIL", f"Phase 3 did not use component-period MRP summary: {sorted(basis_values)}")
+        if "component_period_summary_used_flag" not in check.columns or not _all_true(check, "component_period_summary_used_flag"):
+            return _result("phase3_component_inventory", "FAIL", "Phase 3 did not flag component-period summary usage.")
+    elif mrp_path.exists() and not pd.read_csv(mrp_path).empty:
+        if "component_requirement_basis" not in check.columns:
+            return _result("phase3_component_inventory", "FAIL", "Phase 3 output missing component_requirement_basis while MRP exists.")
+        basis_values = set(check["component_requirement_basis"].dropna().astype(str).str.strip())
+        if basis_values != {"MRP_NET_REQUIREMENT"}:
+            return _result("phase3_component_inventory", "FAIL", f"Phase 3 did not use MRP net requirements: {sorted(basis_values)}")
     return _result("phase3_component_inventory", "PASS", f"Phase 3 checked inventory for {check['component_sku'].nunique()} components.")
 
 
@@ -284,6 +455,16 @@ def _check_phase2_supplier_check() -> dict:
     check = pd.read_csv(path)
     if check.empty:
         return _result("phase2_component_supplier", "WARNING", "No component shortages required supplier coverage checks.")
+    if PHASE4_OUTPUTS["mrp_component_period_summary"].exists():
+        required = {"net_component_requirement_qty", "component_requirement_basis", "mrp_planning_basis", "component_period_summary_used_flag"}
+        missing = sorted(required.difference(check.columns))
+        if missing:
+            return _result("phase2_component_supplier", "FAIL", f"Phase 2 supplier output missing MRP trace columns: {missing}")
+        basis_values = set(check["component_requirement_basis"].dropna().astype(str).str.strip())
+        if basis_values and basis_values != {"MRP_COMPONENT_PERIOD_SUMMARY"}:
+            return _result("phase2_component_supplier", "FAIL", f"Phase 2 did not preserve component-period basis: {sorted(basis_values)}")
+        if not _all_true(check, "component_period_summary_used_flag"):
+            return _result("phase2_component_supplier", "FAIL", "Phase 2 did not preserve component-period summary usage flag.")
     missing_count = int((check["supplier_risk_class"].astype(str) == "MISSING_SUPPLIER_COVERAGE").sum())
     status = "WARNING" if missing_count else "PASS"
     return _result("phase2_component_supplier", status, f"Phase 2 checked supplier coverage for {len(check)} shortage rows; missing coverage rows: {missing_count}.")
@@ -399,7 +580,7 @@ def _result(name: str, status: str, message: str) -> dict:
 
 def _format_report(evidence: dict) -> str:
     lines = [
-        "Phase 4 Initialization Validation with MPS Step 1B Rolling Inventory Balance",
+        "Phase 4 Initialization Validation with Step 2B Component-Period MRP Summary and Pegging",
         f"Generated at UTC: {evidence['generated_at_utc']}",
         f"Overall status: {evidence['overall_status']}",
         f"Fail count: {evidence['fail_count']}",

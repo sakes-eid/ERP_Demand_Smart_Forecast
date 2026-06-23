@@ -1,5 +1,5 @@
-Phase 4 Initialization Validation with MPS Step 1B Rolling Inventory Balance
-Generated at UTC: 2026-06-23T13:03:09+00:00
+Phase 4 Initialization Validation with Step 2B Component-Period MRP Summary and Pegging
+Generated at UTC: 2026-06-23T13:33:31+00:00
 Overall status: PASS
 Fail count: 0
 Warning count: 3
@@ -13,10 +13,13 @@ Checks:
 - PASS: bom_master - BOM exists with 14 valid seed rows.
 - PASS: mps_step1 - MPS Step 1B rolling balance output contains 28 weekly advisory rows for Road Bike and Mountain Bike.
 - PASS: bom_explosion - BOM explosion produced 196 requirement rows; basis = ['MPS_PLANNED_PRODUCTION'].
+- PASS: mrp_step2 - MRP Step 2 netted 196 component requirement rows.
+- PASS: mrp_step2b_summary - Component-period MRP summary contains 140 advisory rows.
+- PASS: mrp_step2b_pegging - MRP pegging detail contains 196 advisory rows with valid pegging sums.
 - PASS: phase3_component_inventory - Phase 3 checked inventory for 10 components.
 - PASS: phase2_component_supplier - Phase 2 checked supplier coverage for 10 shortage rows; missing coverage rows: 0.
-- PASS: phase4_run_id_consistency - Consistent planning_run_id across Phase 4 outputs: PHASE4-MPS-20260623130233
-- PASS: phase4_advisory_only - All checked Phase 4 advisory flags are true: ['master_production_schedule', 'bom_component_requirements', 'component_inventory_check', 'component_supplier_check']
+- PASS: phase4_run_id_consistency - Consistent planning_run_id across Phase 4 outputs: PHASE4-MPS-20260623133255
+- PASS: phase4_advisory_only - All checked Phase 4 advisory flags are true: ['master_production_schedule', 'bom_component_requirements', 'mrp_net_component_requirements', 'mrp_component_period_summary', 'mrp_pegging_detail', 'component_inventory_check', 'component_supplier_check']
 - PASS: existing_outputs - Existing Phase 1/2/3 outputs exist.
 - PASS: safety_flags - No enabled execution flags found across 5 checked columns.
 - PASS: no_execution_outputs - No Phase 4 production/purchase/release/reservation output files found.

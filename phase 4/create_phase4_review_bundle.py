@@ -1,4 +1,4 @@
-"""Create a clean Phase 4 MPS Step 1B review bundle."""
+"""Create a clean Phase 4 MRP Step 2B review bundle."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 PHASE4_OUTPUTS = PROJECT_ROOT / "phase 4" / "outputs"
-ZIP_PATH = PROJECT_ROOT / "phase4_mps_step1b_review_bundle.zip"
+ZIP_PATH = PROJECT_ROOT / "phase4_mrp_step2b_review_bundle.zip"
 MANIFEST_PATH = PHASE4_OUTPUTS / "phase4_review_bundle_manifest.txt"
 
 REQUIRED_RELATIVE_FILES = [
@@ -25,8 +25,12 @@ REQUIRED_RELATIVE_FILES = [
     "phase 4/core/component_inventory_bridge.py",
     "phase 4/core/component_supplier_bridge.py",
     "phase 4/core/master_production_schedule.py",
+    "phase 4/core/mrp_net_requirements.py",
     "phase 4/outputs/phase4_master_production_schedule.csv",
     "phase 4/outputs/phase4_bom_component_requirements.csv",
+    "phase 4/outputs/phase4_mrp_net_component_requirements.csv",
+    "phase 4/outputs/phase4_mrp_component_period_summary.csv",
+    "phase 4/outputs/phase4_mrp_pegging_detail.csv",
     "phase 4/outputs/phase4_initialization_validation.json",
     "phase 4/outputs/phase4_initialization_validation_report.txt",
     "phase 4/outputs/phase4_review_bundle_manifest.txt",
@@ -146,6 +150,10 @@ def _verify_zip() -> tuple[str, list[str]]:
     name_set = set(names)
 
     required_checks = {
+        "phase 4/outputs/phase4_mrp_component_period_summary.csv": "Phase 4 MRP component-period summary exists inside the zip",
+        "phase 4/outputs/phase4_mrp_pegging_detail.csv": "Phase 4 MRP pegging detail exists inside the zip",
+        "phase 4/core/mrp_net_requirements.py": "Phase 4 MRP net requirements builder exists inside the zip",
+        "phase 4/outputs/phase4_mrp_net_component_requirements.csv": "Phase 4 MRP net requirements output exists inside the zip",
         "phase 4/core/master_production_schedule.py": "Phase 4 MPS builder exists inside the zip",
         "phase 4/outputs/phase4_master_production_schedule.csv": "Phase 4 MPS output exists inside the zip",
         "phase 4/core/bom_explosion_bridge.py": "Phase 4 BOM bridge exists inside the zip",
@@ -209,7 +217,7 @@ def _build_manifest(
 ) -> str:
     zip_size_mb = ZIP_PATH.stat().st_size / (1024 * 1024) if ZIP_PATH.exists() else 0.0
     lines = [
-        "Phase 4 MPS Step 1B Review Bundle Manifest",
+        "Phase 4 MRP Step 2B Review Bundle Manifest",
         f"Generated zip path: {ZIP_PATH}",
         f"Generated timestamp UTC: {generated_at}",
         f"Included file count: {len(included)}",

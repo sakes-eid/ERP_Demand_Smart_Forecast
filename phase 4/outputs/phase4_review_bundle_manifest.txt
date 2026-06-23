@@ -1,13 +1,17 @@
-Phase 4 MPS Step 1B Review Bundle Manifest
-Generated zip path: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase4_mps_step1b_review_bundle.zip
-Generated timestamp UTC: 2026-06-23T13:03:31+00:00
-Included file count: 32
+Phase 4 MRP Step 2B Review Bundle Manifest
+Generated zip path: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase4_mrp_step2b_review_bundle.zip
+Generated timestamp UTC: 2026-06-23T13:33:55+00:00
+Included file count: 36
 Missing file count: 0
 Excluded file count: 0
-Final zip size MB: 0.095
+Final zip size MB: 0.108
 Verification status: PASS
 
 Verification messages:
+- PASS: Phase 4 MRP component-period summary exists inside the zip
+- PASS: Phase 4 MRP pegging detail exists inside the zip
+- PASS: Phase 4 MRP net requirements builder exists inside the zip
+- PASS: Phase 4 MRP net requirements output exists inside the zip
 - PASS: Phase 4 MPS builder exists inside the zip
 - PASS: Phase 4 MPS output exists inside the zip
 - PASS: Phase 4 BOM bridge exists inside the zip
@@ -42,8 +46,12 @@ Included files:
 - phase 4/core/component_inventory_bridge.py
 - phase 4/core/component_supplier_bridge.py
 - phase 4/core/master_production_schedule.py
+- phase 4/core/mrp_net_requirements.py
 - phase 4/outputs/phase4_master_production_schedule.csv
 - phase 4/outputs/phase4_bom_component_requirements.csv
+- phase 4/outputs/phase4_mrp_net_component_requirements.csv
+- phase 4/outputs/phase4_mrp_component_period_summary.csv
+- phase 4/outputs/phase4_mrp_pegging_detail.csv
 - phase 4/outputs/phase4_initialization_validation.json
 - phase 4/outputs/phase4_initialization_validation_report.txt
 - phase 4/outputs/phase4_review_bundle_manifest.txt
