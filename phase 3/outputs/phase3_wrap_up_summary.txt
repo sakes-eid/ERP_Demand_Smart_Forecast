@@ -1,10 +1,10 @@
 Phase 3 Wrap-Up Summary
 =======================
-Generated: 2026-06-11T21:48:35
+Generated: 2026-06-23T14:03:01
 
 Phase 3 Status
-- Local validation: WARNING (PASS 208, WARNING 11, FAIL 0, SKIPPED 1)
-- Integrated validation: WARNING (PASS 58, WARNING 3, FAIL 0)
+- Local validation: WARNING (PASS 207, WARNING 12, FAIL 0, SKIPPED 1)
+- Integrated validation: WARNING (PASS 56, WARNING 5, FAIL 0)
 - Convergence: CONVERGED_WITH_REVIEW
 
 Main Outputs
@@ -15,12 +15,13 @@ Main Outputs
 - phase3_validation_report.txt
 
 UI Status
-- Shared employee task rows: 10
-- Unique task SKUs: 10
+- Shared employee task rows: 22
+- Unique task SKUs: 22
 - Role-based Streamlit UI: Manager and Employee / Warehouse Staff views
 - UI mode: read-only advisory
 
 Remaining Warnings
+- Next delivery blanks are visible review cases
 - No purchase order creation yet.
 - Supplier return-policy fields are available through Phase 2 bridges, but automated return execution is not implemented.
 - Backorder aging foundation exists in Phase 2, but deeper batch/inventory/forecast feedback integration remains future work.
@@ -41,7 +42,7 @@ Safety Status
 - No purchase orders, supplier changes, inventory mutations, policy changes, or warehouse changes are executed.
 
 Known Limitations
-- Unavailable KPI fields: 30
+- Unavailable KPI fields: 66
 - Supplier return, PO creation, and inventory/policy execution workflows are not implemented.
 - Scenario optimization and re-evaluation remain rule-based.
 - Phase 4 production/BOM logic is not implemented yet.

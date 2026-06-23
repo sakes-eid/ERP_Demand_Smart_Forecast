@@ -1,5 +1,5 @@
 Phase 2 Procurement Capability Validation Report
-Timestamp: 2026-06-11T13:23:48
+Timestamp: 2026-06-23T14:03:00
 Project path: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 2
 Outputs path: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 2\outputs
 
@@ -12,9 +12,9 @@ Critical Failures:
 None.
 
 Warnings:
-- WARNINGS / FALLBACK_COST_WARNINGS: Rows with fallback cost warning codes: 5.
+- WARNINGS / FALLBACK_COST_WARNINGS: Rows with fallback cost warning codes: 15.
 - WARNINGS / PLACEHOLDER_BATCH_TRACEABILITY: Placeholder/demo batch references: 10.
-- STRATEGY_WARNINGS / REVIEW_CANDIDATE_INFEASIBLE: Affected rows: 10.
+- STRATEGY_WARNINGS / REVIEW_CANDIDATE_INFEASIBLE: Affected rows: 20.
 - STRATEGY_WARNINGS / ALTERNATIVE_SUPPLIER_SWITCH: Affected rows: 3.
 - STRATEGY_WARNINGS / BACKORDER_RISK_WITHOUT_FAST_OPTION: Affected rows: 5.
 - KNOWN_LIMITATIONS / KNOWN_LIMITATION_1: Some suppliers do not support returns.

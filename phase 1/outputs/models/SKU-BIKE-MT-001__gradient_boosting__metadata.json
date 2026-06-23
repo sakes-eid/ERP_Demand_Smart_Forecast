@@ -1,5 +1,5 @@
 {
-  "sku_id": "SKU-FIL-009",
+  "sku_id": "SKU-BIKE-MT-001",
   "model_name": "gradient_boosting",
   "feature_columns": [
     "sales_value",
@@ -48,6 +48,6 @@
   "target_column": "quantity_demanded",
   "internal_target_column": "__target_demand",
   "training_rows": 151,
-  "saved_at": "2026-06-23T14:02:23",
+  "saved_at": "2026-06-23T14:02:21",
   "notes": "Persisted retrained champion model family on available training rows."
 }

@@ -1,6 +1,9 @@
 date,sku_id,quantity_demanded,anomaly_reason,z_score
 2026-03-11,SKU-BAT-008,46,statistical_outlier,8.79095659528179
 2026-05-23,SKU-BBQ-006,95,statistical_outlier,6.671124491096678
+2026-04-18,SKU-BIKE-MT-001,18,statistical_outlier,3.115596369585239
+2026-05-23,SKU-BIKE-MT-001,19,statistical_outlier,3.4997400636553535
+2026-04-18,SKU-BIKE-ROAD-001,22,statistical_outlier,3.6012201668693575
 2026-02-07,SKU-CHC-005,49,statistical_outlier,4.968831398052241
 2026-02-08,SKU-CHC-005,45,statistical_outlier,4.255762234089937
 2026-02-10,SKU-CHC-005,46,statistical_outlier,4.434029525080513

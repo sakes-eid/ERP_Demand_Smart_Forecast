@@ -1,8 +1,8 @@
 {
   "validation_metadata": {
     "validation_version": "1.0",
-    "generated_at": "2026-06-11T19:48:23Z",
-    "run_id": "INTEGRATED-20260611194759",
+    "generated_at": "2026-06-23T12:03:01Z",
+    "run_id": "INTEGRATED-20260623120202",
     "final_iteration": 1,
     "validator_git_or_code_version": "LOCAL",
     "project_root": "C:\\Users\\iTECH\\OneDrive - Beirut Arab University\\Desktop\\apps i made\\SC project",
@@ -10,8 +10,8 @@
   },
   "overall_result": {
     "status": "WARNING",
-    "pass_count": 58,
-    "warning_count": 3,
+    "pass_count": 56,
+    "warning_count": 5,
     "fail_count": 0,
     "skipped_count": 0,
     "convergence_status": "CONVERGED_WITH_REVIEW",
@@ -22,12 +22,12 @@
     "purchase_order_creation_allowed": false
   },
   "pipeline_snapshot": {
-    "phase1_rows": 10,
-    "phase2_supply_rows": 40,
-    "phase3_requirement_rows": 10,
-    "phase2_allocation_rows": 16,
-    "phase3_validation_rows": 10,
-    "integrated_decision_rows": 10
+    "phase1_rows": 12,
+    "phase2_supply_rows": 60,
+    "phase3_requirement_rows": 22,
+    "phase2_allocation_rows": 28,
+    "phase3_validation_rows": 22,
+    "integrated_decision_rows": 22
   },
   "schema_contracts": {
     "phase2_supply_capability_context": {
@@ -782,10 +782,10 @@
       "logical_name": "phase1_demand_context",
       "path": "C:\\Users\\iTECH\\OneDrive - Beirut Arab University\\Desktop\\apps i made\\SC project\\phase 1\\outputs\\phase1_demand_planning_context.csv",
       "exists": true,
-      "row_count": 10,
+      "row_count": 12,
       "column_count": 83,
-      "sha256": "5181be0d28d56264e25860a7d18335536fa8799540dfd8c5953aac12aea0224e",
-      "modified_at": "2026-06-11T13:20:35",
+      "sha256": "98aac663cfd747aecdde1e294acd839aa51491903b58301b69175916f5d3a456",
+      "modified_at": "2026-06-23T14:02:27",
       "schema_version": "",
       "source_phase": "",
       "required_or_optional": "optional"
@@ -794,10 +794,10 @@
       "logical_name": "phase2_supply_capability_context",
       "path": "C:\\Users\\iTECH\\OneDrive - Beirut Arab University\\Desktop\\apps i made\\SC project\\shared\\outputs\\phase2_supply_capability_context.csv",
       "exists": true,
-      "row_count": 40,
+      "row_count": 60,
       "column_count": 67,
-      "sha256": "177e7a51e05470c87f992bb58d3a5bc8d20c93cfa2b23477ce66af490c0acd5f",
-      "modified_at": "2026-06-11T21:48:09",
+      "sha256": "29e3b5b5611d86b379b4269db6d731f2f5c53a8d435a742a5d62a1e09c9fd002",
+      "modified_at": "2026-06-23T14:02:46",
       "schema_version": "1.0",
       "source_phase": "PHASE_2",
       "required_or_optional": "required"
@@ -806,10 +806,10 @@
       "logical_name": "phase2_inbound_supply_summary",
       "path": "C:\\Users\\iTECH\\OneDrive - Beirut Arab University\\Desktop\\apps i made\\SC project\\shared\\outputs\\phase2_inbound_supply_summary.csv",
       "exists": true,
-      "row_count": 10,
+      "row_count": 20,
       "column_count": 17,
-      "sha256": "ae838afd47aff4072b7db00b308e0a22ef11a1fc99109397ef6cfb82398e858c",
-      "modified_at": "2026-06-11T21:48:09",
+      "sha256": "7f0d5a48c4bc5e74a7f51ac76f0dd60b840f3d3302e6f6e3785af918fa0e3585",
+      "modified_at": "2026-06-23T14:02:46",
       "schema_version": "1.0",
       "source_phase": "PHASE_2",
       "required_or_optional": "required"
@@ -818,10 +818,10 @@
       "logical_name": "phase3_procurement_requirement_context",
       "path": "C:\\Users\\iTECH\\OneDrive - Beirut Arab University\\Desktop\\apps i made\\SC project\\shared\\outputs\\phase3_procurement_requirement_context.csv",
       "exists": true,
-      "row_count": 10,
+      "row_count": 22,
       "column_count": 83,
-      "sha256": "ec72efd8bac8abe5ce2619f5901df32c44855db1e5e7678de157918685263a21",
-      "modified_at": "2026-06-11T21:48:10",
+      "sha256": "c4b8493610b36f89173ee6ae75c5d81e06cfd32efea74df72d9e687bb3529bd2",
+      "modified_at": "2026-06-23T14:02:48",
       "schema_version": "1.0",
       "source_phase": "PHASE_3",
       "required_or_optional": "required"
@@ -830,10 +830,10 @@
       "logical_name": "phase2_procurement_allocation_context",
       "path": "C:\\Users\\iTECH\\OneDrive - Beirut Arab University\\Desktop\\apps i made\\SC project\\shared\\outputs\\phase2_procurement_allocation_context.csv",
       "exists": true,
-      "row_count": 16,
+      "row_count": 28,
       "column_count": 61,
-      "sha256": "b333b8762b53de4e366e37d43de72feb44282df2da9c449e02365d84acce96c5",
-      "modified_at": "2026-06-11T21:48:09",
+      "sha256": "ee9fdd7998cd6f23bc4aa14a0f581f3fcb583b67efebd840d27d07c19f19b307",
+      "modified_at": "2026-06-23T14:02:46",
       "schema_version": "1.0",
       "source_phase": "PHASE_2",
       "required_or_optional": "required"
@@ -842,10 +842,10 @@
       "logical_name": "phase2_procurement_allocation_summary",
       "path": "C:\\Users\\iTECH\\OneDrive - Beirut Arab University\\Desktop\\apps i made\\SC project\\shared\\outputs\\phase2_procurement_allocation_summary.csv",
       "exists": true,
-      "row_count": 10,
+      "row_count": 22,
       "column_count": 29,
-      "sha256": "e102c53e41434bd6c798e4bc5881fac8900321e2170e212c8fc16d3e7d42d1bd",
-      "modified_at": "2026-06-11T21:48:09",
+      "sha256": "87354f0661dd2f81c93039e13d7eb63c549d4840558130cc45e2547cdc6520ff",
+      "modified_at": "2026-06-23T14:02:46",
       "schema_version": "1.0",
       "source_phase": "PHASE_2",
       "required_or_optional": "required"
@@ -854,10 +854,10 @@
       "logical_name": "phase3_allocation_validation",
       "path": "C:\\Users\\iTECH\\OneDrive - Beirut Arab University\\Desktop\\apps i made\\SC project\\shared\\outputs\\phase3_allocation_validation.csv",
       "exists": true,
-      "row_count": 10,
+      "row_count": 22,
       "column_count": 25,
-      "sha256": "71a42149cc31fec508b5f8d2a478fc18d4e7d479398863e9d0b2b7265f41e993",
-      "modified_at": "2026-06-11T21:48:10",
+      "sha256": "6b1b317e66eeda4a4bcca3ce6e3c82f571fce770e3b435d44a19bb6421f97d75",
+      "modified_at": "2026-06-23T14:02:48",
       "schema_version": "1.0",
       "source_phase": "PHASE_3",
       "required_or_optional": "required"
@@ -866,10 +866,10 @@
       "logical_name": "integrated_replenishment_decisions",
       "path": "C:\\Users\\iTECH\\OneDrive - Beirut Arab University\\Desktop\\apps i made\\SC project\\shared\\outputs\\integrated_replenishment_decisions.csv",
       "exists": true,
-      "row_count": 10,
+      "row_count": 22,
       "column_count": 44,
-      "sha256": "aef0ff18daff6ffe74a5c72083ee2bfee25b68e4e22910af06236f29a1c1e9df",
-      "modified_at": "2026-06-11T21:48:11",
+      "sha256": "a60f8b5fe3fb6f3da9942f7691853adb3aff0eabbabf4eb838057d37622a7986",
+      "modified_at": "2026-06-23T14:02:49",
       "schema_version": "1.0",
       "source_phase": "",
       "required_or_optional": "required"
@@ -878,10 +878,10 @@
       "logical_name": "phase2_strategy_summary",
       "path": "C:\\Users\\iTECH\\OneDrive - Beirut Arab University\\Desktop\\apps i made\\SC project\\phase 2\\outputs\\phase2_supplier_strategy_summary.csv",
       "exists": true,
-      "row_count": 10,
+      "row_count": 20,
       "column_count": 102,
-      "sha256": "8c2bd237f0f3f8828ca1cf89f07da36f737740a1ae5b2344a7a77484ed2108dc",
-      "modified_at": "2026-06-11T21:48:09",
+      "sha256": "7ff730e1c505e8eee8479486e464e971fdde56246f4f9fa98408a04959d1863c",
+      "modified_at": "2026-06-23T14:02:46",
       "schema_version": "",
       "source_phase": "",
       "required_or_optional": "optional"
@@ -890,10 +890,10 @@
       "logical_name": "phase3_master_decisions",
       "path": "C:\\Users\\iTECH\\OneDrive - Beirut Arab University\\Desktop\\apps i made\\SC project\\phase 3\\outputs\\inventory_control_master_decisions.csv",
       "exists": true,
-      "row_count": 10,
+      "row_count": 22,
       "column_count": 98,
-      "sha256": "16585cee5dfb54b49a3550b09dde3b1caee7d3ea1a2a6cb2c97fb423dc9cd922",
-      "modified_at": "2026-06-11T21:48:10",
+      "sha256": "b6f97dfd66fccebd81682079a05ef1d33fde83132202d9aa65ff26200f98f958",
+      "modified_at": "2026-06-23T14:02:48",
       "schema_version": "",
       "source_phase": "",
       "required_or_optional": "optional"
@@ -901,45 +901,45 @@
   ],
   "phase_summaries": {
     "phase1": {
-      "sku_count": 10
+      "sku_count": 12
     },
     "phase2": {
-      "supplier_option_rows": 40
+      "supplier_option_rows": 60
     },
     "phase3": {
-      "requirement_sku_count": 10
+      "requirement_sku_count": 22
     }
   },
   "cross_phase_reconciliations": {
     "demand_reconciliation": {
-      "phase3_gross_30d_total": 5532.17
+      "phase3_gross_30d_total": 6286.71
     },
     "inbound_reconciliation": {
-      "phase3_confirmed_inbound_30d_total": 548.0
+      "phase3_confirmed_inbound_30d_total": 0.0
     },
     "inventory_reconciliation": {
-      "usable_on_hand_total": 1554.0
+      "usable_on_hand_total": 3668.0
     },
     "requirement_reconciliation": {
-      "net_requirement_total": 4758.0
+      "net_requirement_total": 4941.0
     },
     "allocation_reconciliation": {
-      "allocated_usable_total": 4303.71
+      "allocated_usable_total": 4350.71
     },
     "yield_reconciliation": {
-      "supplier_purchase_total": 4686.0
+      "supplier_purchase_total": 4739.0
     },
     "capacity_reconciliation": {
-      "unallocated_requirement_total": 454.29
+      "unallocated_requirement_total": 610.29
     },
     "final_inventory_reconciliation": {
-      "accepted_allocation_total": 4303.71
+      "accepted_allocation_total": 4350.71
     },
     "cost_reconciliation": {
-      "integrated_procurement_cost_total": 26509.37
+      "integrated_procurement_cost_total": 26870.16
     },
     "review_execution_reconciliation": {
-      "review_required_count": 7
+      "review_required_count": 9
     }
   },
   "validation_checks": [
@@ -1622,13 +1622,23 @@
         {
           "sku_id": "SKU-TEA-002",
           "unallocated_requirement_units": 65.72
+        },
+        {
+          "sku_id": "SKU-BIKE-ROAD-001",
+          "unallocated_requirement_units": 86.0
+        },
+        {
+          "sku_id": "SKU-BIKE-MT-001",
+          "unallocated_requirement_units": 70.0
         }
       ],
-      "affected_row_count": 2,
-      "affected_unique_key_count": 2,
+      "affected_row_count": 4,
+      "affected_unique_key_count": 4,
       "affected_keys": [
         "SKU-COF-001",
-        "SKU-TEA-002"
+        "SKU-TEA-002",
+        "SKU-BIKE-ROAD-001",
+        "SKU-BIKE-MT-001"
       ],
       "evidence": {
         "actual": [
@@ -1639,6 +1649,14 @@
           {
             "sku_id": "SKU-TEA-002",
             "unallocated_requirement_units": 65.72
+          },
+          {
+            "sku_id": "SKU-BIKE-ROAD-001",
+            "unallocated_requirement_units": 86.0
+          },
+          {
+            "sku_id": "SKU-BIKE-MT-001",
+            "unallocated_requirement_units": 70.0
           }
         ]
       },
@@ -1661,13 +1679,25 @@
           "sku_id": "SKU-TEA-002",
           "adjustment_required_flag": true,
           "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
+        },
+        {
+          "sku_id": "SKU-BIKE-ROAD-001",
+          "adjustment_required_flag": true,
+          "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
+        },
+        {
+          "sku_id": "SKU-BIKE-MT-001",
+          "adjustment_required_flag": true,
+          "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
         }
       ],
-      "affected_row_count": 2,
-      "affected_unique_key_count": 2,
+      "affected_row_count": 4,
+      "affected_unique_key_count": 4,
       "affected_keys": [
         "SKU-COF-001",
-        "SKU-TEA-002"
+        "SKU-TEA-002",
+        "SKU-BIKE-ROAD-001",
+        "SKU-BIKE-MT-001"
       ],
       "evidence": {
         "actual": [
@@ -1680,6 +1710,16 @@
             "sku_id": "SKU-TEA-002",
             "adjustment_required_flag": true,
             "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
+          },
+          {
+            "sku_id": "SKU-BIKE-ROAD-001",
+            "adjustment_required_flag": true,
+            "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
+          },
+          {
+            "sku_id": "SKU-BIKE-MT-001",
+            "adjustment_required_flag": true,
+            "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
           }
         ]
       },
@@ -1688,16 +1728,151 @@
     {
       "check_id": "BATCH_INVENTORY_RECONCILIATION_REVIEW",
       "category": "ACTIVE_ISSUES",
-      "severity": "PASS",
-      "status": "PASS",
+      "severity": "WARNING",
+      "status": "WARNING",
       "description": "Batch inventory reconciliation review is surfaced.",
       "expected": "0 active reconciliation warnings",
-      "actual": [],
-      "affected_row_count": 0,
-      "affected_unique_key_count": 0,
-      "affected_keys": [],
+      "actual": [
+        {
+          "sku_id": "SKU-BIKE-ROAD-001",
+          "batch_inventory_reconciliation_difference": 0.0,
+          "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+        },
+        {
+          "sku_id": "SKU-BIKE-MT-001",
+          "batch_inventory_reconciliation_difference": 0.0,
+          "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+        },
+        {
+          "sku_id": "SKU-COMP-FRAME-ROAD-001",
+          "batch_inventory_reconciliation_difference": 0.0,
+          "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+        },
+        {
+          "sku_id": "SKU-COMP-FRAME-MT-001",
+          "batch_inventory_reconciliation_difference": 0.0,
+          "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+        },
+        {
+          "sku_id": "SKU-COMP-WHEEL-ROAD-700C",
+          "batch_inventory_reconciliation_difference": 0.0,
+          "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+        },
+        {
+          "sku_id": "SKU-COMP-WHEEL-MT-29",
+          "batch_inventory_reconciliation_difference": 0.0,
+          "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+        },
+        {
+          "sku_id": "SKU-COMP-TIRE-ROAD-700C",
+          "batch_inventory_reconciliation_difference": 0.0,
+          "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+        },
+        {
+          "sku_id": "SKU-COMP-TIRE-MT-29",
+          "batch_inventory_reconciliation_difference": 0.0,
+          "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+        },
+        {
+          "sku_id": "SKU-COMP-BRAKE-FRONT-001",
+          "batch_inventory_reconciliation_difference": 0.0,
+          "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+        },
+        {
+          "sku_id": "SKU-COMP-BRAKE-REAR-001",
+          "batch_inventory_reconciliation_difference": 0.0,
+          "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+        },
+        {
+          "sku_id": "SKU-COMP-PEDAL-SET-001",
+          "batch_inventory_reconciliation_difference": 0.0,
+          "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+        },
+        {
+          "sku_id": "SKU-COMP-BOLT-KIT-001",
+          "batch_inventory_reconciliation_difference": 0.0,
+          "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+        }
+      ],
+      "affected_row_count": 12,
+      "affected_unique_key_count": 12,
+      "affected_keys": [
+        "SKU-BIKE-ROAD-001",
+        "SKU-BIKE-MT-001",
+        "SKU-COMP-FRAME-ROAD-001",
+        "SKU-COMP-FRAME-MT-001",
+        "SKU-COMP-WHEEL-ROAD-700C",
+        "SKU-COMP-WHEEL-MT-29",
+        "SKU-COMP-TIRE-ROAD-700C",
+        "SKU-COMP-TIRE-MT-29",
+        "SKU-COMP-BRAKE-FRONT-001",
+        "SKU-COMP-BRAKE-REAR-001",
+        "SKU-COMP-PEDAL-SET-001",
+        "SKU-COMP-BOLT-KIT-001"
+      ],
       "evidence": {
-        "actual": []
+        "actual": [
+          {
+            "sku_id": "SKU-BIKE-ROAD-001",
+            "batch_inventory_reconciliation_difference": 0.0,
+            "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+          },
+          {
+            "sku_id": "SKU-BIKE-MT-001",
+            "batch_inventory_reconciliation_difference": 0.0,
+            "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+          },
+          {
+            "sku_id": "SKU-COMP-FRAME-ROAD-001",
+            "batch_inventory_reconciliation_difference": 0.0,
+            "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+          },
+          {
+            "sku_id": "SKU-COMP-FRAME-MT-001",
+            "batch_inventory_reconciliation_difference": 0.0,
+            "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+          },
+          {
+            "sku_id": "SKU-COMP-WHEEL-ROAD-700C",
+            "batch_inventory_reconciliation_difference": 0.0,
+            "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+          },
+          {
+            "sku_id": "SKU-COMP-WHEEL-MT-29",
+            "batch_inventory_reconciliation_difference": 0.0,
+            "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+          },
+          {
+            "sku_id": "SKU-COMP-TIRE-ROAD-700C",
+            "batch_inventory_reconciliation_difference": 0.0,
+            "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+          },
+          {
+            "sku_id": "SKU-COMP-TIRE-MT-29",
+            "batch_inventory_reconciliation_difference": 0.0,
+            "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+          },
+          {
+            "sku_id": "SKU-COMP-BRAKE-FRONT-001",
+            "batch_inventory_reconciliation_difference": 0.0,
+            "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+          },
+          {
+            "sku_id": "SKU-COMP-BRAKE-REAR-001",
+            "batch_inventory_reconciliation_difference": 0.0,
+            "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+          },
+          {
+            "sku_id": "SKU-COMP-PEDAL-SET-001",
+            "batch_inventory_reconciliation_difference": 0.0,
+            "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+          },
+          {
+            "sku_id": "SKU-COMP-BOLT-KIT-001",
+            "batch_inventory_reconciliation_difference": 0.0,
+            "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+          }
+        ]
       },
       "suggested_fix": ""
     },
@@ -1775,7 +1950,7 @@
       "description": "Fallback cost or timing assumptions are surfaced with affected fields.",
       "expected": "no active fallback assumptions",
       "actual": {
-        "affected_rows": 49,
+        "affected_rows": 100,
         "affected_files": [
           "phase2_strategy_summary",
           "phase3_master_decisions"
@@ -1799,27 +1974,97 @@
           {
             "file": "phase2_strategy_summary",
             "row_index": 4,
-            "sku_id": "SKU-FIL-009",
+            "sku_id": "SKU-COMP-BOLT-KIT-001",
             "affected_column": "selected_option_warning_codes",
             "value": "PAYMENT_TERMS_COST_NOT_MODELED"
           },
           {
             "file": "phase2_strategy_summary",
             "row_index": 5,
-            "sku_id": "SKU-GFT-010",
+            "sku_id": "SKU-COMP-BRAKE-FRONT-001",
+            "affected_column": "selected_option_warning_codes",
+            "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 6,
+            "sku_id": "SKU-COMP-BRAKE-REAR-001",
             "affected_column": "selected_option_warning_codes",
             "value": "PAYMENT_TERMS_COST_NOT_MODELED"
           },
           {
             "file": "phase2_strategy_summary",
             "row_index": 7,
+            "sku_id": "SKU-COMP-FRAME-MT-001",
+            "affected_column": "selected_option_warning_codes",
+            "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 8,
+            "sku_id": "SKU-COMP-FRAME-ROAD-001",
+            "affected_column": "selected_option_warning_codes",
+            "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 9,
+            "sku_id": "SKU-COMP-PEDAL-SET-001",
+            "affected_column": "selected_option_warning_codes",
+            "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 10,
+            "sku_id": "SKU-COMP-TIRE-MT-29",
+            "affected_column": "selected_option_warning_codes",
+            "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 11,
+            "sku_id": "SKU-COMP-TIRE-ROAD-700C",
+            "affected_column": "selected_option_warning_codes",
+            "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 12,
+            "sku_id": "SKU-COMP-WHEEL-MT-29",
+            "affected_column": "selected_option_warning_codes",
+            "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 13,
+            "sku_id": "SKU-COMP-WHEEL-ROAD-700C",
+            "affected_column": "selected_option_warning_codes",
+            "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 14,
+            "sku_id": "SKU-FIL-009",
+            "affected_column": "selected_option_warning_codes",
+            "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 15,
+            "sku_id": "SKU-GFT-010",
+            "affected_column": "selected_option_warning_codes",
+            "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 17,
             "sku_id": "SKU-SUP-004",
             "affected_column": "selected_option_warning_codes",
             "value": "PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
           },
           {
             "file": "phase2_strategy_summary",
-            "row_index": 9,
+            "row_index": 19,
             "sku_id": "SKU-UMR-007",
             "affected_column": "selected_option_warning_codes",
             "value": "PAYMENT_TERMS_COST_NOT_MODELED"
@@ -1855,124 +2100,64 @@
           {
             "file": "phase2_strategy_summary",
             "row_index": 4,
-            "sku_id": "SKU-FIL-009",
+            "sku_id": "SKU-COMP-BOLT-KIT-001",
             "affected_column": "sku_option_pool_warning_codes",
-            "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+            "value": "CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED"
           },
           {
             "file": "phase2_strategy_summary",
             "row_index": 5,
-            "sku_id": "SKU-GFT-010",
+            "sku_id": "SKU-COMP-BRAKE-FRONT-001",
             "affected_column": "sku_option_pool_warning_codes",
             "value": "CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED"
           },
           {
             "file": "phase2_strategy_summary",
             "row_index": 6,
-            "sku_id": "SKU-SUN-003",
+            "sku_id": "SKU-COMP-BRAKE-REAR-001",
             "affected_column": "sku_option_pool_warning_codes",
-            "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED"
+            "value": "CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED"
           },
           {
             "file": "phase2_strategy_summary",
             "row_index": 7,
-            "sku_id": "SKU-SUP-004",
+            "sku_id": "SKU-COMP-FRAME-MT-001",
             "affected_column": "sku_option_pool_warning_codes",
-            "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
+            "value": "CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED"
           },
           {
             "file": "phase2_strategy_summary",
             "row_index": 8,
-            "sku_id": "SKU-TEA-002",
+            "sku_id": "SKU-COMP-FRAME-ROAD-001",
             "affected_column": "sku_option_pool_warning_codes",
-            "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
+            "value": "CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED"
           },
           {
             "file": "phase2_strategy_summary",
             "row_index": 9,
-            "sku_id": "SKU-UMR-007",
+            "sku_id": "SKU-COMP-PEDAL-SET-001",
             "affected_column": "sku_option_pool_warning_codes",
-            "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
-          },
-          {
-            "file": "phase2_strategy_summary",
-            "row_index": 0,
-            "sku_id": "SKU-BAT-008",
-            "affected_column": "review_candidate_warning_codes",
-            "value": "BASE_SUPPLIER_OPTION_INFEASIBLE;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
-          },
-          {
-            "file": "phase2_strategy_summary",
-            "row_index": 1,
-            "sku_id": "SKU-BBQ-006",
-            "affected_column": "review_candidate_warning_codes",
-            "value": "BASE_SUPPLIER_OPTION_INFEASIBLE;CAPACITY_SHORTFALL;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
-          },
-          {
-            "file": "phase2_strategy_summary",
-            "row_index": 2,
-            "sku_id": "SKU-CHC-005",
-            "affected_column": "review_candidate_warning_codes",
-            "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
-          },
-          {
-            "file": "phase2_strategy_summary",
-            "row_index": 3,
-            "sku_id": "SKU-COF-001",
-            "affected_column": "review_candidate_warning_codes",
-            "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED"
-          },
-          {
-            "file": "phase2_strategy_summary",
-            "row_index": 4,
-            "sku_id": "SKU-FIL-009",
-            "affected_column": "review_candidate_warning_codes",
-            "value": "BASE_SUPPLIER_OPTION_INFEASIBLE;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
-          },
-          {
-            "file": "phase2_strategy_summary",
-            "row_index": 5,
-            "sku_id": "SKU-GFT-010",
-            "affected_column": "review_candidate_warning_codes",
-            "value": "CUSTOMS_COST_FALLBACK_USED;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
-          },
-          {
-            "file": "phase2_strategy_summary",
-            "row_index": 6,
-            "sku_id": "SKU-SUN-003",
-            "affected_column": "review_candidate_warning_codes",
-            "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
-          },
-          {
-            "file": "phase2_strategy_summary",
-            "row_index": 7,
-            "sku_id": "SKU-SUP-004",
-            "affected_column": "review_candidate_warning_codes",
-            "value": "PAYMENT_TERMS_COST_NOT_MODELED"
-          },
-          {
-            "file": "phase2_strategy_summary",
-            "row_index": 8,
-            "sku_id": "SKU-TEA-002",
-            "affected_column": "review_candidate_warning_codes",
-            "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED"
-          },
-          {
-            "file": "phase2_strategy_summary",
-            "row_index": 9,
-            "sku_id": "SKU-UMR-007",
-            "affected_column": "review_candidate_warning_codes",
-            "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
+            "value": "CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED"
           }
         ]
       },
-      "affected_row_count": 49,
-      "affected_unique_key_count": 10,
+      "affected_row_count": 100,
+      "affected_unique_key_count": 20,
       "affected_keys": [
         "SKU-BAT-008",
         "SKU-BBQ-006",
         "SKU-CHC-005",
         "SKU-COF-001",
+        "SKU-COMP-BOLT-KIT-001",
+        "SKU-COMP-BRAKE-FRONT-001",
+        "SKU-COMP-BRAKE-REAR-001",
+        "SKU-COMP-FRAME-MT-001",
+        "SKU-COMP-FRAME-ROAD-001",
+        "SKU-COMP-PEDAL-SET-001",
+        "SKU-COMP-TIRE-MT-29",
+        "SKU-COMP-TIRE-ROAD-700C",
+        "SKU-COMP-WHEEL-MT-29",
+        "SKU-COMP-WHEEL-ROAD-700C",
         "SKU-FIL-009",
         "SKU-GFT-010",
         "SKU-SUN-003",
@@ -1982,7 +2167,7 @@
       ],
       "evidence": {
         "actual": {
-          "affected_rows": 49,
+          "affected_rows": 100,
           "affected_files": [
             "phase2_strategy_summary",
             "phase3_master_decisions"
@@ -2006,27 +2191,97 @@
             {
               "file": "phase2_strategy_summary",
               "row_index": 4,
-              "sku_id": "SKU-FIL-009",
+              "sku_id": "SKU-COMP-BOLT-KIT-001",
               "affected_column": "selected_option_warning_codes",
               "value": "PAYMENT_TERMS_COST_NOT_MODELED"
             },
             {
               "file": "phase2_strategy_summary",
               "row_index": 5,
-              "sku_id": "SKU-GFT-010",
+              "sku_id": "SKU-COMP-BRAKE-FRONT-001",
+              "affected_column": "selected_option_warning_codes",
+              "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 6,
+              "sku_id": "SKU-COMP-BRAKE-REAR-001",
               "affected_column": "selected_option_warning_codes",
               "value": "PAYMENT_TERMS_COST_NOT_MODELED"
             },
             {
               "file": "phase2_strategy_summary",
               "row_index": 7,
+              "sku_id": "SKU-COMP-FRAME-MT-001",
+              "affected_column": "selected_option_warning_codes",
+              "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 8,
+              "sku_id": "SKU-COMP-FRAME-ROAD-001",
+              "affected_column": "selected_option_warning_codes",
+              "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 9,
+              "sku_id": "SKU-COMP-PEDAL-SET-001",
+              "affected_column": "selected_option_warning_codes",
+              "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 10,
+              "sku_id": "SKU-COMP-TIRE-MT-29",
+              "affected_column": "selected_option_warning_codes",
+              "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 11,
+              "sku_id": "SKU-COMP-TIRE-ROAD-700C",
+              "affected_column": "selected_option_warning_codes",
+              "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 12,
+              "sku_id": "SKU-COMP-WHEEL-MT-29",
+              "affected_column": "selected_option_warning_codes",
+              "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 13,
+              "sku_id": "SKU-COMP-WHEEL-ROAD-700C",
+              "affected_column": "selected_option_warning_codes",
+              "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 14,
+              "sku_id": "SKU-FIL-009",
+              "affected_column": "selected_option_warning_codes",
+              "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 15,
+              "sku_id": "SKU-GFT-010",
+              "affected_column": "selected_option_warning_codes",
+              "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 17,
               "sku_id": "SKU-SUP-004",
               "affected_column": "selected_option_warning_codes",
               "value": "PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
             },
             {
               "file": "phase2_strategy_summary",
-              "row_index": 9,
+              "row_index": 19,
               "sku_id": "SKU-UMR-007",
               "affected_column": "selected_option_warning_codes",
               "value": "PAYMENT_TERMS_COST_NOT_MODELED"
@@ -2062,114 +2317,44 @@
             {
               "file": "phase2_strategy_summary",
               "row_index": 4,
-              "sku_id": "SKU-FIL-009",
+              "sku_id": "SKU-COMP-BOLT-KIT-001",
               "affected_column": "sku_option_pool_warning_codes",
-              "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+              "value": "CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED"
             },
             {
               "file": "phase2_strategy_summary",
               "row_index": 5,
-              "sku_id": "SKU-GFT-010",
+              "sku_id": "SKU-COMP-BRAKE-FRONT-001",
               "affected_column": "sku_option_pool_warning_codes",
               "value": "CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED"
             },
             {
               "file": "phase2_strategy_summary",
               "row_index": 6,
-              "sku_id": "SKU-SUN-003",
+              "sku_id": "SKU-COMP-BRAKE-REAR-001",
               "affected_column": "sku_option_pool_warning_codes",
-              "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED"
+              "value": "CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED"
             },
             {
               "file": "phase2_strategy_summary",
               "row_index": 7,
-              "sku_id": "SKU-SUP-004",
+              "sku_id": "SKU-COMP-FRAME-MT-001",
               "affected_column": "sku_option_pool_warning_codes",
-              "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
+              "value": "CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED"
             },
             {
               "file": "phase2_strategy_summary",
               "row_index": 8,
-              "sku_id": "SKU-TEA-002",
+              "sku_id": "SKU-COMP-FRAME-ROAD-001",
               "affected_column": "sku_option_pool_warning_codes",
-              "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
+              "value": "CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED"
             },
             {
               "file": "phase2_strategy_summary",
               "row_index": 9,
-              "sku_id": "SKU-UMR-007",
+              "sku_id": "SKU-COMP-PEDAL-SET-001",
               "affected_column": "sku_option_pool_warning_codes",
-              "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
-            },
-            {
-              "file": "phase2_strategy_summary",
-              "row_index": 0,
-              "sku_id": "SKU-BAT-008",
-              "affected_column": "review_candidate_warning_codes",
-              "value": "BASE_SUPPLIER_OPTION_INFEASIBLE;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
-            },
-            {
-              "file": "phase2_strategy_summary",
-              "row_index": 1,
-              "sku_id": "SKU-BBQ-006",
-              "affected_column": "review_candidate_warning_codes",
-              "value": "BASE_SUPPLIER_OPTION_INFEASIBLE;CAPACITY_SHORTFALL;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
-            },
-            {
-              "file": "phase2_strategy_summary",
-              "row_index": 2,
-              "sku_id": "SKU-CHC-005",
-              "affected_column": "review_candidate_warning_codes",
-              "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
-            },
-            {
-              "file": "phase2_strategy_summary",
-              "row_index": 3,
-              "sku_id": "SKU-COF-001",
-              "affected_column": "review_candidate_warning_codes",
-              "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED"
-            },
-            {
-              "file": "phase2_strategy_summary",
-              "row_index": 4,
-              "sku_id": "SKU-FIL-009",
-              "affected_column": "review_candidate_warning_codes",
-              "value": "BASE_SUPPLIER_OPTION_INFEASIBLE;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
-            },
-            {
-              "file": "phase2_strategy_summary",
-              "row_index": 5,
-              "sku_id": "SKU-GFT-010",
-              "affected_column": "review_candidate_warning_codes",
-              "value": "CUSTOMS_COST_FALLBACK_USED;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
-            },
-            {
-              "file": "phase2_strategy_summary",
-              "row_index": 6,
-              "sku_id": "SKU-SUN-003",
-              "affected_column": "review_candidate_warning_codes",
-              "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
-            },
-            {
-              "file": "phase2_strategy_summary",
-              "row_index": 7,
-              "sku_id": "SKU-SUP-004",
-              "affected_column": "review_candidate_warning_codes",
-              "value": "PAYMENT_TERMS_COST_NOT_MODELED"
-            },
-            {
-              "file": "phase2_strategy_summary",
-              "row_index": 8,
-              "sku_id": "SKU-TEA-002",
-              "affected_column": "review_candidate_warning_codes",
-              "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED"
-            },
-            {
-              "file": "phase2_strategy_summary",
-              "row_index": 9,
-              "sku_id": "SKU-UMR-007",
-              "affected_column": "review_candidate_warning_codes",
-              "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
+              "value": "CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED"
             }
           ]
         }
@@ -2179,16 +2364,45 @@
     {
       "check_id": "ALLOCATION_INFEASIBLE",
       "category": "ACTIVE_ISSUES",
-      "severity": "PASS",
-      "status": "PASS",
+      "severity": "WARNING",
+      "status": "WARNING",
       "description": "Infeasible allocations are blocked/reviewed.",
       "expected": "0 infeasible allocation rows",
-      "actual": [],
-      "affected_row_count": 0,
-      "affected_unique_key_count": 0,
-      "affected_keys": [],
+      "actual": [
+        {
+          "allocation_id": "ALLOC-SKU-BIKE-ROAD-001-1-REVIEW",
+          "sku_id": "SKU-BIKE-ROAD-001",
+          "supplier_id": "NO_FEASIBLE_SUPPLIER",
+          "allocation_warning_codes": "NO_FEASIBLE_SUPPLIER_CAPACITY"
+        },
+        {
+          "allocation_id": "ALLOC-SKU-BIKE-MT-001-1-REVIEW",
+          "sku_id": "SKU-BIKE-MT-001",
+          "supplier_id": "NO_FEASIBLE_SUPPLIER",
+          "allocation_warning_codes": "NO_FEASIBLE_SUPPLIER_CAPACITY"
+        }
+      ],
+      "affected_row_count": 2,
+      "affected_unique_key_count": 2,
+      "affected_keys": [
+        "SKU-BIKE-MT-001",
+        "SKU-BIKE-ROAD-001"
+      ],
       "evidence": {
-        "actual": []
+        "actual": [
+          {
+            "allocation_id": "ALLOC-SKU-BIKE-ROAD-001-1-REVIEW",
+            "sku_id": "SKU-BIKE-ROAD-001",
+            "supplier_id": "NO_FEASIBLE_SUPPLIER",
+            "allocation_warning_codes": "NO_FEASIBLE_SUPPLIER_CAPACITY"
+          },
+          {
+            "allocation_id": "ALLOC-SKU-BIKE-MT-001-1-REVIEW",
+            "sku_id": "SKU-BIKE-MT-001",
+            "supplier_id": "NO_FEASIBLE_SUPPLIER",
+            "allocation_warning_codes": "NO_FEASIBLE_SUPPLIER_CAPACITY"
+          }
+        ]
       },
       "suggested_fix": ""
     },
@@ -2595,6 +2809,7 @@
         "inconsistencies": [],
         "planning_blockers": [
           "ALLOCATION_ADJUSTMENT_REQUIRED",
+          "ALLOCATION_INFEASIBLE_DETAIL_ROWS",
           "ALLOCATION_INFEASIBLE_SUMMARY_ROWS",
           "UNALLOCATED_REQUIREMENT_REMAINS"
         ],
@@ -2608,6 +2823,7 @@
           "inconsistencies": [],
           "planning_blockers": [
             "ALLOCATION_ADJUSTMENT_REQUIRED",
+            "ALLOCATION_INFEASIBLE_DETAIL_ROWS",
             "ALLOCATION_INFEASIBLE_SUMMARY_ROWS",
             "UNALLOCATED_REQUIREMENT_REMAINS"
           ],
@@ -2655,13 +2871,23 @@
         {
           "sku_id": "SKU-TEA-002",
           "unallocated_requirement_units": 65.72
+        },
+        {
+          "sku_id": "SKU-BIKE-ROAD-001",
+          "unallocated_requirement_units": 86.0
+        },
+        {
+          "sku_id": "SKU-BIKE-MT-001",
+          "unallocated_requirement_units": 70.0
         }
       ],
-      "affected_row_count": 2,
-      "affected_unique_key_count": 2,
+      "affected_row_count": 4,
+      "affected_unique_key_count": 4,
       "affected_keys": [
         "SKU-COF-001",
-        "SKU-TEA-002"
+        "SKU-TEA-002",
+        "SKU-BIKE-ROAD-001",
+        "SKU-BIKE-MT-001"
       ],
       "evidence": {
         "actual": [
@@ -2672,6 +2898,14 @@
           {
             "sku_id": "SKU-TEA-002",
             "unallocated_requirement_units": 65.72
+          },
+          {
+            "sku_id": "SKU-BIKE-ROAD-001",
+            "unallocated_requirement_units": 86.0
+          },
+          {
+            "sku_id": "SKU-BIKE-MT-001",
+            "unallocated_requirement_units": 70.0
           }
         ]
       },
@@ -2694,13 +2928,25 @@
           "sku_id": "SKU-TEA-002",
           "adjustment_required_flag": true,
           "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
+        },
+        {
+          "sku_id": "SKU-BIKE-ROAD-001",
+          "adjustment_required_flag": true,
+          "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
+        },
+        {
+          "sku_id": "SKU-BIKE-MT-001",
+          "adjustment_required_flag": true,
+          "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
         }
       ],
-      "affected_row_count": 2,
-      "affected_unique_key_count": 2,
+      "affected_row_count": 4,
+      "affected_unique_key_count": 4,
       "affected_keys": [
         "SKU-COF-001",
-        "SKU-TEA-002"
+        "SKU-TEA-002",
+        "SKU-BIKE-ROAD-001",
+        "SKU-BIKE-MT-001"
       ],
       "evidence": {
         "actual": [
@@ -2713,6 +2959,167 @@
             "sku_id": "SKU-TEA-002",
             "adjustment_required_flag": true,
             "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
+          },
+          {
+            "sku_id": "SKU-BIKE-ROAD-001",
+            "adjustment_required_flag": true,
+            "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
+          },
+          {
+            "sku_id": "SKU-BIKE-MT-001",
+            "adjustment_required_flag": true,
+            "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
+          }
+        ]
+      },
+      "suggested_fix": ""
+    },
+    {
+      "check_id": "BATCH_INVENTORY_RECONCILIATION_REVIEW",
+      "category": "ACTIVE_ISSUES",
+      "severity": "WARNING",
+      "status": "WARNING",
+      "description": "Batch inventory reconciliation review is surfaced.",
+      "expected": "0 active reconciliation warnings",
+      "actual": [
+        {
+          "sku_id": "SKU-BIKE-ROAD-001",
+          "batch_inventory_reconciliation_difference": 0.0,
+          "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+        },
+        {
+          "sku_id": "SKU-BIKE-MT-001",
+          "batch_inventory_reconciliation_difference": 0.0,
+          "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+        },
+        {
+          "sku_id": "SKU-COMP-FRAME-ROAD-001",
+          "batch_inventory_reconciliation_difference": 0.0,
+          "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+        },
+        {
+          "sku_id": "SKU-COMP-FRAME-MT-001",
+          "batch_inventory_reconciliation_difference": 0.0,
+          "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+        },
+        {
+          "sku_id": "SKU-COMP-WHEEL-ROAD-700C",
+          "batch_inventory_reconciliation_difference": 0.0,
+          "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+        },
+        {
+          "sku_id": "SKU-COMP-WHEEL-MT-29",
+          "batch_inventory_reconciliation_difference": 0.0,
+          "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+        },
+        {
+          "sku_id": "SKU-COMP-TIRE-ROAD-700C",
+          "batch_inventory_reconciliation_difference": 0.0,
+          "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+        },
+        {
+          "sku_id": "SKU-COMP-TIRE-MT-29",
+          "batch_inventory_reconciliation_difference": 0.0,
+          "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+        },
+        {
+          "sku_id": "SKU-COMP-BRAKE-FRONT-001",
+          "batch_inventory_reconciliation_difference": 0.0,
+          "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+        },
+        {
+          "sku_id": "SKU-COMP-BRAKE-REAR-001",
+          "batch_inventory_reconciliation_difference": 0.0,
+          "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+        },
+        {
+          "sku_id": "SKU-COMP-PEDAL-SET-001",
+          "batch_inventory_reconciliation_difference": 0.0,
+          "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+        },
+        {
+          "sku_id": "SKU-COMP-BOLT-KIT-001",
+          "batch_inventory_reconciliation_difference": 0.0,
+          "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+        }
+      ],
+      "affected_row_count": 12,
+      "affected_unique_key_count": 12,
+      "affected_keys": [
+        "SKU-BIKE-ROAD-001",
+        "SKU-BIKE-MT-001",
+        "SKU-COMP-FRAME-ROAD-001",
+        "SKU-COMP-FRAME-MT-001",
+        "SKU-COMP-WHEEL-ROAD-700C",
+        "SKU-COMP-WHEEL-MT-29",
+        "SKU-COMP-TIRE-ROAD-700C",
+        "SKU-COMP-TIRE-MT-29",
+        "SKU-COMP-BRAKE-FRONT-001",
+        "SKU-COMP-BRAKE-REAR-001",
+        "SKU-COMP-PEDAL-SET-001",
+        "SKU-COMP-BOLT-KIT-001"
+      ],
+      "evidence": {
+        "actual": [
+          {
+            "sku_id": "SKU-BIKE-ROAD-001",
+            "batch_inventory_reconciliation_difference": 0.0,
+            "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+          },
+          {
+            "sku_id": "SKU-BIKE-MT-001",
+            "batch_inventory_reconciliation_difference": 0.0,
+            "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+          },
+          {
+            "sku_id": "SKU-COMP-FRAME-ROAD-001",
+            "batch_inventory_reconciliation_difference": 0.0,
+            "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+          },
+          {
+            "sku_id": "SKU-COMP-FRAME-MT-001",
+            "batch_inventory_reconciliation_difference": 0.0,
+            "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+          },
+          {
+            "sku_id": "SKU-COMP-WHEEL-ROAD-700C",
+            "batch_inventory_reconciliation_difference": 0.0,
+            "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+          },
+          {
+            "sku_id": "SKU-COMP-WHEEL-MT-29",
+            "batch_inventory_reconciliation_difference": 0.0,
+            "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+          },
+          {
+            "sku_id": "SKU-COMP-TIRE-ROAD-700C",
+            "batch_inventory_reconciliation_difference": 0.0,
+            "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+          },
+          {
+            "sku_id": "SKU-COMP-TIRE-MT-29",
+            "batch_inventory_reconciliation_difference": 0.0,
+            "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+          },
+          {
+            "sku_id": "SKU-COMP-BRAKE-FRONT-001",
+            "batch_inventory_reconciliation_difference": 0.0,
+            "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+          },
+          {
+            "sku_id": "SKU-COMP-BRAKE-REAR-001",
+            "batch_inventory_reconciliation_difference": 0.0,
+            "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+          },
+          {
+            "sku_id": "SKU-COMP-PEDAL-SET-001",
+            "batch_inventory_reconciliation_difference": 0.0,
+            "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
+          },
+          {
+            "sku_id": "SKU-COMP-BOLT-KIT-001",
+            "batch_inventory_reconciliation_difference": 0.0,
+            "batch_inventory_reconciliation_flag": "NO_BATCH_ROWS"
           }
         ]
       },
@@ -2726,7 +3133,7 @@
       "description": "Fallback cost or timing assumptions are surfaced with affected fields.",
       "expected": "no active fallback assumptions",
       "actual": {
-        "affected_rows": 49,
+        "affected_rows": 100,
         "affected_files": [
           "phase2_strategy_summary",
           "phase3_master_decisions"
@@ -2750,27 +3157,97 @@
           {
             "file": "phase2_strategy_summary",
             "row_index": 4,
-            "sku_id": "SKU-FIL-009",
+            "sku_id": "SKU-COMP-BOLT-KIT-001",
             "affected_column": "selected_option_warning_codes",
             "value": "PAYMENT_TERMS_COST_NOT_MODELED"
           },
           {
             "file": "phase2_strategy_summary",
             "row_index": 5,
-            "sku_id": "SKU-GFT-010",
+            "sku_id": "SKU-COMP-BRAKE-FRONT-001",
+            "affected_column": "selected_option_warning_codes",
+            "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 6,
+            "sku_id": "SKU-COMP-BRAKE-REAR-001",
             "affected_column": "selected_option_warning_codes",
             "value": "PAYMENT_TERMS_COST_NOT_MODELED"
           },
           {
             "file": "phase2_strategy_summary",
             "row_index": 7,
+            "sku_id": "SKU-COMP-FRAME-MT-001",
+            "affected_column": "selected_option_warning_codes",
+            "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 8,
+            "sku_id": "SKU-COMP-FRAME-ROAD-001",
+            "affected_column": "selected_option_warning_codes",
+            "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 9,
+            "sku_id": "SKU-COMP-PEDAL-SET-001",
+            "affected_column": "selected_option_warning_codes",
+            "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 10,
+            "sku_id": "SKU-COMP-TIRE-MT-29",
+            "affected_column": "selected_option_warning_codes",
+            "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 11,
+            "sku_id": "SKU-COMP-TIRE-ROAD-700C",
+            "affected_column": "selected_option_warning_codes",
+            "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 12,
+            "sku_id": "SKU-COMP-WHEEL-MT-29",
+            "affected_column": "selected_option_warning_codes",
+            "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 13,
+            "sku_id": "SKU-COMP-WHEEL-ROAD-700C",
+            "affected_column": "selected_option_warning_codes",
+            "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 14,
+            "sku_id": "SKU-FIL-009",
+            "affected_column": "selected_option_warning_codes",
+            "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 15,
+            "sku_id": "SKU-GFT-010",
+            "affected_column": "selected_option_warning_codes",
+            "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+          },
+          {
+            "file": "phase2_strategy_summary",
+            "row_index": 17,
             "sku_id": "SKU-SUP-004",
             "affected_column": "selected_option_warning_codes",
             "value": "PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
           },
           {
             "file": "phase2_strategy_summary",
-            "row_index": 9,
+            "row_index": 19,
             "sku_id": "SKU-UMR-007",
             "affected_column": "selected_option_warning_codes",
             "value": "PAYMENT_TERMS_COST_NOT_MODELED"
@@ -2806,124 +3283,64 @@
           {
             "file": "phase2_strategy_summary",
             "row_index": 4,
-            "sku_id": "SKU-FIL-009",
+            "sku_id": "SKU-COMP-BOLT-KIT-001",
             "affected_column": "sku_option_pool_warning_codes",
-            "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+            "value": "CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED"
           },
           {
             "file": "phase2_strategy_summary",
             "row_index": 5,
-            "sku_id": "SKU-GFT-010",
+            "sku_id": "SKU-COMP-BRAKE-FRONT-001",
             "affected_column": "sku_option_pool_warning_codes",
             "value": "CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED"
           },
           {
             "file": "phase2_strategy_summary",
             "row_index": 6,
-            "sku_id": "SKU-SUN-003",
+            "sku_id": "SKU-COMP-BRAKE-REAR-001",
             "affected_column": "sku_option_pool_warning_codes",
-            "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED"
+            "value": "CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED"
           },
           {
             "file": "phase2_strategy_summary",
             "row_index": 7,
-            "sku_id": "SKU-SUP-004",
+            "sku_id": "SKU-COMP-FRAME-MT-001",
             "affected_column": "sku_option_pool_warning_codes",
-            "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
+            "value": "CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED"
           },
           {
             "file": "phase2_strategy_summary",
             "row_index": 8,
-            "sku_id": "SKU-TEA-002",
+            "sku_id": "SKU-COMP-FRAME-ROAD-001",
             "affected_column": "sku_option_pool_warning_codes",
-            "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
+            "value": "CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED"
           },
           {
             "file": "phase2_strategy_summary",
             "row_index": 9,
-            "sku_id": "SKU-UMR-007",
+            "sku_id": "SKU-COMP-PEDAL-SET-001",
             "affected_column": "sku_option_pool_warning_codes",
-            "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
-          },
-          {
-            "file": "phase2_strategy_summary",
-            "row_index": 0,
-            "sku_id": "SKU-BAT-008",
-            "affected_column": "review_candidate_warning_codes",
-            "value": "BASE_SUPPLIER_OPTION_INFEASIBLE;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
-          },
-          {
-            "file": "phase2_strategy_summary",
-            "row_index": 1,
-            "sku_id": "SKU-BBQ-006",
-            "affected_column": "review_candidate_warning_codes",
-            "value": "BASE_SUPPLIER_OPTION_INFEASIBLE;CAPACITY_SHORTFALL;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
-          },
-          {
-            "file": "phase2_strategy_summary",
-            "row_index": 2,
-            "sku_id": "SKU-CHC-005",
-            "affected_column": "review_candidate_warning_codes",
-            "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
-          },
-          {
-            "file": "phase2_strategy_summary",
-            "row_index": 3,
-            "sku_id": "SKU-COF-001",
-            "affected_column": "review_candidate_warning_codes",
-            "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED"
-          },
-          {
-            "file": "phase2_strategy_summary",
-            "row_index": 4,
-            "sku_id": "SKU-FIL-009",
-            "affected_column": "review_candidate_warning_codes",
-            "value": "BASE_SUPPLIER_OPTION_INFEASIBLE;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
-          },
-          {
-            "file": "phase2_strategy_summary",
-            "row_index": 5,
-            "sku_id": "SKU-GFT-010",
-            "affected_column": "review_candidate_warning_codes",
-            "value": "CUSTOMS_COST_FALLBACK_USED;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
-          },
-          {
-            "file": "phase2_strategy_summary",
-            "row_index": 6,
-            "sku_id": "SKU-SUN-003",
-            "affected_column": "review_candidate_warning_codes",
-            "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
-          },
-          {
-            "file": "phase2_strategy_summary",
-            "row_index": 7,
-            "sku_id": "SKU-SUP-004",
-            "affected_column": "review_candidate_warning_codes",
-            "value": "PAYMENT_TERMS_COST_NOT_MODELED"
-          },
-          {
-            "file": "phase2_strategy_summary",
-            "row_index": 8,
-            "sku_id": "SKU-TEA-002",
-            "affected_column": "review_candidate_warning_codes",
-            "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED"
-          },
-          {
-            "file": "phase2_strategy_summary",
-            "row_index": 9,
-            "sku_id": "SKU-UMR-007",
-            "affected_column": "review_candidate_warning_codes",
-            "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
+            "value": "CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED"
           }
         ]
       },
-      "affected_row_count": 49,
-      "affected_unique_key_count": 10,
+      "affected_row_count": 100,
+      "affected_unique_key_count": 20,
       "affected_keys": [
         "SKU-BAT-008",
         "SKU-BBQ-006",
         "SKU-CHC-005",
         "SKU-COF-001",
+        "SKU-COMP-BOLT-KIT-001",
+        "SKU-COMP-BRAKE-FRONT-001",
+        "SKU-COMP-BRAKE-REAR-001",
+        "SKU-COMP-FRAME-MT-001",
+        "SKU-COMP-FRAME-ROAD-001",
+        "SKU-COMP-PEDAL-SET-001",
+        "SKU-COMP-TIRE-MT-29",
+        "SKU-COMP-TIRE-ROAD-700C",
+        "SKU-COMP-WHEEL-MT-29",
+        "SKU-COMP-WHEEL-ROAD-700C",
         "SKU-FIL-009",
         "SKU-GFT-010",
         "SKU-SUN-003",
@@ -2933,7 +3350,7 @@
       ],
       "evidence": {
         "actual": {
-          "affected_rows": 49,
+          "affected_rows": 100,
           "affected_files": [
             "phase2_strategy_summary",
             "phase3_master_decisions"
@@ -2957,27 +3374,97 @@
             {
               "file": "phase2_strategy_summary",
               "row_index": 4,
-              "sku_id": "SKU-FIL-009",
+              "sku_id": "SKU-COMP-BOLT-KIT-001",
               "affected_column": "selected_option_warning_codes",
               "value": "PAYMENT_TERMS_COST_NOT_MODELED"
             },
             {
               "file": "phase2_strategy_summary",
               "row_index": 5,
-              "sku_id": "SKU-GFT-010",
+              "sku_id": "SKU-COMP-BRAKE-FRONT-001",
+              "affected_column": "selected_option_warning_codes",
+              "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 6,
+              "sku_id": "SKU-COMP-BRAKE-REAR-001",
               "affected_column": "selected_option_warning_codes",
               "value": "PAYMENT_TERMS_COST_NOT_MODELED"
             },
             {
               "file": "phase2_strategy_summary",
               "row_index": 7,
+              "sku_id": "SKU-COMP-FRAME-MT-001",
+              "affected_column": "selected_option_warning_codes",
+              "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 8,
+              "sku_id": "SKU-COMP-FRAME-ROAD-001",
+              "affected_column": "selected_option_warning_codes",
+              "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 9,
+              "sku_id": "SKU-COMP-PEDAL-SET-001",
+              "affected_column": "selected_option_warning_codes",
+              "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 10,
+              "sku_id": "SKU-COMP-TIRE-MT-29",
+              "affected_column": "selected_option_warning_codes",
+              "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 11,
+              "sku_id": "SKU-COMP-TIRE-ROAD-700C",
+              "affected_column": "selected_option_warning_codes",
+              "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 12,
+              "sku_id": "SKU-COMP-WHEEL-MT-29",
+              "affected_column": "selected_option_warning_codes",
+              "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 13,
+              "sku_id": "SKU-COMP-WHEEL-ROAD-700C",
+              "affected_column": "selected_option_warning_codes",
+              "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 14,
+              "sku_id": "SKU-FIL-009",
+              "affected_column": "selected_option_warning_codes",
+              "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 15,
+              "sku_id": "SKU-GFT-010",
+              "affected_column": "selected_option_warning_codes",
+              "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+            },
+            {
+              "file": "phase2_strategy_summary",
+              "row_index": 17,
               "sku_id": "SKU-SUP-004",
               "affected_column": "selected_option_warning_codes",
               "value": "PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
             },
             {
               "file": "phase2_strategy_summary",
-              "row_index": 9,
+              "row_index": 19,
               "sku_id": "SKU-UMR-007",
               "affected_column": "selected_option_warning_codes",
               "value": "PAYMENT_TERMS_COST_NOT_MODELED"
@@ -3013,119 +3500,94 @@
             {
               "file": "phase2_strategy_summary",
               "row_index": 4,
-              "sku_id": "SKU-FIL-009",
+              "sku_id": "SKU-COMP-BOLT-KIT-001",
               "affected_column": "sku_option_pool_warning_codes",
-              "value": "PAYMENT_TERMS_COST_NOT_MODELED"
+              "value": "CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED"
             },
             {
               "file": "phase2_strategy_summary",
               "row_index": 5,
-              "sku_id": "SKU-GFT-010",
+              "sku_id": "SKU-COMP-BRAKE-FRONT-001",
               "affected_column": "sku_option_pool_warning_codes",
               "value": "CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED"
             },
             {
               "file": "phase2_strategy_summary",
               "row_index": 6,
-              "sku_id": "SKU-SUN-003",
+              "sku_id": "SKU-COMP-BRAKE-REAR-001",
               "affected_column": "sku_option_pool_warning_codes",
-              "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED"
+              "value": "CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED"
             },
             {
               "file": "phase2_strategy_summary",
               "row_index": 7,
-              "sku_id": "SKU-SUP-004",
+              "sku_id": "SKU-COMP-FRAME-MT-001",
               "affected_column": "sku_option_pool_warning_codes",
-              "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
+              "value": "CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED"
             },
             {
               "file": "phase2_strategy_summary",
               "row_index": 8,
-              "sku_id": "SKU-TEA-002",
+              "sku_id": "SKU-COMP-FRAME-ROAD-001",
               "affected_column": "sku_option_pool_warning_codes",
-              "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
+              "value": "CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED"
             },
             {
               "file": "phase2_strategy_summary",
               "row_index": 9,
-              "sku_id": "SKU-UMR-007",
+              "sku_id": "SKU-COMP-PEDAL-SET-001",
               "affected_column": "sku_option_pool_warning_codes",
-              "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED;WAREHOUSE_CAPACITY_REVIEW_REQUIRED_FOR_SPLIT_DELIVERY"
-            },
-            {
-              "file": "phase2_strategy_summary",
-              "row_index": 0,
-              "sku_id": "SKU-BAT-008",
-              "affected_column": "review_candidate_warning_codes",
-              "value": "BASE_SUPPLIER_OPTION_INFEASIBLE;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
-            },
-            {
-              "file": "phase2_strategy_summary",
-              "row_index": 1,
-              "sku_id": "SKU-BBQ-006",
-              "affected_column": "review_candidate_warning_codes",
-              "value": "BASE_SUPPLIER_OPTION_INFEASIBLE;CAPACITY_SHORTFALL;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
-            },
-            {
-              "file": "phase2_strategy_summary",
-              "row_index": 2,
-              "sku_id": "SKU-CHC-005",
-              "affected_column": "review_candidate_warning_codes",
-              "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
-            },
-            {
-              "file": "phase2_strategy_summary",
-              "row_index": 3,
-              "sku_id": "SKU-COF-001",
-              "affected_column": "review_candidate_warning_codes",
-              "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED"
-            },
-            {
-              "file": "phase2_strategy_summary",
-              "row_index": 4,
-              "sku_id": "SKU-FIL-009",
-              "affected_column": "review_candidate_warning_codes",
-              "value": "BASE_SUPPLIER_OPTION_INFEASIBLE;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
-            },
-            {
-              "file": "phase2_strategy_summary",
-              "row_index": 5,
-              "sku_id": "SKU-GFT-010",
-              "affected_column": "review_candidate_warning_codes",
-              "value": "CUSTOMS_COST_FALLBACK_USED;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
-            },
-            {
-              "file": "phase2_strategy_summary",
-              "row_index": 6,
-              "sku_id": "SKU-SUN-003",
-              "affected_column": "review_candidate_warning_codes",
-              "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
-            },
-            {
-              "file": "phase2_strategy_summary",
-              "row_index": 7,
-              "sku_id": "SKU-SUP-004",
-              "affected_column": "review_candidate_warning_codes",
-              "value": "PAYMENT_TERMS_COST_NOT_MODELED"
-            },
-            {
-              "file": "phase2_strategy_summary",
-              "row_index": 8,
-              "sku_id": "SKU-TEA-002",
-              "affected_column": "review_candidate_warning_codes",
-              "value": "CAPACITY_SHORTFALL;PAYMENT_TERMS_COST_NOT_MODELED"
-            },
-            {
-              "file": "phase2_strategy_summary",
-              "row_index": 9,
-              "sku_id": "SKU-UMR-007",
-              "affected_column": "review_candidate_warning_codes",
-              "value": "CAPACITY_SHORTFALL;CUSTOMS_COST_FALLBACK_USED;LOW_ORDER_ACCEPTANCE_PROBABILITY;PAYMENT_TERMS_COST_NOT_MODELED"
+              "value": "CUSTOMS_COST_FALLBACK_USED;PAYMENT_TERMS_COST_NOT_MODELED"
             }
           ]
         }
       },
       "suggested_fix": "Replace fallback assumptions with explicit cost, timing, or policy source fields when available."
+    },
+    {
+      "check_id": "ALLOCATION_INFEASIBLE",
+      "category": "ACTIVE_ISSUES",
+      "severity": "WARNING",
+      "status": "WARNING",
+      "description": "Infeasible allocations are blocked/reviewed.",
+      "expected": "0 infeasible allocation rows",
+      "actual": [
+        {
+          "allocation_id": "ALLOC-SKU-BIKE-ROAD-001-1-REVIEW",
+          "sku_id": "SKU-BIKE-ROAD-001",
+          "supplier_id": "NO_FEASIBLE_SUPPLIER",
+          "allocation_warning_codes": "NO_FEASIBLE_SUPPLIER_CAPACITY"
+        },
+        {
+          "allocation_id": "ALLOC-SKU-BIKE-MT-001-1-REVIEW",
+          "sku_id": "SKU-BIKE-MT-001",
+          "supplier_id": "NO_FEASIBLE_SUPPLIER",
+          "allocation_warning_codes": "NO_FEASIBLE_SUPPLIER_CAPACITY"
+        }
+      ],
+      "affected_row_count": 2,
+      "affected_unique_key_count": 2,
+      "affected_keys": [
+        "SKU-BIKE-MT-001",
+        "SKU-BIKE-ROAD-001"
+      ],
+      "evidence": {
+        "actual": [
+          {
+            "allocation_id": "ALLOC-SKU-BIKE-ROAD-001-1-REVIEW",
+            "sku_id": "SKU-BIKE-ROAD-001",
+            "supplier_id": "NO_FEASIBLE_SUPPLIER",
+            "allocation_warning_codes": "NO_FEASIBLE_SUPPLIER_CAPACITY"
+          },
+          {
+            "allocation_id": "ALLOC-SKU-BIKE-MT-001-1-REVIEW",
+            "sku_id": "SKU-BIKE-MT-001",
+            "supplier_id": "NO_FEASIBLE_SUPPLIER",
+            "allocation_warning_codes": "NO_FEASIBLE_SUPPLIER_CAPACITY"
+          }
+        ]
+      },
+      "suggested_fix": ""
     }
   ],
   "warning_catalog": [
@@ -3171,37 +3633,37 @@
     }
   ],
   "key_metrics": {
-    "sku_count": 10,
-    "net_requirement_total": 4758.0,
-    "allocated_usable_total": 4303.71,
-    "end_to_end_requirement_coverage_rate": 0.904521,
-    "planning_exception_rate": 0.7,
+    "sku_count": 22,
+    "net_requirement_total": 4941.0,
+    "allocated_usable_total": 4350.71,
+    "end_to_end_requirement_coverage_rate": 0.880532,
+    "planning_exception_rate": 0.409091,
     "split_sourcing_count": 3,
     "auto_apply_true_count": 0
   },
   "strategy_counts": {
     "phase2_supplier_strategy_counts": {
+      "CURRENT_SUPPLIER": 11,
       "REVIEW_SPLIT_SOURCING_PLAN": 4,
       "BALANCED_SUPPLIER": 2,
-      "CURRENT_SUPPLIER": 1,
       "SPLIT_DELIVERY_CURRENT_SUPPLIER": 1,
       "REVIEW_AGGREGATE_CAPACITY_SHORTFALL": 1,
       "EXPEDITE_ALTERNATIVE_SUPPLIER": 1
     },
     "integrated_recommendation_counts": {
-      "REVIEW_BEFORE_ACTION": 7,
-      "NO_PROCUREMENT_ACTION_REQUIRED": 3
+      "NO_PROCUREMENT_ACTION_REQUIRED": 13,
+      "REVIEW_BEFORE_ACTION": 9
     },
     "integrated_priority_counts": {
-      "HIGH": 5,
-      "LOW": 3,
+      "LOW": 13,
+      "HIGH": 7,
       "URGENT": 2
     }
   },
   "representative_rows": {
     "healthy_or_no_order_sku": {
       "schema_version": 1.0,
-      "run_id": "INTEGRATED-20260611194759",
+      "run_id": "INTEGRATED-20260623120202",
       "sku_id": "SKU-BBQ-006",
       "final_iteration": 1,
       "convergence_status": "CONVERGED_WITH_REVIEW",
@@ -3209,12 +3671,12 @@
       "demand_urgency_score": 55.0,
       "forecast_uncertainty_level": "LOW",
       "usable_on_hand_inventory_units": 671.0,
-      "integrated_inventory_position_units": 803.0,
+      "integrated_inventory_position_units": 585.0,
       "safety_stock_units": 84.0,
       "reorder_point_units": 327.0,
       "main_inventory_status": "OVERSTOCK",
       "net_replenishment_requirement_units": 0.0,
-      "maximum_safe_order_units": 49.0,
+      "maximum_safe_order_units": 0.0,
       "selected_supplier_ids": null,
       "supplier_allocation_plan": null,
       "total_allocated_usable_quantity": 0.0,
@@ -3247,12 +3709,12 @@
     },
     "stockout_sku": {
       "schema_version": 1.0,
-      "run_id": "INTEGRATED-20260611194759",
+      "run_id": "INTEGRATED-20260623120202",
       "planning_iteration": 1,
-      "generated_at": "2026-06-11T19:48:10Z",
+      "generated_at": "2026-06-23T12:02:48Z",
       "source_phase": "PHASE_3",
       "target_phase": "PHASE_2",
-      "data_as_of_date": "2026-06-11",
+      "data_as_of_date": "2026-06-23",
       "sku_id": "SKU-SUP-004",
       "gross_forecast_demand_7d": 53.5958,
       "gross_forecast_demand_30d": 229.3571,
@@ -3309,7 +3771,7 @@
       "order_quantity_before_supplier_constraints": 1200.0,
       "maximum_safe_order_units": 2124.0,
       "expiry_constrained_max_order_units": 0,
-      "movement_constrained_max_order_units": 0,
+      "movement_constrained_max_order_units": 0.0,
       "existing_inventory_constrained_max_order_units": 2124.0,
       "warehouse_constrained_max_order_units": 2124.0,
       "final_inventory_constraint_cap_units": 2124.0,
@@ -3332,12 +3794,12 @@
     },
     "split_sourcing_sku": {
       "schema_version": 1.0,
-      "run_id": "INTEGRATED-20260611194759",
+      "run_id": "INTEGRATED-20260623120202",
       "planning_iteration": 1,
-      "generated_at": "2026-06-11T19:48:09Z",
+      "generated_at": "2026-06-23T12:02:46Z",
       "source_phase": "PHASE_2",
       "target_phase": "PHASE_3",
-      "data_as_of_date": "2026-06-11",
+      "data_as_of_date": "2026-06-23",
       "sku_id": "SKU-COF-001",
       "requested_requirement_units": 1880.0,
       "total_allocated_usable_quantity": 1491.43,
@@ -3348,8 +3810,8 @@
       "supplier_count": 4,
       "split_sourcing_used_flag": true,
       "expedite_used_flag": false,
-      "earliest_arrival_date": "2026-06-13",
-      "final_arrival_date": "2026-06-27",
+      "earliest_arrival_date": "2026-06-25",
+      "final_arrival_date": "2026-07-09",
       "total_procurement_cost": 4511.55,
       "total_risk_adjusted_procurement_cost": 4737.13,
       "allocation_feasible_flag": false,
@@ -3363,12 +3825,12 @@
     },
     "aggregate_capacity_shortfall_sku": {
       "schema_version": 1.0,
-      "run_id": "INTEGRATED-20260611194759",
+      "run_id": "INTEGRATED-20260623120202",
       "planning_iteration": 1,
-      "generated_at": "2026-06-11T19:48:09Z",
+      "generated_at": "2026-06-23T12:02:46Z",
       "source_phase": "PHASE_2",
       "target_phase": "PHASE_3",
-      "data_as_of_date": "2026-06-11",
+      "data_as_of_date": "2026-06-23",
       "sku_id": "SKU-COF-001",
       "requested_requirement_units": 1880.0,
       "total_allocated_usable_quantity": 1491.43,
@@ -3379,8 +3841,8 @@
       "supplier_count": 4,
       "split_sourcing_used_flag": true,
       "expedite_used_flag": false,
-      "earliest_arrival_date": "2026-06-13",
-      "final_arrival_date": "2026-06-27",
+      "earliest_arrival_date": "2026-06-25",
+      "final_arrival_date": "2026-07-09",
       "total_procurement_cost": 4511.55,
       "total_risk_adjusted_procurement_cost": 4737.13,
       "allocation_feasible_flag": false,
@@ -3403,7 +3865,7 @@
       "secondary_status_flags": "SUPPLIER_REVIEW_REQUIRED;WATCHLIST_SUPPLIER;PHASE4_REVIEW_REQUIRED;POLICY_REVIEW_REQUIRED;QUANTITY_CONSTRAINT_ACTIVE;HIGH_MOQ_OVERSTOCK_RISK",
       "primary_action": "EXPEDITE_ORDER",
       "action_priority": "URGENT",
-      "abc_class": "A",
+      "abc_class": "B",
       "xyz_class": "Y",
       "fsn_class": "F",
       "movement_class": "FAST_MOVING",

@@ -1,6 +1,6 @@
 kpi_category,kpi_name,kpi_value,kpi_unit,kpi_data_quality,kpi_explanation
-REQUIREMENT,requirement_coverage_rate,0.904521,ratio,AVAILABLE,Allocated usable quantity divided by requested usable requirement.
-REQUIREMENT,unallocated_requirement_rate,0.095479,ratio,AVAILABLE,Unallocated requirement divided by requested requirement.
+REQUIREMENT,requirement_coverage_rate,0.876982,ratio,AVAILABLE,Allocated usable quantity divided by requested usable requirement.
+REQUIREMENT,unallocated_requirement_rate,0.123018,ratio,AVAILABLE,Unallocated requirement divided by requested requirement.
 CONCENTRATION,average_top_supplier_allocation_share,0.840195,ratio,AVAILABLE,Average largest-supplier allocation share across allocated SKUs.
-CAPACITY,average_supplier_capacity_utilization_rate,0.686396,ratio,AVAILABLE,Weighted allocation utilization: total allocated usable quantity divided by total relevant supplier horizon capacity.
-COST,average_total_procurement_cost_per_usable_unit,6.159655,currency/unit,AVAILABLE,Weighted procurement cost: total procurement cost across active allocations divided by total usable allocated quantity.
+CAPACITY,average_supplier_capacity_utilization_rate,0.693892,ratio,AVAILABLE,Weighted allocation utilization: total allocated usable quantity divided by total relevant supplier horizon capacity.
+COST,average_total_procurement_cost_per_usable_unit,6.17604,currency/unit,AVAILABLE,Weighted procurement cost: total procurement cost across active allocations divided by total usable allocated quantity.

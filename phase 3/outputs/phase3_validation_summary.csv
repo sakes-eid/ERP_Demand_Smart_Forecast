@@ -44,86 +44,86 @@ REQ-0042,REQUIRED_FILES,Required file exists: inventory_control_manager_dashboar
 REQ-0043,REQUIRED_FILES,Required file exists: inventory_employee_task_view.csv,PASS,PASS,File exists and is non-empty.,inventory_employee_task_view.csv,,,
 REQ-0044,REQUIRED_FILES,Required HTML map exists: warehouse_2d_map.html,PASS,PASS,HTML map exists and is non-empty.,warehouse_2d_map.html,,,
 REQ-0045,REQUIRED_FILES,Required HTML map exists: warehouse_3d_map.html,PASS,PASS,HTML map exists and is non-empty.,warehouse_3d_map.html,,,
-SAF-0046,SAFE_LOAD,Load inventory_clean.csv,PASS,PASS,Loaded 10 rows and 27 columns.,inventory_clean.csv,,,
+SAF-0046,SAFE_LOAD,Load inventory_clean.csv,PASS,PASS,Loaded 22 rows and 27 columns.,inventory_clean.csv,,,
 SAF-0047,SAFE_LOAD,Load inventory_batches_clean.csv,PASS,PASS,Loaded 23 rows and 20 columns.,inventory_batches_clean.csv,,,
 SAF-0048,SAFE_LOAD,Load inventory_movements_clean.csv,PASS,PASS,Loaded 40 rows and 14 columns.,inventory_movements_clean.csv,,,
 SAF-0049,SAFE_LOAD,Load warehouse_layout_clean.csv,PASS,PASS,Loaded 1 rows and 20 columns.,warehouse_layout_clean.csv,,,
 SAF-0050,SAFE_LOAD,Load storage_locations_clean.csv,PASS,PASS,Loaded 16 rows and 31 columns.,storage_locations_clean.csv,,,
-SAF-0051,SAFE_LOAD,Load sku_storage_requirements_clean.csv,PASS,PASS,Loaded 10 rows and 22 columns.,sku_storage_requirements_clean.csv,,,
-SAF-0052,SAFE_LOAD,Load inventory_planning_context.csv,PASS,PASS,Loaded 10 rows and 161 columns.,inventory_planning_context.csv,,,
-SAF-0053,SAFE_LOAD,Load inventory_classification.csv,PASS,PASS,Loaded 10 rows and 42 columns.,inventory_classification.csv,,,
-SAF-0054,SAFE_LOAD,Load inventory_service_levels.csv,PASS,PASS,Loaded 10 rows and 65 columns.,inventory_service_levels.csv,,,
-SAF-0055,SAFE_LOAD,Load inventory_policy.csv,PASS,PASS,Loaded 10 rows and 118 columns.,inventory_policy.csv,,,
-SAF-0056,SAFE_LOAD,Load inventory_policy_parameters.csv,PASS,PASS,Loaded 10 rows and 57 columns.,inventory_policy_parameters.csv,,,
-SAF-0057,SAFE_LOAD,Load inventory_status.csv,PASS,PASS,Loaded 10 rows and 74 columns.,inventory_status.csv,,,
-SAF-0058,SAFE_LOAD,Load inventory_action_recommendations.csv,PASS,PASS,Loaded 10 rows and 17 columns.,inventory_action_recommendations.csv,,,
-SAF-0059,SAFE_LOAD,Load inventory_costs.csv,PASS,PASS,Loaded 10 rows and 111 columns.,inventory_costs.csv,,,
-SAF-0060,SAFE_LOAD,Load inventory_cost_summary.csv,PASS,PASS,Loaded 30 rows and 7 columns.,inventory_cost_summary.csv,,,
-SAF-0061,SAFE_LOAD,Load warehouse_slotting.csv,PASS,PASS,Loaded 10 rows and 153 columns.,warehouse_slotting.csv,,,
+SAF-0051,SAFE_LOAD,Load sku_storage_requirements_clean.csv,PASS,PASS,Loaded 22 rows and 22 columns.,sku_storage_requirements_clean.csv,,,
+SAF-0052,SAFE_LOAD,Load inventory_planning_context.csv,PASS,PASS,Loaded 22 rows and 161 columns.,inventory_planning_context.csv,,,
+SAF-0053,SAFE_LOAD,Load inventory_classification.csv,PASS,PASS,Loaded 22 rows and 42 columns.,inventory_classification.csv,,,
+SAF-0054,SAFE_LOAD,Load inventory_service_levels.csv,PASS,PASS,Loaded 22 rows and 65 columns.,inventory_service_levels.csv,,,
+SAF-0055,SAFE_LOAD,Load inventory_policy.csv,PASS,PASS,Loaded 22 rows and 118 columns.,inventory_policy.csv,,,
+SAF-0056,SAFE_LOAD,Load inventory_policy_parameters.csv,PASS,PASS,Loaded 22 rows and 57 columns.,inventory_policy_parameters.csv,,,
+SAF-0057,SAFE_LOAD,Load inventory_status.csv,PASS,PASS,Loaded 22 rows and 74 columns.,inventory_status.csv,,,
+SAF-0058,SAFE_LOAD,Load inventory_action_recommendations.csv,PASS,PASS,Loaded 22 rows and 17 columns.,inventory_action_recommendations.csv,,,
+SAF-0059,SAFE_LOAD,Load inventory_costs.csv,PASS,PASS,Loaded 22 rows and 111 columns.,inventory_costs.csv,,,
+SAF-0060,SAFE_LOAD,Load inventory_cost_summary.csv,PASS,PASS,Loaded 32 rows and 7 columns.,inventory_cost_summary.csv,,,
+SAF-0061,SAFE_LOAD,Load warehouse_slotting.csv,PASS,PASS,Loaded 22 rows and 153 columns.,warehouse_slotting.csv,,,
 SAF-0062,SAFE_LOAD,Load batch_slotting.csv,PASS,PASS,Loaded 23 rows and 41 columns.,batch_slotting.csv,,,
 SAF-0063,SAFE_LOAD,Load location_utilization.csv,PASS,PASS,Loaded 16 rows and 68 columns.,location_utilization.csv,,,
 SAF-0064,SAFE_LOAD,Load space_utilization.csv,PASS,PASS,Loaded 11 rows and 36 columns.,space_utilization.csv,,,
-SAF-0065,SAFE_LOAD,Load warehouse_travel_costs.csv,PASS,PASS,Loaded 10 rows and 27 columns.,warehouse_travel_costs.csv,,,
+SAF-0065,SAFE_LOAD,Load warehouse_travel_costs.csv,PASS,PASS,Loaded 22 rows and 27 columns.,warehouse_travel_costs.csv,,,
 SAF-0066,SAFE_LOAD,Load warehouse_visual_grid.csv,PASS,PASS,Loaded 16 rows and 20 columns.,warehouse_visual_grid.csv,,,
 SAF-0067,SAFE_LOAD,Load warehouse_visual_locations.csv,PASS,PASS,Loaded 16 rows and 45 columns.,warehouse_visual_locations.csv,,,
-SAF-0068,SAFE_LOAD,Load warehouse_visual_skus.csv,PASS,PASS,Loaded 10 rows and 47 columns.,warehouse_visual_skus.csv,,,
+SAF-0068,SAFE_LOAD,Load warehouse_visual_skus.csv,PASS,PASS,Loaded 22 rows and 47 columns.,warehouse_visual_skus.csv,,,
 SAF-0069,SAFE_LOAD,Load warehouse_visual_batches.csv,PASS,PASS,Loaded 23 rows and 32 columns.,warehouse_visual_batches.csv,,,
 SAF-0070,SAFE_LOAD,Load warehouse_visual_legend.csv,PASS,PASS,Loaded 19 rows and 5 columns.,warehouse_visual_legend.csv,,,
-SAF-0071,SAFE_LOAD,Load warehouse_visual_summary.csv,PASS,PASS,Loaded 36 rows and 10 columns.,warehouse_visual_summary.csv,,,
-SAF-0072,SAFE_LOAD,Load inventory_re_evaluation.csv,PASS,PASS,Loaded 10 rows and 106 columns.,inventory_re_evaluation.csv,,,
-SAF-0073,SAFE_LOAD,Load inventory_parameter_adjustment_recommendations.csv,PASS,PASS,Loaded 10 rows and 44 columns.,inventory_parameter_adjustment_recommendations.csv,,,
-SAF-0074,SAFE_LOAD,Load re_evaluation_summary.csv,PASS,PASS,Loaded 61 rows and 12 columns.,re_evaluation_summary.csv,,,
-SAF-0075,SAFE_LOAD,Load inventory_scenarios.csv,PASS,PASS,Loaded 144 rows and 20 columns.,inventory_scenarios.csv,,,
-SAF-0076,SAFE_LOAD,Load inventory_scenario_results.csv,PASS,PASS,Loaded 144 rows and 71 columns.,inventory_scenario_results.csv,,,
-SAF-0077,SAFE_LOAD,Load inventory_optimization_recommendations.csv,PASS,PASS,Loaded 10 rows and 77 columns.,inventory_optimization_recommendations.csv,,,
-SAF-0078,SAFE_LOAD,Load inventory_optimization_summary.csv,PASS,PASS,Loaded 80 rows and 39 columns.,inventory_optimization_summary.csv,,,
-SAF-0079,SAFE_LOAD,Load inventory_control_master_decisions.csv,PASS,PASS,Loaded 10 rows and 98 columns.,inventory_control_master_decisions.csv,,,
-SAF-0080,SAFE_LOAD,Load inventory_control_human_review_queue.csv,PASS,PASS,Loaded 5 rows and 35 columns.,inventory_control_human_review_queue.csv,,,
-SAF-0081,SAFE_LOAD,Load inventory_control_advisory_review_queue.csv,PASS,PASS,Loaded 5 rows and 21 columns.,inventory_control_advisory_review_queue.csv,,,
+SAF-0071,SAFE_LOAD,Load warehouse_visual_summary.csv,PASS,PASS,Loaded 40 rows and 10 columns.,warehouse_visual_summary.csv,,,
+SAF-0072,SAFE_LOAD,Load inventory_re_evaluation.csv,PASS,PASS,Loaded 22 rows and 106 columns.,inventory_re_evaluation.csv,,,
+SAF-0073,SAFE_LOAD,Load inventory_parameter_adjustment_recommendations.csv,PASS,PASS,Loaded 22 rows and 44 columns.,inventory_parameter_adjustment_recommendations.csv,,,
+SAF-0074,SAFE_LOAD,Load re_evaluation_summary.csv,PASS,PASS,Loaded 57 rows and 12 columns.,re_evaluation_summary.csv,,,
+SAF-0075,SAFE_LOAD,Load inventory_scenarios.csv,PASS,PASS,Loaded 403 rows and 20 columns.,inventory_scenarios.csv,,,
+SAF-0076,SAFE_LOAD,Load inventory_scenario_results.csv,PASS,PASS,Loaded 403 rows and 71 columns.,inventory_scenario_results.csv,,,
+SAF-0077,SAFE_LOAD,Load inventory_optimization_recommendations.csv,PASS,PASS,Loaded 22 rows and 77 columns.,inventory_optimization_recommendations.csv,,,
+SAF-0078,SAFE_LOAD,Load inventory_optimization_summary.csv,PASS,PASS,Loaded 89 rows and 39 columns.,inventory_optimization_summary.csv,,,
+SAF-0079,SAFE_LOAD,Load inventory_control_master_decisions.csv,PASS,PASS,Loaded 22 rows and 98 columns.,inventory_control_master_decisions.csv,,,
+SAF-0080,SAFE_LOAD,Load inventory_control_human_review_queue.csv,PASS,PASS,Loaded 20 rows and 35 columns.,inventory_control_human_review_queue.csv,,,
+SAF-0081,SAFE_LOAD,Load inventory_control_advisory_review_queue.csv,PASS,PASS,Loaded 2 rows and 21 columns.,inventory_control_advisory_review_queue.csv,,,
 SAF-0082,SAFE_LOAD,Load inventory_control_executive_summary.csv,PASS,PASS,Loaded 63 rows and 6 columns.,inventory_control_executive_summary.csv,,,
 SAF-0083,SAFE_LOAD,Load inventory_control_kpi_summary.csv,PASS,PASS,Loaded 25 rows and 7 columns.,inventory_control_kpi_summary.csv,,,
-SAF-0084,SAFE_LOAD,Load inventory_kpi_summary.csv,PASS,PASS,Loaded 10 rows and 28 columns.,inventory_kpi_summary.csv,,,
-SAF-0085,SAFE_LOAD,Load inventory_control_action_plan.csv,PASS,PASS,Loaded 10 rows and 37 columns.,inventory_control_action_plan.csv,,,
-SAF-0086,SAFE_LOAD,Load inventory_control_risk_register.csv,PASS,PASS,Loaded 55 rows and 21 columns.,inventory_control_risk_register.csv,,,
-SAF-0087,SAFE_LOAD,Load inventory_control_manager_dashboard.csv,PASS,PASS,Loaded 10 rows and 47 columns.,inventory_control_manager_dashboard.csv,,,
-SAF-0088,SAFE_LOAD,Load inventory_employee_task_view.csv,PASS,PASS,Loaded 10 rows and 15 columns.,inventory_employee_task_view.csv,,,
-ROW-0089,ROW_COUNTS,Base SKU count,PASS,PASS,Base unique SKU count is 10.,inventory_clean.csv,sku_id,,
-ROW-0090,ROW_COUNTS,SKU-level row count: inventory_classification.csv,PASS,PASS,Rows and unique SKU count match base count 10.,inventory_classification.csv,sku_id,,
+SAF-0084,SAFE_LOAD,Load inventory_kpi_summary.csv,PASS,PASS,Loaded 22 rows and 28 columns.,inventory_kpi_summary.csv,,,
+SAF-0085,SAFE_LOAD,Load inventory_control_action_plan.csv,PASS,PASS,Loaded 22 rows and 37 columns.,inventory_control_action_plan.csv,,,
+SAF-0086,SAFE_LOAD,Load inventory_control_risk_register.csv,PASS,PASS,Loaded 145 rows and 21 columns.,inventory_control_risk_register.csv,,,
+SAF-0087,SAFE_LOAD,Load inventory_control_manager_dashboard.csv,PASS,PASS,Loaded 22 rows and 47 columns.,inventory_control_manager_dashboard.csv,,,
+SAF-0088,SAFE_LOAD,Load inventory_employee_task_view.csv,PASS,PASS,Loaded 22 rows and 15 columns.,inventory_employee_task_view.csv,,,
+ROW-0089,ROW_COUNTS,Base SKU count,PASS,PASS,Base unique SKU count is 22.,inventory_clean.csv,sku_id,,
+ROW-0090,ROW_COUNTS,SKU-level row count: inventory_classification.csv,PASS,PASS,Rows and unique SKU count match base count 22.,inventory_classification.csv,sku_id,,
 KEY-0091,KEY_CHECK,Unique sku_id in inventory_classification.csv,PASS,PASS,sku_id is present and unique.,inventory_classification.csv,sku_id,,
-ROW-0092,ROW_COUNTS,SKU-level row count: inventory_service_levels.csv,PASS,PASS,Rows and unique SKU count match base count 10.,inventory_service_levels.csv,sku_id,,
+ROW-0092,ROW_COUNTS,SKU-level row count: inventory_service_levels.csv,PASS,PASS,Rows and unique SKU count match base count 22.,inventory_service_levels.csv,sku_id,,
 KEY-0093,KEY_CHECK,Unique sku_id in inventory_service_levels.csv,PASS,PASS,sku_id is present and unique.,inventory_service_levels.csv,sku_id,,
-ROW-0094,ROW_COUNTS,SKU-level row count: inventory_policy.csv,PASS,PASS,Rows and unique SKU count match base count 10.,inventory_policy.csv,sku_id,,
+ROW-0094,ROW_COUNTS,SKU-level row count: inventory_policy.csv,PASS,PASS,Rows and unique SKU count match base count 22.,inventory_policy.csv,sku_id,,
 KEY-0095,KEY_CHECK,Unique sku_id in inventory_policy.csv,PASS,PASS,sku_id is present and unique.,inventory_policy.csv,sku_id,,
-ROW-0096,ROW_COUNTS,SKU-level row count: inventory_policy_parameters.csv,PASS,PASS,Rows and unique SKU count match base count 10.,inventory_policy_parameters.csv,sku_id,,
+ROW-0096,ROW_COUNTS,SKU-level row count: inventory_policy_parameters.csv,PASS,PASS,Rows and unique SKU count match base count 22.,inventory_policy_parameters.csv,sku_id,,
 KEY-0097,KEY_CHECK,Unique sku_id in inventory_policy_parameters.csv,PASS,PASS,sku_id is present and unique.,inventory_policy_parameters.csv,sku_id,,
-ROW-0098,ROW_COUNTS,SKU-level row count: inventory_status.csv,PASS,PASS,Rows and unique SKU count match base count 10.,inventory_status.csv,sku_id,,
+ROW-0098,ROW_COUNTS,SKU-level row count: inventory_status.csv,PASS,PASS,Rows and unique SKU count match base count 22.,inventory_status.csv,sku_id,,
 KEY-0099,KEY_CHECK,Unique sku_id in inventory_status.csv,PASS,PASS,sku_id is present and unique.,inventory_status.csv,sku_id,,
-ROW-0100,ROW_COUNTS,SKU-level row count: inventory_action_recommendations.csv,PASS,PASS,Rows and unique SKU count match base count 10.,inventory_action_recommendations.csv,sku_id,,
+ROW-0100,ROW_COUNTS,SKU-level row count: inventory_action_recommendations.csv,PASS,PASS,Rows and unique SKU count match base count 22.,inventory_action_recommendations.csv,sku_id,,
 KEY-0101,KEY_CHECK,Unique sku_id in inventory_action_recommendations.csv,PASS,PASS,sku_id is present and unique.,inventory_action_recommendations.csv,sku_id,,
-ROW-0102,ROW_COUNTS,SKU-level row count: inventory_costs.csv,PASS,PASS,Rows and unique SKU count match base count 10.,inventory_costs.csv,sku_id,,
+ROW-0102,ROW_COUNTS,SKU-level row count: inventory_costs.csv,PASS,PASS,Rows and unique SKU count match base count 22.,inventory_costs.csv,sku_id,,
 KEY-0103,KEY_CHECK,Unique sku_id in inventory_costs.csv,PASS,PASS,sku_id is present and unique.,inventory_costs.csv,sku_id,,
-ROW-0104,ROW_COUNTS,SKU-level row count: warehouse_slotting.csv,PASS,PASS,Rows and unique SKU count match base count 10.,warehouse_slotting.csv,sku_id,,
+ROW-0104,ROW_COUNTS,SKU-level row count: warehouse_slotting.csv,PASS,PASS,Rows and unique SKU count match base count 22.,warehouse_slotting.csv,sku_id,,
 KEY-0105,KEY_CHECK,Unique sku_id in warehouse_slotting.csv,PASS,PASS,sku_id is present and unique.,warehouse_slotting.csv,sku_id,,
-ROW-0106,ROW_COUNTS,SKU-level row count: warehouse_visual_skus.csv,PASS,PASS,Rows and unique SKU count match base count 10.,warehouse_visual_skus.csv,sku_id,,
+ROW-0106,ROW_COUNTS,SKU-level row count: warehouse_visual_skus.csv,PASS,PASS,Rows and unique SKU count match base count 22.,warehouse_visual_skus.csv,sku_id,,
 KEY-0107,KEY_CHECK,Unique sku_id in warehouse_visual_skus.csv,PASS,PASS,sku_id is present and unique.,warehouse_visual_skus.csv,sku_id,,
-ROW-0108,ROW_COUNTS,SKU-level row count: inventory_re_evaluation.csv,PASS,PASS,Rows and unique SKU count match base count 10.,inventory_re_evaluation.csv,sku_id,,
+ROW-0108,ROW_COUNTS,SKU-level row count: inventory_re_evaluation.csv,PASS,PASS,Rows and unique SKU count match base count 22.,inventory_re_evaluation.csv,sku_id,,
 KEY-0109,KEY_CHECK,Unique sku_id in inventory_re_evaluation.csv,PASS,PASS,sku_id is present and unique.,inventory_re_evaluation.csv,sku_id,,
-ROW-0110,ROW_COUNTS,SKU-level row count: inventory_parameter_adjustment_recommendations.csv,PASS,PASS,Rows and unique SKU count match base count 10.,inventory_parameter_adjustment_recommendations.csv,sku_id,,
+ROW-0110,ROW_COUNTS,SKU-level row count: inventory_parameter_adjustment_recommendations.csv,PASS,PASS,Rows and unique SKU count match base count 22.,inventory_parameter_adjustment_recommendations.csv,sku_id,,
 KEY-0111,KEY_CHECK,Unique sku_id in inventory_parameter_adjustment_recommendations.csv,PASS,PASS,sku_id is present and unique.,inventory_parameter_adjustment_recommendations.csv,sku_id,,
-ROW-0112,ROW_COUNTS,SKU-level row count: inventory_optimization_recommendations.csv,PASS,PASS,Rows and unique SKU count match base count 10.,inventory_optimization_recommendations.csv,sku_id,,
+ROW-0112,ROW_COUNTS,SKU-level row count: inventory_optimization_recommendations.csv,PASS,PASS,Rows and unique SKU count match base count 22.,inventory_optimization_recommendations.csv,sku_id,,
 KEY-0113,KEY_CHECK,Unique sku_id in inventory_optimization_recommendations.csv,PASS,PASS,sku_id is present and unique.,inventory_optimization_recommendations.csv,sku_id,,
-ROW-0114,ROW_COUNTS,SKU-level row count: inventory_control_master_decisions.csv,PASS,PASS,Rows and unique SKU count match base count 10.,inventory_control_master_decisions.csv,sku_id,,
+ROW-0114,ROW_COUNTS,SKU-level row count: inventory_control_master_decisions.csv,PASS,PASS,Rows and unique SKU count match base count 22.,inventory_control_master_decisions.csv,sku_id,,
 KEY-0115,KEY_CHECK,Unique sku_id in inventory_control_master_decisions.csv,PASS,PASS,sku_id is present and unique.,inventory_control_master_decisions.csv,sku_id,,
-ROW-0116,ROW_COUNTS,SKU-level row count: inventory_control_manager_dashboard.csv,PASS,PASS,Rows and unique SKU count match base count 10.,inventory_control_manager_dashboard.csv,sku_id,,
+ROW-0116,ROW_COUNTS,SKU-level row count: inventory_control_manager_dashboard.csv,PASS,PASS,Rows and unique SKU count match base count 22.,inventory_control_manager_dashboard.csv,sku_id,,
 KEY-0117,KEY_CHECK,Unique sku_id in inventory_control_manager_dashboard.csv,PASS,PASS,sku_id is present and unique.,inventory_control_manager_dashboard.csv,sku_id,,
-ROW-0118,ROW_COUNTS,SKU-level row count: inventory_employee_task_view.csv,PASS,PASS,Rows and unique SKU count match base count 10.,inventory_employee_task_view.csv,sku_id,,
+ROW-0118,ROW_COUNTS,SKU-level row count: inventory_employee_task_view.csv,PASS,PASS,Rows and unique SKU count match base count 22.,inventory_employee_task_view.csv,sku_id,,
 KEY-0119,KEY_CHECK,Unique sku_id in inventory_employee_task_view.csv,PASS,PASS,sku_id is present and unique.,inventory_employee_task_view.csv,sku_id,,
-ROW-0120,ROW_COUNTS,Scenario rows at least one per SKU,PASS,PASS,"Scenario rows=144, base_skus=10.",inventory_scenarios.csv,,,Ensure every SKU has at least a baseline scenario.
-ROW-0121,ROW_COUNTS,Scenario results row count matches scenarios,PASS,PASS,"Scenario rows=144, result rows=144.",inventory_scenario_results.csv,,,Score every generated scenario exactly once.
+ROW-0120,ROW_COUNTS,Scenario rows at least one per SKU,PASS,PASS,"Scenario rows=403, base_skus=22.",inventory_scenarios.csv,,,Ensure every SKU has at least a baseline scenario.
+ROW-0121,ROW_COUNTS,Scenario results row count matches scenarios,PASS,PASS,"Scenario rows=403, result rows=403.",inventory_scenario_results.csv,,,Score every generated scenario exactly once.
 ROW-0122,ROW_COUNTS,Batch slotting row count matches clean batches,PASS,PASS,"Batch rows=23, batch slotting rows=23.",batch_slotting.csv,,,Keep batch_slotting.csv at one row per clean batch.
-ROW-0123,ROW_COUNTS,Queue/action plan bounded rows: inventory_control_human_review_queue.csv,PASS,PASS,"Rows=5, base_skus=10.",inventory_control_human_review_queue.csv,,,Queue/action plan should not exceed one row per SKU.
-ROW-0124,ROW_COUNTS,Queue/action plan bounded rows: inventory_control_advisory_review_queue.csv,PASS,PASS,"Rows=5, base_skus=10.",inventory_control_advisory_review_queue.csv,,,Queue/action plan should not exceed one row per SKU.
-ROW-0125,ROW_COUNTS,Queue/action plan bounded rows: inventory_control_action_plan.csv,PASS,PASS,"Rows=10, base_skus=10.",inventory_control_action_plan.csv,,,Queue/action plan should not exceed one row per SKU.
+ROW-0123,ROW_COUNTS,Queue/action plan bounded rows: inventory_control_human_review_queue.csv,PASS,PASS,"Rows=20, base_skus=22.",inventory_control_human_review_queue.csv,,,Queue/action plan should not exceed one row per SKU.
+ROW-0124,ROW_COUNTS,Queue/action plan bounded rows: inventory_control_advisory_review_queue.csv,PASS,PASS,"Rows=2, base_skus=22.",inventory_control_advisory_review_queue.csv,,,Queue/action plan should not exceed one row per SKU.
+ROW-0125,ROW_COUNTS,Queue/action plan bounded rows: inventory_control_action_plan.csv,PASS,PASS,"Rows=22, base_skus=22.",inventory_control_action_plan.csv,,,Queue/action plan should not exceed one row per SKU.
 COL-0126,COLUMN_CHECK,Required columns in inventory_control_master_decisions.csv,PASS,PASS,All required columns are present.,inventory_control_master_decisions.csv,,,
 COL-0127,COLUMN_CHECK,Required columns in inventory_control_manager_dashboard.csv,PASS,PASS,All required columns are present.,inventory_control_manager_dashboard.csv,,,
 COL-0128,COLUMN_CHECK,Required columns in inventory_optimization_recommendations.csv,PASS,PASS,All required columns are present.,inventory_optimization_recommendations.csv,,,
@@ -144,25 +144,25 @@ SAF-0142,SAFETY,auto_apply_allowed disabled in inventory_optimization_recommenda
 SAF-0143,SAFETY,auto_apply_allowed disabled in inventory_control_master_decisions.csv,PASS,PASS,Auto-apply is disabled for every row.,inventory_control_master_decisions.csv,auto_apply_allowed,,
 SAF-0144,SAFETY,auto_apply_allowed disabled in inventory_control_manager_dashboard.csv,SKIPPED,SKIPPED,File or column is unavailable.,inventory_control_manager_dashboard.csv,auto_apply_allowed,,
 REV-0145,REVIEW_QUEUE,final_review_required equals mandatory review,PASS,PASS,Mismatched rows: 0.,inventory_control_master_decisions.csv,final_review_required; final_mandatory_review_required,0,Keep final_review_required reserved for mandatory review gates.
-REV-0146,REVIEW_QUEUE,Mandatory queue contains mandatory review rows only,PASS,PASS,"Queue rows=5, mandatory master rows=5, unexpected queue SKUs=0.",inventory_control_human_review_queue.csv,sku_id,0,Build mandatory queue from final_mandatory_review_required only.
-REV-0147,REVIEW_QUEUE,Advisory queue contains advisory-only rows,PASS,PASS,"Queue rows=5, advisory-only master rows=5, unexpected queue SKUs=0.",inventory_control_advisory_review_queue.csv,sku_id,0,Build advisory queue from advisory true and mandatory false rows only.
+REV-0146,REVIEW_QUEUE,Mandatory queue contains mandatory review rows only,PASS,PASS,"Queue rows=20, mandatory master rows=20, unexpected queue SKUs=0.",inventory_control_human_review_queue.csv,sku_id,0,Build mandatory queue from final_mandatory_review_required only.
+REV-0147,REVIEW_QUEUE,Advisory queue contains advisory-only rows,PASS,PASS,"Queue rows=2, advisory-only master rows=2, unexpected queue SKUs=0.",inventory_control_advisory_review_queue.csv,sku_id,0,Build advisory queue from advisory true and mandatory false rows only.
 POP-0148,POPULATION,Required fields populated in inventory_control_master_decisions.csv,PASS,PASS,Required fields are populated.,inventory_control_master_decisions.csv,proposed_operational_action; blocking_review_action; execution_owner; review_owner,,
 ACT-0149,ACTION_CLARITY,Multi-department owner used only for multi-department review,PASS,PASS,Misused rows: 0.,inventory_control_master_decisions.csv,final_action_owner,0,Assign practical owner unless multiple mandatory gates require multi-department review.
 ACT-0150,ACTION_CLARITY,Phase 4 blocking rows expose proposed operational action,PASS,PASS,Rows missing proposed action: 0.,inventory_control_master_decisions.csv,proposed_operational_action,0,Populate proposed_operational_action even when Phase 4 review is blocking.
 ACT-0151,ACTION_CLARITY,Split delivery owner includes procurement and warehouse,PASS,PASS,Rows with incomplete split-delivery owner: 0.,inventory_control_master_decisions.csv,execution_owner,0,Set split-delivery execution owner to PROCUREMENT_TEAM; WAREHOUSE_TEAM.
 ACT-0152,ACTION_CLARITY,No blocking review means no mandatory review,PASS,PASS,Mismatched rows: 0.,inventory_control_master_decisions.csv,blocking_review_action; final_mandatory_review_required,0,Keep NO_BLOCKING_REVIEW aligned with final_mandatory_review_required=False.
 SCE-0153,SCENARIOS,Every SKU has CURRENT_POLICY baseline scenario,PASS,PASS,Missing baseline SKUs: 0.,inventory_scenarios.csv,scenario_name,0,Generate a CURRENT_POLICY baseline for every SKU.
-SCE-0154,SCENARIOS,Scenario count per SKU stays within cap,PASS,PASS,Max scenarios per SKU=21; SKUs over cap=0.,inventory_scenarios.csv,sku_id,0,Keep generated scenarios controlled and signal-gated.
+SCE-0154,SCENARIOS,Scenario count per SKU stays within cap,PASS,PASS,Max scenarios per SKU=24; SKUs over cap=0.,inventory_scenarios.csv,sku_id,0,Keep generated scenarios controlled and signal-gated.
 SCE-0155,SCENARIOS,Contradictory scenarios rejected,PASS,PASS,Contradictory scenario rows: 0.,inventory_scenarios.csv,scenario_contradiction_flag,0,Reject contradictory scenarios before scoring.
-SCE-0156,SCENARIOS,Scenario results row count equals scenario rows,PASS,PASS,Rows=144.,inventory_scenario_results.csv,,,
+SCE-0156,SCENARIOS,Scenario results row count equals scenario rows,PASS,PASS,Rows=403.,inventory_scenario_results.csv,,,
 SCE-0157,SCENARIOS,Relevant cost equals penalty-adjusted cost,PASS,PASS,Rows outside tolerance: 0.,inventory_scenario_results.csv,scenario_total_relevant_cost; scenario_total_penalty_adjusted_cost,0,Keep backward-compatible relevant cost equal to penalty-adjusted total cost.
 SCE-0158,SCENARIOS,Scenario penalty share between 0 and 1,PASS,PASS,Invalid rows: 0.,inventory_scenario_results.csv,scenario_penalty_share_of_total,0,"Bound penalty share to [0, 1]."
 SCE-0159,SCENARIOS,Severity-based penalties replace legacy generic penalty,PASS,PASS,Legacy penalty rows: 0.,inventory_scenario_results.csv,legacy_constraint_penalty_used_flag,0,Step 12C expects severity-based penalties instead of generic legacy penalties.
 SCE-0160,SCENARIOS,Scenario feasible_flag populated,PASS,PASS,Blank rows: 0.,inventory_scenario_results.csv,feasible_flag,0,Populate feasible_flag for every scenario result.
 SCE-0161,SCENARIOS,Selected scenario IDs exist in scenario results,PASS,PASS,Missing selected scenario IDs: 0.,inventory_optimization_recommendations.csv,selected_scenario_id,0,Select only scenarios present in inventory_scenario_results.csv.
 SCE-0162,SCENARIOS,Selected scenarios have no hard blockers,PASS,PASS,Selected rows with hard blockers: 0.,inventory_optimization_recommendations.csv,selected_hard_blocker_count,0,Never select hard-blocker scenarios in normal optimization.
-REC-0163,RECONCILIATION,Master vs optimization operational savings,PASS,PASS,Totals reconcile within tolerance: 9972.4200 vs 9972.4200.,inventory_control_master_decisions.csv; inventory_optimization_recommendations.csv,operational_cost_saving_vs_baseline; operational_cost_saving_vs_baseline,,
-REC-0164,RECONCILIATION,Master vs optimization penalty-adjusted savings,PASS,PASS,Totals reconcile within tolerance: 16884.9200 vs 16884.9200.,inventory_control_master_decisions.csv; inventory_optimization_recommendations.csv,penalty_adjusted_saving_vs_baseline; penalty_adjusted_saving_vs_baseline,,
+REC-0163,RECONCILIATION,Master vs optimization operational savings,PASS,PASS,Totals reconcile within tolerance: 122560.2400 vs 122560.2400.,inventory_control_master_decisions.csv; inventory_optimization_recommendations.csv,operational_cost_saving_vs_baseline; operational_cost_saving_vs_baseline,,
+REC-0164,RECONCILIATION,Master vs optimization penalty-adjusted savings,PASS,PASS,Totals reconcile within tolerance: 149347.7400 vs 149347.7400.,inventory_control_master_decisions.csv; inventory_optimization_recommendations.csv,penalty_adjusted_saving_vs_baseline; penalty_adjusted_saving_vs_baseline,,
 REC-0165,RECONCILIATION,Master operational saving row formula,PASS,PASS,Rows outside tolerance: 0.,inventory_control_master_decisions.csv,baseline_operational_cost; selected_operational_cost; operational_cost_saving_vs_baseline,0,Keep baseline - selected equal to reported operational saving.
 REC-0166,RECONCILIATION,Master penalty-adjusted saving row formula,PASS,PASS,Rows outside tolerance: 0.,inventory_control_master_decisions.csv,baseline_total_penalty_adjusted_cost; selected_total_penalty_adjusted_cost; penalty_adjusted_saving_vs_baseline,0,Keep baseline - selected equal to reported penalty-adjusted saving.
 REC-0167,RECONCILIATION,Scenario cost components equal total penalty-adjusted cost,PASS,PASS,Rows outside tolerance: 0.,inventory_scenario_results.csv,scenario_operational_cost; scenario_risk_penalty_cost; scenario_constraint_penalty_cost; scenario_total_penalty_adjusted_cost,0,Keep operational + risk penalty + constraint penalty equal to total penalty-adjusted cost.
@@ -174,10 +174,10 @@ WAR-0172,WAREHOUSE_BATCH,Visual trace-only batches hidden from physical map,PASS
 WAR-0173,WAREHOUSE_BATCH,Physical-map batch counts reconcile,PASS,PASS,"batch_slotting=13, warehouse_visual_batches=13.",warehouse_visual_batches.csv,show_on_physical_map,0,Keep visual batch physical-map count aligned with batch_slotting.
 WAR-0174,WAREHOUSE_BATCH,Location utilization separates current/projected capacity flags,PASS,PASS,All current/projected capacity fields exist.,location_utilization.csv,current_over_capacity_flag; projected_over_capacity_flag; current_capacity_pressure_flag; projected_capacity_pressure_flag,,Retain Step 9D current/projected capacity split fields.
 WAR-0175,WAREHOUSE_BATCH,Warehouse slotting has z-level score,PASS,PASS,z_level_score exists.,warehouse_slotting.csv,z_level_score,,Keep z-level scoring for Step 10 visual readiness.
-WAR-0176,WAREHOUSE_BATCH,Slotting warning flags are readable when present,PASS,PASS,Rows with slotting warnings: 7.,warehouse_slotting.csv,slotting_warning_flags,,
-MAN-0177,MANAGER_OUTPUT,Allowed values for final_decision_priority,PASS,PASS,Invalid rows: 0.,inventory_control_master_decisions.csv,final_decision_priority,0,Use only configured allowed values: HIGH; URGENT; MEDIUM; NO_ACTION; LOW
-MAN-0178,MANAGER_OUTPUT,Allowed values for final_manager_status,PASS,PASS,Invalid rows: 0.,inventory_control_master_decisions.csv,final_manager_status,0,Use only configured allowed values: NO_ACTION_REQUIRED; TAKE_ACTION_NOW; MONITOR; REVIEW_BEFORE_ACTION
-MAN-0179,MANAGER_OUTPUT,Allowed values for final_review_severity,PASS,PASS,Invalid rows: 0.,inventory_control_master_decisions.csv,final_review_severity,0,Use only configured allowed values: INFO_ONLY; ADVISORY; NO_REVIEW; MANDATORY
+WAR-0176,WAREHOUSE_BATCH,Slotting warning flags are readable when present,PASS,PASS,Rows with slotting warnings: 19.,warehouse_slotting.csv,slotting_warning_flags,,
+MAN-0177,MANAGER_OUTPUT,Allowed values for final_decision_priority,PASS,PASS,Invalid rows: 0.,inventory_control_master_decisions.csv,final_decision_priority,0,Use only configured allowed values: HIGH; MEDIUM; NO_ACTION; LOW; URGENT
+MAN-0178,MANAGER_OUTPUT,Allowed values for final_manager_status,PASS,PASS,Invalid rows: 0.,inventory_control_master_decisions.csv,final_manager_status,0,Use only configured allowed values: MONITOR; NO_ACTION_REQUIRED; REVIEW_BEFORE_ACTION; TAKE_ACTION_NOW
+MAN-0179,MANAGER_OUTPUT,Allowed values for final_review_severity,PASS,PASS,Invalid rows: 0.,inventory_control_master_decisions.csv,final_review_severity,0,Use only configured allowed values: INFO_ONLY; NO_REVIEW; MANDATORY; ADVISORY
 MAN-0180,MANAGER_OUTPUT,REVIEW_BEFORE_ACTION requires mandatory review,PASS,PASS,Mismatched rows: 0.,inventory_control_master_decisions.csv,final_manager_status; final_mandatory_review_required,0,Use REVIEW_BEFORE_ACTION only for mandatory review rows.
 MAN-0181,MANAGER_OUTPUT,TAKE_ACTION_NOW cannot have mandatory review,PASS,PASS,Mismatched rows: 0.,inventory_control_master_decisions.csv,final_manager_status; final_mandatory_review_required,0,Use TAKE_ACTION_NOW only when action is not blocked by mandatory review.
 MAN-0182,MANAGER_OUTPUT,NO_ACTION_REQUIRED aligns with no-action or monitor action,PASS,PASS,Potential mismatch rows: 0.,inventory_control_master_decisions.csv,final_manager_status; proposed_operational_action,0,Ensure no-action manager status does not hide an operational action.
@@ -193,14 +193,14 @@ INV-0191,INVENTORY_KPIS,fefo_compliance_rate is within 0 to 1 when available,PAS
 NUM-0192,NUMERIC,Non-negative numeric values in inventory_kpi_summary.csv,PASS,PASS,Checked non-negative columns: outbound_to_current_inventory_ratio_90d; inventory_turnover_units_90d; days_inventory_on_hand,inventory_kpi_summary.csv,outbound_to_current_inventory_ratio_90d; inventory_turnover_units_90d; days_inventory_on_hand,,
 INV-0193,INVENTORY_KPIS,Inventory turnover is explicitly labelled as a proxy,PASS,PASS,Rows with misleading turnover method labels: 0.,inventory_kpi_summary.csv,inventory_turnover_method,0,
 INV-0194,INVENTORY_KPIS,Excess inventory requires a valid max-stock threshold,PASS,PASS,Rows where missing/nonpositive thresholds produced an excess KPI: 0.,inventory_kpi_summary.csv,max_stock_threshold_units; excess_inventory_rate,0,
-INV-0195,INVENTORY_KPIS,Unavailable formal KPIs are explicitly flagged,PASS,PASS,Unavailable method/data-quality flags: 30.,inventory_kpi_summary.csv,unit_fill_rate_data_quality; stockout_rate_data_quality; fefo_compliance_data_quality,30,
+INV-0195,INVENTORY_KPIS,Unavailable formal KPIs are explicitly flagged,PASS,PASS,Unavailable method/data-quality flags: 66.,inventory_kpi_summary.csv,unit_fill_rate_data_quality; stockout_rate_data_quality; fefo_compliance_data_quality,66,
 INV-0196,INVENTORY_KPIS,Manager dashboard contains compact inventory KPI fields,PASS,PASS,All compact dashboard KPI fields are present.,inventory_control_manager_dashboard.csv,days_inventory_on_hand; days_inventory_on_hand_status; outbound_to_current_inventory_ratio_90d; outbound_to_current_inventory_ratio_90d_data_quality; excess_inventory_units; excess_inventory_rate; excess_inventory_data_quality; dead_stock_rate; expiry_exposure_rate_30d; inventory_reconciliation_accuracy_rate,0,
 COL-0197,COLUMN_CHECK,Required columns in inventory_employee_task_view.csv,PASS,PASS,All required columns are present.,inventory_employee_task_view.csv,,,
 EMP-0198,EMPLOYEE_TASK_VIEW,Employee task rows have populated instruction and review fields,PASS,PASS,"blank instructions=0, blank review flags=0, duplicate SKU rows=0.",inventory_employee_task_view.csv,employee_instruction; manager_review_required; sku_id,0,
 EMP-0199,EMPLOYEE_TASK_VIEW,Employee-facing stock quantities are non-negative,PASS,PASS,"Rows with negative quantities=0, missing displayed quantities=0.",inventory_employee_task_view.csv,available_quantity; usable_quantity,0,Clip employee-facing quantities at zero and expose the source issue as a review warning.
 EMP-0200,EMPLOYEE_TASK_VIEW,Employee warnings use simplified readable labels,PASS,PASS,Rows with blank or unsupported employee warning labels: 0.,inventory_employee_task_view.csv,handling_warning,0,Use concise operational labels instead of backend technical warning noise.
-EMP-0201,EMPLOYEE_TASK_VIEW,Next delivery blanks are visible review cases,PASS,PASS,Rows with replenishment requirement and blank next delivery date: 0. This is acceptable when no delivery exists and must remain visible.,inventory_employee_task_view.csv,next_delivery_date,0,
-EMP-0202,EMPLOYEE_TASK_VIEW,Integrated allocation shortages require manager review in employee task view,PASS,PASS,"shortage SKUs=2, missing review flags=0, unclear shortage warnings=0, wait-only instructions=0.",inventory_employee_task_view.csv,manager_review_required; handling_warning; employee_instruction,0,Flag unallocated or adjustment-required SKUs for manager review with a partial-allocation instruction.
+EMP-0201,EMPLOYEE_TASK_VIEW,Next delivery blanks are visible review cases,WARNING,WARNING,Rows with replenishment requirement and blank next delivery date: 2. This is acceptable when no delivery exists and must remain visible.,inventory_employee_task_view.csv,next_delivery_date,2,
+EMP-0202,EMPLOYEE_TASK_VIEW,Integrated allocation shortages require manager review in employee task view,PASS,PASS,"shortage SKUs=4, missing review flags=0, unclear shortage warnings=0, wait-only instructions=0.",inventory_employee_task_view.csv,manager_review_required; handling_warning; employee_instruction,0,Flag unallocated or adjustment-required SKUs for manager review with a partial-allocation instruction.
 EMP-0203,EMPLOYEE_TASK_VIEW,Allocation execution remains disabled for UI,PASS,PASS,allocation_execution_allowed true rows: 0.,phase2_procurement_allocation_context.csv,allocation_execution_allowed,0,
 EMP-0204,EMPLOYEE_TASK_VIEW,Integrated execution safety flags remain disabled for UI,PASS,PASS,true safety/execution flag cells across integrated decisions: 0.,integrated_replenishment_decisions.csv,auto_apply_allowed; purchase_order_creation_allowed; procurement_execution_ready_flag,0,Keep the Phase 3 UI advisory-only until an approved execution workflow exists.
 EMP-0205,EMPLOYEE_TASK_VIEW,Phase 3 Streamlit app compiles,PASS,PASS,app.py compiled successfully.,app.py,,,
