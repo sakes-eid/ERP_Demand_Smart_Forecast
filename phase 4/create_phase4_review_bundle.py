@@ -1,4 +1,4 @@
-"""Create a clean Phase 4 initialization review bundle."""
+"""Create a clean Phase 4 MPS Step 1B review bundle."""
 
 from __future__ import annotations
 
@@ -8,18 +8,24 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 PHASE4_OUTPUTS = PROJECT_ROOT / "phase 4" / "outputs"
-ZIP_PATH = PROJECT_ROOT / "phase4_init_review_bundle.zip"
+ZIP_PATH = PROJECT_ROOT / "phase4_mps_step1b_review_bundle.zip"
 MANIFEST_PATH = PHASE4_OUTPUTS / "phase4_review_bundle_manifest.txt"
 
 REQUIRED_RELATIVE_FILES = [
+    ".gitignore",
+    "planning_orchestrator.py",
+    "shared/validation/integrated_validation_evidence.json",
+    "shared/validation/integrated_validation_report.txt",
     "phase 4/README.md",
+    "phase 4/main.py",
     "phase 4/validate_phase4_initialization.py",
     "phase 4/create_phase4_review_bundle.py",
-    "phase 4/main.py",
     "phase 4/data/phase4_bom.csv",
     "phase 4/core/bom_explosion_bridge.py",
     "phase 4/core/component_inventory_bridge.py",
     "phase 4/core/component_supplier_bridge.py",
+    "phase 4/core/master_production_schedule.py",
+    "phase 4/outputs/phase4_master_production_schedule.csv",
     "phase 4/outputs/phase4_bom_component_requirements.csv",
     "phase 4/outputs/phase4_initialization_validation.json",
     "phase 4/outputs/phase4_initialization_validation_report.txt",
@@ -39,8 +45,6 @@ REQUIRED_RELATIVE_FILES = [
     "phase 3/outputs/phase4_component_inventory_check.csv",
     "phase 3/outputs/phase3_validation_summary.csv",
     "phase 3/outputs/phase3_validation_report.txt",
-    "shared/validation/integrated_validation_evidence.json",
-    "shared/validation/integrated_validation_report.txt",
 ]
 
 EXCLUDED_PARTS = {
@@ -142,8 +146,13 @@ def _verify_zip() -> tuple[str, list[str]]:
     name_set = set(names)
 
     required_checks = {
+        "phase 4/core/master_production_schedule.py": "Phase 4 MPS builder exists inside the zip",
+        "phase 4/outputs/phase4_master_production_schedule.csv": "Phase 4 MPS output exists inside the zip",
+        "phase 4/core/bom_explosion_bridge.py": "Phase 4 BOM bridge exists inside the zip",
         "phase 2/main.py": "phase 2/main.py exists inside the zip",
         "phase 3/main.py": "phase 3/main.py exists inside the zip",
+        "planning_orchestrator.py": "planning_orchestrator.py exists inside the zip",
+        ".gitignore": ".gitignore exists inside the zip",
         "phase 4/outputs/phase4_bom_component_requirements.csv": "Phase 4 BOM requirements output exists inside the zip",
         "phase 4/outputs/phase4_initialization_validation.json": "Phase 4 validation JSON exists inside the zip",
         "phase 4/outputs/phase4_initialization_validation_report.txt": "Phase 4 validation report exists inside the zip",
@@ -200,7 +209,7 @@ def _build_manifest(
 ) -> str:
     zip_size_mb = ZIP_PATH.stat().st_size / (1024 * 1024) if ZIP_PATH.exists() else 0.0
     lines = [
-        "Phase 4 Review Bundle Manifest",
+        "Phase 4 MPS Step 1B Review Bundle Manifest",
         f"Generated zip path: {ZIP_PATH}",
         f"Generated timestamp UTC: {generated_at}",
         f"Included file count: {len(included)}",

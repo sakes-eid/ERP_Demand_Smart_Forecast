@@ -1,8 +1,8 @@
 {
   "validation_metadata": {
     "validation_version": "1.0",
-    "generated_at": "2026-06-23T12:03:01Z",
-    "run_id": "INTEGRATED-20260623120202",
+    "generated_at": "2026-06-23T13:03:02Z",
+    "run_id": "INTEGRATED-20260623130209",
     "final_iteration": 1,
     "validator_git_or_code_version": "LOCAL",
     "project_root": "C:\\Users\\iTECH\\OneDrive - Beirut Arab University\\Desktop\\apps i made\\SC project",
@@ -784,8 +784,8 @@
       "exists": true,
       "row_count": 12,
       "column_count": 83,
-      "sha256": "98aac663cfd747aecdde1e294acd839aa51491903b58301b69175916f5d3a456",
-      "modified_at": "2026-06-23T14:02:27",
+      "sha256": "43d95e01e5b53ed6e47d737f6a5ea8a83328a3b51759647d4de4af9873d00e1f",
+      "modified_at": "2026-06-23T15:02:32",
       "schema_version": "",
       "source_phase": "",
       "required_or_optional": "optional"
@@ -796,8 +796,8 @@
       "exists": true,
       "row_count": 60,
       "column_count": 67,
-      "sha256": "29e3b5b5611d86b379b4269db6d731f2f5c53a8d435a742a5d62a1e09c9fd002",
-      "modified_at": "2026-06-23T14:02:46",
+      "sha256": "bce5bf37e5fc374997478986cde757309a02530634f32e79441090f9affb88f2",
+      "modified_at": "2026-06-23T15:02:48",
       "schema_version": "1.0",
       "source_phase": "PHASE_2",
       "required_or_optional": "required"
@@ -808,8 +808,8 @@
       "exists": true,
       "row_count": 20,
       "column_count": 17,
-      "sha256": "7f0d5a48c4bc5e74a7f51ac76f0dd60b840f3d3302e6f6e3785af918fa0e3585",
-      "modified_at": "2026-06-23T14:02:46",
+      "sha256": "6af07a45496a4bcb5cc72be06944c2145870db40a305b4f1e742ca2c4ff38f0c",
+      "modified_at": "2026-06-23T15:02:48",
       "schema_version": "1.0",
       "source_phase": "PHASE_2",
       "required_or_optional": "required"
@@ -820,8 +820,8 @@
       "exists": true,
       "row_count": 22,
       "column_count": 83,
-      "sha256": "c4b8493610b36f89173ee6ae75c5d81e06cfd32efea74df72d9e687bb3529bd2",
-      "modified_at": "2026-06-23T14:02:48",
+      "sha256": "99eab69b6caa49ac0e67aed55dd3dbab95fbfe5b9f1336cf421917275723f786",
+      "modified_at": "2026-06-23T15:02:50",
       "schema_version": "1.0",
       "source_phase": "PHASE_3",
       "required_or_optional": "required"
@@ -832,8 +832,8 @@
       "exists": true,
       "row_count": 28,
       "column_count": 61,
-      "sha256": "ee9fdd7998cd6f23bc4aa14a0f581f3fcb583b67efebd840d27d07c19f19b307",
-      "modified_at": "2026-06-23T14:02:46",
+      "sha256": "656b3769ce818ed2fc63bba5fb8e713102f2a5a1f8e62e425dde1d6ebb8ee313",
+      "modified_at": "2026-06-23T15:02:48",
       "schema_version": "1.0",
       "source_phase": "PHASE_2",
       "required_or_optional": "required"
@@ -844,8 +844,8 @@
       "exists": true,
       "row_count": 22,
       "column_count": 29,
-      "sha256": "87354f0661dd2f81c93039e13d7eb63c549d4840558130cc45e2547cdc6520ff",
-      "modified_at": "2026-06-23T14:02:46",
+      "sha256": "cc5066cbc3c1c15df265e670b98a1fd581bf635c1a4217fd094b19c3a76e7c8c",
+      "modified_at": "2026-06-23T15:02:48",
       "schema_version": "1.0",
       "source_phase": "PHASE_2",
       "required_or_optional": "required"
@@ -856,8 +856,8 @@
       "exists": true,
       "row_count": 22,
       "column_count": 25,
-      "sha256": "6b1b317e66eeda4a4bcca3ce6e3c82f571fce770e3b435d44a19bb6421f97d75",
-      "modified_at": "2026-06-23T14:02:48",
+      "sha256": "80bbf24a30c33cf5d31357667d6da1d327b58c82c1b6191b542f3564fd2c0c18",
+      "modified_at": "2026-06-23T15:02:50",
       "schema_version": "1.0",
       "source_phase": "PHASE_3",
       "required_or_optional": "required"
@@ -868,8 +868,8 @@
       "exists": true,
       "row_count": 22,
       "column_count": 44,
-      "sha256": "a60f8b5fe3fb6f3da9942f7691853adb3aff0eabbabf4eb838057d37622a7986",
-      "modified_at": "2026-06-23T14:02:49",
+      "sha256": "d7478e167153deeedcb3f6a386c17e7521580b1b8afee9fa0c9222fc94b4ffe9",
+      "modified_at": "2026-06-23T15:02:50",
       "schema_version": "1.0",
       "source_phase": "",
       "required_or_optional": "required"
@@ -881,7 +881,7 @@
       "row_count": 20,
       "column_count": 102,
       "sha256": "7ff730e1c505e8eee8479486e464e971fdde56246f4f9fa98408a04959d1863c",
-      "modified_at": "2026-06-23T14:02:46",
+      "modified_at": "2026-06-23T15:02:48",
       "schema_version": "",
       "source_phase": "",
       "required_or_optional": "optional"
@@ -893,7 +893,7 @@
       "row_count": 22,
       "column_count": 98,
       "sha256": "b6f97dfd66fccebd81682079a05ef1d33fde83132202d9aa65ff26200f98f958",
-      "modified_at": "2026-06-23T14:02:48",
+      "modified_at": "2026-06-23T15:02:49",
       "schema_version": "",
       "source_phase": "",
       "required_or_optional": "optional"
@@ -3663,7 +3663,7 @@
   "representative_rows": {
     "healthy_or_no_order_sku": {
       "schema_version": 1.0,
-      "run_id": "INTEGRATED-20260623120202",
+      "run_id": "INTEGRATED-20260623130209",
       "sku_id": "SKU-BBQ-006",
       "final_iteration": 1,
       "convergence_status": "CONVERGED_WITH_REVIEW",
@@ -3709,9 +3709,9 @@
     },
     "stockout_sku": {
       "schema_version": 1.0,
-      "run_id": "INTEGRATED-20260623120202",
+      "run_id": "INTEGRATED-20260623130209",
       "planning_iteration": 1,
-      "generated_at": "2026-06-23T12:02:48Z",
+      "generated_at": "2026-06-23T13:02:50Z",
       "source_phase": "PHASE_3",
       "target_phase": "PHASE_2",
       "data_as_of_date": "2026-06-23",
@@ -3794,9 +3794,9 @@
     },
     "split_sourcing_sku": {
       "schema_version": 1.0,
-      "run_id": "INTEGRATED-20260623120202",
+      "run_id": "INTEGRATED-20260623130209",
       "planning_iteration": 1,
-      "generated_at": "2026-06-23T12:02:46Z",
+      "generated_at": "2026-06-23T13:02:48Z",
       "source_phase": "PHASE_2",
       "target_phase": "PHASE_3",
       "data_as_of_date": "2026-06-23",
@@ -3825,9 +3825,9 @@
     },
     "aggregate_capacity_shortfall_sku": {
       "schema_version": 1.0,
-      "run_id": "INTEGRATED-20260623120202",
+      "run_id": "INTEGRATED-20260623130209",
       "planning_iteration": 1,
-      "generated_at": "2026-06-23T12:02:46Z",
+      "generated_at": "2026-06-23T13:02:48Z",
       "source_phase": "PHASE_2",
       "target_phase": "PHASE_3",
       "data_as_of_date": "2026-06-23",

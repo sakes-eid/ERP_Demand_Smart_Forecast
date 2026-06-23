@@ -14,6 +14,7 @@ OUTPUT_DIR = PHASE4_DIR / "outputs"
 
 BIKE_SKUS = {"SKU-BIKE-ROAD-001", "SKU-BIKE-MT-001"}
 PHASE4_OUTPUTS = {
+    "master_production_schedule": PHASE4_DIR / "outputs" / "phase4_master_production_schedule.csv",
     "bom_component_requirements": PHASE4_DIR / "outputs" / "phase4_bom_component_requirements.csv",
     "component_inventory_check": PROJECT_ROOT / "phase 3" / "outputs" / "phase4_component_inventory_check.csv",
     "component_supplier_check": PROJECT_ROOT / "phase 2" / "outputs" / "phase4_component_supplier_check.csv",
@@ -51,6 +52,7 @@ def main() -> None:
     checks.append(_check_integrated_validation_json(PROJECT_ROOT / "shared" / "validation" / "integrated_validation_evidence.json"))
     checks.append(_check_bike_forecasts())
     checks.append(_check_bom())
+    checks.append(_check_mps_output())
     checks.append(_check_bom_explosion())
     checks.append(_check_phase3_inventory_check())
     checks.append(_check_phase2_supplier_check())
@@ -173,6 +175,75 @@ def _check_bom() -> dict:
     return _result("bom_master", "PASS", f"BOM exists with {len(bom)} valid seed rows.")
 
 
+def _check_mps_output() -> dict:
+    path = PHASE4_OUTPUTS["master_production_schedule"]
+    if not path.exists():
+        return _result("mps_step1", "FAIL", "MPS output is missing.")
+    mps = pd.read_csv(path)
+    if mps.empty:
+        return _result("mps_step1", "FAIL", "MPS output has no rows.")
+    required = {
+        "planning_run_id",
+        "period_start",
+        "period_end",
+        "finished_sku",
+        "forecast_demand_qty",
+        "period_sequence",
+        "period_starting_inventory_qty",
+        "net_finished_goods_requirement_qty",
+        "planned_production_qty",
+        "projected_ending_inventory_qty",
+        "projected_shortage_qty",
+        "rolling_balance_applied_flag",
+        "mps_planning_basis",
+        "mps_status",
+        "advisory_only_flag",
+    }
+    missing_columns = sorted(required.difference(mps.columns))
+    if missing_columns:
+        return _result("mps_step1", "FAIL", f"MPS output missing columns: {missing_columns}")
+    present = set(mps["finished_sku"].astype(str)) & BIKE_SKUS
+    missing_skus = sorted(BIKE_SKUS - present)
+    if missing_skus:
+        return _result("mps_step1", "FAIL", f"MPS missing finished bike SKUs: {missing_skus}")
+    period_start = pd.to_datetime(mps["period_start"], errors="coerce")
+    period_end = pd.to_datetime(mps["period_end"], errors="coerce")
+    if period_start.isna().any() or period_end.isna().any():
+        return _result("mps_step1", "FAIL", "MPS period_start/period_end contains invalid dates.")
+    invalid_periods = ((period_end - period_start).dt.days != 6).sum()
+    if invalid_periods:
+        return _result("mps_step1", "FAIL", f"MPS contains {int(invalid_periods)} non-weekly planning rows.")
+    if not _valid_period_sequences(mps):
+        return _result("mps_step1", "FAIL", "MPS period_sequence must be consecutive per finished_sku.")
+    numeric_checks = {
+        "period_starting_inventory_qty": False,
+        "net_finished_goods_requirement_qty": True,
+        "planned_production_qty": True,
+        "projected_ending_inventory_qty": False,
+        "projected_shortage_qty": True,
+    }
+    for column, require_non_negative in numeric_checks.items():
+        values = pd.to_numeric(mps[column], errors="coerce")
+        if values.isna().any():
+            return _result("mps_step1", "FAIL", f"MPS {column} must be numeric.")
+        if require_non_negative and (values < 0).any():
+            return _result("mps_step1", "FAIL", f"MPS {column} must be non-negative.")
+    if (pd.to_numeric(mps["projected_ending_inventory_qty"], errors="coerce") < 0).any():
+        return _result("mps_step1", "FAIL", "MPS projected ending inventory should not be negative in Step 1B.")
+    if not _all_true(mps, "rolling_balance_applied_flag"):
+        return _result("mps_step1", "FAIL", "MPS rolling_balance_applied_flag must be true for all rows.")
+    basis_values = set(mps["mps_planning_basis"].dropna().astype(str).str.strip())
+    if basis_values != {"ROLLING_PROJECTED_AVAILABLE_BALANCE"}:
+        return _result("mps_step1", "FAIL", f"Unexpected MPS planning basis values: {sorted(basis_values)}")
+    if not _all_true(mps, "advisory_only_flag"):
+        return _result("mps_step1", "FAIL", "MPS contains non-advisory rows.")
+    return _result(
+        "mps_step1",
+        "PASS",
+        f"MPS Step 1B rolling balance output contains {len(mps)} weekly advisory rows for Road Bike and Mountain Bike.",
+    )
+
+
 def _check_bom_explosion() -> dict:
     path = PHASE4_OUTPUTS["bom_component_requirements"]
     if not path.exists():
@@ -180,7 +251,20 @@ def _check_bom_explosion() -> dict:
     requirements = pd.read_csv(path)
     if requirements.empty:
         return _result("bom_explosion", "FAIL", "BOM explosion output has no rows.")
-    return _result("bom_explosion", "PASS", f"BOM explosion produced {len(requirements)} requirement rows.")
+    basis_values = set()
+    if "bom_explosion_basis" in requirements.columns:
+        basis_values = set(requirements["bom_explosion_basis"].dropna().astype(str).str.strip())
+    mps_path = PHASE4_OUTPUTS["master_production_schedule"]
+    if mps_path.exists():
+        mps = pd.read_csv(mps_path)
+        if not mps.empty and "MPS_PLANNED_PRODUCTION" not in basis_values:
+            return _result(
+                "bom_explosion",
+                "FAIL",
+                f"MPS exists but BOM explosion was not based on MPS planned production: {sorted(basis_values)}",
+            )
+    basis_message = f"; basis = {sorted(basis_values)}" if basis_values else ""
+    return _result("bom_explosion", "PASS", f"BOM explosion produced {len(requirements)} requirement rows{basis_message}.")
 
 
 def _check_phase3_inventory_check() -> dict:
@@ -293,6 +377,18 @@ def _all_true(df: pd.DataFrame, column: str) -> bool:
     return column in df.columns and bool(_to_bool(df[column]).all())
 
 
+def _valid_period_sequences(mps: pd.DataFrame) -> bool:
+    sequence = pd.to_numeric(mps["period_sequence"], errors="coerce")
+    if sequence.isna().any() or (sequence < 1).any():
+        return False
+    test = mps.assign(_period_sequence=sequence.astype(int)).sort_values(["finished_sku", "period_start"])
+    for _, group in test.groupby("finished_sku"):
+        expected = list(range(1, len(group) + 1))
+        if group["_period_sequence"].tolist() != expected:
+            return False
+    return True
+
+
 def _to_bool(series: pd.Series) -> pd.Series:
     return series.astype(str).str.strip().str.lower().isin({"true", "1", "yes", "y"})
 
@@ -303,7 +399,7 @@ def _result(name: str, status: str, message: str) -> dict:
 
 def _format_report(evidence: dict) -> str:
     lines = [
-        "Phase 4 Initialization Validation",
+        "Phase 4 Initialization Validation with MPS Step 1B Rolling Inventory Balance",
         f"Generated at UTC: {evidence['generated_at_utc']}",
         f"Overall status: {evidence['overall_status']}",
         f"Fail count: {evidence['fail_count']}",
