@@ -1,5 +1,5 @@
-Phase 4 Initialization Validation with Step 4A Workstation Capacity Load / CRP Feasibility
-Generated at UTC: 2026-06-27T14:32:54+00:00
+Phase 4 Initialization Validation with Step 4B Machine and Labor Capacity Load
+Generated at UTC: 2026-06-27T15:06:55+00:00
 Overall status: PASS
 Fail count: 0
 Warning count: 3
@@ -18,12 +18,12 @@ Checks:
 - PASS: mrp_step2b_pegging - MRP pegging detail contains 196 advisory rows with valid pegging sums.
 - PASS: resource_master_data - Step 3A resource master data valid; workstations=7, machines=7, labor_resources=7, calendar_rows=35.
 - PASS: routing_master_data - Step 3B routing master data valid; routing_rows=13, parallel_groups=2, operation_resource_rows=13.
-- PASS: capacity_load - Step 4A workstation capacity load valid; rows=98, periods=14, workstations=7.
+- PASS: capacity_load - Step 4B workstation, machine, and labor capacity load valid; rows=98, periods=14, workstations=7.
 - PASS: phase3_component_inventory - Phase 3 checked inventory for 10 components.
 - PASS: phase2_component_supplier - Phase 2 checked supplier coverage for 10 shortage rows; missing coverage rows: 0.
-- PASS: phase4_run_id_consistency - Consistent planning_run_id across Phase 4 outputs: PHASE4-MPS-20260627143205
-- PASS: phase4_advisory_only - All checked Phase 4 advisory flags are true: ['master_production_schedule', 'bom_component_requirements', 'mrp_net_component_requirements', 'mrp_component_period_summary', 'mrp_pegging_detail', 'component_inventory_check', 'component_supplier_check']
+- PASS: phase4_run_id_consistency - Consistent planning_run_id across Phase 4 outputs: PHASE4-MPS-20260627150605
+- PASS: phase4_advisory_only - All checked Phase 4 advisory flags are true: ['master_production_schedule', 'bom_component_requirements', 'mrp_net_component_requirements', 'mrp_component_period_summary', 'mrp_pegging_detail', 'capacity_load_by_workstation', 'capacity_operation_load_detail', 'capacity_load_by_machine_type', 'capacity_load_by_labor_skill', 'capacity_constraint_bridge', 'component_inventory_check', 'component_supplier_check']
 - PASS: existing_outputs - Existing Phase 1/2/3 outputs exist.
 - PASS: safety_flags - No enabled execution flags found across 5 checked columns.
-- PASS: no_routing_or_capacity_outputs - No Phase 4 capacity, utilization, bottleneck, queue, scheduling, or simulation outputs found.
+- PASS: no_routing_or_capacity_outputs - No future-only queue, bottleneck ranking, detailed scheduling, or simulation outputs found.
 - PASS: no_execution_outputs - No Phase 4 production/purchase/release/reservation output files found.

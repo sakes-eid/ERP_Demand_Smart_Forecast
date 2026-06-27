@@ -1,6 +1,6 @@
 Phase 3 Validation Report
 ===========================
-Timestamp: 2026-06-27T16:32:39
+Timestamp: 2026-06-27T16:49:21
 Project path: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 3
 Outputs path: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 3\outputs
 
@@ -39,8 +39,8 @@ Key Reconciliations
 - Manager dashboard row count: 22
 - Mandatory review queue count: 20
 - Advisory review queue count: 2
-- Operational saving total: 122567.74
-- Penalty-adjusted saving total: 150855.24
+- Operational saving total: 122563.74
+- Penalty-adjusted saving total: 150851.24
 - Auto-apply true count: 0
 - Selected hard blocker count: 0
 

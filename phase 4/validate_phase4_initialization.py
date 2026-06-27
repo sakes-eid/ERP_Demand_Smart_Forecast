@@ -19,6 +19,11 @@ PHASE4_OUTPUTS = {
     "mrp_net_component_requirements": PHASE4_DIR / "outputs" / "phase4_mrp_net_component_requirements.csv",
     "mrp_component_period_summary": PHASE4_DIR / "outputs" / "phase4_mrp_component_period_summary.csv",
     "mrp_pegging_detail": PHASE4_DIR / "outputs" / "phase4_mrp_pegging_detail.csv",
+    "capacity_load_by_workstation": PHASE4_DIR / "outputs" / "phase4_capacity_load_by_workstation.csv",
+    "capacity_operation_load_detail": PHASE4_DIR / "outputs" / "phase4_capacity_operation_load_detail.csv",
+    "capacity_load_by_machine_type": PHASE4_DIR / "outputs" / "phase4_capacity_load_by_machine_type.csv",
+    "capacity_load_by_labor_skill": PHASE4_DIR / "outputs" / "phase4_capacity_load_by_labor_skill.csv",
+    "capacity_constraint_bridge": PHASE4_DIR / "outputs" / "phase4_capacity_constraint_bridge.csv",
     "component_inventory_check": PROJECT_ROOT / "phase 3" / "outputs" / "phase4_component_inventory_check.csv",
     "component_supplier_check": PROJECT_ROOT / "phase 2" / "outputs" / "phase4_component_supplier_check.csv",
 }
@@ -44,6 +49,9 @@ ROUTING_VALIDATION_FILE = PHASE4_DIR / "outputs" / "phase4_routing_validation.cs
 ROUTING_FLOW_SUMMARY_FILE = PHASE4_DIR / "outputs" / "phase4_routing_flow_summary.csv"
 CAPACITY_LOAD_FILE = PHASE4_DIR / "outputs" / "phase4_capacity_load_by_workstation.csv"
 CAPACITY_OPERATION_DETAIL_FILE = PHASE4_DIR / "outputs" / "phase4_capacity_operation_load_detail.csv"
+MACHINE_CAPACITY_LOAD_FILE = PHASE4_DIR / "outputs" / "phase4_capacity_load_by_machine_type.csv"
+LABOR_CAPACITY_LOAD_FILE = PHASE4_DIR / "outputs" / "phase4_capacity_load_by_labor_skill.csv"
+CAPACITY_CONSTRAINT_BRIDGE_FILE = PHASE4_DIR / "outputs" / "phase4_capacity_constraint_bridge.csv"
 CAPACITY_VALIDATION_FILE = PHASE4_DIR / "outputs" / "phase4_capacity_validation.csv"
 
 
@@ -663,15 +671,191 @@ def _check_capacity_load() -> dict:
         return _result("capacity_load", "FAIL", "Capacity operation load detail output has no rows.")
     if "advisory_only_flag" in detail.columns and not _all_true(detail, "advisory_only_flag"):
         return _result("capacity_load", "FAIL", "Capacity operation load detail contains non-advisory rows.")
+    step4b_check = _check_step4b_capacity_outputs()
+    if step4b_check["status"] == "FAIL":
+        return step4b_check
     return _result(
         "capacity_load",
         "PASS",
         (
-            "Step 4A workstation capacity load valid; "
+            "Step 4B workstation, machine, and labor capacity load valid; "
             f"rows={len(load)}, periods={load[['planning_run_id', 'period_start', 'period_end']].drop_duplicates().shape[0]}, "
             f"workstations={load['workstation_id'].nunique()}."
         ),
     )
+
+
+def _check_step4b_capacity_outputs() -> dict:
+    checks = [
+        (
+            MACHINE_CAPACITY_LOAD_FILE,
+            {
+                "planning_run_id",
+                "period_start",
+                "period_end",
+                "workstation_id",
+                "required_machine_type",
+                "machine_required_hours",
+                "available_machine_hours",
+                "machine_utilization_pct",
+                "machine_capacity_status",
+                "machine_overload_flag",
+                "machine_near_capacity_flag",
+                "no_machine_capacity_record_flag",
+                "capacity_planning_basis",
+                "advisory_only_flag",
+            },
+            ["machine_required_hours", "available_machine_hours", "machine_utilization_pct"],
+            "machine_capacity_status",
+            {"MPS_ROUTING_MACHINE_TYPE_LOAD"},
+            "machine capacity",
+        ),
+        (
+            LABOR_CAPACITY_LOAD_FILE,
+            {
+                "planning_run_id",
+                "period_start",
+                "period_end",
+                "workstation_id",
+                "required_labor_skill",
+                "labor_required_hours",
+                "available_labor_hours",
+                "labor_utilization_pct",
+                "labor_capacity_status",
+                "labor_overload_flag",
+                "labor_near_capacity_flag",
+                "no_labor_capacity_record_flag",
+                "labor_soft_warning_threshold_pct",
+                "labor_hard_overload_threshold_pct",
+                "labor_high_utilization_warning_flag",
+                "labor_hard_overload_flag",
+                "labor_capacity_interpretation",
+                "capacity_planning_basis",
+                "advisory_only_flag",
+            },
+            ["labor_required_hours", "available_labor_hours", "labor_utilization_pct"],
+            "labor_capacity_status",
+            {"MPS_ROUTING_LABOR_SKILL_LOAD"},
+            "labor capacity",
+        ),
+    ]
+    valid_statuses = {"NO_LOAD", "FEASIBLE", "NEAR_CAPACITY", "HIGH_UTILIZATION_WARNING", "OVERLOADED", "NO_CAPACITY_RECORD", "REVIEW_REQUIRED"}
+    total_rows = 0
+    for path, required, numeric_columns, status_column, basis_expected, label in checks:
+        if not path.exists():
+            return _result("capacity_load", "FAIL", f"{label} output is missing.")
+        frame = pd.read_csv(path)
+        total_rows += len(frame)
+        if frame.empty:
+            return _result("capacity_load", "FAIL", f"{label} output has no rows.")
+        missing = sorted(required.difference(frame.columns))
+        if missing:
+            return _result("capacity_load", "FAIL", f"{label} output missing columns: {missing}")
+        for column in numeric_columns:
+            values = pd.to_numeric(frame[column], errors="coerce")
+            if values.isna().any() or (values < 0).any():
+                return _result("capacity_load", "FAIL", f"{label} {column} must be numeric and non-negative.")
+        if (~frame[status_column].astype(str).isin(valid_statuses)).any():
+            return _result("capacity_load", "FAIL", f"{label} contains invalid status values.")
+        if set(frame["capacity_planning_basis"].dropna().astype(str).str.strip()) != basis_expected:
+            return _result("capacity_load", "FAIL", f"{label} contains unexpected planning basis values.")
+        if not _all_true(frame, "advisory_only_flag"):
+            return _result("capacity_load", "FAIL", f"{label} output contains non-advisory rows.")
+        if label == "labor capacity":
+            labor_check = _validate_labor_capacity_thresholds(frame)
+            if labor_check:
+                return labor_check
+    workstation_load = pd.read_csv(CAPACITY_LOAD_FILE)
+    workstation_required = {
+        "workstation_capacity_basis",
+        "workstation_capacity_unit_count",
+        "effective_workstation_available_hours",
+        "workstation_capacity_interpretation",
+    }
+    workstation_missing = sorted(workstation_required.difference(workstation_load.columns))
+    if workstation_missing:
+        return _result("capacity_load", "FAIL", f"Workstation capacity output missing basis columns: {workstation_missing}")
+    basis_values = set(workstation_load["workstation_capacity_basis"].dropna().astype(str).str.strip())
+    if basis_values != {"SINGLE_STATION_CALENDAR"}:
+        return _result("capacity_load", "FAIL", f"Unexpected workstation capacity basis values: {sorted(basis_values)}")
+    if workstation_load["workstation_capacity_interpretation"].astype(str).str.strip().eq("").any():
+        return _result("capacity_load", "FAIL", "Workstation capacity interpretation must be populated.")
+    if not CAPACITY_CONSTRAINT_BRIDGE_FILE.exists():
+        return _result("capacity_load", "FAIL", "Capacity constraint bridge output is missing.")
+    bridge = pd.read_csv(CAPACITY_CONSTRAINT_BRIDGE_FILE)
+    if bridge.empty:
+        return _result("capacity_load", "FAIL", "Capacity constraint bridge output has no rows.")
+    bridge_required = {
+        "planning_run_id",
+        "period_start",
+        "period_end",
+        "workstation_id",
+        "workstation_name",
+        "workstation_capacity_status",
+        "workstation_utilization_pct",
+        "workstation_overload_flag",
+        "machine_constraint_flag",
+        "overloaded_machine_types",
+        "highest_machine_utilization_pct",
+        "labor_constraint_flag",
+        "overloaded_labor_skills",
+        "labor_high_utilization_warning_flag",
+        "labor_hard_overload_flag",
+        "high_utilization_labor_skills",
+        "highest_labor_utilization_pct",
+        "workstation_capacity_basis",
+        "workstation_capacity_interpretation",
+        "combined_constraint_type",
+        "constraint_interpretation",
+        "constraint_review_required_flag",
+        "capacity_planning_basis",
+        "advisory_only_flag",
+    }
+    missing_bridge = sorted(bridge_required.difference(bridge.columns))
+    if missing_bridge:
+        return _result("capacity_load", "FAIL", f"Constraint bridge missing columns: {missing_bridge}")
+    valid_constraint_types = {
+        "NONE",
+        "WORKSTATION_ONLY",
+        "MACHINE_ONLY",
+        "LABOR_ONLY",
+        "MACHINE_AND_LABOR",
+        "WORKSTATION_AND_MACHINE",
+        "WORKSTATION_AND_LABOR",
+        "WORKSTATION_MACHINE_AND_LABOR",
+        "WORKSTATION_WITH_LABOR_HIGH_UTILIZATION_WARNING",
+        "LABOR_HIGH_UTILIZATION_WARNING_ONLY",
+        "REVIEW_REQUIRED",
+    }
+    if (~bridge["combined_constraint_type"].astype(str).isin(valid_constraint_types)).any():
+        return _result("capacity_load", "FAIL", "Constraint bridge contains invalid combined_constraint_type values.")
+    warning_without_review = _to_bool(bridge["labor_high_utilization_warning_flag"]) & ~_to_bool(bridge["constraint_review_required_flag"])
+    if warning_without_review.any():
+        return _result("capacity_load", "FAIL", "Constraint bridge must require review when labor high-utilization warning exists.")
+    if not _all_true(bridge, "advisory_only_flag"):
+        return _result("capacity_load", "FAIL", "Constraint bridge contains non-advisory rows.")
+    return _result("capacity_load", "PASS", f"Step 4B outputs valid; machine/labor rows={total_rows}, bridge_rows={len(bridge)}.")
+
+
+def _validate_labor_capacity_thresholds(frame: pd.DataFrame) -> dict | None:
+    utilization = pd.to_numeric(frame["labor_utilization_pct"], errors="coerce")
+    soft = pd.to_numeric(frame["labor_soft_warning_threshold_pct"], errors="coerce")
+    hard = pd.to_numeric(frame["labor_hard_overload_threshold_pct"], errors="coerce")
+    if (soft != 80).any() or (hard != 95).any():
+        return _result("capacity_load", "FAIL", "Labor threshold columns must be 80 and 95 for all rows.")
+    warning_band = (utilization > 80) & (utilization <= 95)
+    hard_band = utilization > 95
+    if (_to_bool(frame["labor_high_utilization_warning_flag"]) != warning_band).any():
+        return _result("capacity_load", "FAIL", "Labor high-utilization warning flags do not match >80 and <=95 utilization.")
+    if (_to_bool(frame["labor_hard_overload_flag"]) != hard_band).any():
+        return _result("capacity_load", "FAIL", "Labor hard overload flags do not match >95 utilization.")
+    if (frame.loc[warning_band, "labor_capacity_status"].astype(str) != "HIGH_UTILIZATION_WARNING").any():
+        return _result("capacity_load", "FAIL", "Labor utilization >80 and <=95 must use HIGH_UTILIZATION_WARNING.")
+    if (frame.loc[warning_band, "labor_capacity_status"].astype(str) == "FEASIBLE").any():
+        return _result("capacity_load", "FAIL", "Labor utilization >80 and <=95 must not be marked FEASIBLE.")
+    if (frame.loc[hard_band, "labor_capacity_status"].astype(str) != "OVERLOADED").any():
+        return _result("capacity_load", "FAIL", "Labor utilization >95 must be marked OVERLOADED.")
+    return None
 
 
 def _check_phase3_inventory_check() -> dict:
@@ -808,8 +992,6 @@ def _check_no_execution_outputs() -> dict:
 
 def _check_no_routing_or_capacity_outputs() -> dict:
     blocked_tokens = [
-        "machine_capacity",
-        "labor_capacity",
         "capacity_feasibility",
         "capacity_plan",
         "utilization",
@@ -833,12 +1015,12 @@ def _check_no_routing_or_capacity_outputs() -> dict:
         return _result(
             "no_routing_or_capacity_outputs",
             "FAIL",
-            f"Routing/capacity/scheduling/simulation-like Phase 4 outputs found: {bad_files}",
+            f"Future-only queue/bottleneck/scheduling/simulation-like Phase 4 outputs found: {bad_files}",
         )
     return _result(
         "no_routing_or_capacity_outputs",
         "PASS",
-        "No Phase 4 capacity, utilization, bottleneck, queue, scheduling, or simulation outputs found.",
+        "No future-only queue, bottleneck ranking, detailed scheduling, or simulation outputs found.",
     )
 
 
@@ -917,7 +1099,7 @@ def _result(name: str, status: str, message: str) -> dict:
 
 def _format_report(evidence: dict) -> str:
     lines = [
-        "Phase 4 Initialization Validation with Step 4A Workstation Capacity Load / CRP Feasibility",
+        "Phase 4 Initialization Validation with Step 4B Machine and Labor Capacity Load",
         f"Generated at UTC: {evidence['generated_at_utc']}",
         f"Overall status: {evidence['overall_status']}",
         f"Fail count: {evidence['fail_count']}",

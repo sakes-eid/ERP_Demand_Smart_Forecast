@@ -1,6 +1,6 @@
-# Phase 4 Initialization Through Workstation Capacity Load
+# Phase 4 Initialization Through Machine and Labor Capacity Load
 
-Phase 4 production planning preparation has started. It now includes a simple advisory Master Production Schedule (MPS), MRP net component requirements, component-period MRP summary, pegging detail, production resource master data, routing/workflow master data, and workstation-level capacity load / CRP feasibility. This is still not the full production planning engine.
+Phase 4 production planning preparation has started. It now includes a simple advisory Master Production Schedule (MPS), MRP net component requirements, component-period MRP summary, pegging detail, production resource master data, routing/workflow master data, and CRP feasibility for workstations, machine types, and labor skills. This is still not the full production planning engine.
 
 Current initialization scope:
 
@@ -27,8 +27,17 @@ Current initialization scope:
 - `outputs/phase4_routing_flow_summary.csv` provides a human-readable review summary of each routing.
 - `core/capacity_load.py` calculates advisory workstation-level capacity load from MPS planned production and routing operation times.
 - Available workstation capacity is based on the workstation rows in the resource calendar.
+- Machine-type capacity checks machine/tool constraints from routing operation resources and `machines.csv`.
+- Labor-skill capacity checks worker skill constraints from routing operation resources and `labor_resources.csv`.
+- The capacity constraint bridge links workstation overloads to machine and labor causes.
+- Labor capacity uses stricter labor-specific thresholds because workers need operating buffer for breaks, fatigue, variability, quality checks, coordination, and disruptions.
+- Labor utilization above 80% is marked `HIGH_UTILIZATION_WARNING`.
+- Labor utilization above 95% is treated as a hard `OVERLOADED` condition.
+- Workstation capacity output now states its capacity basis explicitly.
+- Current workstation capacity is based on `SINGLE_STATION_CALENDAR`.
+- `WORKSTATION_ONLY` overload means the workstation calendar layer is overloaded; it does not necessarily mean the machine-type or labor-skill layers are overloaded.
 - Parallel operations add load to their own workstations in the same period, but they are not sequenced or scheduled yet.
-- Capacity statuses include `FEASIBLE`, `NEAR_CAPACITY`, `OVERLOADED`, `NO_CAPACITY_RECORD`, `NO_LOAD`, and `REVIEW_REQUIRED`.
+- Capacity statuses include `FEASIBLE`, `NEAR_CAPACITY`, `HIGH_UTILIZATION_WARNING`, `OVERLOADED`, `NO_CAPACITY_RECORD`, `NO_LOAD`, and `REVIEW_REQUIRED`.
 - `outputs/phase4_capacity_operation_load_detail.csv` provides operation-level load detail for validation and review only.
 - If MPS output is missing or empty, BOM explosion falls back to the original forecast-based initialization bridge.
 - Phase 3 can produce an advisory inventory availability check using component-period MRP summary when available.
@@ -43,7 +52,7 @@ Run order:
 4. Run Phase 4 MRP net component requirements, component-period summary, and pegging detail.
 5. Validate Phase 4 resource master data.
 6. Validate Phase 4 routing/workflow master data.
-7. Build Phase 4 workstation capacity load / CRP feasibility.
+7. Build Phase 4 workstation, machine-type, and labor-skill capacity load / CRP feasibility.
 8. Run Phase 3 component inventory checks.
 9. Run Phase 2 component supplier checks.
 
@@ -62,17 +71,17 @@ Not implemented yet:
 
 - Full MPS governance beyond the advisory rolling-balance calculation.
 - Full MRP execution, order release, and procurement execution.
-- Machine-level and labor-level capacity checks.
-- Detailed capacity scheduling, utilization dashboards, and bottleneck analysis.
+- Detailed capacity scheduling, utilization dashboards, and bottleneck ranking analysis.
+- Step 4C will later summarize bottleneck candidates more intelligently; this patch does not implement detailed bottleneck ranking.
 - Queue logic or queue simulation.
 - Quality, maintenance, scheduling, layout, or simulation.
 - Production order release.
 
 Next likely Phase 4 feature:
 
-- The next real feature after this workstation capacity-load step is machine/labor capacity checking, but it is not implemented here.
+- The next real feature after this machine/labor capacity-load step is likely bottleneck review or capacity relief recommendations, but it is not implemented here.
 
 Review bundle:
 
-- `create_phase4_review_bundle.py` generates `phase4_step4a_capacity_review_bundle.zip` at the project root for external review.
+- `create_phase4_review_bundle.py` generates `phase4_step4b_machine_labor_capacity_review_bundle.zip` at the project root for external review.
 - The bundle preserves project-relative folder structure and excludes cache, bytecode, virtual environment, and zip artifacts.

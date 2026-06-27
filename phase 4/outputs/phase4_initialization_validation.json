@@ -1,6 +1,6 @@
 {
   "validation_name": "phase4_initialization_validation",
-  "generated_at_utc": "2026-06-27T14:32:54+00:00",
+  "generated_at_utc": "2026-06-27T15:06:55+00:00",
   "overall_status": "PASS",
   "fail_count": 0,
   "warning_count": 3,
@@ -73,7 +73,7 @@
     {
       "check": "capacity_load",
       "status": "PASS",
-      "message": "Step 4A workstation capacity load valid; rows=98, periods=14, workstations=7."
+      "message": "Step 4B workstation, machine, and labor capacity load valid; rows=98, periods=14, workstations=7."
     },
     {
       "check": "phase3_component_inventory",
@@ -88,12 +88,12 @@
     {
       "check": "phase4_run_id_consistency",
       "status": "PASS",
-      "message": "Consistent planning_run_id across Phase 4 outputs: PHASE4-MPS-20260627143205"
+      "message": "Consistent planning_run_id across Phase 4 outputs: PHASE4-MPS-20260627150605"
     },
     {
       "check": "phase4_advisory_only",
       "status": "PASS",
-      "message": "All checked Phase 4 advisory flags are true: ['master_production_schedule', 'bom_component_requirements', 'mrp_net_component_requirements', 'mrp_component_period_summary', 'mrp_pegging_detail', 'component_inventory_check', 'component_supplier_check']"
+      "message": "All checked Phase 4 advisory flags are true: ['master_production_schedule', 'bom_component_requirements', 'mrp_net_component_requirements', 'mrp_component_period_summary', 'mrp_pegging_detail', 'capacity_load_by_workstation', 'capacity_operation_load_detail', 'capacity_load_by_machine_type', 'capacity_load_by_labor_skill', 'capacity_constraint_bridge', 'component_inventory_check', 'component_supplier_check']"
     },
     {
       "check": "existing_outputs",
@@ -108,7 +108,7 @@
     {
       "check": "no_routing_or_capacity_outputs",
       "status": "PASS",
-      "message": "No Phase 4 capacity, utilization, bottleneck, queue, scheduling, or simulation outputs found."
+      "message": "No future-only queue, bottleneck ranking, detailed scheduling, or simulation outputs found."
     },
     {
       "check": "no_execution_outputs",

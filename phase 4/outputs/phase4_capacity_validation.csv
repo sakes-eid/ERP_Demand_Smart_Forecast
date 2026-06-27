@@ -3,6 +3,9 @@ capacity_mps_exists,mps exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab
 capacity_product_routings_exists,product_routings exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\data\product_routings.csv,0,True
 capacity_workstations_exists,workstations exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\data\workstations.csv,0,True
 capacity_resource_calendar_exists,resource_calendar exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\data\resource_calendar.csv,0,True
+capacity_routing_operation_resources_exists,routing_operation_resources exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\data\routing_operation_resources.csv,0,True
+capacity_machines_exists,machines exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\data\machines.csv,0,True
+capacity_labor_resources_exists,labor_resources exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\data\labor_resources.csv,0,True
 capacity_mps_required_columns,mps required columns,PASS,All required columns exist.,0,True
 capacity_mps_not_empty,mps not empty,PASS,File has 28 rows.,0,True
 capacity_product_routings_required_columns,product_routings required columns,PASS,All required columns exist.,0,True
@@ -11,6 +14,12 @@ capacity_workstations_required_columns,workstations required columns,PASS,All re
 capacity_workstations_not_empty,workstations not empty,PASS,File has 7 rows.,0,True
 capacity_resource_calendar_required_columns,resource_calendar required columns,PASS,All required columns exist.,0,True
 capacity_resource_calendar_not_empty,resource_calendar not empty,PASS,File has 35 rows.,0,True
+capacity_routing_operation_resources_required_columns,routing_operation_resources required columns,PASS,All required columns exist.,0,True
+capacity_routing_operation_resources_not_empty,routing_operation_resources not empty,PASS,File has 13 rows.,0,True
+capacity_machines_required_columns,machines required columns,PASS,All required columns exist.,0,True
+capacity_machines_not_empty,machines not empty,PASS,File has 7 rows.,0,True
+capacity_labor_resources_required_columns,labor_resources required columns,PASS,All required columns exist.,0,True
+capacity_labor_resources_not_empty,labor_resources not empty,PASS,File has 7 rows.,0,True
 capacity_resource_validation_has_no_fail,resource_validation has no FAIL rows,PASS,resource_validation has no FAIL rows.,0,True
 capacity_routing_validation_has_no_fail,routing_validation has no FAIL rows,PASS,routing_validation has no FAIL rows.,0,True
 capacity_mps_skus_have_routings,MPS SKUs have routing operations,PASS,Every MPS finished SKU has routing operations.,0,True
@@ -21,5 +30,10 @@ capacity_load_grain_unique,capacity load grain unique,PASS,Capacity load has one
 capacity_load_numeric_values_valid,capacity load numeric values valid,PASS,"Capacity required, available, and utilization values are numeric and non-negative.",0,True
 capacity_status_populated,capacity status populated,PASS,capacity_status is populated for all rows.,0,True
 capacity_load_advisory_only,capacity load advisory only,PASS,All capacity load rows are advisory-only.,0,True
+capacity_workstation_basis_valid,workstation capacity basis valid,PASS,Workstation capacity basis is SINGLE_STATION_CALENDAR.,0,True
 capacity_operation_detail_exists,capacity operation detail exists,PASS,Operation detail output has 182 rows.,0,True
-capacity_no_blocked_future_outputs,capacity no blocked future outputs,PASS,"No machine/labor capacity, queue, bottleneck, scheduling, simulation, or execution outputs found.",0,True
+capacity_machine_load_valid,machine capacity load valid,PASS,machine capacity load has 98 advisory rows.,0,True
+capacity_labor_load_valid,labor capacity load valid,PASS,labor capacity load has 98 advisory rows.,0,True
+capacity_labor_thresholds_valid,labor capacity thresholds valid,PASS,Labor capacity uses 80% warning and 95% hard-overload thresholds.,0,True
+capacity_constraint_bridge_valid,capacity constraint bridge valid,PASS,Constraint bridge has 98 advisory rows.,0,True
+capacity_no_blocked_future_outputs,capacity no blocked future outputs,PASS,"No queue, bottleneck ranking, scheduling, simulation, or execution outputs found.",0,True

@@ -4,6 +4,9 @@ from __future__ import annotations
 
 from core.bom_explosion_bridge import OUTPUT_FILE, build_bom_component_requirements
 from core.capacity_load import DETAIL_OUTPUT_FILE as CAPACITY_DETAIL_OUTPUT_FILE
+from core.capacity_load import CONSTRAINT_BRIDGE_OUTPUT_FILE as CAPACITY_CONSTRAINT_BRIDGE_OUTPUT_FILE
+from core.capacity_load import LABOR_OUTPUT_FILE as CAPACITY_LABOR_OUTPUT_FILE
+from core.capacity_load import MACHINE_OUTPUT_FILE as CAPACITY_MACHINE_OUTPUT_FILE
 from core.capacity_load import OUTPUT_FILE as CAPACITY_LOAD_OUTPUT_FILE
 from core.capacity_load import VALIDATION_OUTPUT_FILE as CAPACITY_VALIDATION_OUTPUT_FILE
 from core.capacity_load import build_workstation_capacity_load
@@ -50,6 +53,9 @@ def run_initialization() -> None:
     print(f"Capacity load output written to: {CAPACITY_LOAD_OUTPUT_FILE}")
     print(f"Capacity operation detail rows: {len(capacity_detail)}")
     print(f"Capacity operation detail output written to: {CAPACITY_DETAIL_OUTPUT_FILE}")
+    print(f"Machine capacity output written to: {CAPACITY_MACHINE_OUTPUT_FILE}")
+    print(f"Labor capacity output written to: {CAPACITY_LABOR_OUTPUT_FILE}")
+    print(f"Capacity constraint bridge output written to: {CAPACITY_CONSTRAINT_BRIDGE_OUTPUT_FILE}")
     print(f"Capacity validation rows: {len(capacity_validation)}")
     print(f"Capacity validation output written to: {CAPACITY_VALIDATION_OUTPUT_FILE}")
 

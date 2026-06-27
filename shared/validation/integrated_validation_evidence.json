@@ -1,8 +1,8 @@
 {
   "validation_metadata": {
     "validation_version": "1.0",
-    "generated_at": "2026-06-27T14:32:53Z",
-    "run_id": "INTEGRATED-20260627143048",
+    "generated_at": "2026-06-27T14:49:22Z",
+    "run_id": "INTEGRATED-20260627144807",
     "final_iteration": 1,
     "validator_git_or_code_version": "LOCAL",
     "project_root": "C:\\Users\\iTECH\\OneDrive - Beirut Arab University\\Desktop\\apps i made\\SC project",
@@ -784,8 +784,8 @@
       "exists": true,
       "row_count": 12,
       "column_count": 83,
-      "sha256": "0c97a11231cd069d3d132ed4cec36746c090d0cc737958d727b5b5446f2d0187",
-      "modified_at": "2026-06-27T16:32:04",
+      "sha256": "7ba7bb56b2b2846080516e3ee5a63ceffc753de53ceb69417dcad30871d06894",
+      "modified_at": "2026-06-27T16:48:41",
       "schema_version": "",
       "source_phase": "",
       "required_or_optional": "optional"
@@ -796,8 +796,8 @@
       "exists": true,
       "row_count": 60,
       "column_count": 67,
-      "sha256": "d5a79dacd8acf8e81a5c33abac5da341d87ba4a8c4429b885c517db0241bb39a",
-      "modified_at": "2026-06-27T16:32:24",
+      "sha256": "507d973c56ff415fc3c33ed53fe0f251ab29d8707fd102ce632ba01b91898538",
+      "modified_at": "2026-06-27T16:49:04",
       "schema_version": "1.0",
       "source_phase": "PHASE_2",
       "required_or_optional": "required"
@@ -808,8 +808,8 @@
       "exists": true,
       "row_count": 20,
       "column_count": 17,
-      "sha256": "da6632f351392990fddf0af151b8a178791a13fa10c16cf31830954f81d49dd7",
-      "modified_at": "2026-06-27T16:32:24",
+      "sha256": "ccaed9aec25d52f735a3bb7992492de9ae3a014e8a841a8f91fbbf60de416f6e",
+      "modified_at": "2026-06-27T16:49:04",
       "schema_version": "1.0",
       "source_phase": "PHASE_2",
       "required_or_optional": "required"
@@ -820,8 +820,8 @@
       "exists": true,
       "row_count": 22,
       "column_count": 83,
-      "sha256": "60db8449374d60c9ca8a4b2d201d0c040b8b92be7c0a2902a98f4be54c8eba85",
-      "modified_at": "2026-06-27T16:32:27",
+      "sha256": "080221ab3f030fd2a4d8500d902a734f84a8ad466414b70b2e3d7a5205d2573e",
+      "modified_at": "2026-06-27T16:49:07",
       "schema_version": "1.0",
       "source_phase": "PHASE_3",
       "required_or_optional": "required"
@@ -832,8 +832,8 @@
       "exists": true,
       "row_count": 28,
       "column_count": 61,
-      "sha256": "c08372649c3044b36efb24b7c8ed8e09227b1e75cd3759ead6b9d61c5fb5feae",
-      "modified_at": "2026-06-27T16:32:24",
+      "sha256": "5e5906e8ca118d9dca67232208e8d3acd9f4785156e12a24bc4eaa8129a29bfc",
+      "modified_at": "2026-06-27T16:49:04",
       "schema_version": "1.0",
       "source_phase": "PHASE_2",
       "required_or_optional": "required"
@@ -844,8 +844,8 @@
       "exists": true,
       "row_count": 22,
       "column_count": 29,
-      "sha256": "a60e9892980f7212a28f689488d355ee5118ec0e33487b7daa6b4a5ad972cab4",
-      "modified_at": "2026-06-27T16:32:24",
+      "sha256": "96eb29fc5f009a6ad0a0f7eff5511c5528a110ad7ee5e1386e01541e6d3f17b3",
+      "modified_at": "2026-06-27T16:49:04",
       "schema_version": "1.0",
       "source_phase": "PHASE_2",
       "required_or_optional": "required"
@@ -856,8 +856,8 @@
       "exists": true,
       "row_count": 22,
       "column_count": 25,
-      "sha256": "62019f903862df6650216f19e211bf66a577f0d9d14ffee9b309636306c05cc0",
-      "modified_at": "2026-06-27T16:32:27",
+      "sha256": "e9bef863be1d18f320a23b3d1dfa08647b9d605bcd21b2bbf11300e26d77f679",
+      "modified_at": "2026-06-27T16:49:07",
       "schema_version": "1.0",
       "source_phase": "PHASE_3",
       "required_or_optional": "required"
@@ -868,8 +868,8 @@
       "exists": true,
       "row_count": 22,
       "column_count": 44,
-      "sha256": "4d881ff164326af005f68ab1375d34654239adc8a1bd4476a85137e026385da0",
-      "modified_at": "2026-06-27T16:32:27",
+      "sha256": "610870f3d3a9b12b54d9bba54f8f5870f58a88a80477db24616455cfaeb14134",
+      "modified_at": "2026-06-27T16:49:08",
       "schema_version": "1.0",
       "source_phase": "",
       "required_or_optional": "required"
@@ -881,7 +881,7 @@
       "row_count": 20,
       "column_count": 102,
       "sha256": "7ff730e1c505e8eee8479486e464e971fdde56246f4f9fa98408a04959d1863c",
-      "modified_at": "2026-06-27T16:32:24",
+      "modified_at": "2026-06-27T16:49:04",
       "schema_version": "",
       "source_phase": "",
       "required_or_optional": "optional"
@@ -892,8 +892,8 @@
       "exists": true,
       "row_count": 22,
       "column_count": 98,
-      "sha256": "cbbfdab478907ee648e738ffeb339f1a90b1c102bcb141ca442c83630bcf8648",
-      "modified_at": "2026-06-27T16:32:27",
+      "sha256": "ba3ebb49e38772b8c98dcb2564bc48fe3be8d4d6c42dd7f769ee381352427bb1",
+      "modified_at": "2026-06-27T16:49:07",
       "schema_version": "",
       "source_phase": "",
       "required_or_optional": "optional"
@@ -921,22 +921,22 @@
       "usable_on_hand_total": 3668.0
     },
     "requirement_reconciliation": {
-      "net_requirement_total": 4961.0
+      "net_requirement_total": 4941.0
     },
     "allocation_reconciliation": {
-      "allocated_usable_total": 4330.71
+      "allocated_usable_total": 4350.71
     },
     "yield_reconciliation": {
-      "supplier_purchase_total": 4718.0
+      "supplier_purchase_total": 4739.0
     },
     "capacity_reconciliation": {
       "unallocated_requirement_total": 610.29
     },
     "final_inventory_reconciliation": {
-      "accepted_allocation_total": 4330.71
+      "accepted_allocation_total": 4350.71
     },
     "cost_reconciliation": {
-      "integrated_procurement_cost_total": 26555.61
+      "integrated_procurement_cost_total": 26870.16
     },
     "review_execution_reconciliation": {
       "review_required_count": 9
@@ -1681,11 +1681,6 @@
           "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
         },
         {
-          "sku_id": "SKU-UMR-007",
-          "adjustment_required_flag": true,
-          "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
-        },
-        {
           "sku_id": "SKU-BIKE-ROAD-001",
           "adjustment_required_flag": true,
           "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
@@ -1696,12 +1691,11 @@
           "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
         }
       ],
-      "affected_row_count": 5,
-      "affected_unique_key_count": 5,
+      "affected_row_count": 4,
+      "affected_unique_key_count": 4,
       "affected_keys": [
         "SKU-COF-001",
         "SKU-TEA-002",
-        "SKU-UMR-007",
         "SKU-BIKE-ROAD-001",
         "SKU-BIKE-MT-001"
       ],
@@ -1714,11 +1708,6 @@
           },
           {
             "sku_id": "SKU-TEA-002",
-            "adjustment_required_flag": true,
-            "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
-          },
-          {
-            "sku_id": "SKU-UMR-007",
             "adjustment_required_flag": true,
             "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
           },
@@ -2941,11 +2930,6 @@
           "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
         },
         {
-          "sku_id": "SKU-UMR-007",
-          "adjustment_required_flag": true,
-          "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
-        },
-        {
           "sku_id": "SKU-BIKE-ROAD-001",
           "adjustment_required_flag": true,
           "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
@@ -2956,12 +2940,11 @@
           "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
         }
       ],
-      "affected_row_count": 5,
-      "affected_unique_key_count": 5,
+      "affected_row_count": 4,
+      "affected_unique_key_count": 4,
       "affected_keys": [
         "SKU-COF-001",
         "SKU-TEA-002",
-        "SKU-UMR-007",
         "SKU-BIKE-ROAD-001",
         "SKU-BIKE-MT-001"
       ],
@@ -2974,11 +2957,6 @@
           },
           {
             "sku_id": "SKU-TEA-002",
-            "adjustment_required_flag": true,
-            "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
-          },
-          {
-            "sku_id": "SKU-UMR-007",
             "adjustment_required_flag": true,
             "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
           },
@@ -3656,9 +3634,9 @@
   ],
   "key_metrics": {
     "sku_count": 22,
-    "net_requirement_total": 4961.0,
-    "allocated_usable_total": 4330.71,
-    "end_to_end_requirement_coverage_rate": 0.872951,
+    "net_requirement_total": 4941.0,
+    "allocated_usable_total": 4350.71,
+    "end_to_end_requirement_coverage_rate": 0.880532,
     "planning_exception_rate": 0.409091,
     "split_sourcing_count": 3,
     "auto_apply_true_count": 0
@@ -3685,7 +3663,7 @@
   "representative_rows": {
     "healthy_or_no_order_sku": {
       "schema_version": 1.0,
-      "run_id": "INTEGRATED-20260627143048",
+      "run_id": "INTEGRATED-20260627144807",
       "sku_id": "SKU-BBQ-006",
       "final_iteration": 1,
       "convergence_status": "CONVERGED_WITH_REVIEW",
@@ -3731,9 +3709,9 @@
     },
     "stockout_sku": {
       "schema_version": 1.0,
-      "run_id": "INTEGRATED-20260627143048",
+      "run_id": "INTEGRATED-20260627144807",
       "planning_iteration": 1,
-      "generated_at": "2026-06-27T14:32:27Z",
+      "generated_at": "2026-06-27T14:49:07Z",
       "source_phase": "PHASE_3",
       "target_phase": "PHASE_2",
       "data_as_of_date": "2026-06-27",
@@ -3816,9 +3794,9 @@
     },
     "split_sourcing_sku": {
       "schema_version": 1.0,
-      "run_id": "INTEGRATED-20260627143048",
+      "run_id": "INTEGRATED-20260627144807",
       "planning_iteration": 1,
-      "generated_at": "2026-06-27T14:32:24Z",
+      "generated_at": "2026-06-27T14:49:04Z",
       "source_phase": "PHASE_2",
       "target_phase": "PHASE_3",
       "data_as_of_date": "2026-06-27",
@@ -3847,9 +3825,9 @@
     },
     "aggregate_capacity_shortfall_sku": {
       "schema_version": 1.0,
-      "run_id": "INTEGRATED-20260627143048",
+      "run_id": "INTEGRATED-20260627144807",
       "planning_iteration": 1,
-      "generated_at": "2026-06-27T14:32:24Z",
+      "generated_at": "2026-06-27T14:49:04Z",
       "source_phase": "PHASE_2",
       "target_phase": "PHASE_3",
       "data_as_of_date": "2026-06-27",

@@ -14,15 +14,27 @@ OUTPUT_DIR = PHASE4_DIR / "outputs"
 MPS_FILE = OUTPUT_DIR / "phase4_master_production_schedule.csv"
 PRODUCT_ROUTINGS_FILE = DATA_DIR / "product_routings.csv"
 WORKSTATIONS_FILE = DATA_DIR / "workstations.csv"
+OPERATION_RESOURCES_FILE = DATA_DIR / "routing_operation_resources.csv"
+MACHINES_FILE = DATA_DIR / "machines.csv"
+LABOR_FILE = DATA_DIR / "labor_resources.csv"
 RESOURCE_CALENDAR_FILE = DATA_DIR / "resource_calendar.csv"
 RESOURCE_VALIDATION_FILE = OUTPUT_DIR / "phase4_resource_validation.csv"
 ROUTING_VALIDATION_FILE = OUTPUT_DIR / "phase4_routing_validation.csv"
 
 OUTPUT_FILE = OUTPUT_DIR / "phase4_capacity_load_by_workstation.csv"
 DETAIL_OUTPUT_FILE = OUTPUT_DIR / "phase4_capacity_operation_load_detail.csv"
+MACHINE_OUTPUT_FILE = OUTPUT_DIR / "phase4_capacity_load_by_machine_type.csv"
+LABOR_OUTPUT_FILE = OUTPUT_DIR / "phase4_capacity_load_by_labor_skill.csv"
+CONSTRAINT_BRIDGE_OUTPUT_FILE = OUTPUT_DIR / "phase4_capacity_constraint_bridge.csv"
 VALIDATION_OUTPUT_FILE = OUTPUT_DIR / "phase4_capacity_validation.csv"
 
 CAPACITY_PLANNING_BASIS = "MPS_ROUTING_WORKSTATION_LOAD"
+MACHINE_CAPACITY_PLANNING_BASIS = "MPS_ROUTING_MACHINE_TYPE_LOAD"
+LABOR_CAPACITY_PLANNING_BASIS = "MPS_ROUTING_LABOR_SKILL_LOAD"
+CONSTRAINT_BRIDGE_PLANNING_BASIS = "MPS_ROUTING_CAPACITY_CONSTRAINT_BRIDGE"
+LABOR_SOFT_WARNING_THRESHOLD_PCT = 80.0
+LABOR_HARD_OVERLOAD_THRESHOLD_PCT = 95.0
+WORKSTATION_CAPACITY_BASIS = "SINGLE_STATION_CALENDAR"
 
 REQUIRED_COLUMNS = {
     "mps": {
@@ -63,17 +75,46 @@ REQUIRED_COLUMNS = {
         "planned_break_minutes",
         "available_flag",
     },
+    "routing_operation_resources": {
+        "operation_id",
+        "routing_id",
+        "finished_sku",
+        "workstation_id",
+        "required_machine_type",
+        "required_labor_skill",
+        "required_machine_count",
+        "required_worker_count",
+        "active_flag",
+        "advisory_only_flag",
+    },
+    "machines": {
+        "workstation_id",
+        "machine_type",
+        "machine_count",
+        "available_hours_per_week",
+        "active_flag",
+    },
+    "labor_resources": {
+        "workstation_id",
+        "skill_type",
+        "workers_available",
+        "hours_per_worker_per_week",
+        "active_flag",
+    },
 }
 
 
 def build_workstation_capacity_load() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
-    """Build operation detail, workstation-period load, and validation outputs."""
+    """Build all Step 4A/4B advisory CRP capacity outputs."""
     checks: list[dict] = []
     frames = {
         "mps": _load_csv(MPS_FILE, "mps", checks),
         "product_routings": _load_csv(PRODUCT_ROUTINGS_FILE, "product_routings", checks),
         "workstations": _load_csv(WORKSTATIONS_FILE, "workstations", checks),
         "resource_calendar": _load_csv(RESOURCE_CALENDAR_FILE, "resource_calendar", checks),
+        "routing_operation_resources": _load_csv(OPERATION_RESOURCES_FILE, "routing_operation_resources", checks),
+        "machines": _load_csv(MACHINES_FILE, "machines", checks),
+        "labor_resources": _load_csv(LABOR_FILE, "labor_resources", checks),
     }
 
     for name, required in REQUIRED_COLUMNS.items():
@@ -88,20 +129,32 @@ def build_workstation_capacity_load() -> tuple[pd.DataFrame, pd.DataFrame, pd.Da
 
     detail = pd.DataFrame()
     load = pd.DataFrame()
+    machine_load = pd.DataFrame()
+    labor_load = pd.DataFrame()
+    constraint_bridge = pd.DataFrame()
     if all(frames[name] is not None and REQUIRED_COLUMNS[name].issubset(frames[name].columns) for name in frames):
         mps = frames["mps"]
         routings = frames["product_routings"]
         workstations = frames["workstations"]
         calendar = frames["resource_calendar"]
+        operation_resources = frames["routing_operation_resources"]
+        machines = frames["machines"]
+        labor = frames["labor_resources"]
         detail = _build_operation_detail(mps, routings, checks)
         load = _build_workstation_load(detail, mps, workstations, calendar, checks)
-        _validate_capacity_outputs(load, detail, checks)
+        machine_load = _build_machine_load(detail, operation_resources, machines)
+        labor_load = _build_labor_load(detail, operation_resources, labor)
+        constraint_bridge = _build_constraint_bridge(load, machine_load, labor_load)
+        _validate_capacity_outputs(load, detail, machine_load, labor_load, constraint_bridge, checks)
 
     _check_no_blocked_outputs(checks)
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     detail.to_csv(DETAIL_OUTPUT_FILE, index=False)
     load.to_csv(OUTPUT_FILE, index=False)
+    machine_load.to_csv(MACHINE_OUTPUT_FILE, index=False)
+    labor_load.to_csv(LABOR_OUTPUT_FILE, index=False)
+    constraint_bridge.to_csv(CONSTRAINT_BRIDGE_OUTPUT_FILE, index=False)
     validation = pd.DataFrame(checks, columns=["check_id", "check_name", "status", "message", "affected_rows", "advisory_only_flag"])
     validation.to_csv(VALIDATION_OUTPUT_FILE, index=False)
     return load, detail, validation
@@ -227,6 +280,10 @@ def _build_workstation_load(
     load["overload_flag"] = load["utilization_pct"] > 100
     load["near_capacity_flag"] = (load["utilization_pct"] > 85) & (load["utilization_pct"] <= 100)
     load["capacity_status"] = load.apply(_capacity_status, axis=1)
+    load["workstation_capacity_basis"] = WORKSTATION_CAPACITY_BASIS
+    load["workstation_capacity_unit_count"] = 1
+    load["effective_workstation_available_hours"] = load["available_hours"]
+    load["workstation_capacity_interpretation"] = load.apply(_workstation_capacity_interpretation, axis=1)
     load["capacity_planning_basis"] = CAPACITY_PLANNING_BASIS
     load["source_phase"] = "PHASE4_MPS_ROUTING_RESOURCE_CALENDAR"
     load["advisory_only_flag"] = True
@@ -251,6 +308,10 @@ def _build_workstation_load(
             "overload_flag",
             "near_capacity_flag",
             "no_capacity_record_flag",
+            "workstation_capacity_basis",
+            "workstation_capacity_unit_count",
+            "effective_workstation_available_hours",
+            "workstation_capacity_interpretation",
             "capacity_planning_basis",
             "source_phase",
             "advisory_only_flag",
@@ -292,6 +353,263 @@ def _build_calendar_availability(load: pd.DataFrame, calendar: pd.DataFrame) -> 
     return pd.DataFrame(rows), fallback_count
 
 
+def _build_machine_load(detail: pd.DataFrame, operation_resources: pd.DataFrame, machines: pd.DataFrame) -> pd.DataFrame:
+    resources = operation_resources[_to_bool(operation_resources["active_flag"])].copy()
+    resources["required_machine_count"] = pd.to_numeric(resources["required_machine_count"], errors="coerce").fillna(0).clip(lower=0)
+    merged = detail.merge(
+        resources[["operation_id", "workstation_id", "required_machine_type", "required_machine_count"]],
+        on=["operation_id", "workstation_id"],
+        how="left",
+    )
+    merged["required_machine_type"] = merged["required_machine_type"].fillna("")
+    merged["required_machine_count"] = pd.to_numeric(merged["required_machine_count"], errors="coerce").fillna(0).clip(lower=0)
+    merged = merged[merged["required_machine_count"] > 0].copy()
+    merged["machine_required_hours"] = merged["total_required_hours"] * merged["required_machine_count"]
+    grouped = merged.groupby(
+        ["planning_run_id", "period_start", "period_end", "workstation_id", "required_machine_type"],
+        as_index=False,
+    ).agg(
+        operation_count=("operation_id", "nunique"),
+        finished_sku_count=("finished_sku", "nunique"),
+        total_planned_production_qty=("planned_production_qty", "sum"),
+        machine_required_hours=("machine_required_hours", "sum"),
+    )
+    active_machines = machines[_to_bool(machines["active_flag"])].copy()
+    active_machines["machine_count"] = pd.to_numeric(active_machines["machine_count"], errors="coerce").fillna(0).clip(lower=0)
+    active_machines["available_hours_per_week"] = pd.to_numeric(active_machines["available_hours_per_week"], errors="coerce").fillna(0).clip(lower=0)
+    active_machines["available_machine_hours"] = active_machines["machine_count"] * active_machines["available_hours_per_week"]
+    availability = active_machines.groupby(["workstation_id", "machine_type"], as_index=False).agg(
+        available_machine_hours=("available_machine_hours", "sum")
+    ).rename(columns={"machine_type": "required_machine_type"})
+    result = grouped.merge(availability, on=["workstation_id", "required_machine_type"], how="left")
+    result["available_machine_hours"] = pd.to_numeric(result["available_machine_hours"], errors="coerce").fillna(0).clip(lower=0)
+    result["no_machine_capacity_record_flag"] = (result["available_machine_hours"] <= 0) & (result["machine_required_hours"] > 0)
+    result["machine_utilization_pct"] = 0.0
+    has_capacity = result["available_machine_hours"] > 0
+    result.loc[has_capacity, "machine_utilization_pct"] = (
+        result.loc[has_capacity, "machine_required_hours"] / result.loc[has_capacity, "available_machine_hours"] * 100
+    )
+    result["machine_capacity_gap_hours"] = result["available_machine_hours"] - result["machine_required_hours"]
+    result["machine_overload_flag"] = result["machine_utilization_pct"] > 100
+    result["machine_near_capacity_flag"] = (result["machine_utilization_pct"] > 85) & (result["machine_utilization_pct"] <= 100)
+    result["machine_capacity_status"] = result.apply(
+        lambda row: _layer_status(
+            required=row["machine_required_hours"],
+            available=row["available_machine_hours"],
+            utilization=row["machine_utilization_pct"],
+            no_record=row["no_machine_capacity_record_flag"],
+        ),
+        axis=1,
+    )
+    result["capacity_planning_basis"] = MACHINE_CAPACITY_PLANNING_BASIS
+    result["source_phase"] = "PHASE4_OPERATION_DETAIL_ROUTING_MACHINE_MASTER"
+    result["advisory_only_flag"] = True
+    return result[
+        [
+            "planning_run_id",
+            "period_start",
+            "period_end",
+            "workstation_id",
+            "required_machine_type",
+            "operation_count",
+            "finished_sku_count",
+            "total_planned_production_qty",
+            "machine_required_hours",
+            "available_machine_hours",
+            "machine_utilization_pct",
+            "machine_capacity_gap_hours",
+            "machine_capacity_status",
+            "machine_overload_flag",
+            "machine_near_capacity_flag",
+            "no_machine_capacity_record_flag",
+            "capacity_planning_basis",
+            "source_phase",
+            "advisory_only_flag",
+        ]
+    ].copy()
+
+
+def _build_labor_load(detail: pd.DataFrame, operation_resources: pd.DataFrame, labor: pd.DataFrame) -> pd.DataFrame:
+    resources = operation_resources[_to_bool(operation_resources["active_flag"])].copy()
+    resources["required_worker_count"] = pd.to_numeric(resources["required_worker_count"], errors="coerce").fillna(0).clip(lower=0)
+    merged = detail.merge(
+        resources[["operation_id", "workstation_id", "required_labor_skill", "required_worker_count"]],
+        on=["operation_id", "workstation_id"],
+        how="left",
+    )
+    merged["required_labor_skill"] = merged["required_labor_skill"].fillna("")
+    merged["required_worker_count"] = pd.to_numeric(merged["required_worker_count"], errors="coerce").fillna(0).clip(lower=0)
+    merged = merged[merged["required_worker_count"] > 0].copy()
+    merged["labor_required_hours"] = merged["total_required_hours"] * merged["required_worker_count"]
+    grouped = merged.groupby(
+        ["planning_run_id", "period_start", "period_end", "workstation_id", "required_labor_skill"],
+        as_index=False,
+    ).agg(
+        operation_count=("operation_id", "nunique"),
+        finished_sku_count=("finished_sku", "nunique"),
+        total_planned_production_qty=("planned_production_qty", "sum"),
+        labor_required_hours=("labor_required_hours", "sum"),
+    )
+    active_labor = labor[_to_bool(labor["active_flag"])].copy()
+    active_labor["workers_available"] = pd.to_numeric(active_labor["workers_available"], errors="coerce").fillna(0).clip(lower=0)
+    active_labor["hours_per_worker_per_week"] = pd.to_numeric(active_labor["hours_per_worker_per_week"], errors="coerce").fillna(0).clip(lower=0)
+    active_labor["available_labor_hours"] = active_labor["workers_available"] * active_labor["hours_per_worker_per_week"]
+    availability = active_labor.groupby(["workstation_id", "skill_type"], as_index=False).agg(
+        available_labor_hours=("available_labor_hours", "sum")
+    ).rename(columns={"skill_type": "required_labor_skill"})
+    result = grouped.merge(availability, on=["workstation_id", "required_labor_skill"], how="left")
+    result["available_labor_hours"] = pd.to_numeric(result["available_labor_hours"], errors="coerce").fillna(0).clip(lower=0)
+    result["no_labor_capacity_record_flag"] = (result["available_labor_hours"] <= 0) & (result["labor_required_hours"] > 0)
+    result["labor_utilization_pct"] = 0.0
+    has_capacity = result["available_labor_hours"] > 0
+    result.loc[has_capacity, "labor_utilization_pct"] = (
+        result.loc[has_capacity, "labor_required_hours"] / result.loc[has_capacity, "available_labor_hours"] * 100
+    )
+    result["labor_capacity_gap_hours"] = result["available_labor_hours"] - result["labor_required_hours"]
+    result["labor_soft_warning_threshold_pct"] = LABOR_SOFT_WARNING_THRESHOLD_PCT
+    result["labor_hard_overload_threshold_pct"] = LABOR_HARD_OVERLOAD_THRESHOLD_PCT
+    result["labor_high_utilization_warning_flag"] = (
+        (result["labor_utilization_pct"] > LABOR_SOFT_WARNING_THRESHOLD_PCT)
+        & (result["labor_utilization_pct"] <= LABOR_HARD_OVERLOAD_THRESHOLD_PCT)
+    )
+    result["labor_hard_overload_flag"] = result["labor_utilization_pct"] > LABOR_HARD_OVERLOAD_THRESHOLD_PCT
+    result["labor_overload_flag"] = result["labor_hard_overload_flag"] | result["no_labor_capacity_record_flag"]
+    result["labor_near_capacity_flag"] = result["labor_high_utilization_warning_flag"]
+    result["labor_capacity_status"] = result.apply(
+        lambda row: _labor_layer_status(
+            required=row["labor_required_hours"],
+            available=row["available_labor_hours"],
+            utilization=row["labor_utilization_pct"],
+            no_record=row["no_labor_capacity_record_flag"],
+        ),
+        axis=1,
+    )
+    result["labor_capacity_interpretation"] = result.apply(_labor_capacity_interpretation, axis=1)
+    result["capacity_planning_basis"] = LABOR_CAPACITY_PLANNING_BASIS
+    result["source_phase"] = "PHASE4_OPERATION_DETAIL_ROUTING_LABOR_MASTER"
+    result["advisory_only_flag"] = True
+    return result[
+        [
+            "planning_run_id",
+            "period_start",
+            "period_end",
+            "workstation_id",
+            "required_labor_skill",
+            "operation_count",
+            "finished_sku_count",
+            "total_planned_production_qty",
+            "labor_required_hours",
+            "available_labor_hours",
+            "labor_utilization_pct",
+            "labor_capacity_gap_hours",
+            "labor_capacity_status",
+            "labor_overload_flag",
+            "labor_near_capacity_flag",
+            "no_labor_capacity_record_flag",
+            "labor_soft_warning_threshold_pct",
+            "labor_hard_overload_threshold_pct",
+            "labor_high_utilization_warning_flag",
+            "labor_hard_overload_flag",
+            "labor_capacity_interpretation",
+            "capacity_planning_basis",
+            "source_phase",
+            "advisory_only_flag",
+        ]
+    ].copy()
+
+
+def _build_constraint_bridge(workstation: pd.DataFrame, machine: pd.DataFrame, labor: pd.DataFrame) -> pd.DataFrame:
+    bridge = workstation[
+        [
+            "planning_run_id",
+            "period_start",
+            "period_end",
+            "workstation_id",
+            "workstation_name",
+            "capacity_status",
+            "utilization_pct",
+            "overload_flag",
+            "workstation_capacity_basis",
+            "workstation_capacity_interpretation",
+        ]
+    ].rename(
+        columns={
+            "capacity_status": "workstation_capacity_status",
+            "utilization_pct": "workstation_utilization_pct",
+            "overload_flag": "workstation_overload_flag",
+        }
+    )
+    keys = ["planning_run_id", "period_start", "period_end", "workstation_id"]
+    machine_summary = machine.assign(
+        _machine_constrained=machine["machine_capacity_status"].isin(["OVERLOADED", "NO_CAPACITY_RECORD"])
+    ).groupby(keys, as_index=False).agg(
+        machine_constraint_flag=("_machine_constrained", "max"),
+        overloaded_machine_types=("required_machine_type", lambda s: ";".join(sorted(set(s[machine.loc[s.index, "machine_capacity_status"].isin(["OVERLOADED", "NO_CAPACITY_RECORD"])])))),
+        highest_machine_utilization_pct=("machine_utilization_pct", "max"),
+    )
+    labor_summary = labor.assign(
+        _labor_constrained=labor["labor_capacity_status"].isin(["OVERLOADED", "NO_CAPACITY_RECORD"]),
+        _labor_high_warning=labor["labor_capacity_status"].isin(["HIGH_UTILIZATION_WARNING"]),
+    ).groupby(keys, as_index=False).agg(
+        labor_constraint_flag=("_labor_constrained", "max"),
+        overloaded_labor_skills=("required_labor_skill", lambda s: ";".join(sorted(set(s[labor.loc[s.index, "labor_capacity_status"].isin(["OVERLOADED", "NO_CAPACITY_RECORD"])])))),
+        labor_high_utilization_warning_flag=("_labor_high_warning", "max"),
+        labor_hard_overload_flag=("labor_hard_overload_flag", "max"),
+        high_utilization_labor_skills=("required_labor_skill", lambda s: ";".join(sorted(set(s[labor.loc[s.index, "labor_capacity_status"].isin(["HIGH_UTILIZATION_WARNING"])])))),
+        highest_labor_utilization_pct=("labor_utilization_pct", "max"),
+    )
+    bridge = bridge.merge(machine_summary, on=keys, how="left").merge(labor_summary, on=keys, how="left")
+    bridge["machine_constraint_flag"] = bridge["machine_constraint_flag"].fillna(False).astype(bool)
+    bridge["labor_constraint_flag"] = bridge["labor_constraint_flag"].fillna(False).astype(bool)
+    bridge["overloaded_machine_types"] = bridge["overloaded_machine_types"].fillna("")
+    bridge["overloaded_labor_skills"] = bridge["overloaded_labor_skills"].fillna("")
+    bridge["high_utilization_labor_skills"] = bridge["high_utilization_labor_skills"].fillna("")
+    bridge["labor_high_utilization_warning_flag"] = bridge["labor_high_utilization_warning_flag"].fillna(False).astype(bool)
+    bridge["labor_hard_overload_flag"] = bridge["labor_hard_overload_flag"].fillna(False).astype(bool)
+    bridge["highest_machine_utilization_pct"] = pd.to_numeric(bridge["highest_machine_utilization_pct"], errors="coerce").fillna(0)
+    bridge["highest_labor_utilization_pct"] = pd.to_numeric(bridge["highest_labor_utilization_pct"], errors="coerce").fillna(0)
+    bridge["combined_constraint_type"] = bridge.apply(_combined_constraint_type, axis=1)
+    bridge["constraint_review_required_flag"] = (
+        bridge["workstation_overload_flag"].astype(bool)
+        | bridge["machine_constraint_flag"].astype(bool)
+        | bridge["labor_constraint_flag"].astype(bool)
+        | bridge["labor_high_utilization_warning_flag"].astype(bool)
+    )
+    bridge["constraint_interpretation"] = bridge.apply(_constraint_interpretation, axis=1)
+    bridge["capacity_planning_basis"] = CONSTRAINT_BRIDGE_PLANNING_BASIS
+    bridge["source_phase"] = "PHASE4_WORKSTATION_MACHINE_LABOR_CAPACITY"
+    bridge["advisory_only_flag"] = True
+    return bridge[
+        [
+            "planning_run_id",
+            "period_start",
+            "period_end",
+            "workstation_id",
+            "workstation_name",
+            "workstation_capacity_status",
+            "workstation_utilization_pct",
+            "workstation_overload_flag",
+            "machine_constraint_flag",
+            "overloaded_machine_types",
+            "highest_machine_utilization_pct",
+            "labor_constraint_flag",
+            "overloaded_labor_skills",
+            "labor_high_utilization_warning_flag",
+            "labor_hard_overload_flag",
+            "high_utilization_labor_skills",
+            "highest_labor_utilization_pct",
+            "workstation_capacity_basis",
+            "workstation_capacity_interpretation",
+            "combined_constraint_type",
+            "constraint_interpretation",
+            "constraint_review_required_flag",
+            "capacity_planning_basis",
+            "source_phase",
+            "advisory_only_flag",
+        ]
+    ].copy()
+
+
 def _calendar_daily_hours(row: pd.Series) -> tuple[float, bool]:
     break_minutes = pd.to_numeric(pd.Series([row.get("planned_break_minutes", 0)]), errors="coerce").fillna(0).iloc[0]
     try:
@@ -328,7 +646,107 @@ def _capacity_status(row: pd.Series) -> str:
     return "FEASIBLE"
 
 
-def _validate_capacity_outputs(load: pd.DataFrame, detail: pd.DataFrame, checks: list[dict]) -> None:
+def _workstation_capacity_interpretation(row: pd.Series) -> str:
+    if row["total_required_hours"] < 0 or row["available_hours"] < 0:
+        return "REVIEW_REQUIRED"
+    if bool(row["no_capacity_record_flag"]):
+        return "NO_WORKSTATION_CAPACITY_RECORD"
+    if str(row["capacity_status"]) == "OVERLOADED":
+        return "SINGLE_CALENDAR_SLOT_OVERLOADED"
+    if str(row["capacity_status"]) == "NEAR_CAPACITY":
+        return "SINGLE_CALENDAR_SLOT_NEAR_CAPACITY"
+    return "SINGLE_CALENDAR_SLOT_FEASIBLE"
+
+
+def _layer_status(required: float, available: float, utilization: float, no_record: bool) -> str:
+    if required < 0 or available < 0:
+        return "REVIEW_REQUIRED"
+    if required == 0:
+        return "NO_LOAD"
+    if bool(no_record):
+        return "NO_CAPACITY_RECORD"
+    if utilization > 100:
+        return "OVERLOADED"
+    if utilization > 85:
+        return "NEAR_CAPACITY"
+    return "FEASIBLE"
+
+
+def _labor_layer_status(required: float, available: float, utilization: float, no_record: bool) -> str:
+    if required < 0 or available < 0:
+        return "REVIEW_REQUIRED"
+    if required == 0:
+        return "NO_LOAD"
+    if bool(no_record):
+        return "NO_CAPACITY_RECORD"
+    if utilization > LABOR_HARD_OVERLOAD_THRESHOLD_PCT:
+        return "OVERLOADED"
+    if utilization > LABOR_SOFT_WARNING_THRESHOLD_PCT:
+        return "HIGH_UTILIZATION_WARNING"
+    return "FEASIBLE"
+
+
+def _labor_capacity_interpretation(row: pd.Series) -> str:
+    status = str(row["labor_capacity_status"])
+    if status == "OVERLOADED":
+        return "LABOR_HARD_OVERLOAD"
+    if status == "HIGH_UTILIZATION_WARNING":
+        return "HIGH_LABOR_UTILIZATION_REVIEW"
+    if status == "NO_CAPACITY_RECORD":
+        return "NO_LABOR_CAPACITY_RECORD"
+    if status == "REVIEW_REQUIRED":
+        return "REVIEW_REQUIRED"
+    return "LOW_OR_NORMAL_LABOR_LOAD"
+
+
+def _combined_constraint_type(row: pd.Series) -> str:
+    workstation = bool(row["workstation_overload_flag"]) or str(row["workstation_capacity_status"]) == "NO_CAPACITY_RECORD"
+    machine = bool(row["machine_constraint_flag"])
+    labor = bool(row["labor_constraint_flag"])
+    labor_warning = bool(row.get("labor_high_utilization_warning_flag", False))
+    if workstation and machine and labor:
+        return "WORKSTATION_MACHINE_AND_LABOR"
+    if workstation and machine:
+        return "WORKSTATION_AND_MACHINE"
+    if workstation and labor:
+        return "WORKSTATION_AND_LABOR"
+    if machine and labor:
+        return "MACHINE_AND_LABOR"
+    if workstation and labor_warning:
+        return "WORKSTATION_WITH_LABOR_HIGH_UTILIZATION_WARNING"
+    if workstation:
+        return "WORKSTATION_ONLY"
+    if machine:
+        return "MACHINE_ONLY"
+    if labor:
+        return "LABOR_ONLY"
+    if labor_warning:
+        return "LABOR_HIGH_UTILIZATION_WARNING_ONLY"
+    return "NONE"
+
+
+def _constraint_interpretation(row: pd.Series) -> str:
+    if bool(row["machine_constraint_flag"]) or bool(row["labor_constraint_flag"]):
+        return "HARD_MACHINE_OR_LABOR_CAPACITY_BLOCK"
+    if str(row["workstation_capacity_status"]) == "NO_CAPACITY_RECORD":
+        return "NO_CAPACITY_REVIEW_REQUIRED"
+    if bool(row["workstation_overload_flag"]) and bool(row.get("labor_high_utilization_warning_flag", False)):
+        return "WORKSTATION_CALENDAR_LIMITED_WITH_LABOR_STRESS_WARNING"
+    if bool(row["workstation_overload_flag"]):
+        return "WORKSTATION_CALENDAR_LIMITED_MACHINE_AND_LABOR_OK"
+    if bool(row.get("labor_high_utilization_warning_flag", False)):
+        return "LABOR_STRESS_WARNING_NO_HARD_CAPACITY_BLOCK"
+    return "NO_CONSTRAINT_DETECTED"
+
+
+def _validate_capacity_outputs(
+    load: pd.DataFrame,
+    detail: pd.DataFrame,
+    machine_load: pd.DataFrame,
+    labor_load: pd.DataFrame,
+    constraint_bridge: pd.DataFrame,
+    checks: list[dict],
+) -> None:
     checks.append(_result("capacity_load_output_not_empty", "capacity load output not empty", "FAIL" if load.empty else "PASS", "Capacity load output has no rows." if load.empty else f"Capacity load output has {len(load)} rows.", 1 if load.empty else 0))
     duplicate_count = int(load.duplicated(["planning_run_id", "period_start", "period_end", "workstation_id"]).sum()) if not load.empty else 0
     checks.append(_result("capacity_load_grain_unique", "capacity load grain unique", "FAIL" if duplicate_count else "PASS", f"Duplicate workstation-period rows: {duplicate_count}" if duplicate_count else "Capacity load has one row per planning_run_id/period/workstation.", duplicate_count))
@@ -341,7 +759,210 @@ def _validate_capacity_outputs(load: pd.DataFrame, detail: pd.DataFrame, checks:
     checks.append(_result("capacity_status_populated", "capacity status populated", "FAIL" if missing_status else "PASS", f"Rows missing capacity_status: {missing_status}" if missing_status else "capacity_status is populated for all rows.", missing_status))
     non_advisory = int((~_to_bool(load["advisory_only_flag"])).sum()) if "advisory_only_flag" in load.columns else len(load)
     checks.append(_result("capacity_load_advisory_only", "capacity load advisory only", "FAIL" if non_advisory else "PASS", f"Non-advisory capacity load rows: {non_advisory}" if non_advisory else "All capacity load rows are advisory-only.", non_advisory))
+    workstation_basis_required = {
+        "workstation_capacity_basis",
+        "workstation_capacity_unit_count",
+        "effective_workstation_available_hours",
+        "workstation_capacity_interpretation",
+    }
+    missing_workstation_basis = sorted(workstation_basis_required.difference(load.columns))
+    invalid_workstation_basis = len(missing_workstation_basis)
+    if "workstation_capacity_basis" in load.columns:
+        invalid_workstation_basis += int((load["workstation_capacity_basis"].astype(str) != WORKSTATION_CAPACITY_BASIS).sum())
+    if "workstation_capacity_interpretation" in load.columns:
+        invalid_workstation_basis += int(load["workstation_capacity_interpretation"].astype(str).str.strip().eq("").sum())
+    if "effective_workstation_available_hours" in load.columns:
+        values = pd.to_numeric(load["effective_workstation_available_hours"], errors="coerce")
+        invalid_workstation_basis += int(values.isna().sum() + (values < 0).sum())
+    checks.append(
+        _result(
+            "capacity_workstation_basis_valid",
+            "workstation capacity basis valid",
+            "FAIL" if invalid_workstation_basis else "PASS",
+            f"Missing/invalid workstation capacity basis values: {invalid_workstation_basis}" if invalid_workstation_basis else f"Workstation capacity basis is {WORKSTATION_CAPACITY_BASIS}.",
+            invalid_workstation_basis,
+        )
+    )
     checks.append(_result("capacity_operation_detail_exists", "capacity operation detail exists", "FAIL" if detail.empty else "PASS", "Operation detail output has no rows." if detail.empty else f"Operation detail output has {len(detail)} rows.", 1 if detail.empty else 0))
+    _validate_layer_output(
+        "machine",
+        machine_load,
+        {
+            "planning_run_id",
+            "period_start",
+            "period_end",
+            "workstation_id",
+            "required_machine_type",
+            "machine_required_hours",
+            "available_machine_hours",
+            "machine_utilization_pct",
+            "machine_capacity_status",
+            "advisory_only_flag",
+        },
+        ["machine_required_hours", "available_machine_hours", "machine_utilization_pct"],
+        "machine_capacity_status",
+        checks,
+    )
+    _validate_layer_output(
+        "labor",
+        labor_load,
+        {
+            "planning_run_id",
+            "period_start",
+            "period_end",
+            "workstation_id",
+            "required_labor_skill",
+            "labor_required_hours",
+            "available_labor_hours",
+            "labor_utilization_pct",
+            "labor_capacity_status",
+            "labor_soft_warning_threshold_pct",
+            "labor_hard_overload_threshold_pct",
+            "labor_high_utilization_warning_flag",
+            "labor_hard_overload_flag",
+            "labor_capacity_interpretation",
+            "advisory_only_flag",
+        },
+        ["labor_required_hours", "available_labor_hours", "labor_utilization_pct"],
+        "labor_capacity_status",
+        checks,
+    )
+    _validate_labor_thresholds(labor_load, checks)
+    bridge_required = {
+        "planning_run_id",
+        "period_start",
+        "period_end",
+        "workstation_id",
+        "workstation_name",
+        "workstation_capacity_status",
+        "workstation_utilization_pct",
+        "workstation_overload_flag",
+        "machine_constraint_flag",
+        "overloaded_machine_types",
+        "highest_machine_utilization_pct",
+        "labor_constraint_flag",
+        "overloaded_labor_skills",
+        "labor_high_utilization_warning_flag",
+        "labor_hard_overload_flag",
+        "high_utilization_labor_skills",
+        "highest_labor_utilization_pct",
+        "workstation_capacity_basis",
+        "workstation_capacity_interpretation",
+        "combined_constraint_type",
+        "constraint_interpretation",
+        "constraint_review_required_flag",
+        "advisory_only_flag",
+    }
+    missing_bridge = sorted(bridge_required.difference(constraint_bridge.columns))
+    valid_constraint_types = {
+        "NONE",
+        "WORKSTATION_ONLY",
+        "MACHINE_ONLY",
+        "LABOR_ONLY",
+        "MACHINE_AND_LABOR",
+        "WORKSTATION_AND_MACHINE",
+        "WORKSTATION_AND_LABOR",
+        "WORKSTATION_MACHINE_AND_LABOR",
+        "WORKSTATION_WITH_LABOR_HIGH_UTILIZATION_WARNING",
+        "LABOR_HIGH_UTILIZATION_WARNING_ONLY",
+        "REVIEW_REQUIRED",
+    }
+    invalid_bridge = len(missing_bridge)
+    if not constraint_bridge.empty and "combined_constraint_type" in constraint_bridge.columns:
+        invalid_bridge += int((~constraint_bridge["combined_constraint_type"].astype(str).isin(valid_constraint_types)).sum())
+    if "advisory_only_flag" in constraint_bridge.columns:
+        invalid_bridge += int((~_to_bool(constraint_bridge["advisory_only_flag"])).sum())
+    else:
+        invalid_bridge += len(constraint_bridge)
+    if {"labor_high_utilization_warning_flag", "constraint_review_required_flag"}.issubset(constraint_bridge.columns):
+        warning_without_review = _to_bool(constraint_bridge["labor_high_utilization_warning_flag"]) & ~_to_bool(
+            constraint_bridge["constraint_review_required_flag"]
+        )
+        invalid_bridge += int(warning_without_review.sum())
+    checks.append(
+        _result(
+            "capacity_constraint_bridge_valid",
+            "capacity constraint bridge valid",
+            "FAIL" if constraint_bridge.empty or invalid_bridge else "PASS",
+            f"Constraint bridge rows={len(constraint_bridge)}; missing/invalid={invalid_bridge}" if invalid_bridge or constraint_bridge.empty else f"Constraint bridge has {len(constraint_bridge)} advisory rows.",
+            invalid_bridge + (1 if constraint_bridge.empty else 0),
+        )
+    )
+
+
+def _validate_labor_thresholds(frame: pd.DataFrame, checks: list[dict]) -> None:
+    invalid = 0
+    if frame.empty:
+        invalid += 1
+    required = {
+        "labor_soft_warning_threshold_pct",
+        "labor_hard_overload_threshold_pct",
+        "labor_high_utilization_warning_flag",
+        "labor_hard_overload_flag",
+        "labor_capacity_status",
+        "labor_utilization_pct",
+    }
+    missing = sorted(required.difference(frame.columns))
+    invalid += len(missing)
+    if not missing:
+        utilization = pd.to_numeric(frame["labor_utilization_pct"], errors="coerce")
+        soft = pd.to_numeric(frame["labor_soft_warning_threshold_pct"], errors="coerce")
+        hard = pd.to_numeric(frame["labor_hard_overload_threshold_pct"], errors="coerce")
+        warning_band = (utilization > LABOR_SOFT_WARNING_THRESHOLD_PCT) & (utilization <= LABOR_HARD_OVERLOAD_THRESHOLD_PCT)
+        hard_band = utilization > LABOR_HARD_OVERLOAD_THRESHOLD_PCT
+        invalid += int((soft != LABOR_SOFT_WARNING_THRESHOLD_PCT).sum())
+        invalid += int((hard != LABOR_HARD_OVERLOAD_THRESHOLD_PCT).sum())
+        invalid += int((_to_bool(frame["labor_high_utilization_warning_flag"]) != warning_band).sum())
+        invalid += int((_to_bool(frame["labor_hard_overload_flag"]) != hard_band).sum())
+        invalid += int((frame.loc[warning_band, "labor_capacity_status"].astype(str) != "HIGH_UTILIZATION_WARNING").sum())
+        invalid += int((frame.loc[hard_band, "labor_capacity_status"].astype(str) != "OVERLOADED").sum())
+    checks.append(
+        _result(
+            "capacity_labor_thresholds_valid",
+            "labor capacity thresholds valid",
+            "FAIL" if invalid else "PASS",
+            f"Missing/invalid labor threshold rows: {invalid}" if invalid else "Labor capacity uses 80% warning and 95% hard-overload thresholds.",
+            invalid,
+        )
+    )
+
+
+def _validate_layer_output(
+    name: str,
+    frame: pd.DataFrame,
+    required_columns: set[str],
+    numeric_columns: list[str],
+    status_column: str,
+    checks: list[dict],
+) -> None:
+    valid_statuses = {"NO_LOAD", "FEASIBLE", "NEAR_CAPACITY", "HIGH_UTILIZATION_WARNING", "OVERLOADED", "NO_CAPACITY_RECORD", "REVIEW_REQUIRED"}
+    missing = sorted(required_columns.difference(frame.columns))
+    invalid = len(missing)
+    if frame.empty:
+        invalid += 1
+    for column in numeric_columns:
+        if column in frame.columns:
+            values = pd.to_numeric(frame[column], errors="coerce")
+            invalid += int(values.isna().sum() + (values < 0).sum())
+        else:
+            invalid += 1
+    if status_column in frame.columns:
+        invalid += int((~frame[status_column].astype(str).isin(valid_statuses)).sum())
+    else:
+        invalid += 1
+    if "advisory_only_flag" in frame.columns:
+        invalid += int((~_to_bool(frame["advisory_only_flag"])).sum())
+    else:
+        invalid += len(frame)
+    checks.append(
+        _result(
+            f"capacity_{name}_load_valid",
+            f"{name} capacity load valid",
+            "FAIL" if invalid else "PASS",
+            f"{name} capacity rows={len(frame)}; missing/invalid={invalid}" if invalid else f"{name} capacity load has {len(frame)} advisory rows.",
+            invalid,
+        )
+    )
 
 
 def _check_prior_validation(name: str, path: Path, checks: list[dict]) -> None:
@@ -355,8 +976,6 @@ def _check_prior_validation(name: str, path: Path, checks: list[dict]) -> None:
 
 def _check_no_blocked_outputs(checks: list[dict]) -> None:
     blocked_tokens = [
-        "machine_capacity",
-        "labor_capacity",
         "queue",
         "bottleneck",
         "detailed_schedule",
@@ -378,7 +997,7 @@ def _check_no_blocked_outputs(checks: list[dict]) -> None:
             lower = path.name.lower()
             if any(token in lower for token in blocked_tokens):
                 bad_files.append(str(path))
-    checks.append(_result("capacity_no_blocked_future_outputs", "capacity no blocked future outputs", "FAIL" if bad_files else "PASS", f"Blocked future/execution outputs found: {bad_files}" if bad_files else "No machine/labor capacity, queue, bottleneck, scheduling, simulation, or execution outputs found.", len(bad_files)))
+    checks.append(_result("capacity_no_blocked_future_outputs", "capacity no blocked future outputs", "FAIL" if bad_files else "PASS", f"Blocked future/execution outputs found: {bad_files}" if bad_files else "No queue, bottleneck ranking, scheduling, simulation, or execution outputs found.", len(bad_files)))
 
 
 def _load_csv(path: Path, name: str, checks: list[dict]) -> pd.DataFrame | None:
