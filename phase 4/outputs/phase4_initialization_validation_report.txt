@@ -1,5 +1,5 @@
-Phase 4 Initialization Validation with Step 2B Component-Period MRP Summary and Pegging
-Generated at UTC: 2026-06-23T13:33:31+00:00
+Phase 4 Initialization Validation with Step 3A Production Resource Master Data
+Generated at UTC: 2026-06-27T13:20:30+00:00
 Overall status: PASS
 Fail count: 0
 Warning count: 3
@@ -16,10 +16,12 @@ Checks:
 - PASS: mrp_step2 - MRP Step 2 netted 196 component requirement rows.
 - PASS: mrp_step2b_summary - Component-period MRP summary contains 140 advisory rows.
 - PASS: mrp_step2b_pegging - MRP pegging detail contains 196 advisory rows with valid pegging sums.
+- PASS: resource_master_data - Step 3A resource master data valid; workstations=7, machines=7, labor_resources=7, calendar_rows=35.
 - PASS: phase3_component_inventory - Phase 3 checked inventory for 10 components.
 - PASS: phase2_component_supplier - Phase 2 checked supplier coverage for 10 shortage rows; missing coverage rows: 0.
-- PASS: phase4_run_id_consistency - Consistent planning_run_id across Phase 4 outputs: PHASE4-MPS-20260623133255
+- PASS: phase4_run_id_consistency - Consistent planning_run_id across Phase 4 outputs: PHASE4-MPS-20260627131840
 - PASS: phase4_advisory_only - All checked Phase 4 advisory flags are true: ['master_production_schedule', 'bom_component_requirements', 'mrp_net_component_requirements', 'mrp_component_period_summary', 'mrp_pegging_detail', 'component_inventory_check', 'component_supplier_check']
 - PASS: existing_outputs - Existing Phase 1/2/3 outputs exist.
 - PASS: safety_flags - No enabled execution flags found across 5 checked columns.
+- PASS: no_routing_or_capacity_outputs - No Phase 4 routing, capacity, utilization, bottleneck, scheduling, or simulation outputs found.
 - PASS: no_execution_outputs - No Phase 4 production/purchase/release/reservation output files found.

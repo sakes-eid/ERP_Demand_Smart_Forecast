@@ -1,8 +1,8 @@
 {
   "validation_metadata": {
     "validation_version": "1.0",
-    "generated_at": "2026-06-23T13:33:24Z",
-    "run_id": "INTEGRATED-20260623133232",
+    "generated_at": "2026-06-27T13:19:07Z",
+    "run_id": "INTEGRATED-20260627131817",
     "final_iteration": 1,
     "validator_git_or_code_version": "LOCAL",
     "project_root": "C:\\Users\\iTECH\\OneDrive - Beirut Arab University\\Desktop\\apps i made\\SC project",
@@ -784,8 +784,8 @@
       "exists": true,
       "row_count": 12,
       "column_count": 83,
-      "sha256": "ba55989768c8be51570e4aa890437c0e6e241f7a337d0153f9f0de5a1af61999",
-      "modified_at": "2026-06-23T15:32:55",
+      "sha256": "6f14761c91e9b1584b39be0b32d6c66eae59cf4b472091a9d4d3b2119bf5fc98",
+      "modified_at": "2026-06-27T15:18:40",
       "schema_version": "",
       "source_phase": "",
       "required_or_optional": "optional"
@@ -796,8 +796,8 @@
       "exists": true,
       "row_count": 60,
       "column_count": 67,
-      "sha256": "79a63f9c5f2a722b895e7f1f4728580988142e62e589a5a4f8c0a4004145cc9c",
-      "modified_at": "2026-06-23T15:33:10",
+      "sha256": "fa9e1134da19a2a8d1becb89b97959a2898430a6ddc3c29cd7bbbf3d3bb5e167",
+      "modified_at": "2026-06-27T15:18:56",
       "schema_version": "1.0",
       "source_phase": "PHASE_2",
       "required_or_optional": "required"
@@ -808,8 +808,8 @@
       "exists": true,
       "row_count": 20,
       "column_count": 17,
-      "sha256": "e4ae53d9dc94f89314db271f16bba8b4702b3e9ca7f449ce9dd59b71338dd5b2",
-      "modified_at": "2026-06-23T15:33:10",
+      "sha256": "0a42625fd3834c52c573546c953de8a287c023b1e07a533d26c75fd63962e773",
+      "modified_at": "2026-06-27T15:18:56",
       "schema_version": "1.0",
       "source_phase": "PHASE_2",
       "required_or_optional": "required"
@@ -820,8 +820,8 @@
       "exists": true,
       "row_count": 22,
       "column_count": 83,
-      "sha256": "6d4d6a180b1e88cc0588f36aedf74da70762f20f42c4a6d0e908072503f900fc",
-      "modified_at": "2026-06-23T15:33:12",
+      "sha256": "218cb0ed195dd457f9cad1d44a23dbcf83c7df83ebcad2567e66a4fef857b1ed",
+      "modified_at": "2026-06-27T15:18:57",
       "schema_version": "1.0",
       "source_phase": "PHASE_3",
       "required_or_optional": "required"
@@ -832,8 +832,8 @@
       "exists": true,
       "row_count": 28,
       "column_count": 61,
-      "sha256": "3bdab066d6adbc67fe4c77032e65e842fdd5f1d898bb8cfcfd17ae5ec37ac4d2",
-      "modified_at": "2026-06-23T15:33:10",
+      "sha256": "803467d13d607540260c69491238a5258af377c318fe36c264f1e3e583f51215",
+      "modified_at": "2026-06-27T15:18:56",
       "schema_version": "1.0",
       "source_phase": "PHASE_2",
       "required_or_optional": "required"
@@ -844,8 +844,8 @@
       "exists": true,
       "row_count": 22,
       "column_count": 29,
-      "sha256": "86f531e1f5104be94aa3349433c210a7aa91982cb8c703b82d3a2db96e4f92aa",
-      "modified_at": "2026-06-23T15:33:10",
+      "sha256": "b1d872220fe28741ba619c720123ec9326fd1f71a875413e2477ae23ce565165",
+      "modified_at": "2026-06-27T15:18:56",
       "schema_version": "1.0",
       "source_phase": "PHASE_2",
       "required_or_optional": "required"
@@ -856,8 +856,8 @@
       "exists": true,
       "row_count": 22,
       "column_count": 25,
-      "sha256": "bb5da82bad7d4c1a9bd557da503ca9fde73aa65e5e4d1e081d05b8a0dd06fc5e",
-      "modified_at": "2026-06-23T15:33:12",
+      "sha256": "314177affb9a00001aaeb5c5f5d3a345dd0ab0e09f40490b8a6dd9347e0d72e6",
+      "modified_at": "2026-06-27T15:18:58",
       "schema_version": "1.0",
       "source_phase": "PHASE_3",
       "required_or_optional": "required"
@@ -868,8 +868,8 @@
       "exists": true,
       "row_count": 22,
       "column_count": 44,
-      "sha256": "3be02028c14b1e98e3062909269af1117e08e72e82fb20c88b7d184a0c3914ee",
-      "modified_at": "2026-06-23T15:33:13",
+      "sha256": "9ca5924f35e03605a212c92e03b2322af511a3c1d8ac39092beaa1c0ab0b0872",
+      "modified_at": "2026-06-27T15:18:58",
       "schema_version": "1.0",
       "source_phase": "",
       "required_or_optional": "required"
@@ -881,7 +881,7 @@
       "row_count": 20,
       "column_count": 102,
       "sha256": "7ff730e1c505e8eee8479486e464e971fdde56246f4f9fa98408a04959d1863c",
-      "modified_at": "2026-06-23T15:33:10",
+      "modified_at": "2026-06-27T15:18:56",
       "schema_version": "",
       "source_phase": "",
       "required_or_optional": "optional"
@@ -892,8 +892,8 @@
       "exists": true,
       "row_count": 22,
       "column_count": 98,
-      "sha256": "b6f97dfd66fccebd81682079a05ef1d33fde83132202d9aa65ff26200f98f958",
-      "modified_at": "2026-06-23T15:33:12",
+      "sha256": "cbbfdab478907ee648e738ffeb339f1a90b1c102bcb141ca442c83630bcf8648",
+      "modified_at": "2026-06-27T15:18:57",
       "schema_version": "",
       "source_phase": "",
       "required_or_optional": "optional"
@@ -921,22 +921,22 @@
       "usable_on_hand_total": 3668.0
     },
     "requirement_reconciliation": {
-      "net_requirement_total": 4941.0
+      "net_requirement_total": 4961.0
     },
     "allocation_reconciliation": {
-      "allocated_usable_total": 4350.71
+      "allocated_usable_total": 4330.71
     },
     "yield_reconciliation": {
-      "supplier_purchase_total": 4739.0
+      "supplier_purchase_total": 4718.0
     },
     "capacity_reconciliation": {
       "unallocated_requirement_total": 610.29
     },
     "final_inventory_reconciliation": {
-      "accepted_allocation_total": 4350.71
+      "accepted_allocation_total": 4330.71
     },
     "cost_reconciliation": {
-      "integrated_procurement_cost_total": 26870.16
+      "integrated_procurement_cost_total": 26555.61
     },
     "review_execution_reconciliation": {
       "review_required_count": 9
@@ -1681,6 +1681,11 @@
           "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
         },
         {
+          "sku_id": "SKU-UMR-007",
+          "adjustment_required_flag": true,
+          "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
+        },
+        {
           "sku_id": "SKU-BIKE-ROAD-001",
           "adjustment_required_flag": true,
           "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
@@ -1691,11 +1696,12 @@
           "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
         }
       ],
-      "affected_row_count": 4,
-      "affected_unique_key_count": 4,
+      "affected_row_count": 5,
+      "affected_unique_key_count": 5,
       "affected_keys": [
         "SKU-COF-001",
         "SKU-TEA-002",
+        "SKU-UMR-007",
         "SKU-BIKE-ROAD-001",
         "SKU-BIKE-MT-001"
       ],
@@ -1708,6 +1714,11 @@
           },
           {
             "sku_id": "SKU-TEA-002",
+            "adjustment_required_flag": true,
+            "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
+          },
+          {
+            "sku_id": "SKU-UMR-007",
             "adjustment_required_flag": true,
             "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
           },
@@ -2930,6 +2941,11 @@
           "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
         },
         {
+          "sku_id": "SKU-UMR-007",
+          "adjustment_required_flag": true,
+          "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
+        },
+        {
           "sku_id": "SKU-BIKE-ROAD-001",
           "adjustment_required_flag": true,
           "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
@@ -2940,11 +2956,12 @@
           "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
         }
       ],
-      "affected_row_count": 4,
-      "affected_unique_key_count": 4,
+      "affected_row_count": 5,
+      "affected_unique_key_count": 5,
       "affected_keys": [
         "SKU-COF-001",
         "SKU-TEA-002",
+        "SKU-UMR-007",
         "SKU-BIKE-ROAD-001",
         "SKU-BIKE-MT-001"
       ],
@@ -2957,6 +2974,11 @@
           },
           {
             "sku_id": "SKU-TEA-002",
+            "adjustment_required_flag": true,
+            "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
+          },
+          {
+            "sku_id": "SKU-UMR-007",
             "adjustment_required_flag": true,
             "validation_warning_codes": "ALLOCATION_REQUIRES_REVIEW"
           },
@@ -3634,9 +3656,9 @@
   ],
   "key_metrics": {
     "sku_count": 22,
-    "net_requirement_total": 4941.0,
-    "allocated_usable_total": 4350.71,
-    "end_to_end_requirement_coverage_rate": 0.880532,
+    "net_requirement_total": 4961.0,
+    "allocated_usable_total": 4330.71,
+    "end_to_end_requirement_coverage_rate": 0.872951,
     "planning_exception_rate": 0.409091,
     "split_sourcing_count": 3,
     "auto_apply_true_count": 0
@@ -3663,7 +3685,7 @@
   "representative_rows": {
     "healthy_or_no_order_sku": {
       "schema_version": 1.0,
-      "run_id": "INTEGRATED-20260623133232",
+      "run_id": "INTEGRATED-20260627131817",
       "sku_id": "SKU-BBQ-006",
       "final_iteration": 1,
       "convergence_status": "CONVERGED_WITH_REVIEW",
@@ -3709,12 +3731,12 @@
     },
     "stockout_sku": {
       "schema_version": 1.0,
-      "run_id": "INTEGRATED-20260623133232",
+      "run_id": "INTEGRATED-20260627131817",
       "planning_iteration": 1,
-      "generated_at": "2026-06-23T13:33:12Z",
+      "generated_at": "2026-06-27T13:18:57Z",
       "source_phase": "PHASE_3",
       "target_phase": "PHASE_2",
-      "data_as_of_date": "2026-06-23",
+      "data_as_of_date": "2026-06-27",
       "sku_id": "SKU-SUP-004",
       "gross_forecast_demand_7d": 53.5958,
       "gross_forecast_demand_30d": 229.3571,
@@ -3794,12 +3816,12 @@
     },
     "split_sourcing_sku": {
       "schema_version": 1.0,
-      "run_id": "INTEGRATED-20260623133232",
+      "run_id": "INTEGRATED-20260627131817",
       "planning_iteration": 1,
-      "generated_at": "2026-06-23T13:33:10Z",
+      "generated_at": "2026-06-27T13:18:56Z",
       "source_phase": "PHASE_2",
       "target_phase": "PHASE_3",
-      "data_as_of_date": "2026-06-23",
+      "data_as_of_date": "2026-06-27",
       "sku_id": "SKU-COF-001",
       "requested_requirement_units": 1880.0,
       "total_allocated_usable_quantity": 1491.43,
@@ -3810,8 +3832,8 @@
       "supplier_count": 4,
       "split_sourcing_used_flag": true,
       "expedite_used_flag": false,
-      "earliest_arrival_date": "2026-06-25",
-      "final_arrival_date": "2026-07-09",
+      "earliest_arrival_date": "2026-06-29",
+      "final_arrival_date": "2026-07-13",
       "total_procurement_cost": 4511.55,
       "total_risk_adjusted_procurement_cost": 4737.13,
       "allocation_feasible_flag": false,
@@ -3825,12 +3847,12 @@
     },
     "aggregate_capacity_shortfall_sku": {
       "schema_version": 1.0,
-      "run_id": "INTEGRATED-20260623133232",
+      "run_id": "INTEGRATED-20260627131817",
       "planning_iteration": 1,
-      "generated_at": "2026-06-23T13:33:10Z",
+      "generated_at": "2026-06-27T13:18:56Z",
       "source_phase": "PHASE_2",
       "target_phase": "PHASE_3",
-      "data_as_of_date": "2026-06-23",
+      "data_as_of_date": "2026-06-27",
       "sku_id": "SKU-COF-001",
       "requested_requirement_units": 1880.0,
       "total_allocated_usable_quantity": 1491.43,
@@ -3841,8 +3863,8 @@
       "supplier_count": 4,
       "split_sourcing_used_flag": true,
       "expedite_used_flag": false,
-      "earliest_arrival_date": "2026-06-25",
-      "final_arrival_date": "2026-07-09",
+      "earliest_arrival_date": "2026-06-29",
+      "final_arrival_date": "2026-07-13",
       "total_procurement_cost": 4511.55,
       "total_risk_adjusted_procurement_cost": 4737.13,
       "allocation_feasible_flag": false,

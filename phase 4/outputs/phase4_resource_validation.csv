@@ -1,0 +1,33 @@
+check_id,check_name,status,message,affected_rows,advisory_only_flag
+workstations_file_exists,workstations file exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\data\workstations.csv,0,True
+machines_file_exists,machines file exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\data\machines.csv,0,True
+labor_resources_file_exists,labor_resources file exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\data\labor_resources.csv,0,True
+resource_calendar_file_exists,resource_calendar file exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\data\resource_calendar.csv,0,True
+workstations_required_columns,workstations required columns,PASS,All required columns exist.,0,True
+workstations_not_empty,workstations not empty,PASS,File has 7 rows.,0,True
+machines_required_columns,machines required columns,PASS,All required columns exist.,0,True
+machines_not_empty,machines not empty,PASS,File has 7 rows.,0,True
+labor_resources_required_columns,labor_resources required columns,PASS,All required columns exist.,0,True
+labor_resources_not_empty,labor_resources not empty,PASS,File has 7 rows.,0,True
+resource_calendar_required_columns,resource_calendar required columns,PASS,All required columns exist.,0,True
+resource_calendar_not_empty,resource_calendar not empty,PASS,File has 35 rows.,0,True
+workstation_ids_unique,workstation ids unique,PASS,workstation_id values are unique.,0,True
+workstations_active_flags,workstations active flags,PASS,All rows are active.,0,True
+machine_ids_unique,machine ids unique,PASS,machine_id values are unique.,0,True
+machine_count_positive,machine count positive,PASS,machine_count is positive.,0,True
+machine_available_hours_non_negative,machine available hours non negative,PASS,available_hours_per_week is non-negative.,0,True
+machine_hourly_cost_non_negative,machine hourly cost non negative,PASS,hourly_machine_cost is non-negative.,0,True
+machines_active_flags,machines active flags,PASS,All rows are active.,0,True
+machine_workstations_valid,machine workstations valid,PASS,All workstation_id references are valid.,0,True
+labor_resource_ids_unique,labor resource ids unique,PASS,labor_resource_id values are unique.,0,True
+workers_available_non_negative,workers available non negative,PASS,workers_available is non-negative.,0,True
+labor_hours_non_negative,labor hours non negative,PASS,hours_per_worker_per_week is non-negative.,0,True
+hourly_wage_non_negative,hourly wage non negative,PASS,hourly_wage is non-negative.,0,True
+break_minutes_non_negative,break minutes non negative,PASS,break_minutes_per_shift is non-negative.,0,True
+labor_active_flags,labor active flags,PASS,All rows are active.,0,True
+labor_workstations_valid,labor workstations valid,PASS,All workstation_id references are valid.,0,True
+calendar_ids_unique,calendar ids unique,PASS,calendar_id values are unique.,0,True
+calendar_break_minutes_non_negative,calendar break minutes non negative,PASS,planned_break_minutes is non-negative.,0,True
+calendar_scope_values_valid,calendar scope values valid,PASS,All resource_scope values are valid.,0,True
+calendar_weekdays_covered,calendar weekdays covered,PASS,Calendar covers Monday through Friday.,0,True
+calendar_resource_references_valid,calendar resource references valid,PASS,All calendar resource references are valid.,0,True

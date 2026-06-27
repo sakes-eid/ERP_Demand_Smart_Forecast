@@ -1,0 +1,8 @@
+labor_resource_id,workstation_id,skill_type,role_name,workers_available,hours_per_worker_per_week,hourly_wage,break_minutes_per_shift,can_support_parallel_work_flag,active_flag,notes
+LR-FRAME-TECH-001,WS-FRAME-PREP,FRAME_TECHNICIAN,Frame Technician,2,40,24.00,45,True,True,Frame prep alignment and visual inspection
+LR-WHEEL-TECH-001,WS-WHEEL-SUB,WHEEL_ASSEMBLY_TECHNICIAN,Wheel Assembly Technician,3,40,23.00,45,True,True,Wheel subassembly truing and tire mounting prep
+LR-BRAKE-TECH-001,WS-BRAKE-SUB,BRAKE_ASSEMBLY_TECHNICIAN,Brake Assembly Technician,2,40,22.50,45,True,True,Brake assembly and adjustment preparation
+LR-SUSP-TECH-001,WS-FORK-SUSP,SUSPENSION_TECHNICIAN,Suspension Technician,2,40,25.50,45,True,True,Fork and suspension prep for mountain bike variants
+LR-FINAL-OP-001,WS-FINAL-ASM,FINAL_ASSEMBLY_OPERATOR,Final Assembly Operator,4,40,24.50,45,False,True,Final bike assembly and subassembly integration
+LR-QC-INSP-001,WS-QC,QUALITY_INSPECTOR,QC Inspector,2,40,26.00,45,False,True,Final inspection torque checks and acceptance review
+LR-PACK-OP-001,WS-PACK,PACKAGING_OPERATOR,Packaging Operator,2,40,20.00,45,False,True,Packaging labeling and shipment preparation

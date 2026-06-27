@@ -1,6 +1,6 @@
 Phase 3 Validation Report
 ===========================
-Timestamp: 2026-06-23T15:33:25
+Timestamp: 2026-06-27T15:20:23
 Project path: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 3
 Outputs path: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 3\outputs
 
@@ -39,8 +39,8 @@ Key Reconciliations
 - Manager dashboard row count: 22
 - Mandatory review queue count: 20
 - Advisory review queue count: 2
-- Operational saving total: 122560.24
-- Penalty-adjusted saving total: 149347.74
+- Operational saving total: 122567.74
+- Penalty-adjusted saving total: 150855.24
 - Auto-apply true count: 0
 - Selected hard blocker count: 0
 
@@ -53,13 +53,13 @@ Final Manager Output Snapshot
 - Execution owner counts: INVENTORY_PLANNER=9, OPERATIONS_MANAGER=5, PROCUREMENT_TEAM=4, PROCUREMENT_TEAM; WAREHOUSE_TEAM=4
 
 Scenario Optimization Snapshot
-- Scenario count: 403
-- Average scenarios per SKU: 18.32
+- Scenario count: 405
+- Average scenarios per SKU: 18.41
 - Max scenarios per SKU: 24
-- Feasible/infeasible counts: FEASIBLE_WITH_REVIEW=366, FEASIBLE=33, BASELINE_ONLY=4
+- Feasible/infeasible counts: FEASIBLE_WITH_REVIEW=368, FEASIBLE=33, BASELINE_ONLY=4
 - Selected hard blocker count: 0
 - Selected review-required count: 17
-- Selected soft warning count: 54
+- Selected soft warning count: 51
 
 Warehouse Snapshot
 - Batch slotting rows: 23

@@ -28,6 +28,13 @@ EXECUTION_FILE_TOKENS = [
     "released_order",
     "inventory_reservation",
 ]
+RESOURCE_DATA_FILES = {
+    "workstations": PHASE4_DIR / "data" / "workstations.csv",
+    "machines": PHASE4_DIR / "data" / "machines.csv",
+    "labor_resources": PHASE4_DIR / "data" / "labor_resources.csv",
+    "resource_calendar": PHASE4_DIR / "data" / "resource_calendar.csv",
+}
+RESOURCE_VALIDATION_FILE = PHASE4_DIR / "outputs" / "phase4_resource_validation.csv"
 
 
 def main() -> None:
@@ -60,12 +67,14 @@ def main() -> None:
     checks.append(_check_mrp_net_requirements())
     checks.append(_check_mrp_component_period_summary())
     checks.append(_check_mrp_pegging_detail())
+    checks.append(_check_resource_master_data())
     checks.append(_check_phase3_inventory_check())
     checks.append(_check_phase2_supplier_check())
     checks.append(_check_phase4_run_id_consistency())
     checks.append(_check_phase4_advisory_only())
     checks.append(_check_existing_outputs())
     checks.append(_check_safety_flags())
+    checks.append(_check_no_routing_or_capacity_outputs())
     checks.append(_check_no_execution_outputs())
 
     fail_count = sum(check["status"] == "FAIL" for check in checks)
@@ -422,6 +431,69 @@ def _check_mrp_pegging_detail() -> dict:
     return _result("mrp_step2b_pegging", "PASS", f"MRP pegging detail contains {len(pegging)} advisory rows with valid pegging sums.")
 
 
+def _check_resource_master_data() -> dict:
+    missing_files = [name for name, path in RESOURCE_DATA_FILES.items() if not path.exists()]
+    if missing_files:
+        return _result("resource_master_data", "FAIL", f"Missing resource master data files: {missing_files}")
+    frames = {name: pd.read_csv(path) for name, path in RESOURCE_DATA_FILES.items()}
+    empty_files = [name for name, frame in frames.items() if frame.empty]
+    if empty_files:
+        return _result("resource_master_data", "FAIL", f"Resource master data files are empty: {empty_files}")
+    if not RESOURCE_VALIDATION_FILE.exists():
+        return _result("resource_master_data", "FAIL", "Resource validation output is missing.")
+    validation = pd.read_csv(RESOURCE_VALIDATION_FILE)
+    if validation.empty:
+        return _result("resource_master_data", "FAIL", "Resource validation output has no rows.")
+    if "status" not in validation.columns:
+        return _result("resource_master_data", "FAIL", "Resource validation output has no status column.")
+    fail_count = int((validation["status"].astype(str).str.upper() == "FAIL").sum())
+    if fail_count:
+        return _result("resource_master_data", "FAIL", f"Resource validation contains FAIL rows: {fail_count}")
+    required_unique = [
+        ("workstations", "workstation_id"),
+        ("machines", "machine_id"),
+        ("labor_resources", "labor_resource_id"),
+    ]
+    for name, column in required_unique:
+        if column not in frames[name].columns:
+            return _result("resource_master_data", "FAIL", f"{name} missing {column}")
+        duplicate_count = int(frames[name][column].astype(str).str.strip().duplicated().sum())
+        if duplicate_count:
+            return _result("resource_master_data", "FAIL", f"{name} has duplicate {column} values: {duplicate_count}")
+    workstation_ids = set(frames["workstations"]["workstation_id"].astype(str).str.strip())
+    for name in ["machines", "labor_resources"]:
+        invalid_refs = int((~frames[name]["workstation_id"].astype(str).str.strip().isin(workstation_ids)).sum())
+        if invalid_refs:
+            return _result("resource_master_data", "FAIL", f"{name} contains invalid workstation references: {invalid_refs}")
+    invalid_calendar_refs = _resource_calendar_invalid_reference_count(frames)
+    if invalid_calendar_refs:
+        return _result("resource_master_data", "FAIL", f"Resource calendar contains invalid resource references: {invalid_calendar_refs}")
+    numeric_checks = [
+        ("machines", "machine_count", True),
+        ("machines", "available_hours_per_week", False),
+        ("machines", "hourly_machine_cost", False),
+        ("labor_resources", "workers_available", False),
+        ("labor_resources", "hours_per_worker_per_week", False),
+        ("labor_resources", "hourly_wage", False),
+        ("labor_resources", "break_minutes_per_shift", False),
+        ("resource_calendar", "planned_break_minutes", False),
+    ]
+    for name, column, positive in numeric_checks:
+        values = pd.to_numeric(frames[name][column], errors="coerce")
+        invalid = values.isna() | (values <= 0 if positive else values < 0)
+        if bool(invalid.any()):
+            return _result("resource_master_data", "FAIL", f"{name}.{column} has invalid numeric rows: {int(invalid.sum())}")
+    return _result(
+        "resource_master_data",
+        "PASS",
+        (
+            "Step 3A resource master data valid; "
+            f"workstations={len(frames['workstations'])}, machines={len(frames['machines'])}, "
+            f"labor_resources={len(frames['labor_resources'])}, calendar_rows={len(frames['resource_calendar'])}."
+        ),
+    )
+
+
 def _check_phase3_inventory_check() -> dict:
     path = PHASE4_OUTPUTS["component_inventory_check"]
     if not path.exists():
@@ -554,6 +626,56 @@ def _check_no_execution_outputs() -> dict:
     return _result("no_execution_outputs", "PASS", "No Phase 4 production/purchase/release/reservation output files found.")
 
 
+def _check_no_routing_or_capacity_outputs() -> dict:
+    blocked_tokens = [
+        "routing",
+        "route",
+        "capacity_feasibility",
+        "capacity_plan",
+        "utilization",
+        "bottleneck",
+        "detailed_schedule",
+        "finite_schedule",
+        "shop_floor_schedule",
+        "production_sequence",
+        "scheduling_engine",
+        "simulation",
+    ]
+    bad_files = []
+    for path in (PHASE4_DIR / "outputs").glob("*"):
+        if not path.is_file():
+            continue
+        lower_name = path.name.lower()
+        if any(token in lower_name for token in blocked_tokens):
+            bad_files.append(str(path))
+    if bad_files:
+        return _result(
+            "no_routing_or_capacity_outputs",
+            "FAIL",
+            f"Routing/capacity/scheduling/simulation-like Phase 4 outputs found: {bad_files}",
+        )
+    return _result(
+        "no_routing_or_capacity_outputs",
+        "PASS",
+        "No Phase 4 routing, capacity, utilization, bottleneck, scheduling, or simulation outputs found.",
+    )
+
+
+def _resource_calendar_invalid_reference_count(frames: dict[str, pd.DataFrame]) -> int:
+    valid_by_scope = {
+        "WORKSTATION": set(frames["workstations"]["workstation_id"].astype(str).str.strip()),
+        "MACHINE": set(frames["machines"]["machine_id"].astype(str).str.strip()),
+        "LABOR": set(frames["labor_resources"]["labor_resource_id"].astype(str).str.strip()),
+    }
+    invalid_count = 0
+    for _, row in frames["resource_calendar"].iterrows():
+        scope = str(row.get("resource_scope", "")).strip()
+        resource_id = str(row.get("resource_id", "")).strip()
+        if resource_id not in valid_by_scope.get(scope, set()):
+            invalid_count += 1
+    return invalid_count
+
+
 def _all_true(df: pd.DataFrame, column: str) -> bool:
     return column in df.columns and bool(_to_bool(df[column]).all())
 
@@ -580,7 +702,7 @@ def _result(name: str, status: str, message: str) -> dict:
 
 def _format_report(evidence: dict) -> str:
     lines = [
-        "Phase 4 Initialization Validation with Step 2B Component-Period MRP Summary and Pegging",
+        "Phase 4 Initialization Validation with Step 3A Production Resource Master Data",
         f"Generated at UTC: {evidence['generated_at_utc']}",
         f"Overall status: {evidence['overall_status']}",
         f"Fail count: {evidence['fail_count']}",

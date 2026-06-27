@@ -1,6 +1,6 @@
 {
   "validation_name": "phase4_initialization_validation",
-  "generated_at_utc": "2026-06-23T13:33:31+00:00",
+  "generated_at_utc": "2026-06-27T13:20:30+00:00",
   "overall_status": "PASS",
   "fail_count": 0,
   "warning_count": 3,
@@ -61,6 +61,11 @@
       "message": "MRP pegging detail contains 196 advisory rows with valid pegging sums."
     },
     {
+      "check": "resource_master_data",
+      "status": "PASS",
+      "message": "Step 3A resource master data valid; workstations=7, machines=7, labor_resources=7, calendar_rows=35."
+    },
+    {
       "check": "phase3_component_inventory",
       "status": "PASS",
       "message": "Phase 3 checked inventory for 10 components."
@@ -73,7 +78,7 @@
     {
       "check": "phase4_run_id_consistency",
       "status": "PASS",
-      "message": "Consistent planning_run_id across Phase 4 outputs: PHASE4-MPS-20260623133255"
+      "message": "Consistent planning_run_id across Phase 4 outputs: PHASE4-MPS-20260627131840"
     },
     {
       "check": "phase4_advisory_only",
@@ -89,6 +94,11 @@
       "check": "safety_flags",
       "status": "PASS",
       "message": "No enabled execution flags found across 5 checked columns."
+    },
+    {
+      "check": "no_routing_or_capacity_outputs",
+      "status": "PASS",
+      "message": "No Phase 4 routing, capacity, utilization, bottleneck, scheduling, or simulation outputs found."
     },
     {
       "check": "no_execution_outputs",

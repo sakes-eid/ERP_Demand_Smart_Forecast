@@ -8,6 +8,8 @@ from core.master_production_schedule import build_master_production_schedule
 from core.mrp_net_requirements import OUTPUT_FILE as MRP_OUTPUT_FILE
 from core.mrp_net_requirements import PEGGING_OUTPUT_FILE, SUMMARY_OUTPUT_FILE
 from core.mrp_net_requirements import build_mrp_net_component_requirements
+from core.resource_master_data import OUTPUT_FILE as RESOURCE_VALIDATION_OUTPUT_FILE
+from core.resource_master_data import validate_resource_master_data
 
 
 def run_initialization() -> None:
@@ -20,6 +22,7 @@ def run_initialization() -> None:
             planning_run_id = run_ids.iloc[0]
     requirements = build_bom_component_requirements(planning_run_id=planning_run_id)
     mrp = build_mrp_net_component_requirements(planning_run_id=planning_run_id)
+    resource_validation = validate_resource_master_data()
     print("Phase 4 initialization bridge completed.")
     print(f"MPS rows: {len(mps)}")
     print(f"MPS output written to: {MPS_OUTPUT_FILE}")
@@ -29,6 +32,8 @@ def run_initialization() -> None:
     print(f"MRP output written to: {MRP_OUTPUT_FILE}")
     print(f"MRP component-period summary written to: {SUMMARY_OUTPUT_FILE}")
     print(f"MRP pegging detail written to: {PEGGING_OUTPUT_FILE}")
+    print(f"Resource validation rows: {len(resource_validation)}")
+    print(f"Resource validation output written to: {RESOURCE_VALIDATION_OUTPUT_FILE}")
 
 
 if __name__ == "__main__":

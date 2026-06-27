@@ -1,0 +1,8 @@
+workstation_id,workstation_name,workstation_type,operation_family,production_area,supports_parallel_work_flag,queue_supported_flag,active_flag,notes
+WS-FRAME-PREP,Frame Preparation Station,PREP,FRAME_PREPARATION,Frame and chassis area,True,True,True,Frame inspection alignment and prep before assembly
+WS-WHEEL-SUB,Wheel Subassembly Station,SUBASSEMBLY,WHEEL_SUBASSEMBLY,Subassembly area,True,True,True,Wheel build and truing can run in parallel with other subassemblies
+WS-BRAKE-SUB,Brake Subassembly Station,SUBASSEMBLY,BRAKE_SUBASSEMBLY,Subassembly area,True,True,True,Front and rear brake kit preparation
+WS-FORK-SUSP,Fork and Suspension Prep Station,PREP,FORK_SUSPENSION_PREP,Subassembly area,True,True,True,Fork prep and mountain bike suspension preparation
+WS-FINAL-ASM,Final Assembly Station,FINAL_ASSEMBLY,FINAL_BIKE_ASSEMBLY,Final assembly area,False,True,True,Main merge point for frame wheel brake and fork subassemblies
+WS-QC,Final Quality Control Station,QUALITY,FINAL_INSPECTION,Quality area,False,True,True,Final safety fit torque and ride-readiness inspection
+WS-PACK,Packaging Station,PACKAGING,PACKAGING,Shipping preparation area,False,True,True,Packaging labeling and shipment preparation

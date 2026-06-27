@@ -1,0 +1,8 @@
+machine_id,workstation_id,machine_name,machine_type,automation_level,machine_count,available_hours_per_week,setup_capable_flag,hourly_machine_cost,active_flag,notes
+M-FRAME-JIG-001,WS-FRAME-PREP,Frame Jig and Alignment Fixture,FRAME_ALIGNMENT_FIXTURE,MANUAL,2,80,True,6.50,True,Supports road and mountain bike frame setup and checks
+M-WHEEL-TRUE-001,WS-WHEEL-SUB,Wheel Truing Stand,WHEEL_TRUING_STAND,MANUAL,3,120,True,4.75,True,Used for wheel subassembly and truing
+M-BRAKE-BENCH-001,WS-BRAKE-SUB,Brake Assembly Bench and Tooling,BRAKE_ASSEMBLY_TOOLS,MANUAL,2,80,True,4.25,True,Supports front and rear brake kit preparation
+M-FORK-BENCH-001,WS-FORK-SUSP,Fork and Suspension Prep Bench,FORK_SUSPENSION_BENCH,MANUAL,2,80,True,5.25,True,Supports fork prep and suspension-specific mountain bike work
+M-FINAL-STAND-001,WS-FINAL-ASM,Final Assembly Stand,BIKE_ASSEMBLY_STAND,MANUAL,4,160,True,5.75,True,Primary final assembly stands for finished bikes
+M-QC-TOOLS-001,WS-QC,QC Inspection Tool Set,INSPECTION_TOOLS,SEMI_AUTOMATED,2,80,False,7.00,True,Torque gauges alignment gauges and inspection tooling
+M-PACK-BENCH-001,WS-PACK,Packaging Bench and Tool Set,PACKAGING_TOOLS,MANUAL,2,80,False,3.50,True,Boxing protection labeling and shipment prep tools

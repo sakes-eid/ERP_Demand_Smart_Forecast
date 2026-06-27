@@ -1,13 +1,19 @@
-Phase 4 MRP Step 2B Review Bundle Manifest
-Generated zip path: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase4_mrp_step2b_review_bundle.zip
-Generated timestamp UTC: 2026-06-23T13:33:55+00:00
-Included file count: 36
+Phase 4 Step 3A Resource Review Bundle Manifest
+Generated zip path: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase4_step3a_resources_review_bundle.zip
+Generated timestamp UTC: 2026-06-27T13:20:31+00:00
+Included file count: 42
 Missing file count: 0
 Excluded file count: 0
-Final zip size MB: 0.108
+Final zip size MB: 0.116
 Verification status: PASS
 
 Verification messages:
+- PASS: Phase 4 workstations master exists inside the zip
+- PASS: Phase 4 machines master exists inside the zip
+- PASS: Phase 4 labor resources master exists inside the zip
+- PASS: Phase 4 resource calendar exists inside the zip
+- PASS: Phase 4 resource validation module exists inside the zip
+- PASS: Phase 4 resource validation output exists inside the zip
 - PASS: Phase 4 MRP component-period summary exists inside the zip
 - PASS: Phase 4 MRP pegging detail exists inside the zip
 - PASS: Phase 4 MRP net requirements builder exists inside the zip
@@ -42,16 +48,22 @@ Included files:
 - phase 4/validate_phase4_initialization.py
 - phase 4/create_phase4_review_bundle.py
 - phase 4/data/phase4_bom.csv
+- phase 4/data/workstations.csv
+- phase 4/data/machines.csv
+- phase 4/data/labor_resources.csv
+- phase 4/data/resource_calendar.csv
 - phase 4/core/bom_explosion_bridge.py
 - phase 4/core/component_inventory_bridge.py
 - phase 4/core/component_supplier_bridge.py
 - phase 4/core/master_production_schedule.py
 - phase 4/core/mrp_net_requirements.py
+- phase 4/core/resource_master_data.py
 - phase 4/outputs/phase4_master_production_schedule.csv
 - phase 4/outputs/phase4_bom_component_requirements.csv
 - phase 4/outputs/phase4_mrp_net_component_requirements.csv
 - phase 4/outputs/phase4_mrp_component_period_summary.csv
 - phase 4/outputs/phase4_mrp_pegging_detail.csv
+- phase 4/outputs/phase4_resource_validation.csv
 - phase 4/outputs/phase4_initialization_validation.json
 - phase 4/outputs/phase4_initialization_validation_report.txt
 - phase 4/outputs/phase4_review_bundle_manifest.txt
