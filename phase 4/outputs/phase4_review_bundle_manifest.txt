@@ -1,10 +1,10 @@
-Phase 4 Step 4B Machine/Labor Capacity Review Bundle Manifest
-Generated zip path: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase4_step4b_machine_labor_capacity_review_bundle.zip
-Generated timestamp UTC: 2026-06-27T15:06:55+00:00
-Included file count: 55
+Phase 4 Step 4C Capacity Summary Review Bundle Manifest
+Generated zip path: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase4_step4c_capacity_summary_review_bundle.zip
+Generated timestamp UTC: 2026-06-27T15:49:54+00:00
+Included file count: 58
 Missing file count: 0
 Excluded file count: 0
-Final zip size MB: 0.151
+Final zip size MB: 0.161
 Verification status: PASS
 
 Verification messages:
@@ -12,6 +12,9 @@ Verification messages:
 - PASS: Phase 4 machine-type capacity output exists inside the zip
 - PASS: Phase 4 labor-skill capacity output exists inside the zip
 - PASS: Phase 4 capacity constraint bridge exists inside the zip
+- PASS: Phase 4 capacity feasibility summary exists inside the zip
+- PASS: Phase 4 bottleneck candidate summary exists inside the zip
+- PASS: Phase 4 capacity manager review queue exists inside the zip
 - PASS: Phase 4 workstation capacity load output exists inside the zip
 - PASS: Phase 4 capacity validation output exists inside the zip
 - PASS: Phase 4 capacity operation detail output exists inside the zip
@@ -89,6 +92,9 @@ Included files:
 - phase 4/outputs/phase4_capacity_load_by_machine_type.csv
 - phase 4/outputs/phase4_capacity_load_by_labor_skill.csv
 - phase 4/outputs/phase4_capacity_constraint_bridge.csv
+- phase 4/outputs/phase4_capacity_feasibility_summary.csv
+- phase 4/outputs/phase4_bottleneck_candidate_summary.csv
+- phase 4/outputs/phase4_capacity_manager_review_queue.csv
 - phase 4/outputs/phase4_capacity_validation.csv
 - phase 4/outputs/phase4_initialization_validation.json
 - phase 4/outputs/phase4_initialization_validation_report.txt

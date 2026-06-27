@@ -1,6 +1,6 @@
-# Phase 4 Initialization Through Machine and Labor Capacity Load
+# Phase 4 Initialization Through Capacity Feasibility Summary
 
-Phase 4 production planning preparation has started. It now includes a simple advisory Master Production Schedule (MPS), MRP net component requirements, component-period MRP summary, pegging detail, production resource master data, routing/workflow master data, and CRP feasibility for workstations, machine types, and labor skills. This is still not the full production planning engine.
+Phase 4 production planning preparation has started. It now includes a simple advisory Master Production Schedule (MPS), MRP net component requirements, component-period MRP summary, pegging detail, production resource master data, routing/workflow master data, CRP feasibility for workstations, machine types, and labor skills, and a capacity feasibility summary layer. This is still not the full production planning engine.
 
 Current initialization scope:
 
@@ -30,6 +30,11 @@ Current initialization scope:
 - Machine-type capacity checks machine/tool constraints from routing operation resources and `machines.csv`.
 - Labor-skill capacity checks worker skill constraints from routing operation resources and `labor_resources.csv`.
 - The capacity constraint bridge links workstation overloads to machine and labor causes.
+- Step 4C summarizes CRP evidence across workstation, machine, and labor layers.
+- `outputs/phase4_capacity_feasibility_summary.csv` answers whether each weekly plan is capacity-feasible.
+- `outputs/phase4_bottleneck_candidate_summary.csv` identifies likely bottleneck candidates using capacity evidence only.
+- Bottleneck candidates are not final queue-confirmed bottlenecks.
+- `outputs/phase4_capacity_manager_review_queue.csv` is an advisory-only manager review list and does not trigger automatic actions.
 - Labor capacity uses stricter labor-specific thresholds because workers need operating buffer for breaks, fatigue, variability, quality checks, coordination, and disruptions.
 - Labor utilization above 80% is marked `HIGH_UTILIZATION_WARNING`.
 - Labor utilization above 95% is treated as a hard `OVERLOADED` condition.
@@ -72,16 +77,17 @@ Not implemented yet:
 - Full MPS governance beyond the advisory rolling-balance calculation.
 - Full MRP execution, order release, and procurement execution.
 - Detailed capacity scheduling, utilization dashboards, and bottleneck ranking analysis.
-- Step 4C will later summarize bottleneck candidates more intelligently; this patch does not implement detailed bottleneck ranking.
+- Step 4C provides bottleneck candidates from CRP evidence; detailed bottleneck ranking remains future work.
+- Confirmed bottlenecks from queue behavior.
 - Queue logic or queue simulation.
 - Quality, maintenance, scheduling, layout, or simulation.
 - Production order release.
 
 Next likely Phase 4 feature:
 
-- The next real feature after this machine/labor capacity-load step is likely bottleneck review or capacity relief recommendations, but it is not implemented here.
+- The next real feature after this capacity feasibility summary step is likely capacity relief recommendations or queue-aware bottleneck confirmation, but it is not implemented here.
 
 Review bundle:
 
-- `create_phase4_review_bundle.py` generates `phase4_step4b_machine_labor_capacity_review_bundle.zip` at the project root for external review.
+- `create_phase4_review_bundle.py` generates `phase4_step4c_capacity_summary_review_bundle.zip` at the project root for external review.
 - The bundle preserves project-relative folder structure and excludes cache, bytecode, virtual environment, and zip artifacts.

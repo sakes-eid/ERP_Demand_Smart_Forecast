@@ -27,4 +27,4 @@ parallel_groups_valid,parallel groups valid,PASS,Parallel fork/join groups are v
 routing_parallel_groups_advisory_active_flags,routing_parallel_groups advisory and active flags,PASS,All rows are active and advisory-only.,0,True
 routing_operation_resources_valid,routing operation resources valid,PASS,"Operation resource mappings reference valid operations, workstations, machine types, and labor skills.",0,True
 routing_operation_resources_advisory_active_flags,routing_operation_resources advisory and active flags,PASS,All rows are active and advisory-only.,0,True
-routing_no_blocked_future_outputs,routing no blocked future outputs,PASS,"No capacity, queue, scheduling, simulation, or execution outputs found.",0,True
+routing_no_blocked_future_outputs,routing no blocked future outputs,PASS,"No future-only queue, detailed scheduling, simulation, or execution outputs found.",0,True

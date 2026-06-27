@@ -36,4 +36,5 @@ capacity_machine_load_valid,machine capacity load valid,PASS,machine capacity lo
 capacity_labor_load_valid,labor capacity load valid,PASS,labor capacity load has 98 advisory rows.,0,True
 capacity_labor_thresholds_valid,labor capacity thresholds valid,PASS,Labor capacity uses 80% warning and 95% hard-overload thresholds.,0,True
 capacity_constraint_bridge_valid,capacity constraint bridge valid,PASS,Constraint bridge has 98 advisory rows.,0,True
+capacity_step4c_outputs_valid,Step 4C capacity summary outputs valid,PASS,"Step 4C outputs valid; feasibility_rows=14, candidate_rows=7, review_rows=138.",0,True
 capacity_no_blocked_future_outputs,capacity no blocked future outputs,PASS,"No queue, bottleneck ranking, scheduling, simulation, or execution outputs found.",0,True

@@ -1,4 +1,4 @@
-"""Create a clean Phase 4 Step 4B machine/labor capacity review bundle."""
+"""Create a clean Phase 4 Step 4C capacity summary review bundle."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 PHASE4_OUTPUTS = PROJECT_ROOT / "phase 4" / "outputs"
-ZIP_PATH = PROJECT_ROOT / "phase4_step4b_machine_labor_capacity_review_bundle.zip"
+ZIP_PATH = PROJECT_ROOT / "phase4_step4c_capacity_summary_review_bundle.zip"
 MANIFEST_PATH = PHASE4_OUTPUTS / "phase4_review_bundle_manifest.txt"
 
 REQUIRED_RELATIVE_FILES = [
@@ -49,6 +49,9 @@ REQUIRED_RELATIVE_FILES = [
     "phase 4/outputs/phase4_capacity_load_by_machine_type.csv",
     "phase 4/outputs/phase4_capacity_load_by_labor_skill.csv",
     "phase 4/outputs/phase4_capacity_constraint_bridge.csv",
+    "phase 4/outputs/phase4_capacity_feasibility_summary.csv",
+    "phase 4/outputs/phase4_bottleneck_candidate_summary.csv",
+    "phase 4/outputs/phase4_capacity_manager_review_queue.csv",
     "phase 4/outputs/phase4_capacity_validation.csv",
     "phase 4/outputs/phase4_initialization_validation.json",
     "phase 4/outputs/phase4_initialization_validation_report.txt",
@@ -173,6 +176,9 @@ def _verify_zip() -> tuple[str, list[str]]:
         "phase 4/outputs/phase4_capacity_load_by_machine_type.csv": "Phase 4 machine-type capacity output exists inside the zip",
         "phase 4/outputs/phase4_capacity_load_by_labor_skill.csv": "Phase 4 labor-skill capacity output exists inside the zip",
         "phase 4/outputs/phase4_capacity_constraint_bridge.csv": "Phase 4 capacity constraint bridge exists inside the zip",
+        "phase 4/outputs/phase4_capacity_feasibility_summary.csv": "Phase 4 capacity feasibility summary exists inside the zip",
+        "phase 4/outputs/phase4_bottleneck_candidate_summary.csv": "Phase 4 bottleneck candidate summary exists inside the zip",
+        "phase 4/outputs/phase4_capacity_manager_review_queue.csv": "Phase 4 capacity manager review queue exists inside the zip",
         "phase 4/outputs/phase4_capacity_load_by_workstation.csv": "Phase 4 workstation capacity load output exists inside the zip",
         "phase 4/outputs/phase4_capacity_validation.csv": "Phase 4 capacity validation output exists inside the zip",
         "phase 4/outputs/phase4_capacity_operation_load_detail.csv": "Phase 4 capacity operation detail output exists inside the zip",
@@ -255,7 +261,7 @@ def _build_manifest(
 ) -> str:
     zip_size_mb = ZIP_PATH.stat().st_size / (1024 * 1024) if ZIP_PATH.exists() else 0.0
     lines = [
-        "Phase 4 Step 4B Machine/Labor Capacity Review Bundle Manifest",
+        "Phase 4 Step 4C Capacity Summary Review Bundle Manifest",
         f"Generated zip path: {ZIP_PATH}",
         f"Generated timestamp UTC: {generated_at}",
         f"Included file count: {len(included)}",

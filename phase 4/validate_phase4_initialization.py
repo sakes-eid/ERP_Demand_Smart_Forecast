@@ -24,6 +24,9 @@ PHASE4_OUTPUTS = {
     "capacity_load_by_machine_type": PHASE4_DIR / "outputs" / "phase4_capacity_load_by_machine_type.csv",
     "capacity_load_by_labor_skill": PHASE4_DIR / "outputs" / "phase4_capacity_load_by_labor_skill.csv",
     "capacity_constraint_bridge": PHASE4_DIR / "outputs" / "phase4_capacity_constraint_bridge.csv",
+    "capacity_feasibility_summary": PHASE4_DIR / "outputs" / "phase4_capacity_feasibility_summary.csv",
+    "bottleneck_candidate_summary": PHASE4_DIR / "outputs" / "phase4_bottleneck_candidate_summary.csv",
+    "capacity_manager_review_queue": PHASE4_DIR / "outputs" / "phase4_capacity_manager_review_queue.csv",
     "component_inventory_check": PROJECT_ROOT / "phase 3" / "outputs" / "phase4_component_inventory_check.csv",
     "component_supplier_check": PROJECT_ROOT / "phase 2" / "outputs" / "phase4_component_supplier_check.csv",
 }
@@ -52,6 +55,9 @@ CAPACITY_OPERATION_DETAIL_FILE = PHASE4_DIR / "outputs" / "phase4_capacity_opera
 MACHINE_CAPACITY_LOAD_FILE = PHASE4_DIR / "outputs" / "phase4_capacity_load_by_machine_type.csv"
 LABOR_CAPACITY_LOAD_FILE = PHASE4_DIR / "outputs" / "phase4_capacity_load_by_labor_skill.csv"
 CAPACITY_CONSTRAINT_BRIDGE_FILE = PHASE4_DIR / "outputs" / "phase4_capacity_constraint_bridge.csv"
+CAPACITY_FEASIBILITY_SUMMARY_FILE = PHASE4_DIR / "outputs" / "phase4_capacity_feasibility_summary.csv"
+BOTTLENECK_CANDIDATE_SUMMARY_FILE = PHASE4_DIR / "outputs" / "phase4_bottleneck_candidate_summary.csv"
+CAPACITY_MANAGER_REVIEW_QUEUE_FILE = PHASE4_DIR / "outputs" / "phase4_capacity_manager_review_queue.csv"
 CAPACITY_VALIDATION_FILE = PHASE4_DIR / "outputs" / "phase4_capacity_validation.csv"
 
 
@@ -674,11 +680,14 @@ def _check_capacity_load() -> dict:
     step4b_check = _check_step4b_capacity_outputs()
     if step4b_check["status"] == "FAIL":
         return step4b_check
+    step4c_check = _check_step4c_capacity_outputs()
+    if step4c_check["status"] == "FAIL":
+        return step4c_check
     return _result(
         "capacity_load",
         "PASS",
         (
-            "Step 4B workstation, machine, and labor capacity load valid; "
+            "Step 4C capacity feasibility summary and bottleneck candidates valid; "
             f"rows={len(load)}, periods={load[['planning_run_id', 'period_start', 'period_end']].drop_duplicates().shape[0]}, "
             f"workstations={load['workstation_id'].nunique()}."
         ),
@@ -837,6 +846,150 @@ def _check_step4b_capacity_outputs() -> dict:
     return _result("capacity_load", "PASS", f"Step 4B outputs valid; machine/labor rows={total_rows}, bridge_rows={len(bridge)}.")
 
 
+def _check_step4c_capacity_outputs() -> dict:
+    for path, label in [
+        (CAPACITY_FEASIBILITY_SUMMARY_FILE, "capacity feasibility summary"),
+        (BOTTLENECK_CANDIDATE_SUMMARY_FILE, "bottleneck candidate summary"),
+    ]:
+        if not path.exists():
+            return _result("capacity_load", "FAIL", f"{label} output is missing.")
+        if pd.read_csv(path).empty:
+            return _result("capacity_load", "FAIL", f"{label} output has no rows.")
+
+    feasibility = pd.read_csv(CAPACITY_FEASIBILITY_SUMMARY_FILE)
+    candidates = pd.read_csv(BOTTLENECK_CANDIDATE_SUMMARY_FILE)
+    review_queue = pd.read_csv(CAPACITY_MANAGER_REVIEW_QUEUE_FILE) if CAPACITY_MANAGER_REVIEW_QUEUE_FILE.exists() else pd.DataFrame()
+    feasibility_required = {
+        "planning_run_id",
+        "period_start",
+        "period_end",
+        "workstation_count",
+        "overloaded_workstation_count",
+        "near_capacity_workstation_count",
+        "feasible_workstation_count",
+        "max_workstation_utilization_pct",
+        "avg_workstation_utilization_pct",
+        "total_required_workstation_hours",
+        "total_available_workstation_hours",
+        "total_workstation_capacity_gap_hours",
+        "machine_constraint_count",
+        "labor_hard_overload_count",
+        "labor_high_utilization_warning_count",
+        "max_machine_utilization_pct",
+        "max_labor_utilization_pct",
+        "constraint_review_required_count",
+        "main_constraint_layer",
+        "capacity_feasibility_status",
+        "capacity_feasibility_reason",
+        "capacity_planning_basis",
+        "advisory_only_flag",
+    }
+    candidate_required = {
+        "planning_run_id",
+        "workstation_id",
+        "workstation_name",
+        "periods_observed",
+        "overloaded_period_count",
+        "near_capacity_period_count",
+        "labor_high_utilization_warning_period_count",
+        "machine_constraint_period_count",
+        "labor_hard_overload_period_count",
+        "max_workstation_utilization_pct",
+        "avg_workstation_utilization_pct",
+        "max_machine_utilization_pct",
+        "max_labor_utilization_pct",
+        "total_required_workstation_hours",
+        "total_available_workstation_hours",
+        "cumulative_capacity_gap_hours",
+        "bottleneck_candidate_score",
+        "bottleneck_candidate_rank",
+        "bottleneck_candidate_level",
+        "bottleneck_candidate_reason",
+        "workstation_capacity_basis",
+        "advisory_only_flag",
+    }
+    review_required = {
+        "planning_run_id",
+        "review_item_id",
+        "period_start",
+        "period_end",
+        "workstation_id",
+        "workstation_name",
+        "issue_type",
+        "issue_severity",
+        "issue_description",
+        "main_constraint_layer",
+        "utilization_pct",
+        "capacity_gap_hours",
+        "suggested_review_action",
+        "auto_action_allowed",
+        "advisory_only_flag",
+    }
+    missing_feasibility = sorted(feasibility_required.difference(feasibility.columns))
+    if missing_feasibility:
+        return _result("capacity_load", "FAIL", f"Capacity feasibility summary missing columns: {missing_feasibility}")
+    missing_candidates = sorted(candidate_required.difference(candidates.columns))
+    if missing_candidates:
+        return _result("capacity_load", "FAIL", f"Bottleneck candidate summary missing columns: {missing_candidates}")
+    valid_statuses = {"FEASIBLE", "FEASIBLE_WITH_LABOR_WARNING", "CAPACITY_REVIEW_REQUIRED", "NOT_CAPACITY_FEASIBLE", "REVIEW_REQUIRED"}
+    valid_layers = {"NONE", "WORKSTATION_CALENDAR", "MACHINE", "LABOR", "LABOR_HIGH_UTILIZATION", "MULTI_LAYER", "REVIEW_REQUIRED"}
+    valid_levels = {"LOW", "MEDIUM", "HIGH", "CRITICAL"}
+    if (~feasibility["capacity_feasibility_status"].astype(str).isin(valid_statuses)).any():
+        return _result("capacity_load", "FAIL", "Capacity feasibility summary contains invalid statuses.")
+    if (~feasibility["main_constraint_layer"].astype(str).isin(valid_layers)).any():
+        return _result("capacity_load", "FAIL", "Capacity feasibility summary contains invalid constraint layers.")
+    if not _all_true(feasibility, "advisory_only_flag"):
+        return _result("capacity_load", "FAIL", "Capacity feasibility summary contains non-advisory rows.")
+    overload_not_flagged = (pd.to_numeric(feasibility["overloaded_workstation_count"], errors="coerce") > 0) & (
+        feasibility["capacity_feasibility_status"].astype(str) != "NOT_CAPACITY_FEASIBLE"
+    )
+    if overload_not_flagged.any():
+        return _result("capacity_load", "FAIL", "Periods with workstation overload must be NOT_CAPACITY_FEASIBLE.")
+    scores = pd.to_numeric(candidates["bottleneck_candidate_score"], errors="coerce")
+    ranks = pd.to_numeric(candidates["bottleneck_candidate_rank"], errors="coerce")
+    if scores.isna().any() or (scores < 0).any():
+        return _result("capacity_load", "FAIL", "Bottleneck candidate scores must be numeric and non-negative.")
+    if ranks.isna().any() or candidates["bottleneck_candidate_rank"].duplicated().any():
+        return _result("capacity_load", "FAIL", "Bottleneck candidate ranks must be numeric and unique.")
+    if (~candidates["bottleneck_candidate_level"].astype(str).isin(valid_levels)).any():
+        return _result("capacity_load", "FAIL", "Bottleneck candidate summary contains invalid levels.")
+    if candidates["bottleneck_candidate_reason"].astype(str).str.contains("FINAL_BOTTLENECK", case=False, na=False).any():
+        return _result("capacity_load", "FAIL", "Bottleneck candidate summary must not mark final bottlenecks.")
+    if not _all_true(candidates, "advisory_only_flag"):
+        return _result("capacity_load", "FAIL", "Bottleneck candidate summary contains non-advisory rows.")
+    infeasible_exists = feasibility["capacity_feasibility_status"].astype(str).isin(["NOT_CAPACITY_FEASIBLE", "CAPACITY_REVIEW_REQUIRED", "REVIEW_REQUIRED"]).any()
+    if infeasible_exists:
+        if review_queue.empty:
+            return _result("capacity_load", "FAIL", "Capacity manager review queue is required when infeasibility exists.")
+        missing_review = sorted(review_required.difference(review_queue.columns))
+        if missing_review:
+            return _result("capacity_load", "FAIL", f"Capacity manager review queue missing columns: {missing_review}")
+        valid_issue_types = {
+            "WORKSTATION_OVERLOAD",
+            "WORKSTATION_NEAR_CAPACITY",
+            "LABOR_HIGH_UTILIZATION_WARNING",
+            "MACHINE_CAPACITY_CONSTRAINT",
+            "LABOR_HARD_OVERLOAD",
+            "NO_CAPACITY_RECORD",
+            "PERIOD_NOT_CAPACITY_FEASIBLE",
+            "REVIEW_REQUIRED",
+        }
+        valid_severities = {"LOW", "MEDIUM", "HIGH", "CRITICAL"}
+        if (~review_queue["issue_type"].astype(str).isin(valid_issue_types)).any():
+            return _result("capacity_load", "FAIL", "Capacity manager review queue contains invalid issue types.")
+        if (~review_queue["issue_severity"].astype(str).isin(valid_severities)).any():
+            return _result("capacity_load", "FAIL", "Capacity manager review queue contains invalid issue severities.")
+        if _to_bool(review_queue["auto_action_allowed"]).any():
+            return _result("capacity_load", "FAIL", "Capacity manager review queue cannot allow automatic action.")
+        if not _all_true(review_queue, "advisory_only_flag"):
+            return _result("capacity_load", "FAIL", "Capacity manager review queue contains non-advisory rows.")
+    return _result(
+        "capacity_load",
+        "PASS",
+        f"Step 4C outputs valid; feasibility_rows={len(feasibility)}, candidate_rows={len(candidates)}, review_rows={len(review_queue)}.",
+    )
+
+
 def _validate_labor_capacity_thresholds(frame: pd.DataFrame) -> dict | None:
     utilization = pd.to_numeric(frame["labor_utilization_pct"], errors="coerce")
     soft = pd.to_numeric(frame["labor_soft_warning_threshold_pct"], errors="coerce")
@@ -992,11 +1145,13 @@ def _check_no_execution_outputs() -> dict:
 
 def _check_no_routing_or_capacity_outputs() -> dict:
     blocked_tokens = [
-        "capacity_feasibility",
         "capacity_plan",
         "utilization",
-        "bottleneck",
-        "queue",
+        "confirmed_bottleneck",
+        "bottleneck_ranking",
+        "workstation_queue",
+        "operation_queue",
+        "queue_simulation",
         "detailed_schedule",
         "finite_schedule",
         "shop_floor_schedule",
@@ -1015,7 +1170,7 @@ def _check_no_routing_or_capacity_outputs() -> dict:
         return _result(
             "no_routing_or_capacity_outputs",
             "FAIL",
-            f"Future-only queue/bottleneck/scheduling/simulation-like Phase 4 outputs found: {bad_files}",
+            f"Future-only queue/scheduling/simulation-like Phase 4 outputs found: {bad_files}",
         )
     return _result(
         "no_routing_or_capacity_outputs",
@@ -1099,7 +1254,7 @@ def _result(name: str, status: str, message: str) -> dict:
 
 def _format_report(evidence: dict) -> str:
     lines = [
-        "Phase 4 Initialization Validation with Step 4B Machine and Labor Capacity Load",
+        "Phase 4 Initialization Validation with Step 4C Capacity Feasibility Summary and Bottleneck Candidates",
         f"Generated at UTC: {evidence['generated_at_utc']}",
         f"Overall status: {evidence['overall_status']}",
         f"Fail count: {evidence['fail_count']}",

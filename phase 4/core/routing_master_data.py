@@ -422,11 +422,13 @@ def _check_foreign_key(check_id: str, check_name: str, frame: pd.DataFrame, colu
 
 def _check_no_blocked_outputs(checks: list[dict]) -> None:
     blocked_tokens = [
-        "capacity_feasibility",
         "capacity_plan",
         "utilization",
-        "bottleneck",
-        "queue",
+        "confirmed_bottleneck",
+        "bottleneck_ranking",
+        "workstation_queue",
+        "operation_queue",
+        "queue_simulation",
         "detailed_schedule",
         "finite_schedule",
         "shop_floor_schedule",
@@ -443,7 +445,15 @@ def _check_no_blocked_outputs(checks: list[dict]) -> None:
         for path in OUTPUT_DIR.glob("*"):
             if path.is_file() and any(token in path.name.lower() for token in blocked_tokens):
                 bad_files.append(str(path))
-    checks.append(_result("routing_no_blocked_future_outputs", "routing no blocked future outputs", "FAIL" if bad_files else "PASS", f"Blocked future/execution outputs found: {bad_files}" if bad_files else "No capacity, queue, scheduling, simulation, or execution outputs found.", len(bad_files)))
+    checks.append(
+        _result(
+            "routing_no_blocked_future_outputs",
+            "routing no blocked future outputs",
+            "FAIL" if bad_files else "PASS",
+            f"Blocked future/execution outputs found: {bad_files}" if bad_files else "No future-only queue, detailed scheduling, simulation, or execution outputs found.",
+            len(bad_files),
+        )
+    )
 
 
 def _format_flow_text(routing: pd.DataFrame, groups: pd.DataFrame) -> str:
