@@ -1,0 +1,25 @@
+check_id,check_name,status,message,affected_rows,advisory_only_flag
+capacity_mps_exists,mps exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_master_production_schedule.csv,0,True
+capacity_product_routings_exists,product_routings exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\data\product_routings.csv,0,True
+capacity_workstations_exists,workstations exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\data\workstations.csv,0,True
+capacity_resource_calendar_exists,resource_calendar exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\data\resource_calendar.csv,0,True
+capacity_mps_required_columns,mps required columns,PASS,All required columns exist.,0,True
+capacity_mps_not_empty,mps not empty,PASS,File has 28 rows.,0,True
+capacity_product_routings_required_columns,product_routings required columns,PASS,All required columns exist.,0,True
+capacity_product_routings_not_empty,product_routings not empty,PASS,File has 13 rows.,0,True
+capacity_workstations_required_columns,workstations required columns,PASS,All required columns exist.,0,True
+capacity_workstations_not_empty,workstations not empty,PASS,File has 7 rows.,0,True
+capacity_resource_calendar_required_columns,resource_calendar required columns,PASS,All required columns exist.,0,True
+capacity_resource_calendar_not_empty,resource_calendar not empty,PASS,File has 35 rows.,0,True
+capacity_resource_validation_has_no_fail,resource_validation has no FAIL rows,PASS,resource_validation has no FAIL rows.,0,True
+capacity_routing_validation_has_no_fail,routing_validation has no FAIL rows,PASS,routing_validation has no FAIL rows.,0,True
+capacity_mps_skus_have_routings,MPS SKUs have routing operations,PASS,Every MPS finished SKU has routing operations.,0,True
+capacity_routing_times_valid,routing operation times valid,PASS,Routing setup/run/move times are valid.,0,True
+capacity_calendar_shift_hours_parsed,calendar shift hours parsed,PASS,Calendar shift hours parsed without fallback.,0,True
+capacity_load_output_not_empty,capacity load output not empty,PASS,Capacity load output has 98 rows.,0,True
+capacity_load_grain_unique,capacity load grain unique,PASS,Capacity load has one row per planning_run_id/period/workstation.,0,True
+capacity_load_numeric_values_valid,capacity load numeric values valid,PASS,"Capacity required, available, and utilization values are numeric and non-negative.",0,True
+capacity_status_populated,capacity status populated,PASS,capacity_status is populated for all rows.,0,True
+capacity_load_advisory_only,capacity load advisory only,PASS,All capacity load rows are advisory-only.,0,True
+capacity_operation_detail_exists,capacity operation detail exists,PASS,Operation detail output has 182 rows.,0,True
+capacity_no_blocked_future_outputs,capacity no blocked future outputs,PASS,"No machine/labor capacity, queue, bottleneck, scheduling, simulation, or execution outputs found.",0,True

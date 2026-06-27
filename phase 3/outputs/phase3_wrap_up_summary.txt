@@ -1,10 +1,10 @@
 Phase 3 Wrap-Up Summary
 =======================
-Generated: 2026-06-27T15:37:09
+Generated: 2026-06-27T16:32:39
 
 Phase 3 Status
 - Local validation: WARNING (PASS 207, WARNING 12, FAIL 0, SKIPPED 1)
-- Integrated validation: WARNING (PASS 56, WARNING 5, FAIL 0)
+- Integrated validation: FAIL (PASS 55, WARNING 5, FAIL 1)
 - Convergence: CONVERGED_WITH_REVIEW
 
 Main Outputs

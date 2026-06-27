@@ -3,6 +3,10 @@
 from __future__ import annotations
 
 from core.bom_explosion_bridge import OUTPUT_FILE, build_bom_component_requirements
+from core.capacity_load import DETAIL_OUTPUT_FILE as CAPACITY_DETAIL_OUTPUT_FILE
+from core.capacity_load import OUTPUT_FILE as CAPACITY_LOAD_OUTPUT_FILE
+from core.capacity_load import VALIDATION_OUTPUT_FILE as CAPACITY_VALIDATION_OUTPUT_FILE
+from core.capacity_load import build_workstation_capacity_load
 from core.master_production_schedule import OUTPUT_FILE as MPS_OUTPUT_FILE
 from core.master_production_schedule import build_master_production_schedule
 from core.mrp_net_requirements import OUTPUT_FILE as MRP_OUTPUT_FILE
@@ -27,6 +31,7 @@ def run_initialization() -> None:
     mrp = build_mrp_net_component_requirements(planning_run_id=planning_run_id)
     resource_validation = validate_resource_master_data()
     routing_validation = validate_routing_master_data()
+    capacity_load, capacity_detail, capacity_validation = build_workstation_capacity_load()
     print("Phase 4 initialization bridge completed.")
     print(f"MPS rows: {len(mps)}")
     print(f"MPS output written to: {MPS_OUTPUT_FILE}")
@@ -41,6 +46,12 @@ def run_initialization() -> None:
     print(f"Routing validation rows: {len(routing_validation)}")
     print(f"Routing validation output written to: {ROUTING_VALIDATION_OUTPUT_FILE}")
     print(f"Routing flow summary written to: {FLOW_SUMMARY_OUTPUT_FILE}")
+    print(f"Capacity load rows: {len(capacity_load)}")
+    print(f"Capacity load output written to: {CAPACITY_LOAD_OUTPUT_FILE}")
+    print(f"Capacity operation detail rows: {len(capacity_detail)}")
+    print(f"Capacity operation detail output written to: {CAPACITY_DETAIL_OUTPUT_FILE}")
+    print(f"Capacity validation rows: {len(capacity_validation)}")
+    print(f"Capacity validation output written to: {CAPACITY_VALIDATION_OUTPUT_FILE}")
 
 
 if __name__ == "__main__":

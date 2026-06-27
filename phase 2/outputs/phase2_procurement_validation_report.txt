@@ -1,5 +1,5 @@
 Phase 2 Procurement Capability Validation Report
-Timestamp: 2026-06-27T15:37:09
+Timestamp: 2026-06-27T16:32:38
 Project path: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 2
 Outputs path: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 2\outputs
 

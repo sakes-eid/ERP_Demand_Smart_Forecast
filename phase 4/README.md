@@ -1,6 +1,6 @@
-# Phase 4 Initialization Through Routing Master Data
+# Phase 4 Initialization Through Workstation Capacity Load
 
-Phase 4 production planning preparation has started. It now includes a simple advisory Master Production Schedule (MPS), MRP net component requirements, component-period MRP summary, pegging detail, production resource master data, and routing/workflow master data. This is still not the full production planning engine.
+Phase 4 production planning preparation has started. It now includes a simple advisory Master Production Schedule (MPS), MRP net component requirements, component-period MRP summary, pegging detail, production resource master data, routing/workflow master data, and workstation-level capacity load / CRP feasibility. This is still not the full production planning engine.
 
 Current initialization scope:
 
@@ -25,6 +25,11 @@ Current initialization scope:
 - Routing operation resources reference the workstations, machine types, and labor skills from Step 3A.
 - `core/routing_master_data.py` validates routing structure, resource references, fork/join groups, and circular dependencies.
 - `outputs/phase4_routing_flow_summary.csv` provides a human-readable review summary of each routing.
+- `core/capacity_load.py` calculates advisory workstation-level capacity load from MPS planned production and routing operation times.
+- Available workstation capacity is based on the workstation rows in the resource calendar.
+- Parallel operations add load to their own workstations in the same period, but they are not sequenced or scheduled yet.
+- Capacity statuses include `FEASIBLE`, `NEAR_CAPACITY`, `OVERLOADED`, `NO_CAPACITY_RECORD`, `NO_LOAD`, and `REVIEW_REQUIRED`.
+- `outputs/phase4_capacity_operation_load_detail.csv` provides operation-level load detail for validation and review only.
 - If MPS output is missing or empty, BOM explosion falls back to the original forecast-based initialization bridge.
 - Phase 3 can produce an advisory inventory availability check using component-period MRP summary when available.
 - Phase 2 preserves the component-period basis in advisory supplier coverage checks.
@@ -38,8 +43,9 @@ Run order:
 4. Run Phase 4 MRP net component requirements, component-period summary, and pegging detail.
 5. Validate Phase 4 resource master data.
 6. Validate Phase 4 routing/workflow master data.
-7. Run Phase 3 component inventory checks.
-8. Run Phase 2 component supplier checks.
+7. Build Phase 4 workstation capacity load / CRP feasibility.
+8. Run Phase 3 component inventory checks.
+9. Run Phase 2 component supplier checks.
 
 The Phase 4 bridges are optional-safe. If a bridge file is missing or fails, Phase 2 and Phase 3 print a warning and continue their existing core pipelines.
 
@@ -56,16 +62,17 @@ Not implemented yet:
 
 - Full MPS governance beyond the advisory rolling-balance calculation.
 - Full MRP execution, order release, and procurement execution.
-- Capacity feasibility, utilization, and bottleneck analysis.
+- Machine-level and labor-level capacity checks.
+- Detailed capacity scheduling, utilization dashboards, and bottleneck analysis.
 - Queue logic or queue simulation.
 - Quality, maintenance, scheduling, layout, or simulation.
 - Production order release.
 
 Next likely Phase 4 feature:
 
-- The next real feature after this routing master-data step is capacity feasibility, but it is not implemented here.
+- The next real feature after this workstation capacity-load step is machine/labor capacity checking, but it is not implemented here.
 
 Review bundle:
 
-- `create_phase4_review_bundle.py` generates `phase4_step3b_routing_review_bundle.zip` at the project root for external review.
+- `create_phase4_review_bundle.py` generates `phase4_step4a_capacity_review_bundle.zip` at the project root for external review.
 - The bundle preserves project-relative folder structure and excludes cache, bytecode, virtual environment, and zip artifacts.

@@ -42,6 +42,9 @@ ROUTING_DATA_FILES = {
 }
 ROUTING_VALIDATION_FILE = PHASE4_DIR / "outputs" / "phase4_routing_validation.csv"
 ROUTING_FLOW_SUMMARY_FILE = PHASE4_DIR / "outputs" / "phase4_routing_flow_summary.csv"
+CAPACITY_LOAD_FILE = PHASE4_DIR / "outputs" / "phase4_capacity_load_by_workstation.csv"
+CAPACITY_OPERATION_DETAIL_FILE = PHASE4_DIR / "outputs" / "phase4_capacity_operation_load_detail.csv"
+CAPACITY_VALIDATION_FILE = PHASE4_DIR / "outputs" / "phase4_capacity_validation.csv"
 
 
 def main() -> None:
@@ -76,6 +79,7 @@ def main() -> None:
     checks.append(_check_mrp_pegging_detail())
     checks.append(_check_resource_master_data())
     checks.append(_check_routing_master_data())
+    checks.append(_check_capacity_load())
     checks.append(_check_phase3_inventory_check())
     checks.append(_check_phase2_supplier_check())
     checks.append(_check_phase4_run_id_consistency())
@@ -592,6 +596,84 @@ def _check_routing_master_data() -> dict:
     )
 
 
+def _check_capacity_load() -> dict:
+    if not CAPACITY_LOAD_FILE.exists():
+        return _result("capacity_load", "FAIL", "Workstation capacity load output is missing.")
+    load = pd.read_csv(CAPACITY_LOAD_FILE)
+    if load.empty:
+        return _result("capacity_load", "FAIL", "Workstation capacity load output has no rows.")
+    required = {
+        "planning_run_id",
+        "period_start",
+        "period_end",
+        "workstation_id",
+        "workstation_name",
+        "operation_count",
+        "finished_sku_count",
+        "total_planned_production_qty",
+        "required_setup_hours",
+        "required_run_hours",
+        "required_move_hours",
+        "total_required_hours",
+        "available_hours",
+        "utilization_pct",
+        "capacity_gap_hours",
+        "capacity_status",
+        "overload_flag",
+        "near_capacity_flag",
+        "no_capacity_record_flag",
+        "capacity_planning_basis",
+        "source_phase",
+        "advisory_only_flag",
+    }
+    missing = sorted(required.difference(load.columns))
+    if missing:
+        return _result("capacity_load", "FAIL", f"Capacity load output missing columns: {missing}")
+    duplicate_count = int(load.duplicated(["planning_run_id", "period_start", "period_end", "workstation_id"]).sum())
+    if duplicate_count:
+        return _result("capacity_load", "FAIL", f"Capacity load has duplicate workstation-period rows: {duplicate_count}")
+    for column in ["total_required_hours", "available_hours", "utilization_pct"]:
+        values = pd.to_numeric(load[column], errors="coerce")
+        if values.isna().any() or (values < 0).any():
+            return _result("capacity_load", "FAIL", f"{column} must be numeric and non-negative.")
+    if load["capacity_status"].astype(str).str.strip().eq("").any():
+        return _result("capacity_load", "FAIL", "capacity_status must be populated for all rows.")
+    basis_values = set(load["capacity_planning_basis"].dropna().astype(str).str.strip())
+    if basis_values != {"MPS_ROUTING_WORKSTATION_LOAD"}:
+        return _result("capacity_load", "FAIL", f"Unexpected capacity planning basis values: {sorted(basis_values)}")
+    for flag in ["overload_flag", "near_capacity_flag", "no_capacity_record_flag"]:
+        if flag not in load.columns:
+            return _result("capacity_load", "FAIL", f"Missing capacity flag column: {flag}")
+    if not _all_true(load, "advisory_only_flag"):
+        return _result("capacity_load", "FAIL", "Capacity load contains non-advisory rows.")
+    if not CAPACITY_VALIDATION_FILE.exists():
+        return _result("capacity_load", "FAIL", "Capacity validation output is missing.")
+    validation = pd.read_csv(CAPACITY_VALIDATION_FILE)
+    if validation.empty:
+        return _result("capacity_load", "FAIL", "Capacity validation output has no rows.")
+    if "status" not in validation.columns:
+        return _result("capacity_load", "FAIL", "Capacity validation output has no status column.")
+    fail_count = int((validation["status"].astype(str).str.upper() == "FAIL").sum())
+    if fail_count:
+        return _result("capacity_load", "FAIL", f"Capacity validation contains FAIL rows: {fail_count}")
+    if not CAPACITY_OPERATION_DETAIL_FILE.exists():
+        return _result("capacity_load", "FAIL", "Capacity operation load detail output is missing.")
+    detail = pd.read_csv(CAPACITY_OPERATION_DETAIL_FILE)
+    if detail.empty:
+        return _result("capacity_load", "FAIL", "Capacity operation load detail output has no rows.")
+    if "advisory_only_flag" in detail.columns and not _all_true(detail, "advisory_only_flag"):
+        return _result("capacity_load", "FAIL", "Capacity operation load detail contains non-advisory rows.")
+    return _result(
+        "capacity_load",
+        "PASS",
+        (
+            "Step 4A workstation capacity load valid; "
+            f"rows={len(load)}, periods={load[['planning_run_id', 'period_start', 'period_end']].drop_duplicates().shape[0]}, "
+            f"workstations={load['workstation_id'].nunique()}."
+        ),
+    )
+
+
 def _check_phase3_inventory_check() -> dict:
     path = PHASE4_OUTPUTS["component_inventory_check"]
     if not path.exists():
@@ -726,6 +808,8 @@ def _check_no_execution_outputs() -> dict:
 
 def _check_no_routing_or_capacity_outputs() -> dict:
     blocked_tokens = [
+        "machine_capacity",
+        "labor_capacity",
         "capacity_feasibility",
         "capacity_plan",
         "utilization",
@@ -833,7 +917,7 @@ def _result(name: str, status: str, message: str) -> dict:
 
 def _format_report(evidence: dict) -> str:
     lines = [
-        "Phase 4 Initialization Validation with Step 3B Routing/Workflow Master Data",
+        "Phase 4 Initialization Validation with Step 4A Workstation Capacity Load / CRP Feasibility",
         f"Generated at UTC: {evidence['generated_at_utc']}",
         f"Overall status: {evidence['overall_status']}",
         f"Fail count: {evidence['fail_count']}",

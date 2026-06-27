@@ -1,6 +1,6 @@
 {
   "validation_name": "phase4_initialization_validation",
-  "generated_at_utc": "2026-06-27T13:37:16+00:00",
+  "generated_at_utc": "2026-06-27T14:32:54+00:00",
   "overall_status": "PASS",
   "fail_count": 0,
   "warning_count": 3,
@@ -71,6 +71,11 @@
       "message": "Step 3B routing master data valid; routing_rows=13, parallel_groups=2, operation_resource_rows=13."
     },
     {
+      "check": "capacity_load",
+      "status": "PASS",
+      "message": "Step 4A workstation capacity load valid; rows=98, periods=14, workstations=7."
+    },
+    {
       "check": "phase3_component_inventory",
       "status": "PASS",
       "message": "Phase 3 checked inventory for 10 components."
@@ -83,7 +88,7 @@
     {
       "check": "phase4_run_id_consistency",
       "status": "PASS",
-      "message": "Consistent planning_run_id across Phase 4 outputs: PHASE4-MPS-20260627133641"
+      "message": "Consistent planning_run_id across Phase 4 outputs: PHASE4-MPS-20260627143205"
     },
     {
       "check": "phase4_advisory_only",
