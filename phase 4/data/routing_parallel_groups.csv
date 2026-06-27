@@ -1,0 +1,3 @@
+parallel_group_id,routing_id,finished_sku,group_name,fork_after_operation_id,join_before_operation_id,member_operation_ids,parallel_group_type,all_members_required_to_join_flag,active_flag,advisory_only_flag,notes
+ROAD-PG-01,RT-BIKE-ROAD-V1,SKU-BIKE-ROAD-001,Road Bike Wheel and Brake Parallel Subassembly,ROAD-OP-010,ROAD-OP-040,ROAD-OP-020;ROAD-OP-030,FORK_JOIN_SUBASSEMBLY,True,True,True,Wheel and brake subassemblies run in parallel before final assembly join.
+MT-PG-01,RT-BIKE-MT-V1,SKU-BIKE-MT-001,Mountain Bike Fork Wheel and Brake Parallel Subassembly,MT-OP-010,MT-OP-050,MT-OP-020;MT-OP-030;MT-OP-040,FORK_JOIN_SUBASSEMBLY,True,True,True,Fork suspension wheels and brakes run as parallel branches before final assembly join.

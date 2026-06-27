@@ -1,0 +1,3 @@
+routing_id,finished_sku,finished_product_name,routing_flow_text,parallel_groups_summary,operation_count,parallel_operation_count,join_operation_count,advisory_only_flag
+RT-BIKE-MT-V1,SKU-BIKE-MT-001,Mountain Bike,Frame Preparation -> [Fork and Suspension Prep || Wheel Subassembly || Brake Subassembly] -> Final Assembly -> Final Quality Control -> Packaging,MT-PG-01: Fork and Suspension Prep || Wheel Subassembly || Brake Subassembly,7,3,1,True
+RT-BIKE-ROAD-V1,SKU-BIKE-ROAD-001,Road Bike,Frame Preparation -> [Wheel Subassembly || Brake Subassembly] -> Final Assembly -> Final Quality Control -> Packaging,ROAD-PG-01: Wheel Subassembly || Brake Subassembly,6,2,1,True

@@ -1,4 +1,4 @@
-"""Create a clean Phase 4 Step 3A resource review bundle."""
+"""Create a clean Phase 4 Step 3B routing review bundle."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 PHASE4_OUTPUTS = PROJECT_ROOT / "phase 4" / "outputs"
-ZIP_PATH = PROJECT_ROOT / "phase4_step3a_resources_review_bundle.zip"
+ZIP_PATH = PROJECT_ROOT / "phase4_step3b_routing_review_bundle.zip"
 MANIFEST_PATH = PHASE4_OUTPUTS / "phase4_review_bundle_manifest.txt"
 
 REQUIRED_RELATIVE_FILES = [
@@ -25,18 +25,24 @@ REQUIRED_RELATIVE_FILES = [
     "phase 4/data/machines.csv",
     "phase 4/data/labor_resources.csv",
     "phase 4/data/resource_calendar.csv",
+    "phase 4/data/product_routings.csv",
+    "phase 4/data/routing_parallel_groups.csv",
+    "phase 4/data/routing_operation_resources.csv",
     "phase 4/core/bom_explosion_bridge.py",
     "phase 4/core/component_inventory_bridge.py",
     "phase 4/core/component_supplier_bridge.py",
     "phase 4/core/master_production_schedule.py",
     "phase 4/core/mrp_net_requirements.py",
     "phase 4/core/resource_master_data.py",
+    "phase 4/core/routing_master_data.py",
     "phase 4/outputs/phase4_master_production_schedule.csv",
     "phase 4/outputs/phase4_bom_component_requirements.csv",
     "phase 4/outputs/phase4_mrp_net_component_requirements.csv",
     "phase 4/outputs/phase4_mrp_component_period_summary.csv",
     "phase 4/outputs/phase4_mrp_pegging_detail.csv",
     "phase 4/outputs/phase4_resource_validation.csv",
+    "phase 4/outputs/phase4_routing_validation.csv",
+    "phase 4/outputs/phase4_routing_flow_summary.csv",
     "phase 4/outputs/phase4_initialization_validation.json",
     "phase 4/outputs/phase4_initialization_validation_report.txt",
     "phase 4/outputs/phase4_review_bundle_manifest.txt",
@@ -156,6 +162,12 @@ def _verify_zip() -> tuple[str, list[str]]:
     name_set = set(names)
 
     required_checks = {
+        "phase 4/data/product_routings.csv": "Phase 4 product routings master exists inside the zip",
+        "phase 4/data/routing_parallel_groups.csv": "Phase 4 routing parallel groups master exists inside the zip",
+        "phase 4/data/routing_operation_resources.csv": "Phase 4 routing operation resources master exists inside the zip",
+        "phase 4/core/routing_master_data.py": "Phase 4 routing validation module exists inside the zip",
+        "phase 4/outputs/phase4_routing_validation.csv": "Phase 4 routing validation output exists inside the zip",
+        "phase 4/outputs/phase4_routing_flow_summary.csv": "Phase 4 routing flow summary exists inside the zip",
         "phase 4/data/workstations.csv": "Phase 4 workstations master exists inside the zip",
         "phase 4/data/machines.csv": "Phase 4 machines master exists inside the zip",
         "phase 4/data/labor_resources.csv": "Phase 4 labor resources master exists inside the zip",
@@ -229,7 +241,7 @@ def _build_manifest(
 ) -> str:
     zip_size_mb = ZIP_PATH.stat().st_size / (1024 * 1024) if ZIP_PATH.exists() else 0.0
     lines = [
-        "Phase 4 Step 3A Resource Review Bundle Manifest",
+        "Phase 4 Step 3B Routing Review Bundle Manifest",
         f"Generated zip path: {ZIP_PATH}",
         f"Generated timestamp UTC: {generated_at}",
         f"Included file count: {len(included)}",

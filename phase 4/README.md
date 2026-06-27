@@ -1,6 +1,6 @@
-# Phase 4 Initialization Through Resource Master Data
+# Phase 4 Initialization Through Routing Master Data
 
-Phase 4 production planning preparation has started. It now includes a simple advisory Master Production Schedule (MPS), MRP net component requirements, component-period MRP summary, pegging detail, and production resource master data. This is still not the full production planning engine.
+Phase 4 production planning preparation has started. It now includes a simple advisory Master Production Schedule (MPS), MRP net component requirements, component-period MRP summary, pegging detail, production resource master data, and routing/workflow master data. This is still not the full production planning engine.
 
 Current initialization scope:
 
@@ -17,6 +17,14 @@ Current initialization scope:
 - MRP pegging detail shows which finished product demand caused each component requirement.
 - Resource master data now defines workstations, machines, labor resources, and a simple resource calendar.
 - The resource data will later support routing/workflow, capacity feasibility, queues, bottlenecks, quality, and maintenance.
+- Routing is the ERP version of the production flowchart.
+- Road Bike and Mountain Bike now have different advisory routings.
+- Parallel subassembly branches are included for both products.
+- Final assembly acts as the join point for the parallel branches.
+- Mountain Bike routing includes fork and suspension prep; Road Bike routing does not.
+- Routing operation resources reference the workstations, machine types, and labor skills from Step 3A.
+- `core/routing_master_data.py` validates routing structure, resource references, fork/join groups, and circular dependencies.
+- `outputs/phase4_routing_flow_summary.csv` provides a human-readable review summary of each routing.
 - If MPS output is missing or empty, BOM explosion falls back to the original forecast-based initialization bridge.
 - Phase 3 can produce an advisory inventory availability check using component-period MRP summary when available.
 - Phase 2 preserves the component-period basis in advisory supplier coverage checks.
@@ -29,8 +37,9 @@ Run order:
 3. Run Phase 4 BOM explosion from MPS planned production.
 4. Run Phase 4 MRP net component requirements, component-period summary, and pegging detail.
 5. Validate Phase 4 resource master data.
-6. Run Phase 3 component inventory checks.
-7. Run Phase 2 component supplier checks.
+6. Validate Phase 4 routing/workflow master data.
+7. Run Phase 3 component inventory checks.
+8. Run Phase 2 component supplier checks.
 
 The Phase 4 bridges are optional-safe. If a bridge file is missing or fails, Phase 2 and Phase 3 print a warning and continue their existing core pipelines.
 
@@ -47,16 +56,16 @@ Not implemented yet:
 
 - Full MPS governance beyond the advisory rolling-balance calculation.
 - Full MRP execution, order release, and procurement execution.
-- Routing/workflow.
 - Capacity feasibility, utilization, and bottleneck analysis.
-- Queues, quality, maintenance, scheduling, layout, or simulation.
+- Queue logic or queue simulation.
+- Quality, maintenance, scheduling, layout, or simulation.
 - Production order release.
 
 Next likely Phase 4 feature:
 
-- The next real feature after this resource master data step is routing/workflow, but it is not implemented here.
+- The next real feature after this routing master-data step is capacity feasibility, but it is not implemented here.
 
 Review bundle:
 
-- `create_phase4_review_bundle.py` generates `phase4_step3a_resources_review_bundle.zip` at the project root for external review.
+- `create_phase4_review_bundle.py` generates `phase4_step3b_routing_review_bundle.zip` at the project root for external review.
 - The bundle preserves project-relative folder structure and excludes cache, bytecode, virtual environment, and zip artifacts.

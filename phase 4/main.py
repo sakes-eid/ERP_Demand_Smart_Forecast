@@ -10,6 +10,9 @@ from core.mrp_net_requirements import PEGGING_OUTPUT_FILE, SUMMARY_OUTPUT_FILE
 from core.mrp_net_requirements import build_mrp_net_component_requirements
 from core.resource_master_data import OUTPUT_FILE as RESOURCE_VALIDATION_OUTPUT_FILE
 from core.resource_master_data import validate_resource_master_data
+from core.routing_master_data import FLOW_SUMMARY_OUTPUT_FILE
+from core.routing_master_data import OUTPUT_FILE as ROUTING_VALIDATION_OUTPUT_FILE
+from core.routing_master_data import validate_routing_master_data
 
 
 def run_initialization() -> None:
@@ -23,6 +26,7 @@ def run_initialization() -> None:
     requirements = build_bom_component_requirements(planning_run_id=planning_run_id)
     mrp = build_mrp_net_component_requirements(planning_run_id=planning_run_id)
     resource_validation = validate_resource_master_data()
+    routing_validation = validate_routing_master_data()
     print("Phase 4 initialization bridge completed.")
     print(f"MPS rows: {len(mps)}")
     print(f"MPS output written to: {MPS_OUTPUT_FILE}")
@@ -34,6 +38,9 @@ def run_initialization() -> None:
     print(f"MRP pegging detail written to: {PEGGING_OUTPUT_FILE}")
     print(f"Resource validation rows: {len(resource_validation)}")
     print(f"Resource validation output written to: {RESOURCE_VALIDATION_OUTPUT_FILE}")
+    print(f"Routing validation rows: {len(routing_validation)}")
+    print(f"Routing validation output written to: {ROUTING_VALIDATION_OUTPUT_FILE}")
+    print(f"Routing flow summary written to: {FLOW_SUMMARY_OUTPUT_FILE}")
 
 
 if __name__ == "__main__":

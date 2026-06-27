@@ -35,6 +35,13 @@ RESOURCE_DATA_FILES = {
     "resource_calendar": PHASE4_DIR / "data" / "resource_calendar.csv",
 }
 RESOURCE_VALIDATION_FILE = PHASE4_DIR / "outputs" / "phase4_resource_validation.csv"
+ROUTING_DATA_FILES = {
+    "product_routings": PHASE4_DIR / "data" / "product_routings.csv",
+    "routing_parallel_groups": PHASE4_DIR / "data" / "routing_parallel_groups.csv",
+    "routing_operation_resources": PHASE4_DIR / "data" / "routing_operation_resources.csv",
+}
+ROUTING_VALIDATION_FILE = PHASE4_DIR / "outputs" / "phase4_routing_validation.csv"
+ROUTING_FLOW_SUMMARY_FILE = PHASE4_DIR / "outputs" / "phase4_routing_flow_summary.csv"
 
 
 def main() -> None:
@@ -68,6 +75,7 @@ def main() -> None:
     checks.append(_check_mrp_component_period_summary())
     checks.append(_check_mrp_pegging_detail())
     checks.append(_check_resource_master_data())
+    checks.append(_check_routing_master_data())
     checks.append(_check_phase3_inventory_check())
     checks.append(_check_phase2_supplier_check())
     checks.append(_check_phase4_run_id_consistency())
@@ -494,6 +502,96 @@ def _check_resource_master_data() -> dict:
     )
 
 
+def _check_routing_master_data() -> dict:
+    missing_files = [name for name, path in ROUTING_DATA_FILES.items() if not path.exists()]
+    if missing_files:
+        return _result("routing_master_data", "FAIL", f"Missing routing master data files: {missing_files}")
+    frames = {name: pd.read_csv(path, keep_default_na=False) for name, path in ROUTING_DATA_FILES.items()}
+    empty_files = [name for name, frame in frames.items() if frame.empty]
+    if empty_files:
+        return _result("routing_master_data", "FAIL", f"Routing master data files are empty: {empty_files}")
+    if not ROUTING_VALIDATION_FILE.exists():
+        return _result("routing_master_data", "FAIL", "Routing validation output is missing.")
+    validation = pd.read_csv(ROUTING_VALIDATION_FILE)
+    if validation.empty:
+        return _result("routing_master_data", "FAIL", "Routing validation output has no rows.")
+    if "status" not in validation.columns:
+        return _result("routing_master_data", "FAIL", "Routing validation output has no status column.")
+    fail_count = int((validation["status"].astype(str).str.upper() == "FAIL").sum())
+    if fail_count:
+        return _result("routing_master_data", "FAIL", f"Routing validation contains FAIL rows: {fail_count}")
+
+    routings = frames["product_routings"]
+    groups = frames["routing_parallel_groups"]
+    resources = frames["routing_operation_resources"]
+    active = routings[_to_bool(routings["active_flag"])]
+    active_skus = set(active["finished_sku"].astype(str).str.strip())
+    missing_skus = sorted(BIKE_SKUS - active_skus)
+    if missing_skus:
+        return _result("routing_master_data", "FAIL", f"Missing active routings for finished SKUs: {missing_skus}")
+    mps_path = PHASE4_OUTPUTS["master_production_schedule"]
+    if mps_path.exists():
+        mps = pd.read_csv(mps_path)
+        mps_skus = set(mps.get("finished_sku", pd.Series(dtype=str)).dropna().astype(str).str.strip())
+        missing_mps_skus = sorted(mps_skus - active_skus)
+        if missing_mps_skus:
+            return _result("routing_master_data", "FAIL", f"MPS finished SKUs missing active routing: {missing_mps_skus}")
+
+    workstations = pd.read_csv(RESOURCE_DATA_FILES["workstations"])
+    machines = pd.read_csv(RESOURCE_DATA_FILES["machines"])
+    labor = pd.read_csv(RESOURCE_DATA_FILES["labor_resources"])
+    workstation_ids = set(workstations["workstation_id"].astype(str).str.strip())
+    invalid_routing_ws = int((~routings["workstation_id"].astype(str).str.strip().isin(workstation_ids)).sum())
+    invalid_resource_ws = int((~resources["workstation_id"].astype(str).str.strip().isin(workstation_ids)).sum())
+    if invalid_routing_ws or invalid_resource_ws:
+        return _result("routing_master_data", "FAIL", f"Invalid routing/resource workstation references: {invalid_routing_ws + invalid_resource_ws}")
+    machine_types = set(machines["machine_type"].astype(str).str.strip())
+    invalid_machine_types = int((~resources["required_machine_type"].astype(str).str.strip().isin(machine_types)).sum())
+    if invalid_machine_types:
+        return _result("routing_master_data", "FAIL", f"Invalid routing machine type references: {invalid_machine_types}")
+    labor_skills = set(labor["skill_type"].astype(str).str.strip())
+    invalid_labor_skills = int((~resources["required_labor_skill"].astype(str).str.strip().isin(labor_skills)).sum())
+    if invalid_labor_skills:
+        return _result("routing_master_data", "FAIL", f"Invalid routing labor skill references: {invalid_labor_skills}")
+
+    operation_ids = set(routings["operation_id"].astype(str).str.strip())
+    invalid_group_refs = 0
+    for _, row in groups.iterrows():
+        refs = [row["fork_after_operation_id"], row["join_before_operation_id"]]
+        refs.extend(_split_ids(row["member_operation_ids"]))
+        invalid_group_refs += sum(1 for ref in refs if str(ref).strip() not in operation_ids)
+    if invalid_group_refs:
+        return _result("routing_master_data", "FAIL", f"Parallel group invalid operation references: {invalid_group_refs}")
+
+    if _routing_has_cycle(routings):
+        return _result("routing_master_data", "FAIL", "Circular routing dependency found.")
+    road_groups = groups[groups["finished_sku"].astype(str).str.strip() == "SKU-BIKE-ROAD-001"]
+    mt_groups = groups[groups["finished_sku"].astype(str).str.strip() == "SKU-BIKE-MT-001"]
+    if road_groups.empty or mt_groups.empty:
+        return _result("routing_master_data", "FAIL", "Road Bike and Mountain Bike must each have at least one parallel group.")
+    road_ws = set(routings.loc[routings["finished_sku"].astype(str).str.strip() == "SKU-BIKE-ROAD-001", "workstation_id"].astype(str).str.strip())
+    mt_ws = set(routings.loc[routings["finished_sku"].astype(str).str.strip() == "SKU-BIKE-MT-001", "workstation_id"].astype(str).str.strip())
+    if "WS-FORK-SUSP" not in mt_ws:
+        return _result("routing_master_data", "FAIL", "Mountain Bike routing does not use WS-FORK-SUSP.")
+    if "WS-FORK-SUSP" in road_ws:
+        return _result("routing_master_data", "FAIL", "Road Bike routing incorrectly uses WS-FORK-SUSP.")
+    if not ROUTING_FLOW_SUMMARY_FILE.exists():
+        return _result("routing_master_data", "FAIL", "Routing flow summary output is missing.")
+    flow = pd.read_csv(ROUTING_FLOW_SUMMARY_FILE)
+    if flow.empty:
+        return _result("routing_master_data", "FAIL", "Routing flow summary output has no rows.")
+    if "advisory_only_flag" in flow.columns and not _all_true(flow, "advisory_only_flag"):
+        return _result("routing_master_data", "FAIL", "Routing flow summary contains non-advisory rows.")
+    return _result(
+        "routing_master_data",
+        "PASS",
+        (
+            "Step 3B routing master data valid; "
+            f"routing_rows={len(routings)}, parallel_groups={len(groups)}, operation_resource_rows={len(resources)}."
+        ),
+    )
+
+
 def _check_phase3_inventory_check() -> dict:
     path = PHASE4_OUTPUTS["component_inventory_check"]
     if not path.exists():
@@ -628,12 +726,11 @@ def _check_no_execution_outputs() -> dict:
 
 def _check_no_routing_or_capacity_outputs() -> dict:
     blocked_tokens = [
-        "routing",
-        "route",
         "capacity_feasibility",
         "capacity_plan",
         "utilization",
         "bottleneck",
+        "queue",
         "detailed_schedule",
         "finite_schedule",
         "shop_floor_schedule",
@@ -657,7 +754,7 @@ def _check_no_routing_or_capacity_outputs() -> dict:
     return _result(
         "no_routing_or_capacity_outputs",
         "PASS",
-        "No Phase 4 routing, capacity, utilization, bottleneck, scheduling, or simulation outputs found.",
+        "No Phase 4 capacity, utilization, bottleneck, queue, scheduling, or simulation outputs found.",
     )
 
 
@@ -692,6 +789,40 @@ def _valid_period_sequences(mps: pd.DataFrame) -> bool:
     return True
 
 
+def _routing_has_cycle(routings: pd.DataFrame) -> bool:
+    for _, group in routings.groupby("routing_id"):
+        graph = {
+            str(row["operation_id"]).strip(): _split_ids(row.get("successor_operation_ids", ""))
+            for _, row in group.iterrows()
+        }
+        visiting = set()
+        visited = set()
+
+        def visit(node: str) -> bool:
+            if node in visiting:
+                return True
+            if node in visited:
+                return False
+            visiting.add(node)
+            for next_node in graph.get(node, []):
+                if visit(next_node):
+                    return True
+            visiting.remove(node)
+            visited.add(node)
+            return False
+
+        if any(visit(node) for node in graph):
+            return True
+    return False
+
+
+def _split_ids(value: object) -> list[str]:
+    text = "" if value is None else str(value).strip()
+    if not text:
+        return []
+    return [item.strip() for item in text.split(";") if item.strip()]
+
+
 def _to_bool(series: pd.Series) -> pd.Series:
     return series.astype(str).str.strip().str.lower().isin({"true", "1", "yes", "y"})
 
@@ -702,7 +833,7 @@ def _result(name: str, status: str, message: str) -> dict:
 
 def _format_report(evidence: dict) -> str:
     lines = [
-        "Phase 4 Initialization Validation with Step 3A Production Resource Master Data",
+        "Phase 4 Initialization Validation with Step 3B Routing/Workflow Master Data",
         f"Generated at UTC: {evidence['generated_at_utc']}",
         f"Overall status: {evidence['overall_status']}",
         f"Fail count: {evidence['fail_count']}",

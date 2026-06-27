@@ -1,0 +1,14 @@
+operation_id,routing_id,finished_sku,workstation_id,required_machine_type,required_labor_skill,required_machine_count,required_worker_count,simultaneous_resource_required_flag,resource_notes,active_flag,advisory_only_flag
+ROAD-OP-010,RT-BIKE-ROAD-V1,SKU-BIKE-ROAD-001,WS-FRAME-PREP,FRAME_ALIGNMENT_FIXTURE,FRAME_TECHNICIAN,1,1,True,Frame jig and technician required together for alignment prep.,True,True
+ROAD-OP-020,RT-BIKE-ROAD-V1,SKU-BIKE-ROAD-001,WS-WHEEL-SUB,WHEEL_TRUING_STAND,WHEEL_ASSEMBLY_TECHNICIAN,1,1,True,Wheel truing stand and wheel technician required together.,True,True
+ROAD-OP-030,RT-BIKE-ROAD-V1,SKU-BIKE-ROAD-001,WS-BRAKE-SUB,BRAKE_ASSEMBLY_TOOLS,BRAKE_ASSEMBLY_TECHNICIAN,1,1,True,Brake bench tooling and brake technician required together.,True,True
+ROAD-OP-040,RT-BIKE-ROAD-V1,SKU-BIKE-ROAD-001,WS-FINAL-ASM,BIKE_ASSEMBLY_STAND,FINAL_ASSEMBLY_OPERATOR,1,1,True,Final stand and final assembly operator required together.,True,True
+ROAD-OP-050,RT-BIKE-ROAD-V1,SKU-BIKE-ROAD-001,WS-QC,INSPECTION_TOOLS,QUALITY_INSPECTOR,1,1,True,Inspection tool set and QC inspector required together.,True,True
+ROAD-OP-060,RT-BIKE-ROAD-V1,SKU-BIKE-ROAD-001,WS-PACK,PACKAGING_TOOLS,PACKAGING_OPERATOR,1,1,True,Packaging bench and packaging operator required together.,True,True
+MT-OP-010,RT-BIKE-MT-V1,SKU-BIKE-MT-001,WS-FRAME-PREP,FRAME_ALIGNMENT_FIXTURE,FRAME_TECHNICIAN,1,1,True,Mountain frame jig and technician required together.,True,True
+MT-OP-020,RT-BIKE-MT-V1,SKU-BIKE-MT-001,WS-FORK-SUSP,FORK_SUSPENSION_BENCH,SUSPENSION_TECHNICIAN,1,1,True,Fork suspension bench and suspension technician required together.,True,True
+MT-OP-030,RT-BIKE-MT-V1,SKU-BIKE-MT-001,WS-WHEEL-SUB,WHEEL_TRUING_STAND,WHEEL_ASSEMBLY_TECHNICIAN,1,1,True,Mountain wheel truing stand and technician required together.,True,True
+MT-OP-040,RT-BIKE-MT-V1,SKU-BIKE-MT-001,WS-BRAKE-SUB,BRAKE_ASSEMBLY_TOOLS,BRAKE_ASSEMBLY_TECHNICIAN,1,1,True,Brake bench tooling and brake technician required together.,True,True
+MT-OP-050,RT-BIKE-MT-V1,SKU-BIKE-MT-001,WS-FINAL-ASM,BIKE_ASSEMBLY_STAND,FINAL_ASSEMBLY_OPERATOR,1,1,True,Final stand and assembly operator required for join operation.,True,True
+MT-OP-060,RT-BIKE-MT-V1,SKU-BIKE-MT-001,WS-QC,INSPECTION_TOOLS,QUALITY_INSPECTOR,1,1,True,Inspection tool set and QC inspector required together.,True,True
+MT-OP-070,RT-BIKE-MT-V1,SKU-BIKE-MT-001,WS-PACK,PACKAGING_TOOLS,PACKAGING_OPERATOR,1,1,True,Packaging bench and packaging operator required together.,True,True

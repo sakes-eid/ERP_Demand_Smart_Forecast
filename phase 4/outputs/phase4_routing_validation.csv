@@ -1,0 +1,30 @@
+check_id,check_name,status,message,affected_rows,advisory_only_flag
+product_routings_file_exists,product_routings file exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\data\product_routings.csv,0,True
+routing_parallel_groups_file_exists,routing_parallel_groups file exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\data\routing_parallel_groups.csv,0,True
+routing_operation_resources_file_exists,routing_operation_resources file exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\data\routing_operation_resources.csv,0,True
+workstations_file_exists,workstations file exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\data\workstations.csv,0,True
+machines_file_exists,machines file exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\data\machines.csv,0,True
+labor_resources_file_exists,labor_resources file exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\data\labor_resources.csv,0,True
+product_routings_required_columns,product_routings required columns,PASS,All required columns exist.,0,True
+product_routings_not_empty,product_routings not empty,PASS,File has 13 rows.,0,True
+routing_parallel_groups_required_columns,routing_parallel_groups required columns,PASS,All required columns exist.,0,True
+routing_parallel_groups_not_empty,routing_parallel_groups not empty,PASS,File has 2 rows.,0,True
+routing_operation_resources_required_columns,routing_operation_resources required columns,PASS,All required columns exist.,0,True
+routing_operation_resources_not_empty,routing_operation_resources not empty,PASS,File has 13 rows.,0,True
+routing_finished_skus_valid,routing finished SKUs valid,PASS,Road Bike and Mountain Bike active routings exist.,0,True
+routing_operation_ids_unique,routing operation IDs unique,PASS,Operation IDs are unique.,0,True
+routing_sequences_valid,routing operation sequences valid,PASS,Operation sequences are positive and ordered per routing.,0,True
+routing_timing_values_valid,routing timing values valid,PASS,Setup/run/move timing values are valid.,0,True
+product_routings_advisory_active_flags,product_routings advisory and active flags,PASS,All rows are active and advisory-only.,0,True
+routing_workstations_valid,routing workstation references valid,PASS,All workstation_id references are valid.,0,True
+routing_graph_references_valid,routing graph references valid,PASS,All predecessor and successor references are valid within routing.,0,True
+routing_directional_links_consistent,routing directional links consistent,PASS,Predecessor and successor links are directionally consistent.,0,True
+routing_no_circular_dependencies,routing no circular dependencies,PASS,No circular routing dependencies found.,0,True
+routing_start_end_structure_valid,routing start/end structure valid,PASS,Each routing has exactly one start and one end operation.,0,True
+routing_product_specific_workstations_valid,routing product-specific workstations valid,PASS,Mountain uses fork/suspension=True; Road uses fork/suspension=False.,0,True
+parallel_group_ids_unique,parallel group IDs unique,PASS,Parallel group IDs are unique.,0,True
+parallel_groups_valid,parallel groups valid,PASS,Parallel fork/join groups are valid for Road Bike and Mountain Bike.,0,True
+routing_parallel_groups_advisory_active_flags,routing_parallel_groups advisory and active flags,PASS,All rows are active and advisory-only.,0,True
+routing_operation_resources_valid,routing operation resources valid,PASS,"Operation resource mappings reference valid operations, workstations, machine types, and labor skills.",0,True
+routing_operation_resources_advisory_active_flags,routing_operation_resources advisory and active flags,PASS,All rows are active and advisory-only.,0,True
+routing_no_blocked_future_outputs,routing no blocked future outputs,PASS,"No capacity, queue, scheduling, simulation, or execution outputs found.",0,True
