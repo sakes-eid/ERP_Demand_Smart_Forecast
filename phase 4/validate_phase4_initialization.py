@@ -30,6 +30,9 @@ PHASE4_OUTPUTS = {
     "queue_pressure_by_workstation": PHASE4_DIR / "outputs" / "phase4_queue_pressure_by_workstation.csv",
     "queue_risk_summary": PHASE4_DIR / "outputs" / "phase4_queue_risk_summary.csv",
     "queue_manager_review_queue": PHASE4_DIR / "outputs" / "phase4_queue_manager_review_queue.csv",
+    "bottleneck_visibility_summary": PHASE4_DIR / "outputs" / "phase4_bottleneck_visibility_summary.csv",
+    "bottleneck_period_evidence": PHASE4_DIR / "outputs" / "phase4_bottleneck_period_evidence.csv",
+    "bottleneck_manager_review_queue": PHASE4_DIR / "outputs" / "phase4_bottleneck_manager_review_queue.csv",
     "component_inventory_check": PROJECT_ROOT / "phase 3" / "outputs" / "phase4_component_inventory_check.csv",
     "component_supplier_check": PROJECT_ROOT / "phase 2" / "outputs" / "phase4_component_supplier_check.csv",
 }
@@ -66,6 +69,10 @@ QUEUE_PRESSURE_FILE = PHASE4_DIR / "outputs" / "phase4_queue_pressure_by_worksta
 QUEUE_RISK_SUMMARY_FILE = PHASE4_DIR / "outputs" / "phase4_queue_risk_summary.csv"
 QUEUE_MANAGER_REVIEW_QUEUE_FILE = PHASE4_DIR / "outputs" / "phase4_queue_manager_review_queue.csv"
 QUEUE_VALIDATION_FILE = PHASE4_DIR / "outputs" / "phase4_queue_validation.csv"
+BOTTLENECK_VISIBILITY_SUMMARY_FILE = PHASE4_DIR / "outputs" / "phase4_bottleneck_visibility_summary.csv"
+BOTTLENECK_PERIOD_EVIDENCE_FILE = PHASE4_DIR / "outputs" / "phase4_bottleneck_period_evidence.csv"
+BOTTLENECK_MANAGER_REVIEW_QUEUE_FILE = PHASE4_DIR / "outputs" / "phase4_bottleneck_manager_review_queue.csv"
+BOTTLENECK_VALIDATION_FILE = PHASE4_DIR / "outputs" / "phase4_bottleneck_validation.csv"
 
 
 def main() -> None:
@@ -102,6 +109,7 @@ def main() -> None:
     checks.append(_check_routing_master_data())
     checks.append(_check_capacity_load())
     checks.append(_check_queue_pressure())
+    checks.append(_check_bottleneck_visibility())
     checks.append(_check_phase3_inventory_check())
     checks.append(_check_phase2_supplier_check())
     checks.append(_check_phase4_run_id_consistency())
@@ -1110,6 +1118,93 @@ def _check_queue_pressure() -> dict:
     )
 
 
+def _check_bottleneck_visibility() -> dict:
+    for path, label in [
+        (BOTTLENECK_VISIBILITY_SUMMARY_FILE, "bottleneck visibility summary"),
+        (BOTTLENECK_PERIOD_EVIDENCE_FILE, "bottleneck period evidence"),
+        (BOTTLENECK_VALIDATION_FILE, "bottleneck validation"),
+    ]:
+        if not path.exists():
+            return _result("bottleneck_visibility", "FAIL", f"{label} output is missing.")
+        if pd.read_csv(path).empty:
+            return _result("bottleneck_visibility", "FAIL", f"{label} output has no rows.")
+    summary = pd.read_csv(BOTTLENECK_VISIBILITY_SUMMARY_FILE)
+    period = pd.read_csv(BOTTLENECK_PERIOD_EVIDENCE_FILE)
+    validation = pd.read_csv(BOTTLENECK_VALIDATION_FILE)
+    fail_count = int((validation["status"].astype(str).str.upper() == "FAIL").sum()) if "status" in validation.columns else len(validation)
+    if fail_count:
+        return _result("bottleneck_visibility", "FAIL", f"Bottleneck validation contains FAIL rows: {fail_count}")
+    summary_required = {
+        "planning_run_id",
+        "workstation_id",
+        "workstation_name",
+        "combined_bottleneck_visibility_score",
+        "bottleneck_visibility_rank",
+        "bottleneck_visibility_level",
+        "confirmation_status",
+        "advisory_only_flag",
+    }
+    period_required = {
+        "planning_run_id",
+        "period_start",
+        "period_end",
+        "workstation_id",
+        "period_bottleneck_visibility_score",
+        "period_bottleneck_visibility_level",
+        "evidence_type",
+        "confirmation_status",
+        "advisory_only_flag",
+    }
+    missing_summary = sorted(summary_required.difference(summary.columns))
+    missing_period = sorted(period_required.difference(period.columns))
+    if missing_summary:
+        return _result("bottleneck_visibility", "FAIL", f"Bottleneck visibility summary missing columns: {missing_summary}")
+    if missing_period:
+        return _result("bottleneck_visibility", "FAIL", f"Bottleneck period evidence missing columns: {missing_period}")
+    scores = pd.to_numeric(summary["combined_bottleneck_visibility_score"], errors="coerce")
+    if scores.isna().any() or (scores < 0).any():
+        return _result("bottleneck_visibility", "FAIL", "Combined bottleneck visibility scores must be numeric and non-negative.")
+    valid_levels = {"LOW", "MEDIUM", "HIGH", "CRITICAL"}
+    if (~summary["bottleneck_visibility_level"].astype(str).isin(valid_levels)).any():
+        return _result("bottleneck_visibility", "FAIL", "Bottleneck visibility summary contains invalid levels.")
+    if (~period["period_bottleneck_visibility_level"].astype(str).isin(valid_levels)).any():
+        return _result("bottleneck_visibility", "FAIL", "Bottleneck period evidence contains invalid levels.")
+    expected_status = "PLANNING_EVIDENCE_ONLY_NOT_SIMULATION_CONFIRMED"
+    if set(summary["confirmation_status"].dropna().astype(str).str.strip()) != {expected_status}:
+        return _result("bottleneck_visibility", "FAIL", "Bottleneck summary confirmation status must be planning evidence only.")
+    if set(period["confirmation_status"].dropna().astype(str).str.strip()) != {expected_status}:
+        return _result("bottleneck_visibility", "FAIL", "Bottleneck period confirmation status must be planning evidence only.")
+    if not _all_true(summary, "advisory_only_flag") or not _all_true(period, "advisory_only_flag"):
+        return _result("bottleneck_visibility", "FAIL", "Step 5B bottleneck outputs must be advisory-only.")
+    forbidden_columns = [
+        column
+        for column in list(summary.columns) + list(period.columns)
+        if any(token in column.lower() for token in ["final_bottleneck", "actual_bottleneck", "measured_bottleneck", "simulation_confirmed_bottleneck"])
+    ]
+    if forbidden_columns:
+        return _result("bottleneck_visibility", "FAIL", f"Forbidden final/measured bottleneck column names found: {forbidden_columns}")
+    high_or_critical = summary["bottleneck_visibility_level"].astype(str).isin({"HIGH", "CRITICAL"}).any()
+    if high_or_critical:
+        if not BOTTLENECK_MANAGER_REVIEW_QUEUE_FILE.exists():
+            return _result("bottleneck_visibility", "FAIL", "Bottleneck manager review queue is missing while high/critical candidates exist.")
+        review = pd.read_csv(BOTTLENECK_MANAGER_REVIEW_QUEUE_FILE)
+        if review.empty:
+            return _result("bottleneck_visibility", "FAIL", "Bottleneck manager review queue has no rows while high/critical candidates exist.")
+        required_review = {"bottleneck_review_item_id", "bottleneck_issue_type", "bottleneck_issue_severity", "auto_action_allowed", "advisory_only_flag"}
+        missing_review = sorted(required_review.difference(review.columns))
+        if missing_review:
+            return _result("bottleneck_visibility", "FAIL", f"Bottleneck manager review queue missing columns: {missing_review}")
+        if _to_bool(review["auto_action_allowed"]).any():
+            return _result("bottleneck_visibility", "FAIL", "Bottleneck manager review queue cannot allow automatic action.")
+        if not _all_true(review, "advisory_only_flag"):
+            return _result("bottleneck_visibility", "FAIL", "Bottleneck manager review queue must be advisory-only.")
+    return _result(
+        "bottleneck_visibility",
+        "PASS",
+        f"Step 5B bottleneck visibility valid; summary_rows={len(summary)}, period_rows={len(period)}.",
+    )
+
+
 def _check_phase3_inventory_check() -> dict:
     path = PHASE4_OUTPUTS["component_inventory_check"]
     if not path.exists():
@@ -1246,6 +1341,10 @@ def _check_no_routing_or_capacity_outputs() -> dict:
     blocked_tokens = [
         "capacity_plan",
         "utilization",
+        "final_bottleneck",
+        "actual_bottleneck",
+        "measured_bottleneck",
+        "simulation_confirmed_bottleneck",
         "confirmed_bottleneck",
         "bottleneck_ranking",
         "workstation_queue",
@@ -1278,7 +1377,7 @@ def _check_no_routing_or_capacity_outputs() -> dict:
     return _result(
         "no_routing_or_capacity_outputs",
         "PASS",
-        "No future-only queue, bottleneck ranking, detailed scheduling, or simulation outputs found.",
+        "No measured/final bottleneck, detailed scheduling, or simulation outputs found.",
     )
 
 
@@ -1357,7 +1456,7 @@ def _result(name: str, status: str, message: str) -> dict:
 
 def _format_report(evidence: dict) -> str:
     lines = [
-        "Phase 4 Initialization Validation with Step 5A Estimated Queue Pressure and WIP Risk Visibility",
+        "Phase 4 Initialization Validation with Step 5B Bottleneck Visibility Summary",
         f"Generated at UTC: {evidence['generated_at_utc']}",
         f"Overall status: {evidence['overall_status']}",
         f"Fail count: {evidence['fail_count']}",

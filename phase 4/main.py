@@ -3,6 +3,11 @@
 from __future__ import annotations
 
 from core.bom_explosion_bridge import OUTPUT_FILE, build_bom_component_requirements
+from core.bottleneck_visibility import MANAGER_REVIEW_OUTPUT_FILE as BOTTLENECK_MANAGER_REVIEW_OUTPUT_FILE
+from core.bottleneck_visibility import PERIOD_EVIDENCE_OUTPUT_FILE as BOTTLENECK_PERIOD_EVIDENCE_OUTPUT_FILE
+from core.bottleneck_visibility import VALIDATION_OUTPUT_FILE as BOTTLENECK_VALIDATION_OUTPUT_FILE
+from core.bottleneck_visibility import VISIBILITY_SUMMARY_OUTPUT_FILE as BOTTLENECK_VISIBILITY_SUMMARY_OUTPUT_FILE
+from core.bottleneck_visibility import build_bottleneck_visibility_outputs
 from core.capacity_load import DETAIL_OUTPUT_FILE as CAPACITY_DETAIL_OUTPUT_FILE
 from core.capacity_load import BOTTLENECK_CANDIDATE_OUTPUT_FILE as CAPACITY_BOTTLENECK_CANDIDATE_OUTPUT_FILE
 from core.capacity_load import CONSTRAINT_BRIDGE_OUTPUT_FILE as CAPACITY_CONSTRAINT_BRIDGE_OUTPUT_FILE
@@ -44,6 +49,7 @@ def run_initialization() -> None:
     routing_validation = validate_routing_master_data()
     capacity_load, capacity_detail, capacity_validation = build_workstation_capacity_load()
     queue_pressure, queue_summary, queue_review, queue_validation = build_queue_pressure_outputs()
+    bottleneck_summary, bottleneck_periods, bottleneck_review, bottleneck_validation = build_bottleneck_visibility_outputs()
     print("Phase 4 initialization bridge completed.")
     print(f"MPS rows: {len(mps)}")
     print(f"MPS output written to: {MPS_OUTPUT_FILE}")
@@ -78,6 +84,14 @@ def run_initialization() -> None:
     print(f"Queue manager review output written to: {QUEUE_MANAGER_REVIEW_OUTPUT_FILE}")
     print(f"Queue validation rows: {len(queue_validation)}")
     print(f"Queue validation output written to: {QUEUE_VALIDATION_OUTPUT_FILE}")
+    print(f"Bottleneck visibility summary rows: {len(bottleneck_summary)}")
+    print(f"Bottleneck visibility summary output written to: {BOTTLENECK_VISIBILITY_SUMMARY_OUTPUT_FILE}")
+    print(f"Bottleneck period evidence rows: {len(bottleneck_periods)}")
+    print(f"Bottleneck period evidence output written to: {BOTTLENECK_PERIOD_EVIDENCE_OUTPUT_FILE}")
+    print(f"Bottleneck manager review rows: {len(bottleneck_review)}")
+    print(f"Bottleneck manager review output written to: {BOTTLENECK_MANAGER_REVIEW_OUTPUT_FILE}")
+    print(f"Bottleneck validation rows: {len(bottleneck_validation)}")
+    print(f"Bottleneck validation output written to: {BOTTLENECK_VALIDATION_OUTPUT_FILE}")
 
 
 if __name__ == "__main__":

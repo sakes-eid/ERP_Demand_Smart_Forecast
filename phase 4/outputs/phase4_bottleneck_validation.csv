@@ -1,0 +1,17 @@
+check_id,check_name,status,message,affected_rows,advisory_only_flag
+bottleneck_bottleneck_candidates_exists,bottleneck_candidates exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_bottleneck_candidate_summary.csv,0,True
+bottleneck_capacity_feasibility_exists,capacity_feasibility exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_capacity_feasibility_summary.csv,0,True
+bottleneck_capacity_review_queue_exists,capacity_review_queue exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_capacity_manager_review_queue.csv,0,True
+bottleneck_constraint_bridge_exists,constraint_bridge exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_capacity_constraint_bridge.csv,0,True
+bottleneck_workstation_load_exists,workstation_load exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_capacity_load_by_workstation.csv,0,True
+bottleneck_machine_load_exists,machine_load exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_capacity_load_by_machine_type.csv,0,True
+bottleneck_labor_load_exists,labor_load exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_capacity_load_by_labor_skill.csv,0,True
+bottleneck_queue_pressure_exists,queue_pressure exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_queue_pressure_by_workstation.csv,0,True
+bottleneck_queue_summary_exists,queue_summary exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_queue_risk_summary.csv,0,True
+bottleneck_queue_review_queue_exists,queue_review_queue exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_queue_manager_review_queue.csv,0,True
+bottleneck_queue_validation_exists,queue_validation exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_queue_validation.csv,0,True
+bottleneck_product_routings_exists,product_routings exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\data\product_routings.csv,0,True
+bottleneck_parallel_groups_exists,parallel_groups exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\data\routing_parallel_groups.csv,0,True
+bottleneck_workstations_exists,workstations exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\data\workstations.csv,0,True
+bottleneck_step5b_outputs_valid,Step 5B bottleneck visibility outputs valid,PASS,"Bottleneck visibility outputs valid; summary_rows=7, period_rows=98, review_rows=95.",0,True
+bottleneck_no_blocked_execution_outputs,bottleneck no blocked execution outputs,PASS,"No measured bottleneck, real queue measurement, scheduling, simulation, or execution outputs found.",0,True
