@@ -33,6 +33,14 @@ from core.production_flow_view import FLOW_RISK_SUMMARY_OUTPUT_FILE
 from core.production_flow_view import FLOW_VALIDATION_OUTPUT_FILE
 from core.production_flow_view import PRODUCTION_FLOW_OUTPUT_FILE
 from core.production_flow_view import build_production_flow_view_outputs
+from core.quality_trends import PROCESSING_TIME_TREND_OUTPUT_FILE
+from core.quality_trends import QUALITY_HISTORY_CLEAN_OUTPUT_FILE
+from core.quality_trends import QUALITY_MANAGER_REVIEW_OUTPUT_FILE
+from core.quality_trends import QUALITY_TREND_OPERATION_OUTPUT_FILE
+from core.quality_trends import QUALITY_TREND_WORKSTATION_OUTPUT_FILE
+from core.quality_trends import QUALITY_VALIDATION_OUTPUT_FILE
+from core.quality_trends import WORKSTATION_PERFORMANCE_SUMMARY_OUTPUT_FILE
+from core.quality_trends import build_quality_trend_outputs
 from core.resource_master_data import OUTPUT_FILE as RESOURCE_VALIDATION_OUTPUT_FILE
 from core.resource_master_data import validate_resource_master_data
 from core.routing_master_data import FLOW_SUMMARY_OUTPUT_FILE
@@ -56,6 +64,7 @@ def run_initialization() -> None:
     queue_pressure, queue_summary, queue_review, queue_validation = build_queue_pressure_outputs()
     bottleneck_summary, bottleneck_periods, bottleneck_review, bottleneck_validation = build_bottleneck_visibility_outputs()
     flow_view, flow_summary, flow_review, flow_validation = build_production_flow_view_outputs()
+    quality_history, quality_operation, quality_workstation, processing_trend, performance_summary, quality_review, quality_validation = build_quality_trend_outputs()
     print("Phase 4 initialization bridge completed.")
     print(f"MPS rows: {len(mps)}")
     print(f"MPS output written to: {MPS_OUTPUT_FILE}")
@@ -106,6 +115,20 @@ def run_initialization() -> None:
     print(f"Flow manager review output written to: {FLOW_MANAGER_REVIEW_OUTPUT_FILE}")
     print(f"Flow validation rows: {len(flow_validation)}")
     print(f"Flow validation output written to: {FLOW_VALIDATION_OUTPUT_FILE}")
+    print(f"Quality history clean rows: {len(quality_history)}")
+    print(f"Quality history clean output written to: {QUALITY_HISTORY_CLEAN_OUTPUT_FILE}")
+    print(f"Quality operation trend rows: {len(quality_operation)}")
+    print(f"Quality operation trend output written to: {QUALITY_TREND_OPERATION_OUTPUT_FILE}")
+    print(f"Quality workstation trend rows: {len(quality_workstation)}")
+    print(f"Quality workstation trend output written to: {QUALITY_TREND_WORKSTATION_OUTPUT_FILE}")
+    print(f"Processing time trend rows: {len(processing_trend)}")
+    print(f"Processing time trend output written to: {PROCESSING_TIME_TREND_OUTPUT_FILE}")
+    print(f"Workstation performance summary rows: {len(performance_summary)}")
+    print(f"Workstation performance summary output written to: {WORKSTATION_PERFORMANCE_SUMMARY_OUTPUT_FILE}")
+    print(f"Quality manager review rows: {len(quality_review)}")
+    print(f"Quality manager review output written to: {QUALITY_MANAGER_REVIEW_OUTPUT_FILE}")
+    print(f"Quality validation rows: {len(quality_validation)}")
+    print(f"Quality validation output written to: {QUALITY_VALIDATION_OUTPUT_FILE}")
 
 
 if __name__ == "__main__":

@@ -36,6 +36,12 @@ PHASE4_OUTPUTS = {
     "production_flow_view": PHASE4_DIR / "outputs" / "phase4_production_flow_view.csv",
     "flow_step_risk_summary": PHASE4_DIR / "outputs" / "phase4_flow_step_risk_summary.csv",
     "flow_manager_review_queue": PHASE4_DIR / "outputs" / "phase4_flow_manager_review_queue.csv",
+    "quality_history_clean": PHASE4_DIR / "outputs" / "phase4_quality_history_clean.csv",
+    "quality_trend_by_operation": PHASE4_DIR / "outputs" / "phase4_quality_trend_by_operation.csv",
+    "quality_trend_by_workstation": PHASE4_DIR / "outputs" / "phase4_quality_trend_by_workstation.csv",
+    "processing_time_trend_by_workstation": PHASE4_DIR / "outputs" / "phase4_processing_time_trend_by_workstation.csv",
+    "workstation_performance_trend_summary": PHASE4_DIR / "outputs" / "phase4_workstation_performance_trend_summary.csv",
+    "quality_manager_review_queue": PHASE4_DIR / "outputs" / "phase4_quality_manager_review_queue.csv",
     "component_inventory_check": PROJECT_ROOT / "phase 3" / "outputs" / "phase4_component_inventory_check.csv",
     "component_supplier_check": PROJECT_ROOT / "phase 2" / "outputs" / "phase4_component_supplier_check.csv",
 }
@@ -80,6 +86,16 @@ PRODUCTION_FLOW_VIEW_FILE = PHASE4_DIR / "outputs" / "phase4_production_flow_vie
 FLOW_STEP_RISK_SUMMARY_FILE = PHASE4_DIR / "outputs" / "phase4_flow_step_risk_summary.csv"
 FLOW_MANAGER_REVIEW_QUEUE_FILE = PHASE4_DIR / "outputs" / "phase4_flow_manager_review_queue.csv"
 FLOW_VALIDATION_FILE = PHASE4_DIR / "outputs" / "phase4_flow_validation.csv"
+QUALITY_HISTORY_FILE = PHASE4_DIR / "data" / "quality_history.csv"
+QUALITY_RULES_FILE = PHASE4_DIR / "data" / "quality_rules.csv"
+REWORK_RULES_FILE = PHASE4_DIR / "data" / "rework_rules.csv"
+QUALITY_HISTORY_CLEAN_FILE = PHASE4_DIR / "outputs" / "phase4_quality_history_clean.csv"
+QUALITY_TREND_OPERATION_FILE = PHASE4_DIR / "outputs" / "phase4_quality_trend_by_operation.csv"
+QUALITY_TREND_WORKSTATION_FILE = PHASE4_DIR / "outputs" / "phase4_quality_trend_by_workstation.csv"
+PROCESSING_TIME_TREND_FILE = PHASE4_DIR / "outputs" / "phase4_processing_time_trend_by_workstation.csv"
+WORKSTATION_PERFORMANCE_SUMMARY_FILE = PHASE4_DIR / "outputs" / "phase4_workstation_performance_trend_summary.csv"
+QUALITY_MANAGER_REVIEW_QUEUE_FILE = PHASE4_DIR / "outputs" / "phase4_quality_manager_review_queue.csv"
+QUALITY_VALIDATION_FILE = PHASE4_DIR / "outputs" / "phase4_quality_validation.csv"
 
 
 def main() -> None:
@@ -118,6 +134,7 @@ def main() -> None:
     checks.append(_check_queue_pressure())
     checks.append(_check_bottleneck_visibility())
     checks.append(_check_production_flow_view())
+    checks.append(_check_quality_trends())
     checks.append(_check_phase3_inventory_check())
     checks.append(_check_phase2_supplier_check())
     checks.append(_check_phase4_run_id_consistency())
@@ -1302,6 +1319,81 @@ def _check_production_flow_view() -> dict:
     )
 
 
+def _check_quality_trends() -> dict:
+    for path, label in [
+        (QUALITY_HISTORY_FILE, "quality history data"),
+        (QUALITY_RULES_FILE, "quality rules data"),
+        (REWORK_RULES_FILE, "rework rules data"),
+        (QUALITY_HISTORY_CLEAN_FILE, "quality history clean"),
+        (QUALITY_TREND_OPERATION_FILE, "quality trend by operation"),
+        (QUALITY_TREND_WORKSTATION_FILE, "quality trend by workstation"),
+        (PROCESSING_TIME_TREND_FILE, "processing time trend by workstation"),
+        (WORKSTATION_PERFORMANCE_SUMMARY_FILE, "workstation performance trend summary"),
+        (QUALITY_VALIDATION_FILE, "quality validation"),
+    ]:
+        if not path.exists():
+            return _result("quality_trends", "FAIL", f"{label} file is missing.")
+        if pd.read_csv(path).empty:
+            return _result("quality_trends", "FAIL", f"{label} file has no rows.")
+    clean = pd.read_csv(QUALITY_HISTORY_CLEAN_FILE)
+    operation = pd.read_csv(QUALITY_TREND_OPERATION_FILE)
+    workstation = pd.read_csv(QUALITY_TREND_WORKSTATION_FILE)
+    processing = pd.read_csv(PROCESSING_TIME_TREND_FILE)
+    summary = pd.read_csv(WORKSTATION_PERFORMANCE_SUMMARY_FILE)
+    validation = pd.read_csv(QUALITY_VALIDATION_FILE)
+    fail_count = int((validation["status"].astype(str).str.upper() == "FAIL").sum()) if "status" in validation.columns else len(validation)
+    if fail_count:
+        return _result("quality_trends", "FAIL", f"Quality validation contains FAIL rows: {fail_count}")
+    required_clean = {"defect_rate", "rework_rate", "scrap_rate", "processing_time_variance_pct", "data_source_type", "advisory_only_flag"}
+    required_operation = {"planning_run_id", "finished_sku", "operation_id", "workstation_id", "avg_defect_rate", "avg_rework_rate", "avg_scrap_rate", "quality_trend_overall", "data_source_type", "advisory_only_flag"}
+    required_processing = {"planning_run_id", "workstation_id", "processing_time_trend", "speed_trend", "capacity_risk_trend", "data_source_type", "advisory_only_flag"}
+    required_summary = {"planning_run_id", "workstation_id", "quality_trend_overall", "processing_time_trend", "speed_trend", "capacity_risk_trend", "combined_workstation_performance_trend", "performance_risk_level", "confirmation_status", "advisory_only_flag"}
+    for frame, required, label in [
+        (clean, required_clean, "quality history clean"),
+        (operation, required_operation, "quality trend by operation"),
+        (processing, required_processing, "processing time trend"),
+        (summary, required_summary, "workstation performance trend summary"),
+    ]:
+        missing = sorted(required.difference(frame.columns))
+        if missing:
+            return _result("quality_trends", "FAIL", f"{label} missing columns: {missing}")
+    for column in ["defect_rate", "rework_rate", "scrap_rate"]:
+        values = pd.to_numeric(clean[column], errors="coerce")
+        if values.isna().any() or (values < 0).any():
+            return _result("quality_trends", "FAIL", f"{column} must be numeric and non-negative.")
+    valid_trends = {"IMPROVING", "STABLE", "WORSENING", "INSUFFICIENT_DATA"}
+    for frame, columns in [
+        (operation, ["quality_trend_overall", "defect_rate_trend", "rework_rate_trend", "scrap_rate_trend"]),
+        (workstation, ["quality_trend_overall", "defect_rate_trend", "rework_rate_trend", "scrap_rate_trend"]),
+        (processing, ["processing_time_trend", "speed_trend", "capacity_risk_trend"]),
+        (summary, ["quality_trend_overall", "processing_time_trend", "speed_trend", "capacity_risk_trend", "combined_workstation_performance_trend"]),
+    ]:
+        for column in columns:
+            if column in frame.columns and (~frame[column].astype(str).isin(valid_trends)).any():
+                return _result("quality_trends", "FAIL", f"{column} contains invalid trend values.")
+    valid_sources = {"SYNTHETIC_PLANNING_HISTORY", "PLANNING_ASSUMPTION_HISTORY"}
+    for frame, label in [(clean, "history"), (operation, "operation trends"), (processing, "processing trends")]:
+        if "data_source_type" in frame.columns and (~frame["data_source_type"].astype(str).isin(valid_sources)).any():
+            return _result("quality_trends", "FAIL", f"{label} data source must clearly state synthetic/planning history.")
+    expected_status = "PLANNING_HISTORY_ONLY_NOT_SHOP_FLOOR_CONFIRMED"
+    if set(summary["confirmation_status"].dropna().astype(str).str.strip()) != {expected_status}:
+        return _result("quality_trends", "FAIL", "Workstation performance confirmation status must be planning history only.")
+    if not _all_true(clean, "advisory_only_flag") or not _all_true(operation, "advisory_only_flag") or not _all_true(workstation, "advisory_only_flag") or not _all_true(processing, "advisory_only_flag") or not _all_true(summary, "advisory_only_flag"):
+        return _result("quality_trends", "FAIL", "Step 6A quality outputs must be advisory-only.")
+    if QUALITY_MANAGER_REVIEW_QUEUE_FILE.exists():
+        review = pd.read_csv(QUALITY_MANAGER_REVIEW_QUEUE_FILE)
+        if not review.empty:
+            if _to_bool(review["auto_action_allowed"]).any():
+                return _result("quality_trends", "FAIL", "Quality manager review queue cannot allow automatic action.")
+            if not _all_true(review, "advisory_only_flag"):
+                return _result("quality_trends", "FAIL", "Quality manager review queue must be advisory-only.")
+    return _result(
+        "quality_trends",
+        "PASS",
+        f"Step 6A quality trends valid; history_rows={len(clean)}, operation_rows={len(operation)}, workstation_rows={len(workstation)}.",
+    )
+
+
 def _check_phase3_inventory_check() -> dict:
     path = PHASE4_OUTPUTS["component_inventory_check"]
     if not path.exists():
@@ -1437,6 +1529,7 @@ def _check_no_execution_outputs() -> dict:
 def _check_no_routing_or_capacity_outputs() -> dict:
     blocked_tokens = [
         "capacity_plan",
+        "quality_adjusted_capacity",
         "utilization",
         "streamlit",
         "final_bottleneck",
@@ -1475,7 +1568,7 @@ def _check_no_routing_or_capacity_outputs() -> dict:
     return _result(
         "no_routing_or_capacity_outputs",
         "PASS",
-        "No UI, measured/final bottleneck, detailed scheduling, or simulation outputs found.",
+        "No UI, quality-adjusted capacity, measured/final bottleneck, detailed scheduling, or simulation outputs found.",
     )
 
 
@@ -1554,7 +1647,7 @@ def _result(name: str, status: str, message: str) -> dict:
 
 def _format_report(evidence: dict) -> str:
     lines = [
-        "Phase 4 Initialization Validation with Step 5C Production Flow and Queue-Bottleneck Flow View",
+        "Phase 4 Initialization Validation with Step 6A Quality and Workstation Performance Trends",
         f"Generated at UTC: {evidence['generated_at_utc']}",
         f"Overall status: {evidence['overall_status']}",
         f"Fail count: {evidence['fail_count']}",

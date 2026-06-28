@@ -1,0 +1,14 @@
+operation_id,workstation_id,defects_reworkable_flag,defects_scrapable_flag,discount_review_allowed_flag,rework_success_probability,extra_rework_time_minutes,active_flag,advisory_only_flag,notes
+ROAD-OP-010,WS-FRAME-PREP,True,True,False,0.92,12,True,True,Alignment and cosmetic issues are usually recoverable.
+ROAD-OP-020,WS-WHEEL-SUB,True,True,False,0.88,18,True,True,Wheel truing rework can be time consuming.
+ROAD-OP-030,WS-BRAKE-SUB,True,True,False,0.90,14,True,True,Brake fitment defects are normally reworked.
+ROAD-OP-040,WS-FINAL-ASM,True,True,True,0.84,28,True,True,Integration defects may require teardown or discount review.
+ROAD-OP-050,WS-QC,True,True,True,0.86,20,True,True,QC defects route back to the relevant workstation.
+ROAD-OP-060,WS-PACK,True,False,False,0.98,6,True,True,Packaging defects are normally corrected.
+MT-OP-010,WS-FRAME-PREP,True,True,False,0.90,14,True,True,Frame prep rework can require refitting.
+MT-OP-020,WS-FORK-SUSP,True,True,True,0.82,24,True,True,Suspension setup defects may need specialist rework.
+MT-OP-030,WS-WHEEL-SUB,True,True,False,0.86,20,True,True,Mountain wheel rework can affect capacity.
+MT-OP-040,WS-BRAKE-SUB,True,True,False,0.90,15,True,True,Brake prep defects are normally recoverable.
+MT-OP-050,WS-FINAL-ASM,True,True,True,0.80,32,True,True,Final assembly defects may require multi-station review.
+MT-OP-060,WS-QC,True,True,True,0.84,22,True,True,QC defects route back to production review.
+MT-OP-070,WS-PACK,True,False,False,0.98,7,True,True,Packaging defects are normally corrected.

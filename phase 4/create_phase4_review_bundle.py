@@ -1,4 +1,4 @@
-"""Create a clean Phase 4 Step 5C flow view review bundle."""
+"""Create a clean Phase 4 Step 6A quality trends review bundle."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 PHASE4_OUTPUTS = PROJECT_ROOT / "phase 4" / "outputs"
-ZIP_PATH = PROJECT_ROOT / "phase4_step5c_flow_view_review_bundle.zip"
+ZIP_PATH = PROJECT_ROOT / "phase4_step6a_quality_trends_review_bundle.zip"
 MANIFEST_PATH = PHASE4_OUTPUTS / "phase4_review_bundle_manifest.txt"
 
 REQUIRED_RELATIVE_FILES = [
@@ -28,6 +28,9 @@ REQUIRED_RELATIVE_FILES = [
     "phase 4/data/product_routings.csv",
     "phase 4/data/routing_parallel_groups.csv",
     "phase 4/data/routing_operation_resources.csv",
+    "phase 4/data/quality_history.csv",
+    "phase 4/data/quality_rules.csv",
+    "phase 4/data/rework_rules.csv",
     "phase 4/core/bom_explosion_bridge.py",
     "phase 4/core/component_inventory_bridge.py",
     "phase 4/core/component_supplier_bridge.py",
@@ -39,6 +42,7 @@ REQUIRED_RELATIVE_FILES = [
     "phase 4/core/queue_pressure.py",
     "phase 4/core/bottleneck_visibility.py",
     "phase 4/core/production_flow_view.py",
+    "phase 4/core/quality_trends.py",
     "phase 4/outputs/phase4_master_production_schedule.csv",
     "phase 4/outputs/phase4_bom_component_requirements.csv",
     "phase 4/outputs/phase4_mrp_net_component_requirements.csv",
@@ -68,6 +72,13 @@ REQUIRED_RELATIVE_FILES = [
     "phase 4/outputs/phase4_flow_step_risk_summary.csv",
     "phase 4/outputs/phase4_flow_manager_review_queue.csv",
     "phase 4/outputs/phase4_flow_validation.csv",
+    "phase 4/outputs/phase4_quality_history_clean.csv",
+    "phase 4/outputs/phase4_quality_trend_by_operation.csv",
+    "phase 4/outputs/phase4_quality_trend_by_workstation.csv",
+    "phase 4/outputs/phase4_processing_time_trend_by_workstation.csv",
+    "phase 4/outputs/phase4_workstation_performance_trend_summary.csv",
+    "phase 4/outputs/phase4_quality_manager_review_queue.csv",
+    "phase 4/outputs/phase4_quality_validation.csv",
     "phase 4/outputs/phase4_initialization_validation.json",
     "phase 4/outputs/phase4_initialization_validation_report.txt",
     "phase 4/outputs/phase4_review_bundle_manifest.txt",
@@ -187,6 +198,17 @@ def _verify_zip() -> tuple[str, list[str]]:
     name_set = set(names)
 
     required_checks = {
+        "phase 4/data/quality_history.csv": "Phase 4 quality history seed data exists inside the zip",
+        "phase 4/data/quality_rules.csv": "Phase 4 quality rules seed data exists inside the zip",
+        "phase 4/data/rework_rules.csv": "Phase 4 rework rules seed data exists inside the zip",
+        "phase 4/core/quality_trends.py": "Phase 4 quality trend module exists inside the zip",
+        "phase 4/outputs/phase4_quality_history_clean.csv": "Phase 4 clean quality history output exists inside the zip",
+        "phase 4/outputs/phase4_quality_trend_by_operation.csv": "Phase 4 operation quality trend output exists inside the zip",
+        "phase 4/outputs/phase4_quality_trend_by_workstation.csv": "Phase 4 workstation quality trend output exists inside the zip",
+        "phase 4/outputs/phase4_processing_time_trend_by_workstation.csv": "Phase 4 processing time trend output exists inside the zip",
+        "phase 4/outputs/phase4_workstation_performance_trend_summary.csv": "Phase 4 workstation performance trend summary exists inside the zip",
+        "phase 4/outputs/phase4_quality_manager_review_queue.csv": "Phase 4 quality manager review queue exists inside the zip",
+        "phase 4/outputs/phase4_quality_validation.csv": "Phase 4 quality validation output exists inside the zip",
         "phase 4/core/production_flow_view.py": "Phase 4 production flow view module exists inside the zip",
         "phase 4/outputs/phase4_production_flow_view.csv": "Phase 4 production flow view exists inside the zip",
         "phase 4/outputs/phase4_flow_step_risk_summary.csv": "Phase 4 flow-step risk summary exists inside the zip",
@@ -291,7 +313,7 @@ def _build_manifest(
 ) -> str:
     zip_size_mb = ZIP_PATH.stat().st_size / (1024 * 1024) if ZIP_PATH.exists() else 0.0
     lines = [
-        "Phase 4 Step 5C Flow View Review Bundle Manifest",
+        "Phase 4 Step 6A Quality Trends Review Bundle Manifest",
         f"Generated zip path: {ZIP_PATH}",
         f"Generated timestamp UTC: {generated_at}",
         f"Included file count: {len(included)}",

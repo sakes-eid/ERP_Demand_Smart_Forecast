@@ -1,0 +1,14 @@
+operation_id,workstation_id,expected_defect_rate,expected_rework_rate,expected_scrap_rate,quality_review_threshold_rate,active_flag,advisory_only_flag,notes
+ROAD-OP-010,WS-FRAME-PREP,0.035,0.020,0.005,0.060,True,True,Frame prep cosmetic and alignment checks.
+ROAD-OP-020,WS-WHEEL-SUB,0.045,0.025,0.006,0.075,True,True,Wheel true and spoke tension defects are usually reworkable.
+ROAD-OP-030,WS-BRAKE-SUB,0.030,0.020,0.004,0.060,True,True,Brake kit fitment issues usually caught before final assembly.
+ROAD-OP-040,WS-FINAL-ASM,0.060,0.040,0.010,0.090,True,True,Final assembly has higher integration complexity.
+ROAD-OP-050,WS-QC,0.040,0.025,0.005,0.070,True,True,QC records defects detected at final inspection.
+ROAD-OP-060,WS-PACK,0.020,0.005,0.002,0.040,True,True,Packaging label or protection issues.
+MT-OP-010,WS-FRAME-PREP,0.040,0.020,0.005,0.065,True,True,Mountain frame prep has extra fit checks.
+MT-OP-020,WS-FORK-SUSP,0.050,0.030,0.008,0.080,True,True,Fork and suspension setup is quality-sensitive.
+MT-OP-030,WS-WHEEL-SUB,0.050,0.030,0.008,0.080,True,True,Mountain wheel subassembly has higher load requirements.
+MT-OP-040,WS-BRAKE-SUB,0.035,0.020,0.005,0.065,True,True,Hydraulic/disc brake prep checks.
+MT-OP-050,WS-FINAL-ASM,0.070,0.045,0.012,0.100,True,True,Mountain final assembly merges more subassemblies.
+MT-OP-060,WS-QC,0.045,0.025,0.006,0.075,True,True,Mountain QC includes suspension and ride-readiness checks.
+MT-OP-070,WS-PACK,0.020,0.005,0.002,0.040,True,True,Packaging label or protection issues.
