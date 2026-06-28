@@ -1,6 +1,6 @@
-# Phase 4 Initialization Through Bottleneck Visibility
+# Phase 4 Initialization Through Production Flow Visibility
 
-Phase 4 production planning preparation has started. It now includes a simple advisory Master Production Schedule (MPS), MRP net component requirements, component-period MRP summary, pegging detail, production resource master data, routing/workflow master data, CRP feasibility for workstations, machine types, and labor skills, capacity feasibility summary, bottleneck candidates, estimated queue pressure / WIP risk visibility, and bottleneck visibility summaries. This is still not the full production planning engine.
+Phase 4 production planning preparation has started. It now includes a simple advisory Master Production Schedule (MPS), MRP net component requirements, component-period MRP summary, pegging detail, production resource master data, routing/workflow master data, CRP feasibility for workstations, machine types, and labor skills, capacity feasibility summary, bottleneck candidates, estimated queue pressure / WIP risk visibility, bottleneck visibility summaries, and a production flow view. This is still not the full production planning engine.
 
 Current initialization scope:
 
@@ -45,6 +45,10 @@ Current initialization scope:
 - Bottleneck visibility outputs are bottleneck candidates, not final measured bottlenecks.
 - Confirmation status is `PLANNING_EVIDENCE_ONLY_NOT_SIMULATION_CONFIRMED`.
 - Final Assembly may appear as the top bottleneck candidate because it combines high load, queue pressure, and parallel branch merge pressure.
+- `core/production_flow_view.py` creates UI-ready production flow data, but no UI is built yet.
+- The production flow view combines routing order, parallel branches, queue-pressure evidence, and bottleneck-visibility evidence.
+- Flow risks are planning-based and not simulation-confirmed.
+- Final Assembly may appear as a high-risk flow step because parallel branches merge there and capacity/queue evidence is high.
 - Labor capacity uses stricter labor-specific thresholds because workers need operating buffer for breaks, fatigue, variability, quality checks, coordination, and disruptions.
 - Labor utilization above 80% is marked `HIGH_UTILIZATION_WARNING`.
 - Labor utilization above 95% is treated as a hard `OVERLOADED` condition.
@@ -71,8 +75,9 @@ Run order:
 8. Build Phase 4 capacity feasibility summary and bottleneck candidates.
 9. Build Phase 4 estimated queue pressure and WIP risk visibility.
 10. Build Phase 4 bottleneck visibility summary.
-11. Run Phase 3 component inventory checks.
-12. Run Phase 2 component supplier checks.
+11. Build Phase 4 production flow and queue-bottleneck flow view.
+12. Run Phase 3 component inventory checks.
+13. Run Phase 2 component supplier checks.
 
 The Phase 4 bridges are optional-safe. If a bridge file is missing or fails, Phase 2 and Phase 3 print a warning and continue their existing core pipelines.
 
@@ -91,6 +96,7 @@ Not implemented yet:
 - Full MRP execution, order release, and procurement execution.
 - Detailed capacity scheduling and utilization dashboards.
 - Step 5B provides bottleneck visibility from CRP and estimated queue evidence; final measured bottleneck confirmation remains future work.
+- Step 5C provides production-flow and queue-bottleneck flow-view data; Streamlit/UI screens remain future work.
 - Confirmed bottlenecks from real queue behavior.
 - Real queue measurement, exact wait-time tracking, queue logic, or queue simulation.
 - Quality, maintenance, scheduling, layout, or simulation.
@@ -98,9 +104,9 @@ Not implemented yet:
 
 Next likely Phase 4 feature:
 
-- The next real feature after this bottleneck visibility step is likely capacity relief recommendations or queue-aware bottleneck confirmation, but it is not implemented here.
+- The next real feature after this flow-view step is likely capacity relief recommendations or UI/dashboard work, but it is not implemented here.
 
 Review bundle:
 
-- `create_phase4_review_bundle.py` generates `phase4_step5b_bottleneck_visibility_review_bundle.zip` at the project root for external review.
+- `create_phase4_review_bundle.py` generates `phase4_step5c_flow_view_review_bundle.zip` at the project root for external review.
 - The bundle preserves project-relative folder structure and excludes cache, bytecode, virtual environment, and zip artifacts.

@@ -33,6 +33,9 @@ PHASE4_OUTPUTS = {
     "bottleneck_visibility_summary": PHASE4_DIR / "outputs" / "phase4_bottleneck_visibility_summary.csv",
     "bottleneck_period_evidence": PHASE4_DIR / "outputs" / "phase4_bottleneck_period_evidence.csv",
     "bottleneck_manager_review_queue": PHASE4_DIR / "outputs" / "phase4_bottleneck_manager_review_queue.csv",
+    "production_flow_view": PHASE4_DIR / "outputs" / "phase4_production_flow_view.csv",
+    "flow_step_risk_summary": PHASE4_DIR / "outputs" / "phase4_flow_step_risk_summary.csv",
+    "flow_manager_review_queue": PHASE4_DIR / "outputs" / "phase4_flow_manager_review_queue.csv",
     "component_inventory_check": PROJECT_ROOT / "phase 3" / "outputs" / "phase4_component_inventory_check.csv",
     "component_supplier_check": PROJECT_ROOT / "phase 2" / "outputs" / "phase4_component_supplier_check.csv",
 }
@@ -73,6 +76,10 @@ BOTTLENECK_VISIBILITY_SUMMARY_FILE = PHASE4_DIR / "outputs" / "phase4_bottleneck
 BOTTLENECK_PERIOD_EVIDENCE_FILE = PHASE4_DIR / "outputs" / "phase4_bottleneck_period_evidence.csv"
 BOTTLENECK_MANAGER_REVIEW_QUEUE_FILE = PHASE4_DIR / "outputs" / "phase4_bottleneck_manager_review_queue.csv"
 BOTTLENECK_VALIDATION_FILE = PHASE4_DIR / "outputs" / "phase4_bottleneck_validation.csv"
+PRODUCTION_FLOW_VIEW_FILE = PHASE4_DIR / "outputs" / "phase4_production_flow_view.csv"
+FLOW_STEP_RISK_SUMMARY_FILE = PHASE4_DIR / "outputs" / "phase4_flow_step_risk_summary.csv"
+FLOW_MANAGER_REVIEW_QUEUE_FILE = PHASE4_DIR / "outputs" / "phase4_flow_manager_review_queue.csv"
+FLOW_VALIDATION_FILE = PHASE4_DIR / "outputs" / "phase4_flow_validation.csv"
 
 
 def main() -> None:
@@ -110,6 +117,7 @@ def main() -> None:
     checks.append(_check_capacity_load())
     checks.append(_check_queue_pressure())
     checks.append(_check_bottleneck_visibility())
+    checks.append(_check_production_flow_view())
     checks.append(_check_phase3_inventory_check())
     checks.append(_check_phase2_supplier_check())
     checks.append(_check_phase4_run_id_consistency())
@@ -1205,6 +1213,95 @@ def _check_bottleneck_visibility() -> dict:
     )
 
 
+def _check_production_flow_view() -> dict:
+    for path, label in [
+        (PRODUCTION_FLOW_VIEW_FILE, "production flow view"),
+        (FLOW_STEP_RISK_SUMMARY_FILE, "flow-step risk summary"),
+        (FLOW_VALIDATION_FILE, "flow validation"),
+    ]:
+        if not path.exists():
+            return _result("production_flow_view", "FAIL", f"{label} output is missing.")
+        if pd.read_csv(path).empty:
+            return _result("production_flow_view", "FAIL", f"{label} output has no rows.")
+    flow = pd.read_csv(PRODUCTION_FLOW_VIEW_FILE)
+    summary = pd.read_csv(FLOW_STEP_RISK_SUMMARY_FILE)
+    validation = pd.read_csv(FLOW_VALIDATION_FILE)
+    fail_count = int((validation["status"].astype(str).str.upper() == "FAIL").sum()) if "status" in validation.columns else len(validation)
+    if fail_count:
+        return _result("production_flow_view", "FAIL", f"Flow validation contains FAIL rows: {fail_count}")
+    flow_required = {
+        "planning_run_id",
+        "finished_sku",
+        "operation_id",
+        "operation_sequence",
+        "workstation_id",
+        "workstation_name",
+        "can_run_in_parallel_flag",
+        "join_required_before_next_flag",
+        "routing_join_pressure_flag",
+        "parallel_merge_pressure_flag",
+        "estimated_queue_pressure_level",
+        "bottleneck_visibility_level",
+        "flow_step_risk_level",
+        "confirmation_status",
+        "advisory_only_flag",
+    }
+    summary_required = {
+        "planning_run_id",
+        "finished_sku",
+        "workstation_id",
+        "flow_step_risk_level",
+        "flow_step_risk_score",
+        "confirmation_status",
+        "advisory_only_flag",
+    }
+    missing_flow = sorted(flow_required.difference(flow.columns))
+    missing_summary = sorted(summary_required.difference(summary.columns))
+    if missing_flow:
+        return _result("production_flow_view", "FAIL", f"Production flow view missing columns: {missing_flow}")
+    if missing_summary:
+        return _result("production_flow_view", "FAIL", f"Flow-step risk summary missing columns: {missing_summary}")
+    if not BIKE_SKUS.issubset(set(flow["finished_sku"].astype(str))):
+        return _result("production_flow_view", "FAIL", "Road Bike and Mountain Bike must both appear in production flow view.")
+    if not _to_bool(flow["can_run_in_parallel_flag"]).any():
+        return _result("production_flow_view", "FAIL", "Production flow view must represent parallel operations.")
+    if not (_to_bool(flow["join_required_before_next_flag"]) | _to_bool(flow["routing_join_pressure_flag"])).any():
+        return _result("production_flow_view", "FAIL", "Production flow view must represent join operations.")
+    final_assembly = flow[flow["workstation_id"].astype(str) == "WS-FINAL-ASM"]
+    if final_assembly.empty or not _to_bool(final_assembly["routing_join_pressure_flag"]).any():
+        return _result("production_flow_view", "FAIL", "Final Assembly must be marked as join/merge pressure.")
+    valid_levels = {"LOW", "MEDIUM", "HIGH", "CRITICAL"}
+    if (~flow["flow_step_risk_level"].astype(str).isin(valid_levels)).any():
+        return _result("production_flow_view", "FAIL", "Production flow view contains invalid flow risk levels.")
+    expected_status = "PLANNING_EVIDENCE_ONLY_NOT_SIMULATION_CONFIRMED"
+    if set(flow["confirmation_status"].dropna().astype(str).str.strip()) != {expected_status}:
+        return _result("production_flow_view", "FAIL", "Production flow confirmation status must be planning evidence only.")
+    if set(summary["confirmation_status"].dropna().astype(str).str.strip()) != {expected_status}:
+        return _result("production_flow_view", "FAIL", "Flow summary confirmation status must be planning evidence only.")
+    if not _all_true(flow, "advisory_only_flag") or not _all_true(summary, "advisory_only_flag"):
+        return _result("production_flow_view", "FAIL", "Step 5C flow outputs must be advisory-only.")
+    high_or_critical = flow["flow_step_risk_level"].astype(str).isin({"HIGH", "CRITICAL"}).any()
+    if high_or_critical:
+        if not FLOW_MANAGER_REVIEW_QUEUE_FILE.exists():
+            return _result("production_flow_view", "FAIL", "Flow manager review queue is missing while high/critical flow risks exist.")
+        review = pd.read_csv(FLOW_MANAGER_REVIEW_QUEUE_FILE)
+        if review.empty:
+            return _result("production_flow_view", "FAIL", "Flow manager review queue has no rows while high/critical flow risks exist.")
+        required_review = {"flow_review_item_id", "flow_issue_type", "flow_issue_severity", "auto_action_allowed", "advisory_only_flag"}
+        missing_review = sorted(required_review.difference(review.columns))
+        if missing_review:
+            return _result("production_flow_view", "FAIL", f"Flow manager review queue missing columns: {missing_review}")
+        if _to_bool(review["auto_action_allowed"]).any():
+            return _result("production_flow_view", "FAIL", "Flow manager review queue cannot allow automatic action.")
+        if not _all_true(review, "advisory_only_flag"):
+            return _result("production_flow_view", "FAIL", "Flow manager review queue must be advisory-only.")
+    return _result(
+        "production_flow_view",
+        "PASS",
+        f"Step 5C production flow view valid; flow_rows={len(flow)}, summary_rows={len(summary)}.",
+    )
+
+
 def _check_phase3_inventory_check() -> dict:
     path = PHASE4_OUTPUTS["component_inventory_check"]
     if not path.exists():
@@ -1341,6 +1438,7 @@ def _check_no_routing_or_capacity_outputs() -> dict:
     blocked_tokens = [
         "capacity_plan",
         "utilization",
+        "streamlit",
         "final_bottleneck",
         "actual_bottleneck",
         "measured_bottleneck",
@@ -1377,7 +1475,7 @@ def _check_no_routing_or_capacity_outputs() -> dict:
     return _result(
         "no_routing_or_capacity_outputs",
         "PASS",
-        "No measured/final bottleneck, detailed scheduling, or simulation outputs found.",
+        "No UI, measured/final bottleneck, detailed scheduling, or simulation outputs found.",
     )
 
 
@@ -1456,7 +1554,7 @@ def _result(name: str, status: str, message: str) -> dict:
 
 def _format_report(evidence: dict) -> str:
     lines = [
-        "Phase 4 Initialization Validation with Step 5B Bottleneck Visibility Summary",
+        "Phase 4 Initialization Validation with Step 5C Production Flow and Queue-Bottleneck Flow View",
         f"Generated at UTC: {evidence['generated_at_utc']}",
         f"Overall status: {evidence['overall_status']}",
         f"Fail count: {evidence['fail_count']}",

@@ -28,6 +28,11 @@ from core.queue_pressure import QUEUE_PRESSURE_OUTPUT_FILE
 from core.queue_pressure import QUEUE_RISK_SUMMARY_OUTPUT_FILE
 from core.queue_pressure import QUEUE_VALIDATION_OUTPUT_FILE
 from core.queue_pressure import build_queue_pressure_outputs
+from core.production_flow_view import FLOW_MANAGER_REVIEW_OUTPUT_FILE
+from core.production_flow_view import FLOW_RISK_SUMMARY_OUTPUT_FILE
+from core.production_flow_view import FLOW_VALIDATION_OUTPUT_FILE
+from core.production_flow_view import PRODUCTION_FLOW_OUTPUT_FILE
+from core.production_flow_view import build_production_flow_view_outputs
 from core.resource_master_data import OUTPUT_FILE as RESOURCE_VALIDATION_OUTPUT_FILE
 from core.resource_master_data import validate_resource_master_data
 from core.routing_master_data import FLOW_SUMMARY_OUTPUT_FILE
@@ -50,6 +55,7 @@ def run_initialization() -> None:
     capacity_load, capacity_detail, capacity_validation = build_workstation_capacity_load()
     queue_pressure, queue_summary, queue_review, queue_validation = build_queue_pressure_outputs()
     bottleneck_summary, bottleneck_periods, bottleneck_review, bottleneck_validation = build_bottleneck_visibility_outputs()
+    flow_view, flow_summary, flow_review, flow_validation = build_production_flow_view_outputs()
     print("Phase 4 initialization bridge completed.")
     print(f"MPS rows: {len(mps)}")
     print(f"MPS output written to: {MPS_OUTPUT_FILE}")
@@ -92,6 +98,14 @@ def run_initialization() -> None:
     print(f"Bottleneck manager review output written to: {BOTTLENECK_MANAGER_REVIEW_OUTPUT_FILE}")
     print(f"Bottleneck validation rows: {len(bottleneck_validation)}")
     print(f"Bottleneck validation output written to: {BOTTLENECK_VALIDATION_OUTPUT_FILE}")
+    print(f"Production flow view rows: {len(flow_view)}")
+    print(f"Production flow view output written to: {PRODUCTION_FLOW_OUTPUT_FILE}")
+    print(f"Flow-step risk summary rows: {len(flow_summary)}")
+    print(f"Flow-step risk summary output written to: {FLOW_RISK_SUMMARY_OUTPUT_FILE}")
+    print(f"Flow manager review rows: {len(flow_review)}")
+    print(f"Flow manager review output written to: {FLOW_MANAGER_REVIEW_OUTPUT_FILE}")
+    print(f"Flow validation rows: {len(flow_validation)}")
+    print(f"Flow validation output written to: {FLOW_VALIDATION_OUTPUT_FILE}")
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 {
   "validation_name": "phase4_initialization_validation",
-  "generated_at_utc": "2026-06-28T11:28:24+00:00",
+  "generated_at_utc": "2026-06-28T15:03:29+00:00",
   "overall_status": "PASS",
   "fail_count": 0,
   "warning_count": 3,
@@ -86,6 +86,11 @@
       "message": "Step 5B bottleneck visibility valid; summary_rows=7, period_rows=98."
     },
     {
+      "check": "production_flow_view",
+      "status": "PASS",
+      "message": "Step 5C production flow view valid; flow_rows=13, summary_rows=13."
+    },
+    {
       "check": "phase3_component_inventory",
       "status": "PASS",
       "message": "Phase 3 checked inventory for 10 components."
@@ -98,12 +103,12 @@
     {
       "check": "phase4_run_id_consistency",
       "status": "PASS",
-      "message": "Consistent planning_run_id across Phase 4 outputs: PHASE4-MPS-20260628112806"
+      "message": "Consistent planning_run_id across Phase 4 outputs: PHASE4-MPS-20260628150304"
     },
     {
       "check": "phase4_advisory_only",
       "status": "PASS",
-      "message": "All checked Phase 4 advisory flags are true: ['master_production_schedule', 'bom_component_requirements', 'mrp_net_component_requirements', 'mrp_component_period_summary', 'mrp_pegging_detail', 'capacity_load_by_workstation', 'capacity_operation_load_detail', 'capacity_load_by_machine_type', 'capacity_load_by_labor_skill', 'capacity_constraint_bridge', 'capacity_feasibility_summary', 'bottleneck_candidate_summary', 'capacity_manager_review_queue', 'queue_pressure_by_workstation', 'queue_risk_summary', 'queue_manager_review_queue', 'bottleneck_visibility_summary', 'bottleneck_period_evidence', 'bottleneck_manager_review_queue', 'component_inventory_check', 'component_supplier_check']"
+      "message": "All checked Phase 4 advisory flags are true: ['master_production_schedule', 'bom_component_requirements', 'mrp_net_component_requirements', 'mrp_component_period_summary', 'mrp_pegging_detail', 'capacity_load_by_workstation', 'capacity_operation_load_detail', 'capacity_load_by_machine_type', 'capacity_load_by_labor_skill', 'capacity_constraint_bridge', 'capacity_feasibility_summary', 'bottleneck_candidate_summary', 'capacity_manager_review_queue', 'queue_pressure_by_workstation', 'queue_risk_summary', 'queue_manager_review_queue', 'bottleneck_visibility_summary', 'bottleneck_period_evidence', 'bottleneck_manager_review_queue', 'production_flow_view', 'flow_step_risk_summary', 'flow_manager_review_queue', 'component_inventory_check', 'component_supplier_check']"
     },
     {
       "check": "existing_outputs",
@@ -118,7 +123,7 @@
     {
       "check": "no_routing_or_capacity_outputs",
       "status": "PASS",
-      "message": "No measured/final bottleneck, detailed scheduling, or simulation outputs found."
+      "message": "No UI, measured/final bottleneck, detailed scheduling, or simulation outputs found."
     },
     {
       "check": "no_execution_outputs",
