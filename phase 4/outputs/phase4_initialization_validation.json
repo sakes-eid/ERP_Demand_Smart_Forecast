@@ -1,6 +1,6 @@
 {
   "validation_name": "phase4_initialization_validation",
-  "generated_at_utc": "2026-06-27T15:49:54+00:00",
+  "generated_at_utc": "2026-06-28T10:25:00+00:00",
   "overall_status": "PASS",
   "fail_count": 0,
   "warning_count": 3,
@@ -76,6 +76,11 @@
       "message": "Step 4C capacity feasibility summary and bottleneck candidates valid; rows=98, periods=14, workstations=7."
     },
     {
+      "check": "queue_pressure",
+      "status": "PASS",
+      "message": "Step 5A queue pressure valid; pressure_rows=98, summary_rows=7."
+    },
+    {
       "check": "phase3_component_inventory",
       "status": "PASS",
       "message": "Phase 3 checked inventory for 10 components."
@@ -88,12 +93,12 @@
     {
       "check": "phase4_run_id_consistency",
       "status": "PASS",
-      "message": "Consistent planning_run_id across Phase 4 outputs: PHASE4-MPS-20260627154949"
+      "message": "Consistent planning_run_id across Phase 4 outputs: PHASE4-MPS-20260628102440"
     },
     {
       "check": "phase4_advisory_only",
       "status": "PASS",
-      "message": "All checked Phase 4 advisory flags are true: ['master_production_schedule', 'bom_component_requirements', 'mrp_net_component_requirements', 'mrp_component_period_summary', 'mrp_pegging_detail', 'capacity_load_by_workstation', 'capacity_operation_load_detail', 'capacity_load_by_machine_type', 'capacity_load_by_labor_skill', 'capacity_constraint_bridge', 'capacity_feasibility_summary', 'bottleneck_candidate_summary', 'capacity_manager_review_queue', 'component_inventory_check', 'component_supplier_check']"
+      "message": "All checked Phase 4 advisory flags are true: ['master_production_schedule', 'bom_component_requirements', 'mrp_net_component_requirements', 'mrp_component_period_summary', 'mrp_pegging_detail', 'capacity_load_by_workstation', 'capacity_operation_load_detail', 'capacity_load_by_machine_type', 'capacity_load_by_labor_skill', 'capacity_constraint_bridge', 'capacity_feasibility_summary', 'bottleneck_candidate_summary', 'capacity_manager_review_queue', 'queue_pressure_by_workstation', 'queue_risk_summary', 'queue_manager_review_queue', 'component_inventory_check', 'component_supplier_check']"
     },
     {
       "check": "existing_outputs",

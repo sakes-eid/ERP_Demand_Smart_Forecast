@@ -27,6 +27,9 @@ PHASE4_OUTPUTS = {
     "capacity_feasibility_summary": PHASE4_DIR / "outputs" / "phase4_capacity_feasibility_summary.csv",
     "bottleneck_candidate_summary": PHASE4_DIR / "outputs" / "phase4_bottleneck_candidate_summary.csv",
     "capacity_manager_review_queue": PHASE4_DIR / "outputs" / "phase4_capacity_manager_review_queue.csv",
+    "queue_pressure_by_workstation": PHASE4_DIR / "outputs" / "phase4_queue_pressure_by_workstation.csv",
+    "queue_risk_summary": PHASE4_DIR / "outputs" / "phase4_queue_risk_summary.csv",
+    "queue_manager_review_queue": PHASE4_DIR / "outputs" / "phase4_queue_manager_review_queue.csv",
     "component_inventory_check": PROJECT_ROOT / "phase 3" / "outputs" / "phase4_component_inventory_check.csv",
     "component_supplier_check": PROJECT_ROOT / "phase 2" / "outputs" / "phase4_component_supplier_check.csv",
 }
@@ -59,6 +62,10 @@ CAPACITY_FEASIBILITY_SUMMARY_FILE = PHASE4_DIR / "outputs" / "phase4_capacity_fe
 BOTTLENECK_CANDIDATE_SUMMARY_FILE = PHASE4_DIR / "outputs" / "phase4_bottleneck_candidate_summary.csv"
 CAPACITY_MANAGER_REVIEW_QUEUE_FILE = PHASE4_DIR / "outputs" / "phase4_capacity_manager_review_queue.csv"
 CAPACITY_VALIDATION_FILE = PHASE4_DIR / "outputs" / "phase4_capacity_validation.csv"
+QUEUE_PRESSURE_FILE = PHASE4_DIR / "outputs" / "phase4_queue_pressure_by_workstation.csv"
+QUEUE_RISK_SUMMARY_FILE = PHASE4_DIR / "outputs" / "phase4_queue_risk_summary.csv"
+QUEUE_MANAGER_REVIEW_QUEUE_FILE = PHASE4_DIR / "outputs" / "phase4_queue_manager_review_queue.csv"
+QUEUE_VALIDATION_FILE = PHASE4_DIR / "outputs" / "phase4_queue_validation.csv"
 
 
 def main() -> None:
@@ -94,6 +101,7 @@ def main() -> None:
     checks.append(_check_resource_master_data())
     checks.append(_check_routing_master_data())
     checks.append(_check_capacity_load())
+    checks.append(_check_queue_pressure())
     checks.append(_check_phase3_inventory_check())
     checks.append(_check_phase2_supplier_check())
     checks.append(_check_phase4_run_id_consistency())
@@ -1011,6 +1019,97 @@ def _validate_labor_capacity_thresholds(frame: pd.DataFrame) -> dict | None:
     return None
 
 
+def _check_queue_pressure() -> dict:
+    for path, label in [
+        (QUEUE_PRESSURE_FILE, "queue pressure by workstation"),
+        (QUEUE_RISK_SUMMARY_FILE, "queue risk summary"),
+        (QUEUE_VALIDATION_FILE, "queue validation"),
+    ]:
+        if not path.exists():
+            return _result("queue_pressure", "FAIL", f"{label} output is missing.")
+        if pd.read_csv(path).empty:
+            return _result("queue_pressure", "FAIL", f"{label} output has no rows.")
+    pressure = pd.read_csv(QUEUE_PRESSURE_FILE)
+    summary = pd.read_csv(QUEUE_RISK_SUMMARY_FILE)
+    validation = pd.read_csv(QUEUE_VALIDATION_FILE)
+    fail_count = int((validation["status"].astype(str).str.upper() == "FAIL").sum()) if "status" in validation.columns else len(validation)
+    if fail_count:
+        return _result("queue_pressure", "FAIL", f"Queue validation contains FAIL rows: {fail_count}")
+    pressure_required = {
+        "planning_run_id",
+        "period_start",
+        "period_end",
+        "workstation_id",
+        "workstation_name",
+        "estimated_queue_pressure_score",
+        "estimated_queue_pressure_level",
+        "estimated_wip_risk_level",
+        "queue_measurement_type",
+        "actual_queue_length_available_flag",
+        "actual_wait_time_available_flag",
+        "future_actual_queue_tracking_flag",
+        "routing_join_pressure_flag",
+        "parallel_merge_pressure_flag",
+        "advisory_only_flag",
+    }
+    summary_required = {
+        "planning_run_id",
+        "workstation_id",
+        "workstation_name",
+        "max_estimated_queue_pressure_score",
+        "queue_risk_rank",
+        "overall_queue_risk_level",
+        "advisory_only_flag",
+    }
+    missing_pressure = sorted(pressure_required.difference(pressure.columns))
+    if missing_pressure:
+        return _result("queue_pressure", "FAIL", f"Queue pressure output missing columns: {missing_pressure}")
+    missing_summary = sorted(summary_required.difference(summary.columns))
+    if missing_summary:
+        return _result("queue_pressure", "FAIL", f"Queue risk summary missing columns: {missing_summary}")
+    scores = pd.to_numeric(pressure["estimated_queue_pressure_score"], errors="coerce")
+    if scores.isna().any() or (scores < 0).any():
+        return _result("queue_pressure", "FAIL", "Queue pressure scores must be numeric and non-negative.")
+    valid_levels = {"LOW", "MEDIUM", "HIGH", "CRITICAL"}
+    if (~pressure["estimated_queue_pressure_level"].astype(str).isin(valid_levels)).any():
+        return _result("queue_pressure", "FAIL", "Queue pressure output contains invalid pressure levels.")
+    if (~pressure["estimated_wip_risk_level"].astype(str).isin(valid_levels)).any():
+        return _result("queue_pressure", "FAIL", "Queue pressure output contains invalid WIP risk levels.")
+    if set(pressure["queue_measurement_type"].dropna().astype(str).str.strip()) != {"ESTIMATED_FROM_CAPACITY_PLAN"}:
+        return _result("queue_pressure", "FAIL", "Queue measurement type must be ESTIMATED_FROM_CAPACITY_PLAN.")
+    if _to_bool(pressure["actual_queue_length_available_flag"]).any():
+        return _result("queue_pressure", "FAIL", "Actual queue length availability must be False.")
+    if _to_bool(pressure["actual_wait_time_available_flag"]).any():
+        return _result("queue_pressure", "FAIL", "Actual wait time availability must be False.")
+    if not _all_true(pressure, "future_actual_queue_tracking_flag"):
+        return _result("queue_pressure", "FAIL", "Future actual queue tracking flag must be True.")
+    if not _all_true(pressure, "advisory_only_flag") or not _all_true(summary, "advisory_only_flag"):
+        return _result("queue_pressure", "FAIL", "Step 5A queue outputs must be advisory-only.")
+    final_assembly = pressure[pressure["workstation_id"].astype(str) == "WS-FINAL-ASM"]
+    if final_assembly.empty or not _to_bool(final_assembly["routing_join_pressure_flag"]).any():
+        return _result("queue_pressure", "FAIL", "Final Assembly must be flagged as routing join pressure when routing supports it.")
+    high_or_critical = pressure["estimated_queue_pressure_level"].astype(str).isin({"HIGH", "CRITICAL"}).any()
+    if high_or_critical:
+        if not QUEUE_MANAGER_REVIEW_QUEUE_FILE.exists():
+            return _result("queue_pressure", "FAIL", "Queue manager review queue is missing while high/critical queue risk exists.")
+        review = pd.read_csv(QUEUE_MANAGER_REVIEW_QUEUE_FILE)
+        if review.empty:
+            return _result("queue_pressure", "FAIL", "Queue manager review queue has no rows while high/critical queue risk exists.")
+        required_review = {"queue_review_item_id", "queue_issue_type", "queue_issue_severity", "auto_action_allowed", "advisory_only_flag"}
+        missing_review = sorted(required_review.difference(review.columns))
+        if missing_review:
+            return _result("queue_pressure", "FAIL", f"Queue manager review queue missing columns: {missing_review}")
+        if _to_bool(review["auto_action_allowed"]).any():
+            return _result("queue_pressure", "FAIL", "Queue manager review queue cannot allow automatic action.")
+        if not _all_true(review, "advisory_only_flag"):
+            return _result("queue_pressure", "FAIL", "Queue manager review queue must be advisory-only.")
+    return _result(
+        "queue_pressure",
+        "PASS",
+        f"Step 5A queue pressure valid; pressure_rows={len(pressure)}, summary_rows={len(summary)}.",
+    )
+
+
 def _check_phase3_inventory_check() -> dict:
     path = PHASE4_OUTPUTS["component_inventory_check"]
     if not path.exists():
@@ -1152,6 +1251,10 @@ def _check_no_routing_or_capacity_outputs() -> dict:
         "workstation_queue",
         "operation_queue",
         "queue_simulation",
+        "actual_queue_length",
+        "measured_wait_time",
+        "real_queue_time",
+        "observed_queue_length",
         "detailed_schedule",
         "finite_schedule",
         "shop_floor_schedule",
@@ -1254,7 +1357,7 @@ def _result(name: str, status: str, message: str) -> dict:
 
 def _format_report(evidence: dict) -> str:
     lines = [
-        "Phase 4 Initialization Validation with Step 4C Capacity Feasibility Summary and Bottleneck Candidates",
+        "Phase 4 Initialization Validation with Step 5A Estimated Queue Pressure and WIP Risk Visibility",
         f"Generated at UTC: {evidence['generated_at_utc']}",
         f"Overall status: {evidence['overall_status']}",
         f"Fail count: {evidence['fail_count']}",

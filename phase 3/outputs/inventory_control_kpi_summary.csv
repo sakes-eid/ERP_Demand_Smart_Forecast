@@ -17,7 +17,7 @@ Optimization,selected_scenarios_no_hard_blocker_rate,100.0,%,100%,GOOD,Selected 
 Warehouse,warehouse_capacity_pressure_rate,37.5,%,Lower is better,WATCH,Projected capacity pressure by location.
 Inventory Health,expiry_risk_rate,9.09,%,Lower is better,WATCH,SKUs with expiry risk.
 Review Load,phase4_review_rate,72.73,%,As needed,INFO,SKUs needing Phase 4 production review.
-Service Level,average_service_level,0.9418181818181816,ratio,Policy dependent,INFO,Average configured service level.
+Service Level,average_service_level,0.9381818181818179,ratio,Policy dependent,INFO,Average configured service level.
 Service Level,average_safety_stock,57.04545454545455,units,Policy dependent,INFO,Average calculated safety stock.
 Inventory Health,total_recommended_order_quantity,5756.0,units,Policy dependent,INFO,Total recommended order quantity from Step 6.
 Optimization,average_scenarios_tested_per_sku,18.40909090909091,scenarios/SKU,Controlled by config,INFO,Average Step 12 scenarios tested per SKU.

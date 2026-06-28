@@ -1,0 +1,14 @@
+check_id,check_name,status,message,affected_rows,advisory_only_flag
+queue_workstation_load_exists,workstation_load exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_capacity_load_by_workstation.csv,0,True
+queue_machine_load_exists,machine_load exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_capacity_load_by_machine_type.csv,0,True
+queue_labor_load_exists,labor_load exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_capacity_load_by_labor_skill.csv,0,True
+queue_constraint_bridge_exists,constraint_bridge exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_capacity_constraint_bridge.csv,0,True
+queue_capacity_feasibility_exists,capacity_feasibility exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_capacity_feasibility_summary.csv,0,True
+queue_bottleneck_candidates_exists,bottleneck_candidates exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_bottleneck_candidate_summary.csv,0,True
+queue_capacity_review_queue_exists,capacity_review_queue exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_capacity_manager_review_queue.csv,0,True
+queue_operation_detail_exists,operation_detail exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_capacity_operation_load_detail.csv,0,True
+queue_product_routings_exists,product_routings exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\data\product_routings.csv,0,True
+queue_parallel_groups_exists,parallel_groups exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\data\routing_parallel_groups.csv,0,True
+queue_workstations_exists,workstations exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\data\workstations.csv,0,True
+queue_step5a_outputs_valid,Step 5A queue pressure outputs valid,PASS,"Queue outputs valid; pressure_rows=98, summary_rows=7, review_rows=89.",0,True
+queue_no_blocked_execution_outputs,queue no blocked execution outputs,PASS,"No real queue measurement, scheduling, simulation, or execution outputs found.",0,True

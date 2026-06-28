@@ -1,4 +1,4 @@
-"""Create a clean Phase 4 Step 4C capacity summary review bundle."""
+"""Create a clean Phase 4 Step 5A queue pressure review bundle."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 PHASE4_OUTPUTS = PROJECT_ROOT / "phase 4" / "outputs"
-ZIP_PATH = PROJECT_ROOT / "phase4_step4c_capacity_summary_review_bundle.zip"
+ZIP_PATH = PROJECT_ROOT / "phase4_step5a_queue_pressure_review_bundle.zip"
 MANIFEST_PATH = PHASE4_OUTPUTS / "phase4_review_bundle_manifest.txt"
 
 REQUIRED_RELATIVE_FILES = [
@@ -36,6 +36,7 @@ REQUIRED_RELATIVE_FILES = [
     "phase 4/core/resource_master_data.py",
     "phase 4/core/routing_master_data.py",
     "phase 4/core/capacity_load.py",
+    "phase 4/core/queue_pressure.py",
     "phase 4/outputs/phase4_master_production_schedule.csv",
     "phase 4/outputs/phase4_bom_component_requirements.csv",
     "phase 4/outputs/phase4_mrp_net_component_requirements.csv",
@@ -53,6 +54,10 @@ REQUIRED_RELATIVE_FILES = [
     "phase 4/outputs/phase4_bottleneck_candidate_summary.csv",
     "phase 4/outputs/phase4_capacity_manager_review_queue.csv",
     "phase 4/outputs/phase4_capacity_validation.csv",
+    "phase 4/outputs/phase4_queue_pressure_by_workstation.csv",
+    "phase 4/outputs/phase4_queue_risk_summary.csv",
+    "phase 4/outputs/phase4_queue_manager_review_queue.csv",
+    "phase 4/outputs/phase4_queue_validation.csv",
     "phase 4/outputs/phase4_initialization_validation.json",
     "phase 4/outputs/phase4_initialization_validation_report.txt",
     "phase 4/outputs/phase4_review_bundle_manifest.txt",
@@ -173,12 +178,17 @@ def _verify_zip() -> tuple[str, list[str]]:
 
     required_checks = {
         "phase 4/core/capacity_load.py": "Phase 4 capacity load module exists inside the zip",
+        "phase 4/core/queue_pressure.py": "Phase 4 queue pressure module exists inside the zip",
         "phase 4/outputs/phase4_capacity_load_by_machine_type.csv": "Phase 4 machine-type capacity output exists inside the zip",
         "phase 4/outputs/phase4_capacity_load_by_labor_skill.csv": "Phase 4 labor-skill capacity output exists inside the zip",
         "phase 4/outputs/phase4_capacity_constraint_bridge.csv": "Phase 4 capacity constraint bridge exists inside the zip",
         "phase 4/outputs/phase4_capacity_feasibility_summary.csv": "Phase 4 capacity feasibility summary exists inside the zip",
         "phase 4/outputs/phase4_bottleneck_candidate_summary.csv": "Phase 4 bottleneck candidate summary exists inside the zip",
         "phase 4/outputs/phase4_capacity_manager_review_queue.csv": "Phase 4 capacity manager review queue exists inside the zip",
+        "phase 4/outputs/phase4_queue_pressure_by_workstation.csv": "Phase 4 queue pressure output exists inside the zip",
+        "phase 4/outputs/phase4_queue_risk_summary.csv": "Phase 4 queue risk summary exists inside the zip",
+        "phase 4/outputs/phase4_queue_manager_review_queue.csv": "Phase 4 queue manager review queue exists inside the zip",
+        "phase 4/outputs/phase4_queue_validation.csv": "Phase 4 queue validation output exists inside the zip",
         "phase 4/outputs/phase4_capacity_load_by_workstation.csv": "Phase 4 workstation capacity load output exists inside the zip",
         "phase 4/outputs/phase4_capacity_validation.csv": "Phase 4 capacity validation output exists inside the zip",
         "phase 4/outputs/phase4_capacity_operation_load_detail.csv": "Phase 4 capacity operation detail output exists inside the zip",
@@ -261,7 +271,7 @@ def _build_manifest(
 ) -> str:
     zip_size_mb = ZIP_PATH.stat().st_size / (1024 * 1024) if ZIP_PATH.exists() else 0.0
     lines = [
-        "Phase 4 Step 4C Capacity Summary Review Bundle Manifest",
+        "Phase 4 Step 5A Queue Pressure Review Bundle Manifest",
         f"Generated zip path: {ZIP_PATH}",
         f"Generated timestamp UTC: {generated_at}",
         f"Included file count: {len(included)}",

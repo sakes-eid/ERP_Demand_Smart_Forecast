@@ -18,6 +18,11 @@ from core.master_production_schedule import build_master_production_schedule
 from core.mrp_net_requirements import OUTPUT_FILE as MRP_OUTPUT_FILE
 from core.mrp_net_requirements import PEGGING_OUTPUT_FILE, SUMMARY_OUTPUT_FILE
 from core.mrp_net_requirements import build_mrp_net_component_requirements
+from core.queue_pressure import QUEUE_MANAGER_REVIEW_OUTPUT_FILE
+from core.queue_pressure import QUEUE_PRESSURE_OUTPUT_FILE
+from core.queue_pressure import QUEUE_RISK_SUMMARY_OUTPUT_FILE
+from core.queue_pressure import QUEUE_VALIDATION_OUTPUT_FILE
+from core.queue_pressure import build_queue_pressure_outputs
 from core.resource_master_data import OUTPUT_FILE as RESOURCE_VALIDATION_OUTPUT_FILE
 from core.resource_master_data import validate_resource_master_data
 from core.routing_master_data import FLOW_SUMMARY_OUTPUT_FILE
@@ -38,6 +43,7 @@ def run_initialization() -> None:
     resource_validation = validate_resource_master_data()
     routing_validation = validate_routing_master_data()
     capacity_load, capacity_detail, capacity_validation = build_workstation_capacity_load()
+    queue_pressure, queue_summary, queue_review, queue_validation = build_queue_pressure_outputs()
     print("Phase 4 initialization bridge completed.")
     print(f"MPS rows: {len(mps)}")
     print(f"MPS output written to: {MPS_OUTPUT_FILE}")
@@ -64,6 +70,14 @@ def run_initialization() -> None:
     print(f"Capacity manager review queue output written to: {CAPACITY_MANAGER_REVIEW_QUEUE_OUTPUT_FILE}")
     print(f"Capacity validation rows: {len(capacity_validation)}")
     print(f"Capacity validation output written to: {CAPACITY_VALIDATION_OUTPUT_FILE}")
+    print(f"Queue pressure rows: {len(queue_pressure)}")
+    print(f"Queue pressure output written to: {QUEUE_PRESSURE_OUTPUT_FILE}")
+    print(f"Queue risk summary rows: {len(queue_summary)}")
+    print(f"Queue risk summary output written to: {QUEUE_RISK_SUMMARY_OUTPUT_FILE}")
+    print(f"Queue manager review rows: {len(queue_review)}")
+    print(f"Queue manager review output written to: {QUEUE_MANAGER_REVIEW_OUTPUT_FILE}")
+    print(f"Queue validation rows: {len(queue_validation)}")
+    print(f"Queue validation output written to: {QUEUE_VALIDATION_OUTPUT_FILE}")
 
 
 if __name__ == "__main__":
