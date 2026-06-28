@@ -433,7 +433,9 @@ def _validate_quality_outputs(
 
 def _check_no_blocked_outputs(checks: list[dict]) -> None:
     blocked_tokens = [
-        "quality_adjusted_capacity",
+        "quality_adjusted_mrp",
+        "quality_adjusted_bom",
+        "quality_adjusted_purchase",
         "detailed_schedule",
         "finite_schedule",
         "shop_floor_schedule",
@@ -450,7 +452,7 @@ def _check_no_blocked_outputs(checks: list[dict]) -> None:
             lower = path.name.lower()
             if path.is_file() and any(token in lower for token in blocked_tokens):
                 bad_files.append(str(path))
-    checks.append(_result("quality_no_blocked_outputs", "quality no blocked execution outputs", "FAIL" if bad_files else "PASS", f"Blocked quality-adjusted capacity/scheduling/simulation/execution outputs found: {bad_files}" if bad_files else "No quality-adjusted capacity, scheduling, simulation, or execution outputs found.", len(bad_files)))
+    checks.append(_result("quality_no_blocked_outputs", "quality no blocked execution outputs", "FAIL" if bad_files else "PASS", f"Blocked quality-adjusted MRP/scheduling/simulation/execution outputs found: {bad_files}" if bad_files else "No quality-adjusted MRP, scheduling, simulation, or execution outputs found.", len(bad_files)))
 
 
 def _planning_run_id() -> str:

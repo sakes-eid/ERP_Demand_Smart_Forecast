@@ -1,6 +1,6 @@
 # Phase 4 Initialization Through Production Flow Visibility
 
-Phase 4 production planning preparation has started. It now includes a simple advisory Master Production Schedule (MPS), MRP net component requirements, component-period MRP summary, pegging detail, production resource master data, routing/workflow master data, CRP feasibility for workstations, machine types, and labor skills, capacity feasibility summary, bottleneck candidates, estimated queue pressure / WIP risk visibility, bottleneck visibility summaries, a production flow view, and planning-based quality/workstation performance trends. This is still not the full production planning engine.
+Phase 4 production planning preparation has started. It now includes a simple advisory Master Production Schedule (MPS), MRP net component requirements, component-period MRP summary, pegging detail, production resource master data, routing/workflow master data, CRP feasibility for workstations, machine types, and labor skills, capacity feasibility summary, bottleneck candidates, estimated queue pressure / WIP risk visibility, bottleneck visibility summaries, a production flow view, planning-based quality/workstation performance trends, and quality-adjusted capacity impact estimates. This is still not the full production planning engine.
 
 Current initialization scope:
 
@@ -53,7 +53,15 @@ Current initialization scope:
 - Quality history uses `SYNTHETIC_PLANNING_HISTORY` or `PLANNING_ASSUMPTION_HISTORY`; it is not claimed as shop-floor-confirmed measurement.
 - Workstation performance trend summaries classify quality trend, processing-time trend, speed trend, and capacity-risk trend as `IMPROVING`, `STABLE`, `WORSENING`, or `INSUFFICIENT_DATA`.
 - Step 6A does not adjust MPS, BOM, MRP, or capacity math.
-- Step 6A does not create quality-adjusted capacity outputs.
+- `core/quality_adjusted_capacity.py` estimates how defects, rework, scrap, and worsening processing-time trends affect required capacity and bottleneck pressure.
+- Step 6B outputs are planning estimates only with confirmation status `PLANNING_ESTIMATE_ONLY_NOT_EXECUTION_CONFIRMED`.
+- Step 6B includes explicit defect disposition reconciliation.
+- Defects are split into reworkable defects, direct scrap, discount/review units, and other defect disposition units.
+- Rework can succeed or fail, and final expected good units plus total expected loss units are reconciled back to planned production.
+- Quality-adjusted capacity compares original workstation load to estimated rework and processing-time trend impacts.
+- Quality material loss exposure is advisory-only, uses total expected loss units, and explicitly flags that MRP is not changed.
+- Step 6B does not change MPS quantities, BOM quantities, MRP quantities, inventory, or execution orders.
+- Step 6B does not create MPS, BOM, MRP, procurement, inventory, scheduling, simulation, or execution actions.
 - Labor capacity uses stricter labor-specific thresholds because workers need operating buffer for breaks, fatigue, variability, quality checks, coordination, and disruptions.
 - Labor utilization above 80% is marked `HIGH_UTILIZATION_WARNING`.
 - Labor utilization above 95% is treated as a hard `OVERLOADED` condition.
@@ -82,8 +90,9 @@ Run order:
 10. Build Phase 4 bottleneck visibility summary.
 11. Build Phase 4 production flow and queue-bottleneck flow view.
 12. Build Phase 4 quality and workstation performance trend detection.
-13. Run Phase 3 component inventory checks.
-14. Run Phase 2 component supplier checks.
+13. Build Phase 4 quality-adjusted capacity impact estimates.
+14. Run Phase 3 component inventory checks.
+15. Run Phase 2 component supplier checks.
 
 The Phase 4 bridges are optional-safe. If a bridge file is missing or fails, Phase 2 and Phase 3 print a warning and continue their existing core pipelines.
 
@@ -103,17 +112,17 @@ Not implemented yet:
 - Detailed capacity scheduling and utilization dashboards.
 - Step 5B provides bottleneck visibility from CRP and estimated queue evidence; final measured bottleneck confirmation remains future work.
 - Step 5C provides production-flow and queue-bottleneck flow-view data; Streamlit/UI screens remain future work.
-- Step 6A provides planning-history quality and workstation performance trends; quality-adjusted capacity remains future work.
+- Step 6B provides planning-based quality-adjusted capacity impact; quality-adjusted MRP remains future work.
 - Confirmed bottlenecks from real queue behavior.
 - Real queue measurement, exact wait-time tracking, queue logic, or queue simulation.
-- Shop-floor-confirmed quality measurement, quality-adjusted capacity, maintenance, scheduling, layout, or simulation.
+- Shop-floor-confirmed quality measurement, quality-adjusted MRP, maintenance, scheduling, layout, or simulation.
 - Production order release.
 
 Next likely Phase 4 feature:
 
-- The next real feature after this quality-trend step is likely quality-adjusted capacity or capacity relief recommendations, but neither is implemented here.
+- The next real feature after this quality-adjusted capacity step is likely quality-adjusted material planning or capacity relief recommendations, but neither is implemented here.
 
 Review bundle:
 
-- `create_phase4_review_bundle.py` generates `phase4_step6a_quality_trends_review_bundle.zip` at the project root for external review.
+- `create_phase4_review_bundle.py` generates `phase4_step6b_quality_adjusted_capacity_review_bundle.zip` at the project root for external review.
 - The bundle preserves project-relative folder structure and excludes cache, bytecode, virtual environment, and zip artifacts.

@@ -42,6 +42,11 @@ PHASE4_OUTPUTS = {
     "processing_time_trend_by_workstation": PHASE4_DIR / "outputs" / "phase4_processing_time_trend_by_workstation.csv",
     "workstation_performance_trend_summary": PHASE4_DIR / "outputs" / "phase4_workstation_performance_trend_summary.csv",
     "quality_manager_review_queue": PHASE4_DIR / "outputs" / "phase4_quality_manager_review_queue.csv",
+    "quality_impact_by_operation": PHASE4_DIR / "outputs" / "phase4_quality_impact_by_operation.csv",
+    "quality_adjusted_capacity_by_workstation": PHASE4_DIR / "outputs" / "phase4_quality_adjusted_capacity_by_workstation.csv",
+    "quality_adjusted_bottleneck_impact": PHASE4_DIR / "outputs" / "phase4_quality_adjusted_bottleneck_impact.csv",
+    "quality_material_loss_exposure": PHASE4_DIR / "outputs" / "phase4_quality_material_loss_exposure.csv",
+    "quality_impact_manager_review_queue": PHASE4_DIR / "outputs" / "phase4_quality_impact_manager_review_queue.csv",
     "component_inventory_check": PROJECT_ROOT / "phase 3" / "outputs" / "phase4_component_inventory_check.csv",
     "component_supplier_check": PROJECT_ROOT / "phase 2" / "outputs" / "phase4_component_supplier_check.csv",
 }
@@ -96,6 +101,12 @@ PROCESSING_TIME_TREND_FILE = PHASE4_DIR / "outputs" / "phase4_processing_time_tr
 WORKSTATION_PERFORMANCE_SUMMARY_FILE = PHASE4_DIR / "outputs" / "phase4_workstation_performance_trend_summary.csv"
 QUALITY_MANAGER_REVIEW_QUEUE_FILE = PHASE4_DIR / "outputs" / "phase4_quality_manager_review_queue.csv"
 QUALITY_VALIDATION_FILE = PHASE4_DIR / "outputs" / "phase4_quality_validation.csv"
+QUALITY_IMPACT_OPERATION_FILE = PHASE4_DIR / "outputs" / "phase4_quality_impact_by_operation.csv"
+QUALITY_ADJUSTED_CAPACITY_FILE = PHASE4_DIR / "outputs" / "phase4_quality_adjusted_capacity_by_workstation.csv"
+QUALITY_ADJUSTED_BOTTLENECK_FILE = PHASE4_DIR / "outputs" / "phase4_quality_adjusted_bottleneck_impact.csv"
+QUALITY_MATERIAL_LOSS_FILE = PHASE4_DIR / "outputs" / "phase4_quality_material_loss_exposure.csv"
+QUALITY_IMPACT_MANAGER_REVIEW_QUEUE_FILE = PHASE4_DIR / "outputs" / "phase4_quality_impact_manager_review_queue.csv"
+QUALITY_ADJUSTED_CAPACITY_VALIDATION_FILE = PHASE4_DIR / "outputs" / "phase4_quality_adjusted_capacity_validation.csv"
 
 
 def main() -> None:
@@ -135,6 +146,7 @@ def main() -> None:
     checks.append(_check_bottleneck_visibility())
     checks.append(_check_production_flow_view())
     checks.append(_check_quality_trends())
+    checks.append(_check_quality_adjusted_capacity())
     checks.append(_check_phase3_inventory_check())
     checks.append(_check_phase2_supplier_check())
     checks.append(_check_phase4_run_id_consistency())
@@ -1394,6 +1406,220 @@ def _check_quality_trends() -> dict:
     )
 
 
+def _check_quality_adjusted_capacity() -> dict:
+    for path, label in [
+        (QUALITY_IMPACT_OPERATION_FILE, "quality impact by operation"),
+        (QUALITY_ADJUSTED_CAPACITY_FILE, "quality-adjusted capacity by workstation"),
+        (QUALITY_ADJUSTED_BOTTLENECK_FILE, "quality-adjusted bottleneck impact"),
+        (QUALITY_MATERIAL_LOSS_FILE, "quality material loss exposure"),
+        (QUALITY_IMPACT_MANAGER_REVIEW_QUEUE_FILE, "quality impact manager review queue"),
+        (QUALITY_ADJUSTED_CAPACITY_VALIDATION_FILE, "quality-adjusted capacity validation"),
+    ]:
+        if not path.exists():
+            return _result("quality_adjusted_capacity", "FAIL", f"{label} file is missing.")
+        if pd.read_csv(path).empty:
+            return _result("quality_adjusted_capacity", "FAIL", f"{label} file has no rows.")
+    impact = pd.read_csv(QUALITY_IMPACT_OPERATION_FILE)
+    adjusted = pd.read_csv(QUALITY_ADJUSTED_CAPACITY_FILE)
+    bottleneck = pd.read_csv(QUALITY_ADJUSTED_BOTTLENECK_FILE)
+    material = pd.read_csv(QUALITY_MATERIAL_LOSS_FILE)
+    review = pd.read_csv(QUALITY_IMPACT_MANAGER_REVIEW_QUEUE_FILE)
+    validation = pd.read_csv(QUALITY_ADJUSTED_CAPACITY_VALIDATION_FILE)
+    fail_count = int((validation["status"].astype(str).str.upper() == "FAIL").sum()) if "status" in validation.columns else len(validation)
+    if fail_count:
+        return _result("quality_adjusted_capacity", "FAIL", f"Quality-adjusted capacity validation contains FAIL rows: {fail_count}")
+    required_impact = {
+        "planning_run_id",
+        "period_start",
+        "period_end",
+        "finished_sku",
+        "operation_id",
+        "workstation_id",
+        "planned_production_qty",
+        "original_total_required_hours",
+        "defect_rate_used",
+        "rework_rate_used",
+        "scrap_rate_used",
+        "discount_review_rate_used",
+        "other_disposition_share_used",
+        "defective_units",
+        "first_pass_good_units",
+        "reworkable_defect_units",
+        "direct_scrap_units",
+        "discount_review_units",
+        "other_defect_disposition_units",
+        "defect_disposition_total_units",
+        "defect_disposition_balance_check",
+        "defect_disposition_balance_status",
+        "rework_success_units",
+        "rework_failure_units",
+        "final_expected_good_units",
+        "total_expected_loss_units",
+        "final_quality_balance_check",
+        "final_quality_balance_status",
+        "disposition_model_basis",
+        "expected_defect_units",
+        "expected_rework_units",
+        "expected_scrap_units",
+        "expected_good_units_after_quality",
+        "expected_rework_success_units",
+        "expected_rework_failure_units",
+        "extra_rework_time_hours",
+        "processing_time_trend",
+        "processing_time_trend_adjustment_factor",
+        "processing_time_trend_adjustment_hours",
+        "quality_adjusted_required_hours",
+        "quality_impact_level",
+        "confirmation_status",
+        "advisory_only_flag",
+    }
+    required_adjusted = {
+        "planning_run_id",
+        "period_start",
+        "period_end",
+        "workstation_id",
+        "original_required_hours",
+        "quality_extra_rework_hours",
+        "processing_time_adjustment_hours",
+        "quality_adjusted_required_hours",
+        "expected_defective_units",
+        "expected_rework_units",
+        "expected_loss_units",
+        "expected_final_good_units",
+        "disposition_review_required_count",
+        "quality_balance_review_required_flag",
+        "available_hours",
+        "original_utilization_pct",
+        "quality_adjusted_utilization_pct",
+        "utilization_delta_pct",
+        "original_capacity_status",
+        "quality_adjusted_capacity_status",
+        "quality_capacity_impact_level",
+        "quality_capacity_review_required_flag",
+        "confirmation_status",
+        "advisory_only_flag",
+    }
+    required_bottleneck = {
+        "planning_run_id",
+        "workstation_id",
+        "original_bottleneck_visibility_level",
+        "original_bottleneck_visibility_rank",
+        "quality_adjusted_utilization_pct",
+        "utilization_delta_pct",
+        "quality_extra_rework_hours",
+        "expected_defective_units",
+        "expected_rework_units",
+        "expected_loss_units",
+        "quality_balance_review_required_flag",
+        "quality_impact_level",
+        "bottleneck_risk_after_quality",
+        "bottleneck_rank_pressure_change",
+        "disposition_model_basis",
+        "confirmation_status",
+        "advisory_only_flag",
+    }
+    required_material = {
+        "planning_run_id",
+        "period_start",
+        "period_end",
+        "finished_sku",
+        "operation_id",
+        "workstation_id",
+        "defective_units",
+        "direct_scrap_units",
+        "rework_failure_units",
+        "discount_review_units",
+        "other_defect_disposition_units",
+        "total_expected_loss_units",
+        "final_expected_good_units",
+        "expected_scrap_units",
+        "expected_rework_failure_units",
+        "potential_replacement_unit_exposure",
+        "defect_disposition_balance_status",
+        "final_quality_balance_status",
+        "disposition_model_basis",
+        "material_loss_review_required_flag",
+        "note_no_mrp_change_flag",
+        "confirmation_status",
+        "advisory_only_flag",
+    }
+    required_review = {
+        "review_item_id",
+        "planning_run_id",
+        "period_start",
+        "period_end",
+        "workstation_id",
+        "operation_id",
+        "issue_type",
+        "issue_severity",
+        "issue_description",
+        "recommended_review_action",
+        "auto_action_allowed",
+        "advisory_only_flag",
+    }
+    for frame, required, label in [
+        (impact, required_impact, "quality impact by operation"),
+        (adjusted, required_adjusted, "quality-adjusted capacity by workstation"),
+        (bottleneck, required_bottleneck, "quality-adjusted bottleneck impact"),
+        (material, required_material, "quality material loss exposure"),
+        (review, required_review, "quality impact manager review queue"),
+    ]:
+        missing = sorted(required.difference(frame.columns))
+        if missing:
+            return _result("quality_adjusted_capacity", "FAIL", f"{label} missing columns: {missing}")
+    for frame, columns in [
+        (impact, ["planned_production_qty", "original_total_required_hours", "defect_rate_used", "rework_rate_used", "scrap_rate_used", "discount_review_rate_used", "other_disposition_share_used", "defective_units", "first_pass_good_units", "reworkable_defect_units", "direct_scrap_units", "discount_review_units", "other_defect_disposition_units", "defect_disposition_total_units", "rework_success_units", "rework_failure_units", "final_expected_good_units", "total_expected_loss_units", "expected_defect_units", "expected_rework_units", "expected_scrap_units", "expected_good_units_after_quality", "expected_rework_success_units", "expected_rework_failure_units", "extra_rework_time_hours", "quality_adjusted_required_hours"]),
+        (adjusted, ["original_required_hours", "quality_extra_rework_hours", "quality_adjusted_required_hours", "expected_defective_units", "expected_rework_units", "expected_loss_units", "expected_final_good_units", "available_hours", "original_utilization_pct", "quality_adjusted_utilization_pct"]),
+        (bottleneck, ["quality_adjusted_utilization_pct", "quality_extra_rework_hours", "expected_defective_units", "expected_rework_units", "expected_loss_units"]),
+        (material, ["defective_units", "direct_scrap_units", "rework_failure_units", "discount_review_units", "other_defect_disposition_units", "total_expected_loss_units", "final_expected_good_units", "expected_scrap_units", "expected_rework_failure_units", "potential_replacement_unit_exposure"]),
+    ]:
+        for column in columns:
+            values = pd.to_numeric(frame[column], errors="coerce")
+            if values.isna().any() or (values < 0).any():
+                return _result("quality_adjusted_capacity", "FAIL", f"{column} must be numeric and non-negative.")
+    worsening_or_rework = (pd.to_numeric(impact["extra_rework_time_hours"], errors="coerce").fillna(0) > 0) | impact["processing_time_trend"].astype(str).eq("WORSENING")
+    if (impact.loc[worsening_or_rework, "quality_adjusted_required_hours"] + 1e-9 < impact.loc[worsening_or_rework, "original_total_required_hours"]).any():
+        return _result("quality_adjusted_capacity", "FAIL", "Quality-adjusted required hours must not fall below original hours when rework or worsening time applies.")
+    tolerance = 0.0001
+    if (impact["defect_disposition_balance_check"].abs() > tolerance).any():
+        return _result("quality_adjusted_capacity", "FAIL", "Defect disposition units do not reconcile to defective units.")
+    if (impact["final_quality_balance_check"].abs() > tolerance).any():
+        return _result("quality_adjusted_capacity", "FAIL", "Final good plus loss units do not reconcile to planned production.")
+    valid_balance_statuses = {"BALANCED", "REVIEW_REQUIRED"}
+    if (~impact["defect_disposition_balance_status"].astype(str).isin(valid_balance_statuses)).any():
+        return _result("quality_adjusted_capacity", "FAIL", "Invalid defect disposition balance status.")
+    if (~impact["final_quality_balance_status"].astype(str).isin(valid_balance_statuses)).any():
+        return _result("quality_adjusted_capacity", "FAIL", "Invalid final quality balance status.")
+    disposition_share_total = impact["rework_rate_used"] + impact["scrap_rate_used"] + impact["discount_review_rate_used"] + impact["other_disposition_share_used"]
+    if ((impact["defective_units"] > 0) & (disposition_share_total.sub(1).abs() > tolerance)).any():
+        return _result("quality_adjusted_capacity", "FAIL", "Disposition rate shares do not reconcile to 1.0 where defects exist.")
+    expected_status = "PLANNING_ESTIMATE_ONLY_NOT_EXECUTION_CONFIRMED"
+    for frame, label in [(impact, "impact"), (adjusted, "adjusted capacity"), (bottleneck, "bottleneck impact"), (material, "material loss")]:
+        if set(frame["confirmation_status"].dropna().astype(str).str.strip()) != {expected_status}:
+            return _result("quality_adjusted_capacity", "FAIL", f"{label} confirmation status must be planning estimate only.")
+        if not _all_true(frame, "advisory_only_flag"):
+            return _result("quality_adjusted_capacity", "FAIL", f"{label} must be advisory-only.")
+        if "disposition_model_basis" in frame.columns and set(frame["disposition_model_basis"].dropna().astype(str).str.strip()) != {"DEFECT_DISPOSITION_RECONCILIATION"}:
+            return _result("quality_adjusted_capacity", "FAIL", f"{label} disposition model basis must be defect disposition reconciliation.")
+    valid_levels = {"LOW", "MEDIUM", "HIGH", "CRITICAL"}
+    for frame, column in [(impact, "quality_impact_level"), (adjusted, "quality_capacity_impact_level"), (bottleneck, "bottleneck_risk_after_quality")]:
+        if (~frame[column].astype(str).isin(valid_levels)).any():
+            return _result("quality_adjusted_capacity", "FAIL", f"{column} contains invalid risk levels.")
+    if not _all_true(material, "note_no_mrp_change_flag"):
+        return _result("quality_adjusted_capacity", "FAIL", "Material loss exposure must flag that MRP is unchanged.")
+    if (material["potential_replacement_unit_exposure"].sub(material["total_expected_loss_units"]).abs() > tolerance).any():
+        return _result("quality_adjusted_capacity", "FAIL", "Material loss exposure must be based on total expected loss units.")
+    if _to_bool(review["auto_action_allowed"]).any():
+        return _result("quality_adjusted_capacity", "FAIL", "Quality impact manager review queue cannot allow automatic action.")
+    if not _all_true(review, "advisory_only_flag"):
+        return _result("quality_adjusted_capacity", "FAIL", "Quality impact manager review queue must be advisory-only.")
+    return _result(
+        "quality_adjusted_capacity",
+        "PASS",
+        f"Step 6B quality-adjusted capacity valid; impact_rows={len(impact)}, adjusted_capacity_rows={len(adjusted)}, bottleneck_impact_rows={len(bottleneck)}.",
+    )
+
+
 def _check_phase3_inventory_check() -> dict:
     path = PHASE4_OUTPUTS["component_inventory_check"]
     if not path.exists():
@@ -1529,7 +1755,9 @@ def _check_no_execution_outputs() -> dict:
 def _check_no_routing_or_capacity_outputs() -> dict:
     blocked_tokens = [
         "capacity_plan",
-        "quality_adjusted_capacity",
+        "quality_adjusted_mrp",
+        "quality_adjusted_bom",
+        "quality_adjusted_purchase",
         "utilization",
         "streamlit",
         "final_bottleneck",
@@ -1568,7 +1796,7 @@ def _check_no_routing_or_capacity_outputs() -> dict:
     return _result(
         "no_routing_or_capacity_outputs",
         "PASS",
-        "No UI, quality-adjusted capacity, measured/final bottleneck, detailed scheduling, or simulation outputs found.",
+        "No UI, quality-adjusted MRP/BOM/procurement, measured/final bottleneck, detailed scheduling, or simulation outputs found.",
     )
 
 
@@ -1647,7 +1875,7 @@ def _result(name: str, status: str, message: str) -> dict:
 
 def _format_report(evidence: dict) -> str:
     lines = [
-        "Phase 4 Initialization Validation with Step 6A Quality and Workstation Performance Trends",
+        "Phase 4 Initialization Validation with Step 6B Quality-Adjusted Capacity Impact",
         f"Generated at UTC: {evidence['generated_at_utc']}",
         f"Overall status: {evidence['overall_status']}",
         f"Fail count: {evidence['fail_count']}",

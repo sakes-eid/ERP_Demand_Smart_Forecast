@@ -1,0 +1,19 @@
+check_id,check_name,status,message,affected_rows,advisory_only_flag
+quality_adjusted_quality_rules_exists,quality_rules exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\data\quality_rules.csv,0,True
+quality_adjusted_rework_rules_exists,rework_rules exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\data\rework_rules.csv,0,True
+quality_adjusted_quality_trend_operation_exists,quality_trend_operation exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_quality_trend_by_operation.csv,0,True
+quality_adjusted_processing_time_trend_exists,processing_time_trend exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_processing_time_trend_by_workstation.csv,0,True
+quality_adjusted_workstation_performance_exists,workstation_performance exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_workstation_performance_trend_summary.csv,0,True
+quality_adjusted_capacity_operation_detail_exists,capacity_operation_detail exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_capacity_operation_load_detail.csv,0,True
+quality_adjusted_capacity_workstation_exists,capacity_workstation exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_capacity_load_by_workstation.csv,0,True
+quality_adjusted_bottleneck_visibility_exists,bottleneck_visibility exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_bottleneck_visibility_summary.csv,0,True
+quality_adjusted_production_flow_exists,production_flow exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_production_flow_view.csv,0,True
+quality_adjusted_product_routings_exists,product_routings exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\data\product_routings.csv,0,True
+quality_adjusted_workstations_exists,workstations exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\data\workstations.csv,0,True
+quality_adjusted_quality_validation_exists,quality_validation exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_quality_validation.csv,0,True
+quality_adjusted_flow_validation_exists,flow_validation exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_flow_validation.csv,0,True
+quality_adjusted_capacity_validation_exists,capacity_validation exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_capacity_validation.csv,0,True
+quality_adjusted_queue_validation_exists,queue_validation exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_queue_validation.csv,0,True
+quality_adjusted_bottleneck_validation_exists,bottleneck_validation exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_bottleneck_validation.csv,0,True
+quality_adjusted_capacity_outputs_valid,Step 6B quality-adjusted capacity outputs valid,PASS,"Step 6B outputs valid; impact_rows=182, adjusted_rows=98.",0,True
+quality_adjusted_no_blocked_outputs,quality adjusted no blocked outputs,PASS,"No quality-adjusted MRP, scheduling, simulation, or execution outputs found.",0,True

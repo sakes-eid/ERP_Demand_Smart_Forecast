@@ -41,6 +41,13 @@ from core.quality_trends import QUALITY_TREND_WORKSTATION_OUTPUT_FILE
 from core.quality_trends import QUALITY_VALIDATION_OUTPUT_FILE
 from core.quality_trends import WORKSTATION_PERFORMANCE_SUMMARY_OUTPUT_FILE
 from core.quality_trends import build_quality_trend_outputs
+from core.quality_adjusted_capacity import QUALITY_ADJUSTED_BOTTLENECK_OUTPUT_FILE
+from core.quality_adjusted_capacity import QUALITY_ADJUSTED_CAPACITY_OUTPUT_FILE
+from core.quality_adjusted_capacity import QUALITY_ADJUSTED_VALIDATION_OUTPUT_FILE
+from core.quality_adjusted_capacity import QUALITY_IMPACT_MANAGER_REVIEW_OUTPUT_FILE
+from core.quality_adjusted_capacity import QUALITY_IMPACT_OPERATION_OUTPUT_FILE
+from core.quality_adjusted_capacity import QUALITY_MATERIAL_LOSS_OUTPUT_FILE
+from core.quality_adjusted_capacity import build_quality_adjusted_capacity_outputs
 from core.resource_master_data import OUTPUT_FILE as RESOURCE_VALIDATION_OUTPUT_FILE
 from core.resource_master_data import validate_resource_master_data
 from core.routing_master_data import FLOW_SUMMARY_OUTPUT_FILE
@@ -65,6 +72,7 @@ def run_initialization() -> None:
     bottleneck_summary, bottleneck_periods, bottleneck_review, bottleneck_validation = build_bottleneck_visibility_outputs()
     flow_view, flow_summary, flow_review, flow_validation = build_production_flow_view_outputs()
     quality_history, quality_operation, quality_workstation, processing_trend, performance_summary, quality_review, quality_validation = build_quality_trend_outputs()
+    quality_impact, quality_adjusted_capacity, quality_bottleneck_impact, quality_material_loss, quality_impact_review, quality_adjusted_validation = build_quality_adjusted_capacity_outputs()
     print("Phase 4 initialization bridge completed.")
     print(f"MPS rows: {len(mps)}")
     print(f"MPS output written to: {MPS_OUTPUT_FILE}")
@@ -129,6 +137,18 @@ def run_initialization() -> None:
     print(f"Quality manager review output written to: {QUALITY_MANAGER_REVIEW_OUTPUT_FILE}")
     print(f"Quality validation rows: {len(quality_validation)}")
     print(f"Quality validation output written to: {QUALITY_VALIDATION_OUTPUT_FILE}")
+    print(f"Quality impact operation rows: {len(quality_impact)}")
+    print(f"Quality impact operation output written to: {QUALITY_IMPACT_OPERATION_OUTPUT_FILE}")
+    print(f"Quality-adjusted capacity rows: {len(quality_adjusted_capacity)}")
+    print(f"Quality-adjusted capacity output written to: {QUALITY_ADJUSTED_CAPACITY_OUTPUT_FILE}")
+    print(f"Quality-adjusted bottleneck impact rows: {len(quality_bottleneck_impact)}")
+    print(f"Quality-adjusted bottleneck impact output written to: {QUALITY_ADJUSTED_BOTTLENECK_OUTPUT_FILE}")
+    print(f"Quality material loss exposure rows: {len(quality_material_loss)}")
+    print(f"Quality material loss exposure output written to: {QUALITY_MATERIAL_LOSS_OUTPUT_FILE}")
+    print(f"Quality impact manager review rows: {len(quality_impact_review)}")
+    print(f"Quality impact manager review output written to: {QUALITY_IMPACT_MANAGER_REVIEW_OUTPUT_FILE}")
+    print(f"Quality-adjusted capacity validation rows: {len(quality_adjusted_validation)}")
+    print(f"Quality-adjusted capacity validation output written to: {QUALITY_ADJUSTED_VALIDATION_OUTPUT_FILE}")
 
 
 if __name__ == "__main__":

@@ -9,4 +9,4 @@ quality_capacity_validation_exists,capacity_validation exists,PASS,Loaded C:\Use
 quality_queue_validation_exists,queue_validation exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_queue_validation.csv,0,True
 quality_bottleneck_validation_exists,bottleneck_validation exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_bottleneck_validation.csv,0,True
 quality_step6a_outputs_valid,Step 6A quality trend outputs valid,PASS,"Quality trend outputs valid; history_rows=52, operation_rows=13, workstation_rows=7.",0,True
-quality_no_blocked_outputs,quality no blocked execution outputs,PASS,"No quality-adjusted capacity, scheduling, simulation, or execution outputs found.",0,True
+quality_no_blocked_outputs,quality no blocked execution outputs,PASS,"No quality-adjusted MRP, scheduling, simulation, or execution outputs found.",0,True
