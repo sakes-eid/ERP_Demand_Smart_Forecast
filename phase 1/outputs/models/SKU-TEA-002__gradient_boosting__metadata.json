@@ -48,6 +48,6 @@
   "target_column": "quantity_demanded",
   "internal_target_column": "__target_demand",
   "training_rows": 151,
-  "saved_at": "2026-06-30T15:18:47",
+  "saved_at": "2026-06-30T15:54:46",
   "notes": "Persisted retrained champion model family on available training rows."
 }

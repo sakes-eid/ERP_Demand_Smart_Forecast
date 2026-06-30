@@ -80,6 +80,16 @@ from shared.core.maintenance_master_data import PHASE4_MAINTENANCE_CONTEXT_FILE
 from shared.core.maintenance_master_data import SPARE_PART_CONTEXT_FILE as MAINTENANCE_SPARE_PART_CONTEXT_FILE
 from shared.core.maintenance_master_data import VALIDATION_OUTPUT_FILE as MAINTENANCE_VALIDATION_OUTPUT_FILE
 from shared.core.maintenance_master_data import build_maintenance_master_data_outputs
+from shared.core.breakdown_risk_forecast import BREAKDOWN_HISTORY_CLEAN_FILE
+from shared.core.breakdown_risk_forecast import BREAKDOWN_RISK_FORECAST_FILE
+from shared.core.breakdown_risk_forecast import BREAKDOWN_TREND_FILE
+from shared.core.breakdown_risk_forecast import CREW_SKILL_EXPOSURE_FILE as BREAKDOWN_CREW_SKILL_EXPOSURE_FILE
+from shared.core.breakdown_risk_forecast import FAILURE_MODE_EXPOSURE_FILE as BREAKDOWN_FAILURE_MODE_EXPOSURE_FILE
+from shared.core.breakdown_risk_forecast import MANAGER_REVIEW_QUEUE_FILE as BREAKDOWN_MANAGER_REVIEW_QUEUE_FILE
+from shared.core.breakdown_risk_forecast import PHASE4_BREAKDOWN_CONTEXT_FILE
+from shared.core.breakdown_risk_forecast import SPARE_PART_EXPOSURE_FILE as BREAKDOWN_SPARE_PART_EXPOSURE_FILE
+from shared.core.breakdown_risk_forecast import VALIDATION_OUTPUT_FILE as BREAKDOWN_VALIDATION_OUTPUT_FILE
+from shared.core.breakdown_risk_forecast import build_breakdown_risk_outputs
 
 
 def run_initialization() -> None:
@@ -96,6 +106,7 @@ def run_initialization() -> None:
     workforce_validation, workforce_capacity, workforce_machine_auth, workforce_skill_summary, workforce_review, phase4_workforce_context = build_workforce_master_data_outputs()
     spare_validation, spare_machine_context, spare_phase_context, spare_review, phase4_spare_context = build_spare_part_master_data_outputs()
     maintenance_validation, maintenance_due, maintenance_spare, maintenance_cost, maintenance_review, phase4_maintenance_context = build_maintenance_master_data_outputs()
+    breakdown_validation, breakdown_clean, breakdown_trend, breakdown_risk, breakdown_failure, breakdown_spare, breakdown_crew, breakdown_review, phase4_breakdown_context = build_breakdown_risk_outputs()
     routing_validation = validate_routing_master_data()
     capacity_load, capacity_detail, capacity_validation = build_workstation_capacity_load()
     queue_pressure, queue_summary, queue_review, queue_validation = build_queue_pressure_outputs()
@@ -148,6 +159,24 @@ def run_initialization() -> None:
     print(f"Maintenance manager review output written to: {MAINTENANCE_MANAGER_REVIEW_QUEUE_FILE}")
     print(f"Phase 4 maintenance readiness rows: {len(phase4_maintenance_context)}")
     print(f"Phase 4 maintenance readiness output written to: {PHASE4_MAINTENANCE_CONTEXT_FILE}")
+    print(f"Breakdown validation rows: {len(breakdown_validation)}")
+    print(f"Breakdown validation output written to: {BREAKDOWN_VALIDATION_OUTPUT_FILE}")
+    print(f"Breakdown history clean rows: {len(breakdown_clean)}")
+    print(f"Breakdown history clean output written to: {BREAKDOWN_HISTORY_CLEAN_FILE}")
+    print(f"Breakdown trend rows: {len(breakdown_trend)}")
+    print(f"Breakdown trend output written to: {BREAKDOWN_TREND_FILE}")
+    print(f"Breakdown risk forecast rows: {len(breakdown_risk)}")
+    print(f"Breakdown risk forecast output written to: {BREAKDOWN_RISK_FORECAST_FILE}")
+    print(f"Breakdown failure-mode exposure rows: {len(breakdown_failure)}")
+    print(f"Breakdown failure-mode exposure output written to: {BREAKDOWN_FAILURE_MODE_EXPOSURE_FILE}")
+    print(f"Breakdown spare-part exposure rows: {len(breakdown_spare)}")
+    print(f"Breakdown spare-part exposure output written to: {BREAKDOWN_SPARE_PART_EXPOSURE_FILE}")
+    print(f"Breakdown crew-skill exposure rows: {len(breakdown_crew)}")
+    print(f"Breakdown crew-skill exposure output written to: {BREAKDOWN_CREW_SKILL_EXPOSURE_FILE}")
+    print(f"Breakdown manager review rows: {len(breakdown_review)}")
+    print(f"Breakdown manager review output written to: {BREAKDOWN_MANAGER_REVIEW_QUEUE_FILE}")
+    print(f"Phase 4 breakdown risk context rows: {len(phase4_breakdown_context)}")
+    print(f"Phase 4 breakdown risk context output written to: {PHASE4_BREAKDOWN_CONTEXT_FILE}")
     print(f"Routing validation rows: {len(routing_validation)}")
     print(f"Routing validation output written to: {ROUTING_VALIDATION_OUTPUT_FILE}")
     print(f"Routing flow summary written to: {FLOW_SUMMARY_OUTPUT_FILE}")

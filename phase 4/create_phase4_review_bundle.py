@@ -1,4 +1,4 @@
-"""Create a clean Phase 4 Step 7C maintenance master review bundle."""
+"""Create a clean Phase 4 Step 7D breakdown risk review bundle."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 PHASE4_OUTPUTS = PROJECT_ROOT / "phase 4" / "outputs"
-ZIP_PATH = PROJECT_ROOT / "phase4_step7c_maintenance_master_review_bundle.zip"
+ZIP_PATH = PROJECT_ROOT / "phase4_step7d_breakdown_risk_review_bundle.zip"
 MANIFEST_PATH = PHASE4_OUTPUTS / "phase4_review_bundle_manifest.txt"
 
 REQUIRED_RELATIVE_FILES = [
@@ -25,11 +25,15 @@ REQUIRED_RELATIVE_FILES = [
     "shared/data/maintenance_plans.csv",
     "shared/data/maintenance_plan_spare_parts.csv",
     "shared/data/machine_maintenance_state.csv",
+    "shared/data/breakdown_history.csv",
+    "shared/data/machine_failure_modes.csv",
+    "shared/data/manufacturer_reliability_assumptions.csv",
     "shared/data/crew_calendar.csv",
     "shared/data/crew_cost_rates.csv",
     "shared/core/workforce_master_data.py",
     "shared/core/spare_parts_master_data.py",
     "shared/core/maintenance_master_data.py",
+    "shared/core/breakdown_risk_forecast.py",
     "shared/outputs/workforce_crew_validation.csv",
     "shared/outputs/workforce_crew_capacity_context.csv",
     "shared/outputs/workforce_machine_authorization_context.csv",
@@ -44,6 +48,14 @@ REQUIRED_RELATIVE_FILES = [
     "shared/outputs/maintenance_spare_part_requirement_context.csv",
     "shared/outputs/maintenance_cost_downtime_context.csv",
     "shared/outputs/maintenance_manager_review_queue.csv",
+    "shared/outputs/breakdown_history_clean.csv",
+    "shared/outputs/breakdown_trend_by_machine.csv",
+    "shared/outputs/breakdown_risk_forecast.csv",
+    "shared/outputs/breakdown_failure_mode_exposure.csv",
+    "shared/outputs/breakdown_spare_part_exposure.csv",
+    "shared/outputs/breakdown_crew_skill_exposure.csv",
+    "shared/outputs/breakdown_manager_review_queue.csv",
+    "shared/outputs/breakdown_validation.csv",
     "phase 4/README.md",
     "phase 4/main.py",
     "phase 4/validate_phase4_initialization.py",
@@ -81,6 +93,7 @@ REQUIRED_RELATIVE_FILES = [
     "phase 4/outputs/phase4_workforce_resource_context.csv",
     "phase 4/outputs/phase4_spare_part_requirement_context.csv",
     "phase 4/outputs/phase4_maintenance_readiness_context.csv",
+    "phase 4/outputs/phase4_breakdown_risk_context.csv",
     "phase 4/outputs/phase4_routing_validation.csv",
     "phase 4/outputs/phase4_routing_flow_summary.csv",
     "phase 4/outputs/phase4_capacity_load_by_workstation.csv",
@@ -259,6 +272,19 @@ def _verify_zip() -> tuple[str, list[str]]:
         "shared/outputs/maintenance_cost_downtime_context.csv": "Shared maintenance cost/downtime context exists inside the zip",
         "shared/outputs/maintenance_manager_review_queue.csv": "Shared maintenance manager review queue exists inside the zip",
         "phase 4/outputs/phase4_maintenance_readiness_context.csv": "Phase 4 maintenance readiness context exists inside the zip",
+        "shared/data/breakdown_history.csv": "Shared breakdown history data exists inside the zip",
+        "shared/data/machine_failure_modes.csv": "Shared machine failure modes data exists inside the zip",
+        "shared/data/manufacturer_reliability_assumptions.csv": "Shared manufacturer reliability assumptions data exists inside the zip",
+        "shared/core/breakdown_risk_forecast.py": "Shared breakdown risk forecast module exists inside the zip",
+        "shared/outputs/breakdown_history_clean.csv": "Shared clean breakdown history output exists inside the zip",
+        "shared/outputs/breakdown_trend_by_machine.csv": "Shared breakdown trend output exists inside the zip",
+        "shared/outputs/breakdown_risk_forecast.csv": "Shared breakdown risk forecast output exists inside the zip",
+        "shared/outputs/breakdown_failure_mode_exposure.csv": "Shared breakdown failure-mode exposure output exists inside the zip",
+        "shared/outputs/breakdown_spare_part_exposure.csv": "Shared breakdown spare-part exposure output exists inside the zip",
+        "shared/outputs/breakdown_crew_skill_exposure.csv": "Shared breakdown crew-skill exposure output exists inside the zip",
+        "shared/outputs/breakdown_manager_review_queue.csv": "Shared breakdown manager review queue exists inside the zip",
+        "shared/outputs/breakdown_validation.csv": "Shared breakdown validation output exists inside the zip",
+        "phase 4/outputs/phase4_breakdown_risk_context.csv": "Phase 4 breakdown risk context exists inside the zip",
         "phase 1/outputs/phase1_spare_part_demand_context.csv": "Phase 1 spare-part demand context exists inside the zip",
         "phase 2/outputs/phase4_spare_part_supplier_check.csv": "Phase 2 spare-part supplier check exists inside the zip",
         "phase 3/outputs/phase4_spare_part_inventory_check.csv": "Phase 3 spare-part inventory check exists inside the zip",
@@ -396,7 +422,7 @@ def _build_manifest(
 ) -> str:
     zip_size_mb = ZIP_PATH.stat().st_size / (1024 * 1024) if ZIP_PATH.exists() else 0.0
     lines = [
-        "Phase 4 Step 7C Maintenance Master Review Bundle Manifest",
+        "Phase 4 Step 7D Breakdown Risk Review Bundle Manifest",
         f"Generated zip path: {ZIP_PATH}",
         f"Generated timestamp UTC: {generated_at}",
         f"Included file count: {len(included)}",

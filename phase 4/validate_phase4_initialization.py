@@ -21,6 +21,7 @@ PHASE4_OUTPUTS = {
     "mrp_pegging_detail": PHASE4_DIR / "outputs" / "phase4_mrp_pegging_detail.csv",
     "phase4_workforce_resource_context": PHASE4_DIR / "outputs" / "phase4_workforce_resource_context.csv",
     "phase4_maintenance_readiness_context": PHASE4_DIR / "outputs" / "phase4_maintenance_readiness_context.csv",
+    "phase4_breakdown_risk_context": PHASE4_DIR / "outputs" / "phase4_breakdown_risk_context.csv",
     "capacity_load_by_workstation": PHASE4_DIR / "outputs" / "phase4_capacity_load_by_workstation.csv",
     "capacity_operation_load_detail": PHASE4_DIR / "outputs" / "phase4_capacity_operation_load_detail.csv",
     "capacity_load_by_machine_type": PHASE4_DIR / "outputs" / "phase4_capacity_load_by_machine_type.csv",
@@ -102,6 +103,21 @@ MAINTENANCE_SPARE_PART_CONTEXT_FILE = PROJECT_ROOT / "shared" / "outputs" / "mai
 MAINTENANCE_COST_DOWNTIME_FILE = PROJECT_ROOT / "shared" / "outputs" / "maintenance_cost_downtime_context.csv"
 MAINTENANCE_MANAGER_REVIEW_FILE = PROJECT_ROOT / "shared" / "outputs" / "maintenance_manager_review_queue.csv"
 PHASE4_MAINTENANCE_CONTEXT_FILE = PHASE4_DIR / "outputs" / "phase4_maintenance_readiness_context.csv"
+BREAKDOWN_DATA_FILES = {
+    "breakdown_history": PROJECT_ROOT / "shared" / "data" / "breakdown_history.csv",
+    "machine_failure_modes": PROJECT_ROOT / "shared" / "data" / "machine_failure_modes.csv",
+    "manufacturer_reliability_assumptions": PROJECT_ROOT / "shared" / "data" / "manufacturer_reliability_assumptions.csv",
+}
+BREAKDOWN_VALIDATION_FILE = PROJECT_ROOT / "shared" / "outputs" / "breakdown_validation.csv"
+BREAKDOWN_HISTORY_CLEAN_FILE = PROJECT_ROOT / "shared" / "outputs" / "breakdown_history_clean.csv"
+BREAKDOWN_TREND_FILE = PROJECT_ROOT / "shared" / "outputs" / "breakdown_trend_by_machine.csv"
+BREAKDOWN_RISK_FORECAST_FILE = PROJECT_ROOT / "shared" / "outputs" / "breakdown_risk_forecast.csv"
+BREAKDOWN_FAILURE_MODE_EXPOSURE_FILE = PROJECT_ROOT / "shared" / "outputs" / "breakdown_failure_mode_exposure.csv"
+BREAKDOWN_SPARE_PART_EXPOSURE_FILE = PROJECT_ROOT / "shared" / "outputs" / "breakdown_spare_part_exposure.csv"
+BREAKDOWN_CREW_SKILL_EXPOSURE_FILE = PROJECT_ROOT / "shared" / "outputs" / "breakdown_crew_skill_exposure.csv"
+BREAKDOWN_MANAGER_REVIEW_FILE = PROJECT_ROOT / "shared" / "outputs" / "breakdown_manager_review_queue.csv"
+PHASE4_BREAKDOWN_CONTEXT_FILE = PHASE4_DIR / "outputs" / "phase4_breakdown_risk_context.csv"
+BREAKDOWN_NEW_MACHINE_ID = "M-FORK-BENCH-001"
 RESOURCE_DATA_FILES = {
     "workstations": PHASE4_DIR / "data" / "workstations.csv",
     "machines": PHASE4_DIR / "data" / "machines.csv",
@@ -189,6 +205,7 @@ def main() -> None:
     checks.append(_check_workforce_master_data())
     checks.append(_check_spare_part_integration())
     checks.append(_check_maintenance_master_data())
+    checks.append(_check_breakdown_risk_forecast())
     checks.append(_check_routing_master_data())
     checks.append(_check_capacity_load())
     checks.append(_check_queue_pressure())
@@ -940,6 +957,107 @@ def _check_maintenance_master_data() -> dict:
         "maintenance_master_data",
         "PASS",
         f"Step 7C maintenance master data valid; plans={len(plans)}, plan_spares={len(plan_spares)}, due_rows={len(due)}, phase4_context_rows={len(phase4_context)}.",
+    )
+
+
+def _check_breakdown_risk_forecast() -> dict:
+    for name, path in BREAKDOWN_DATA_FILES.items():
+        if not path.exists():
+            return _result("breakdown_risk_forecast", "FAIL", f"Breakdown data file is missing: {path}")
+        if name != "breakdown_history" and pd.read_csv(path).empty:
+            return _result("breakdown_risk_forecast", "FAIL", f"Breakdown data file has no rows: {path}")
+    if not BREAKDOWN_DATA_FILES["breakdown_history"].exists():
+        return _result("breakdown_risk_forecast", "FAIL", "Breakdown history file is missing.")
+
+    required_outputs = [
+        (BREAKDOWN_VALIDATION_FILE, "breakdown validation"),
+        (BREAKDOWN_HISTORY_CLEAN_FILE, "breakdown history clean"),
+        (BREAKDOWN_TREND_FILE, "breakdown trend by machine"),
+        (BREAKDOWN_RISK_FORECAST_FILE, "breakdown risk forecast"),
+        (BREAKDOWN_FAILURE_MODE_EXPOSURE_FILE, "breakdown failure-mode exposure"),
+        (BREAKDOWN_SPARE_PART_EXPOSURE_FILE, "breakdown spare-part exposure"),
+        (BREAKDOWN_CREW_SKILL_EXPOSURE_FILE, "breakdown crew-skill exposure"),
+        (BREAKDOWN_MANAGER_REVIEW_FILE, "breakdown manager review queue"),
+        (PHASE4_BREAKDOWN_CONTEXT_FILE, "Phase 4 breakdown risk context"),
+    ]
+    for path, label in required_outputs:
+        if not path.exists():
+            return _result("breakdown_risk_forecast", "FAIL", f"{label} output is missing: {path}")
+        if label != "breakdown manager review queue" and pd.read_csv(path).empty:
+            return _result("breakdown_risk_forecast", "FAIL", f"{label} output has no rows: {path}")
+
+    validation = pd.read_csv(BREAKDOWN_VALIDATION_FILE)
+    fail_count = int((validation["status"].astype(str).str.upper() == "FAIL").sum()) if "status" in validation.columns else len(validation)
+    if fail_count:
+        return _result("breakdown_risk_forecast", "FAIL", f"Breakdown validation contains FAIL rows: {fail_count}")
+
+    machines = pd.read_csv(RESOURCE_DATA_FILES["machines"])
+    oem = pd.read_csv(BREAKDOWN_DATA_FILES["manufacturer_reliability_assumptions"])
+    history = pd.read_csv(BREAKDOWN_DATA_FILES["breakdown_history"])
+    failure_modes = pd.read_csv(BREAKDOWN_DATA_FILES["machine_failure_modes"])
+    trend = pd.read_csv(BREAKDOWN_TREND_FILE)
+    risk = pd.read_csv(BREAKDOWN_RISK_FORECAST_FILE)
+    failure_exposure = pd.read_csv(BREAKDOWN_FAILURE_MODE_EXPOSURE_FILE)
+    spare_exposure = pd.read_csv(BREAKDOWN_SPARE_PART_EXPOSURE_FILE)
+    crew_exposure = pd.read_csv(BREAKDOWN_CREW_SKILL_EXPOSURE_FILE)
+    review = pd.read_csv(BREAKDOWN_MANAGER_REVIEW_FILE)
+    phase4_context = pd.read_csv(PHASE4_BREAKDOWN_CONTEXT_FILE)
+
+    machine_ids = set(machines["machine_id"].astype(str))
+    if sorted(set(oem["machine_id"].astype(str)) - machine_ids):
+        return _result("breakdown_risk_forecast", "FAIL", "OEM assumptions reference invalid machines.")
+    if sorted(set(failure_modes["machine_id"].astype(str)) - machine_ids):
+        return _result("breakdown_risk_forecast", "FAIL", "Failure modes reference invalid machines.")
+    if sorted(set(history["machine_id"].astype(str)) - machine_ids):
+        return _result("breakdown_risk_forecast", "FAIL", "Breakdown history references invalid machines.")
+    missing_oem = sorted(machine_ids - set(oem.loc[_to_bool(oem["active_flag"]), "machine_id"].astype(str)))
+    if missing_oem:
+        return _result("breakdown_risk_forecast", "FAIL", f"Active machines missing OEM/manufacturer assumptions: {missing_oem}")
+
+    new_oem = oem[oem["machine_id"].astype(str) == BREAKDOWN_NEW_MACHINE_ID]
+    new_risk = risk[risk["machine_id"].astype(str) == BREAKDOWN_NEW_MACHINE_ID]
+    if new_oem.empty or new_risk.empty:
+        return _result("breakdown_risk_forecast", "FAIL", f"New-to-us machine {BREAKDOWN_NEW_MACHINE_ID} is missing from OEM or risk outputs.")
+    if not _to_bool(new_oem["new_machine_flag"]).all() or _to_bool(new_oem["history_available_flag"]).any() or not _to_bool(new_oem["use_oem_when_history_missing_flag"]).all():
+        return _result("breakdown_risk_forecast", "FAIL", f"New-to-us machine {BREAKDOWN_NEW_MACHINE_ID} OEM flags are invalid.")
+    if set(new_risk["risk_basis"].astype(str)) != {"OEM_GUIDELINE_NEW_MACHINE"} or set(new_risk["reliability_data_source"].astype(str)) != {"OEM_GUIDELINE"}:
+        return _result("breakdown_risk_forecast", "FAIL", f"New-to-us machine {BREAKDOWN_NEW_MACHINE_ID} must use OEM guideline risk basis.")
+
+    allowed_risk_basis = {"HISTORICAL_BREAKDOWN_DATA", "HYBRID_HISTORY_AND_OEM", "OEM_GUIDELINE_NEW_MACHINE", "OEM_GUIDELINE_INSUFFICIENT_HISTORY", "PLANNING_ASSUMPTION_REVIEW"}
+    allowed_risk_level = {"LOW", "MEDIUM", "HIGH", "CRITICAL", "REVIEW_REQUIRED"}
+    allowed_trend = {"IMPROVING", "STABLE", "WORSENING", "INSUFFICIENT_DATA", "OEM_BASELINE_ONLY"}
+    if set(risk["risk_basis"].dropna().astype(str)) - allowed_risk_basis:
+        return _result("breakdown_risk_forecast", "FAIL", "Breakdown risk forecast contains invalid risk basis values.")
+    if set(risk["breakdown_risk_level"].dropna().astype(str)) - allowed_risk_level:
+        return _result("breakdown_risk_forecast", "FAIL", "Breakdown risk forecast contains invalid risk levels.")
+    if set(trend["breakdown_trend_overall"].dropna().astype(str)) - allowed_trend:
+        return _result("breakdown_risk_forecast", "FAIL", "Breakdown trend output contains invalid trend values.")
+    if set(phase4_context["confirmation_status"].dropna().astype(str)) != {"PLANNING_RISK_ESTIMATE_ONLY_NOT_EXECUTION_CONFIRMED"}:
+        return _result("breakdown_risk_forecast", "FAIL", "Phase 4 breakdown context confirmation status is invalid.")
+    for frame, label in [
+        (trend, "breakdown trend"),
+        (risk, "breakdown risk forecast"),
+        (failure_exposure, "failure-mode exposure"),
+        (spare_exposure, "spare-part exposure"),
+        (crew_exposure, "crew-skill exposure"),
+        (phase4_context, "Phase 4 breakdown context"),
+    ]:
+        if not _all_true(frame, "advisory_only_flag"):
+            return _result("breakdown_risk_forecast", "FAIL", f"{label} must be advisory-only.")
+    if not _all_true(spare_exposure, "note_no_consumption_flag"):
+        return _result("breakdown_risk_forecast", "FAIL", "Breakdown spare-part exposure must flag no consumption.")
+    if not _all_true(crew_exposure, "note_no_scheduling_flag"):
+        return _result("breakdown_risk_forecast", "FAIL", "Breakdown crew-skill exposure must flag no scheduling.")
+    if not review.empty:
+        if _to_bool(review["auto_action_allowed"]).any():
+            return _result("breakdown_risk_forecast", "FAIL", "Breakdown manager review queue cannot allow automatic action.")
+        if not _all_true(review, "advisory_only_flag"):
+            return _result("breakdown_risk_forecast", "FAIL", "Breakdown manager review queue must be advisory-only.")
+
+    return _result(
+        "breakdown_risk_forecast",
+        "PASS",
+        f"Step 7D breakdown risk forecast valid; history_rows={len(history)}, failure_modes={len(failure_modes)}, risk_rows={len(risk)}, phase4_context_rows={len(phase4_context)}.",
     )
 
 
@@ -2249,7 +2367,7 @@ def _result(name: str, status: str, message: str) -> dict:
 
 def _format_report(evidence: dict) -> str:
     lines = [
-        "Phase 4 Initialization Validation with Step 7C Maintenance Master Data and Due-Status Rules",
+        "Phase 4 Initialization Validation with Step 7D Breakdown History, OEM Reliability Baseline, Forecast, and Trend Detection",
         f"Generated at UTC: {evidence['generated_at_utc']}",
         f"Overall status: {evidence['overall_status']}",
         f"Fail count: {evidence['fail_count']}",

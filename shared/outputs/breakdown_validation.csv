@@ -1,0 +1,65 @@
+check_id,check_name,status,message,affected_rows,advisory_only_flag
+breakdown_breakdown_history_exists,breakdown_history exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\shared\data\breakdown_history.csv,0,True
+breakdown_machine_failure_modes_exists,machine_failure_modes exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\shared\data\machine_failure_modes.csv,0,True
+breakdown_manufacturer_reliability_assumptions_exists,manufacturer_reliability_assumptions exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\shared\data\manufacturer_reliability_assumptions.csv,0,True
+breakdown_phase4_machines_exists,phase4_machines exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\data\machines.csv,0,True
+breakdown_spare_parts_master_exists,spare_parts_master exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\shared\data\spare_parts_master.csv,0,True
+breakdown_workforce_skills_exists,workforce_skills exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\shared\data\workforce_skills.csv,0,True
+breakdown_workforce_crews_exists,workforce_crews exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\shared\data\workforce_crews.csv,0,True
+breakdown_crew_skill_matrix_exists,crew_skill_matrix exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\shared\data\crew_skill_matrix.csv,0,True
+breakdown_workforce_machine_authorization_context_exists,workforce_machine_authorization_context exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\shared\outputs\workforce_machine_authorization_context.csv,0,True
+breakdown_maintenance_due_status_context_exists,maintenance_due_status_context exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\shared\outputs\maintenance_due_status_context.csv,0,True
+breakdown_phase4_maintenance_readiness_context_exists,phase4_maintenance_readiness_context exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_maintenance_readiness_context.csv,0,True
+breakdown_phase4_spare_part_requirement_context_exists,phase4_spare_part_requirement_context exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_spare_part_requirement_context.csv,0,True
+breakdown_history_required_columns,history required columns,PASS,history has required columns.,0,True
+breakdown_failure_modes_required_columns,failure_modes required columns,PASS,failure_modes has required columns.,0,True
+breakdown_oem_required_columns,oem required columns,PASS,oem has required columns.,0,True
+breakdown_history_machine_refs,machine_id references valid,PASS,machine_id references are valid.,0,True
+failure_mode_machine_refs,machine_id references valid,PASS,machine_id references are valid.,0,True
+oem_machine_refs,machine_id references valid,PASS,machine_id references are valid.,0,True
+breakdown_every_machine_has_oem,every machine has OEM assumption,PASS,Every active machine has OEM/manufacturer assumptions.,0,True
+breakdown_history_failure_mode_refs,history failure mode refs valid,PASS,Breakdown history failure modes are valid.,0,True
+breakdown_history_spare_refs,spare_part_sku_used references valid spares,PASS,spare_part_sku_used spare references are valid.,0,True
+failure_mode_spare_refs,likely_spare_part_sku references valid spares,PASS,likely_spare_part_sku spare references are valid.,0,True
+failure_mode_skill_refs,failure mode skill refs valid,PASS,Failure mode skill references are valid.,0,True
+breakdown_history_root_causes_valid,root_cause_category values valid,PASS,root_cause_category values are valid.,0,True
+failure_mode_categories_valid,failure_mode_category values valid,PASS,failure_mode_category values are valid.,0,True
+failure_mode_severity_valid,severity_level values valid,PASS,severity_level values are valid.,0,True
+failure_mode_detectability_valid,detectability_level values valid,PASS,detectability_level values are valid.,0,True
+oem_interval_basis_valid,oem_interval_basis values valid,PASS,oem_interval_basis values are valid.,0,True
+oem_reliability_source_valid,reliability_data_source values valid,PASS,reliability_data_source values are valid.,0,True
+breakdown_history_numeric_nonnegative,numeric fields non-negative,PASS,Numeric fields are non-negative.,0,True
+failure_mode_numeric_nonnegative,numeric fields non-negative,PASS,Numeric fields are non-negative.,0,True
+oem_numeric_nonnegative,numeric fields non-negative,PASS,Numeric fields are non-negative.,0,True
+breakdown_new_machine_oem_setup,new-to-us machine uses OEM guideline,PASS,M-FORK-BENCH-001 is configured as new-to-us OEM-guideline machine.,0,True
+breakdown_new_machine_no_history,new-to-us machine has no active history,PASS,New-to-us machine has no active breakdown history.,0,True
+breakdown_master_advisory_only,breakdown master data advisory-only,PASS,Breakdown master advisory flags are true.,0,True
+breakdown_history_clean_not_empty,breakdown_history_clean not empty,PASS,breakdown_history_clean rows: 22,0,True
+breakdown_history_clean_advisory_only,breakdown_history_clean advisory-only,PASS,breakdown_history_clean advisory flags are true.,0,True
+breakdown_trend_by_machine_not_empty,breakdown_trend_by_machine not empty,PASS,breakdown_trend_by_machine rows: 7,0,True
+breakdown_trend_by_machine_advisory_only,breakdown_trend_by_machine advisory-only,PASS,breakdown_trend_by_machine advisory flags are true.,0,True
+breakdown_risk_forecast_not_empty,breakdown_risk_forecast not empty,PASS,breakdown_risk_forecast rows: 7,0,True
+breakdown_risk_forecast_advisory_only,breakdown_risk_forecast advisory-only,PASS,breakdown_risk_forecast advisory flags are true.,0,True
+breakdown_failure_mode_exposure_not_empty,breakdown_failure_mode_exposure not empty,PASS,breakdown_failure_mode_exposure rows: 14,0,True
+breakdown_failure_mode_exposure_advisory_only,breakdown_failure_mode_exposure advisory-only,PASS,breakdown_failure_mode_exposure advisory flags are true.,0,True
+breakdown_spare_part_exposure_not_empty,breakdown_spare_part_exposure not empty,PASS,breakdown_spare_part_exposure rows: 14,0,True
+breakdown_spare_part_exposure_advisory_only,breakdown_spare_part_exposure advisory-only,PASS,breakdown_spare_part_exposure advisory flags are true.,0,True
+breakdown_crew_skill_exposure_not_empty,breakdown_crew_skill_exposure not empty,PASS,breakdown_crew_skill_exposure rows: 14,0,True
+breakdown_crew_skill_exposure_advisory_only,breakdown_crew_skill_exposure advisory-only,PASS,breakdown_crew_skill_exposure advisory flags are true.,0,True
+phase4_breakdown_risk_context_not_empty,phase4_breakdown_risk_context not empty,PASS,phase4_breakdown_risk_context rows: 7,0,True
+phase4_breakdown_risk_context_advisory_only,phase4_breakdown_risk_context advisory-only,PASS,phase4_breakdown_risk_context advisory flags are true.,0,True
+breakdown_trend_values_valid,breakdown_trend_overall values valid,PASS,breakdown_trend_overall values are valid.,0,True
+breakdown_history_sufficiency_valid,history_sufficiency_status values valid,PASS,history_sufficiency_status values are valid.,0,True
+breakdown_risk_basis_valid,risk_basis values valid,PASS,risk_basis values are valid.,0,True
+breakdown_risk_level_valid,breakdown_risk_level values valid,PASS,breakdown_risk_level values are valid.,0,True
+failure_mode_exposure_level_valid,failure_mode_exposure_level values valid,PASS,failure_mode_exposure_level values are valid.,0,True
+crew_skill_coverage_valid,crew_skill_coverage_status values valid,PASS,crew_skill_coverage_status values are valid.,0,True
+breakdown_new_machine_forecast_oem,new machine forecast uses OEM,PASS,M-FORK-BENCH-001 forecast uses OEM guideline new-machine basis.,0,True
+breakdown_spare_no_consumption,spare exposure no consumption,PASS,Breakdown spare exposure flags no consumption.,0,True
+breakdown_crew_no_scheduling,crew exposure no scheduling,PASS,Breakdown crew exposure flags no scheduling.,0,True
+breakdown_review_queue_safe,review queue safe,PASS,Breakdown review queue has no automatic action.,0,True
+phase4_breakdown_confirmation_status,Phase 4 breakdown confirmation status,PASS,Phase 4 breakdown context is planning risk estimate only.,0,True
+breakdown_existing_workforce_validation,existing workforce validation,PASS,workforce validation FAIL rows: 0,0,True
+breakdown_existing_spare-part_validation,existing spare-part validation,PASS,spare-part validation FAIL rows: 0,0,True
+breakdown_existing_maintenance_validation,existing maintenance validation,PASS,maintenance validation FAIL rows: 0,0,True
+breakdown_no_blocked_outputs,no blocked breakdown outputs,PASS,"No breakdown events, work orders, scheduling, reservation, purchase-order, or simulation outputs found.",0,True
