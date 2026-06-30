@@ -1,10 +1,10 @@
-Phase 4 Step 7B Spare Parts Review Bundle Manifest
-Generated zip path: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase4_step7b_spare_parts_review_bundle.zip
-Generated timestamp UTC: 2026-06-30T11:56:12+00:00
-Included file count: 118
+Phase 4 Step 7C Maintenance Master Review Bundle Manifest
+Generated zip path: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase4_step7c_maintenance_master_review_bundle.zip
+Generated timestamp UTC: 2026-06-30T13:19:18+00:00
+Included file count: 128
 Missing file count: 0
 Excluded file count: 0
-Final zip size MB: 0.302
+Final zip size MB: 0.320
 Verification status: PASS
 
 Verification messages:
@@ -15,6 +15,16 @@ Verification messages:
 - PASS: Shared spare-part machine requirement context exists inside the zip
 - PASS: Shared spare-part phase integration context exists inside the zip
 - PASS: Shared spare-part manager review queue exists inside the zip
+- PASS: Shared maintenance plans data exists inside the zip
+- PASS: Shared maintenance plan spare-parts data exists inside the zip
+- PASS: Shared machine maintenance state data exists inside the zip
+- PASS: Shared maintenance master data module exists inside the zip
+- PASS: Shared maintenance validation output exists inside the zip
+- PASS: Shared maintenance due-status context exists inside the zip
+- PASS: Shared maintenance spare-part requirement context exists inside the zip
+- PASS: Shared maintenance cost/downtime context exists inside the zip
+- PASS: Shared maintenance manager review queue exists inside the zip
+- PASS: Phase 4 maintenance readiness context exists inside the zip
 - PASS: Phase 1 spare-part demand context exists inside the zip
 - PASS: Phase 2 spare-part supplier check exists inside the zip
 - PASS: Phase 3 spare-part inventory check exists inside the zip
@@ -120,10 +130,14 @@ Included files:
 - shared/data/crew_machine_authorizations.csv
 - shared/data/spare_parts_master.csv
 - shared/data/machine_spare_part_requirements.csv
+- shared/data/maintenance_plans.csv
+- shared/data/maintenance_plan_spare_parts.csv
+- shared/data/machine_maintenance_state.csv
 - shared/data/crew_calendar.csv
 - shared/data/crew_cost_rates.csv
 - shared/core/workforce_master_data.py
 - shared/core/spare_parts_master_data.py
+- shared/core/maintenance_master_data.py
 - shared/outputs/workforce_crew_validation.csv
 - shared/outputs/workforce_crew_capacity_context.csv
 - shared/outputs/workforce_machine_authorization_context.csv
@@ -133,6 +147,11 @@ Included files:
 - shared/outputs/spare_part_machine_requirement_context.csv
 - shared/outputs/spare_part_phase_integration_context.csv
 - shared/outputs/spare_part_manager_review_queue.csv
+- shared/outputs/maintenance_plan_validation.csv
+- shared/outputs/maintenance_due_status_context.csv
+- shared/outputs/maintenance_spare_part_requirement_context.csv
+- shared/outputs/maintenance_cost_downtime_context.csv
+- shared/outputs/maintenance_manager_review_queue.csv
 - phase 4/README.md
 - phase 4/main.py
 - phase 4/validate_phase4_initialization.py
@@ -169,6 +188,7 @@ Included files:
 - phase 4/outputs/phase4_resource_validation.csv
 - phase 4/outputs/phase4_workforce_resource_context.csv
 - phase 4/outputs/phase4_spare_part_requirement_context.csv
+- phase 4/outputs/phase4_maintenance_readiness_context.csv
 - phase 4/outputs/phase4_routing_validation.csv
 - phase 4/outputs/phase4_routing_flow_summary.csv
 - phase 4/outputs/phase4_capacity_load_by_workstation.csv

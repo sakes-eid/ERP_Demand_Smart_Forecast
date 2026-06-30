@@ -73,6 +73,13 @@ from shared.core.spare_parts_master_data import PHASE4_SPARE_PART_CONTEXT_FILE
 from shared.core.spare_parts_master_data import PHASE_INTEGRATION_CONTEXT_FILE as SPARE_PHASE_INTEGRATION_CONTEXT_FILE
 from shared.core.spare_parts_master_data import VALIDATION_OUTPUT_FILE as SPARE_VALIDATION_OUTPUT_FILE
 from shared.core.spare_parts_master_data import build_spare_part_master_data_outputs
+from shared.core.maintenance_master_data import COST_DOWNTIME_CONTEXT_FILE
+from shared.core.maintenance_master_data import DUE_STATUS_CONTEXT_FILE
+from shared.core.maintenance_master_data import MANAGER_REVIEW_QUEUE_FILE as MAINTENANCE_MANAGER_REVIEW_QUEUE_FILE
+from shared.core.maintenance_master_data import PHASE4_MAINTENANCE_CONTEXT_FILE
+from shared.core.maintenance_master_data import SPARE_PART_CONTEXT_FILE as MAINTENANCE_SPARE_PART_CONTEXT_FILE
+from shared.core.maintenance_master_data import VALIDATION_OUTPUT_FILE as MAINTENANCE_VALIDATION_OUTPUT_FILE
+from shared.core.maintenance_master_data import build_maintenance_master_data_outputs
 
 
 def run_initialization() -> None:
@@ -88,6 +95,7 @@ def run_initialization() -> None:
     resource_validation = validate_resource_master_data()
     workforce_validation, workforce_capacity, workforce_machine_auth, workforce_skill_summary, workforce_review, phase4_workforce_context = build_workforce_master_data_outputs()
     spare_validation, spare_machine_context, spare_phase_context, spare_review, phase4_spare_context = build_spare_part_master_data_outputs()
+    maintenance_validation, maintenance_due, maintenance_spare, maintenance_cost, maintenance_review, phase4_maintenance_context = build_maintenance_master_data_outputs()
     routing_validation = validate_routing_master_data()
     capacity_load, capacity_detail, capacity_validation = build_workstation_capacity_load()
     queue_pressure, queue_summary, queue_review, queue_validation = build_queue_pressure_outputs()
@@ -128,6 +136,18 @@ def run_initialization() -> None:
     print(f"Spare-part manager review output written to: {SPARE_MANAGER_REVIEW_QUEUE_FILE}")
     print(f"Phase 4 spare-part context rows: {len(phase4_spare_context)}")
     print(f"Phase 4 spare-part context output written to: {PHASE4_SPARE_PART_CONTEXT_FILE}")
+    print(f"Shared maintenance validation rows: {len(maintenance_validation)}")
+    print(f"Shared maintenance validation output written to: {MAINTENANCE_VALIDATION_OUTPUT_FILE}")
+    print(f"Maintenance due-status context rows: {len(maintenance_due)}")
+    print(f"Maintenance due-status context output written to: {DUE_STATUS_CONTEXT_FILE}")
+    print(f"Maintenance spare-part requirement rows: {len(maintenance_spare)}")
+    print(f"Maintenance spare-part requirement output written to: {MAINTENANCE_SPARE_PART_CONTEXT_FILE}")
+    print(f"Maintenance cost/downtime rows: {len(maintenance_cost)}")
+    print(f"Maintenance cost/downtime output written to: {COST_DOWNTIME_CONTEXT_FILE}")
+    print(f"Maintenance manager review rows: {len(maintenance_review)}")
+    print(f"Maintenance manager review output written to: {MAINTENANCE_MANAGER_REVIEW_QUEUE_FILE}")
+    print(f"Phase 4 maintenance readiness rows: {len(phase4_maintenance_context)}")
+    print(f"Phase 4 maintenance readiness output written to: {PHASE4_MAINTENANCE_CONTEXT_FILE}")
     print(f"Routing validation rows: {len(routing_validation)}")
     print(f"Routing validation output written to: {ROUTING_VALIDATION_OUTPUT_FILE}")
     print(f"Routing flow summary written to: {FLOW_SUMMARY_OUTPUT_FILE}")

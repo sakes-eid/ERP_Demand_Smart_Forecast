@@ -1,0 +1,37 @@
+check_id,check_name,status,message,affected_rows,advisory_only_flag
+maintenance_maintenance_plans_exists,maintenance_plans exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\shared\data\maintenance_plans.csv,0,True
+maintenance_maintenance_plan_spare_parts_exists,maintenance_plan_spare_parts exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\shared\data\maintenance_plan_spare_parts.csv,0,True
+maintenance_machine_maintenance_state_exists,machine_maintenance_state exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\shared\data\machine_maintenance_state.csv,0,True
+maintenance_phase4_machines_exists,phase4_machines exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\data\machines.csv,0,True
+maintenance_spare_parts_master_exists,spare_parts_master exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\shared\data\spare_parts_master.csv,0,True
+maintenance_phase4_workforce_resource_context_exists,phase4_workforce_resource_context exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_workforce_resource_context.csv,0,True
+maintenance_workforce_machine_authorization_context_exists,workforce_machine_authorization_context exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\shared\outputs\workforce_machine_authorization_context.csv,0,True
+maintenance_spare_part_phase_integration_context_exists,spare_part_phase_integration_context exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\shared\outputs\spare_part_phase_integration_context.csv,0,True
+maintenance_phase4_spare_part_requirement_context_exists,phase4_spare_part_requirement_context exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\outputs\phase4_spare_part_requirement_context.csv,0,True
+maintenance_plans_required_columns,plans required columns,PASS,plans has required columns.,0,True
+maintenance_plan_spares_required_columns,plan_spares required columns,PASS,plan_spares has required columns.,0,True
+maintenance_state_required_columns,state required columns,PASS,state has required columns.,0,True
+maintenance_plan_id_unique,maintenance plan IDs unique,PASS,Duplicate maintenance_plan_id rows: 0,0,True
+maintenance_plan_machine_refs,machine_id references valid,PASS,machine_id references are valid.,0,True
+maintenance_spare_plan_refs,maintenance_plan_id references valid,PASS,maintenance_plan_id references are valid.,0,True
+maintenance_spare_sku_refs,spare_part_sku references valid,PASS,spare_part_sku references are valid.,0,True
+maintenance_state_machine_refs,machine_id references valid,PASS,machine_id references are valid.,0,True
+maintenance_state_plan_refs,maintenance_plan_id references valid,PASS,maintenance_plan_id references are valid.,0,True
+maintenance_levels_valid,maintenance_level values valid,PASS,maintenance_level values are valid.,0,True
+maintenance_categories_valid,maintenance_category values valid,PASS,maintenance_category values are valid.,0,True
+maintenance_triggers_valid,trigger_type values valid,PASS,trigger_type values are valid.,0,True
+maintenance_deferral_risk_valid,deferral_risk_level values valid,PASS,deferral_risk_level values are valid.,0,True
+maintenance_condition_status_valid,current_condition_status values valid,PASS,current_condition_status values are valid.,0,True
+maintenance_state_source_valid,maintenance_state_source values valid,PASS,maintenance_state_source values are valid.,0,True
+maintenance_plan_numeric_nonnegative,numeric fields non-negative,PASS,Numeric fields are non-negative.,0,True
+maintenance_spare_quantities_nonnegative,numeric fields non-negative,PASS,Numeric fields are non-negative.,0,True
+maintenance_state_numeric_nonnegative,numeric fields non-negative,PASS,Numeric fields are non-negative.,0,True
+maintenance_required_worker_count_positive,active plan worker counts positive,PASS,Active plans have positive worker counts.,0,True
+maintenance_operation_triggers_positive,operation triggers positive,PASS,Operation-based triggers are positive.,0,True
+maintenance_time_triggers_positive,time triggers positive,PASS,Time-based triggers are positive.,0,True
+maintenance_light_production_authorized,light maintenance production authorization valid,PASS,Light production-performed plans have production LIGHT authorization.,0,True
+maintenance_medium_heavy_requires_maintenance,medium heavy requires maintenance crews,PASS,Medium/heavy plans require maintenance crews.,0,True
+maintenance_breakdown_placeholder_only,breakdown placeholders only,PASS,Breakdown repair rows are placeholders only.,0,True
+maintenance_master_advisory_only,maintenance master advisory-only,PASS,Maintenance master data advisory flags are true.,0,True
+maintenance_context_outputs_valid,maintenance context outputs valid,PASS,Maintenance contexts are valid and advisory-only.,0,True
+maintenance_no_blocked_outputs,no blocked maintenance outputs,PASS,"No maintenance work-order, scheduling, reservation, purchase-order, or simulation outputs found.",0,True

@@ -1,0 +1,16 @@
+maintenance_plan_id,spare_part_sku,spare_part_name,quantity_required,mandatory_flag,substitutable_flag,spare_part_criticality,inventory_check_required_flag,active_flag,advisory_only_flag,notes
+MP-FRAME-LIGHT-001,SP-LUBE-OIL-001,General Machine Lubricating Oil,0.25,True,True,HIGH,True,True,True,Light lubrication.
+MP-FRAME-MED-001,SP-FRAME-JIG-PAD-001,Frame Jig Wear Pad Kit,1.00,True,False,HIGH,True,True,True,Wear pad service.
+MP-FRAME-HEAVY-001,SP-FRAME-JIG-PAD-001,Frame Jig Wear Pad Kit,2.00,True,False,HIGH,True,True,True,Fixture rebuild placeholder.
+MP-WHEEL-LIGHT-001,SP-LUBE-OIL-001,General Machine Lubricating Oil,0.20,True,True,HIGH,True,True,True,Light lubrication.
+MP-WHEEL-MED-001,SP-WHEEL-TRUING-SPARE-001,Wheel Truing Stand Spare Kit,1.00,True,False,MEDIUM,True,True,True,Calibration spare kit.
+MP-WHEEL-HEAVY-001,SP-BEARING-KIT-001,General Bearing Replacement Kit,1.00,True,True,CRITICAL,True,True,True,Heavy overhaul bearing kit.
+MP-BRAKE-MED-001,SP-BRAKE-BENCH-TOOL-001,Brake Bench Tool Spare Set,1.00,True,True,MEDIUM,True,True,True,Brake tooling replacement.
+MP-FORK-LIGHT-001,SP-LUBE-OIL-001,General Machine Lubricating Oil,0.25,True,True,HIGH,True,True,True,Light lubrication.
+MP-FORK-MED-001,SP-FORK-SUSP-SEAL-001,Fork Suspension Seal Kit,1.00,True,False,CRITICAL,True,True,True,Seal kit service.
+MP-FINAL-LIGHT-001,SP-LUBE-OIL-001,General Machine Lubricating Oil,0.25,True,True,HIGH,True,True,True,Light lubrication.
+MP-FINAL-MED-001,SP-FINAL-ASM-JIG-001,Final Assembly Jig Spare Kit,1.00,True,False,HIGH,True,True,True,Jig service.
+MP-FINAL-HEAVY-001,SP-FINAL-ASM-JIG-001,Final Assembly Jig Spare Kit,2.00,True,False,HIGH,True,True,True,Heavy jig rebuild placeholder.
+MP-QC-CAL-001,SP-QC-CALIBRATION-KIT-001,QC Calibration Kit,1.00,True,False,CRITICAL,True,True,True,Calibration kit.
+MP-QC-BREAKDOWN-001,SP-ELECTRICAL-SENSOR-001,General Machine Sensor Kit,1.00,True,True,CRITICAL,True,True,True,Breakdown placeholder sensor kit.
+MP-PACK-MED-001,SP-PACK-BENCH-SPARE-001,Packaging Bench Spare Kit,1.00,True,True,LOW,True,True,True,Packaging bench service.

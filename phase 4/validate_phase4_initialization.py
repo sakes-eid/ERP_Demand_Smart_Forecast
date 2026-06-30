@@ -20,6 +20,7 @@ PHASE4_OUTPUTS = {
     "mrp_component_period_summary": PHASE4_DIR / "outputs" / "phase4_mrp_component_period_summary.csv",
     "mrp_pegging_detail": PHASE4_DIR / "outputs" / "phase4_mrp_pegging_detail.csv",
     "phase4_workforce_resource_context": PHASE4_DIR / "outputs" / "phase4_workforce_resource_context.csv",
+    "phase4_maintenance_readiness_context": PHASE4_DIR / "outputs" / "phase4_maintenance_readiness_context.csv",
     "capacity_load_by_workstation": PHASE4_DIR / "outputs" / "phase4_capacity_load_by_workstation.csv",
     "capacity_operation_load_detail": PHASE4_DIR / "outputs" / "phase4_capacity_operation_load_detail.csv",
     "capacity_load_by_machine_type": PHASE4_DIR / "outputs" / "phase4_capacity_load_by_machine_type.csv",
@@ -54,9 +55,15 @@ PHASE4_OUTPUTS = {
 EXECUTION_FILE_TOKENS = [
     "production_order",
     "maintenance_work_order",
+    "spare_part_consumption",
     "purchase_order",
     "released_order",
     "inventory_reservation",
+    "finite_schedule",
+    "dispatch_schedule",
+    "crew_schedule",
+    "simulation",
+    "breakdown_event",
 ]
 WORKFORCE_DATA_FILES = {
     "workforce_crews": PROJECT_ROOT / "shared" / "data" / "workforce_crews.csv",
@@ -84,6 +91,17 @@ PHASE1_SPARE_DEMAND_CONTEXT_FILE = PROJECT_ROOT / "phase 1" / "outputs" / "phase
 PHASE2_SPARE_SUPPLIER_CHECK_FILE = PROJECT_ROOT / "phase 2" / "outputs" / "phase4_spare_part_supplier_check.csv"
 PHASE3_SPARE_INVENTORY_CHECK_FILE = PROJECT_ROOT / "phase 3" / "outputs" / "phase4_spare_part_inventory_check.csv"
 PHASE4_SPARE_PART_CONTEXT_FILE = PHASE4_DIR / "outputs" / "phase4_spare_part_requirement_context.csv"
+MAINTENANCE_DATA_FILES = {
+    "maintenance_plans": PROJECT_ROOT / "shared" / "data" / "maintenance_plans.csv",
+    "maintenance_plan_spare_parts": PROJECT_ROOT / "shared" / "data" / "maintenance_plan_spare_parts.csv",
+    "machine_maintenance_state": PROJECT_ROOT / "shared" / "data" / "machine_maintenance_state.csv",
+}
+MAINTENANCE_VALIDATION_FILE = PROJECT_ROOT / "shared" / "outputs" / "maintenance_plan_validation.csv"
+MAINTENANCE_DUE_STATUS_FILE = PROJECT_ROOT / "shared" / "outputs" / "maintenance_due_status_context.csv"
+MAINTENANCE_SPARE_PART_CONTEXT_FILE = PROJECT_ROOT / "shared" / "outputs" / "maintenance_spare_part_requirement_context.csv"
+MAINTENANCE_COST_DOWNTIME_FILE = PROJECT_ROOT / "shared" / "outputs" / "maintenance_cost_downtime_context.csv"
+MAINTENANCE_MANAGER_REVIEW_FILE = PROJECT_ROOT / "shared" / "outputs" / "maintenance_manager_review_queue.csv"
+PHASE4_MAINTENANCE_CONTEXT_FILE = PHASE4_DIR / "outputs" / "phase4_maintenance_readiness_context.csv"
 RESOURCE_DATA_FILES = {
     "workstations": PHASE4_DIR / "data" / "workstations.csv",
     "machines": PHASE4_DIR / "data" / "machines.csv",
@@ -170,6 +188,7 @@ def main() -> None:
     checks.append(_check_resource_master_data())
     checks.append(_check_workforce_master_data())
     checks.append(_check_spare_part_integration())
+    checks.append(_check_maintenance_master_data())
     checks.append(_check_routing_master_data())
     checks.append(_check_capacity_load())
     checks.append(_check_queue_pressure())
@@ -791,6 +810,136 @@ def _check_spare_part_integration() -> dict:
         "spare_part_integration",
         "PASS",
         f"Step 7B spare-part integration valid; spare_parts={len(spares)}, requirements={len(requirements)}, phase4_context_rows={len(phase4_context)}.",
+    )
+
+
+def _check_maintenance_master_data() -> dict:
+    for name, path in MAINTENANCE_DATA_FILES.items():
+        if not path.exists():
+            return _result("maintenance_master_data", "FAIL", f"Maintenance data file is missing: {path}")
+        if pd.read_csv(path).empty:
+            return _result("maintenance_master_data", "FAIL", f"Maintenance data file has no rows: {path}")
+
+    required_outputs = [
+        (MAINTENANCE_VALIDATION_FILE, "maintenance validation"),
+        (MAINTENANCE_DUE_STATUS_FILE, "maintenance due-status context"),
+        (MAINTENANCE_SPARE_PART_CONTEXT_FILE, "maintenance spare-part requirement context"),
+        (MAINTENANCE_COST_DOWNTIME_FILE, "maintenance cost/downtime context"),
+        (MAINTENANCE_MANAGER_REVIEW_FILE, "maintenance manager review queue"),
+        (PHASE4_MAINTENANCE_CONTEXT_FILE, "Phase 4 maintenance readiness context"),
+    ]
+    for path, label in required_outputs:
+        if not path.exists():
+            return _result("maintenance_master_data", "FAIL", f"{label} output is missing: {path}")
+        if label != "maintenance manager review queue" and pd.read_csv(path).empty:
+            return _result("maintenance_master_data", "FAIL", f"{label} output has no rows: {path}")
+
+    validation = pd.read_csv(MAINTENANCE_VALIDATION_FILE)
+    fail_count = int((validation["status"].astype(str).str.upper() == "FAIL").sum()) if "status" in validation.columns else len(validation)
+    if fail_count:
+        return _result("maintenance_master_data", "FAIL", f"Maintenance validation contains FAIL rows: {fail_count}")
+
+    plans = pd.read_csv(MAINTENANCE_DATA_FILES["maintenance_plans"])
+    plan_spares = pd.read_csv(MAINTENANCE_DATA_FILES["maintenance_plan_spare_parts"])
+    state = pd.read_csv(MAINTENANCE_DATA_FILES["machine_maintenance_state"])
+    machines = pd.read_csv(RESOURCE_DATA_FILES["machines"])
+    spare_master = pd.read_csv(SPARE_PART_DATA_FILES["spare_parts_master"])
+    workforce_auth = pd.read_csv(WORKFORCE_MACHINE_AUTH_CONTEXT_FILE)
+    due = pd.read_csv(MAINTENANCE_DUE_STATUS_FILE)
+    spare_context = pd.read_csv(MAINTENANCE_SPARE_PART_CONTEXT_FILE)
+    cost = pd.read_csv(MAINTENANCE_COST_DOWNTIME_FILE)
+    review = pd.read_csv(MAINTENANCE_MANAGER_REVIEW_FILE)
+    phase4_context = pd.read_csv(PHASE4_MAINTENANCE_CONTEXT_FILE)
+
+    required_plan_columns = {
+        "maintenance_plan_id",
+        "machine_id",
+        "maintenance_level",
+        "trigger_type",
+        "required_crew_type",
+        "can_be_performed_by_production_flag",
+        "can_be_performed_by_maintenance_flag",
+        "estimated_labor_hours",
+        "estimated_external_service_cost",
+        "planned_downtime_hours",
+        "advisory_only_flag",
+    }
+    missing_plan_columns = sorted(required_plan_columns.difference(plans.columns))
+    if missing_plan_columns:
+        return _result("maintenance_master_data", "FAIL", f"maintenance_plans missing columns: {missing_plan_columns}")
+    required_due_columns = {"due_status", "operations_until_due", "days_until_due", "deferral_review_required_flag", "advisory_only_flag"}
+    missing_due_columns = sorted(required_due_columns.difference(due.columns))
+    if missing_due_columns:
+        return _result("maintenance_master_data", "FAIL", f"Maintenance due-status context missing columns: {missing_due_columns}")
+    required_spare_columns = {"spare_part_readiness_status", "note_no_consumption_flag", "advisory_only_flag"}
+    missing_spare_columns = sorted(required_spare_columns.difference(spare_context.columns))
+    if missing_spare_columns:
+        return _result("maintenance_master_data", "FAIL", f"Maintenance spare-part context missing columns: {missing_spare_columns}")
+    required_cost_columns = {"planned_downtime_hours", "estimated_labor_cost", "estimated_spare_part_cost", "estimated_external_service_cost", "estimated_total_maintenance_cost", "advisory_only_flag"}
+    missing_cost_columns = sorted(required_cost_columns.difference(cost.columns))
+    if missing_cost_columns:
+        return _result("maintenance_master_data", "FAIL", f"Maintenance cost/downtime context missing columns: {missing_cost_columns}")
+
+    machine_ids = set(machines["machine_id"].astype(str))
+    plan_ids = set(plans["maintenance_plan_id"].astype(str))
+    spare_skus = set(spare_master["spare_part_sku"].astype(str))
+    if sorted(set(plans["machine_id"].astype(str)) - machine_ids):
+        return _result("maintenance_master_data", "FAIL", "Maintenance plans reference invalid Phase 4 machines.")
+    if sorted(set(plan_spares["maintenance_plan_id"].astype(str)) - plan_ids):
+        return _result("maintenance_master_data", "FAIL", "Maintenance spare-part rows reference invalid maintenance plans.")
+    if sorted(set(plan_spares["spare_part_sku"].astype(str)) - spare_skus):
+        return _result("maintenance_master_data", "FAIL", "Maintenance spare-part rows reference invalid spare SKUs.")
+    if sorted(set(state["machine_id"].astype(str)) - machine_ids):
+        return _result("maintenance_master_data", "FAIL", "Machine maintenance state references invalid Phase 4 machines.")
+    if sorted(set(state["maintenance_plan_id"].astype(str)) - plan_ids):
+        return _result("maintenance_master_data", "FAIL", "Machine maintenance state references invalid maintenance plans.")
+
+    prod_light_auth = workforce_auth[
+        (workforce_auth["crew_type"].astype(str) == "PRODUCTION")
+        & _to_bool(workforce_auth["can_maintain_flag"])
+        & (workforce_auth["maintenance_level_authorized"].astype(str) == "LIGHT")
+    ]
+    bad_light = plans[
+        (plans["maintenance_level"].astype(str) == "LIGHT")
+        & _to_bool(plans["can_be_performed_by_production_flag"])
+        & ~plans["machine_id"].astype(str).isin(set(prod_light_auth["machine_id"].astype(str)))
+    ]
+    if not bad_light.empty:
+        return _result("maintenance_master_data", "FAIL", f"Light production-performed plans lack production LIGHT authorization: {bad_light['maintenance_plan_id'].tolist()}")
+    bad_medium_heavy = plans[plans["maintenance_level"].astype(str).isin({"MEDIUM", "HEAVY"}) & (plans["required_crew_type"].astype(str) != "MAINTENANCE")]
+    if not bad_medium_heavy.empty:
+        return _result("maintenance_master_data", "FAIL", f"Medium/heavy plans must require maintenance crews: {bad_medium_heavy['maintenance_plan_id'].tolist()}")
+
+    allowed_due = {"NOT_DUE", "DUE_SOON", "DUE_NOW", "OVERDUE", "REVIEW_REQUIRED"}
+    if set(due["due_status"].dropna().astype(str)) - allowed_due:
+        return _result("maintenance_master_data", "FAIL", "Maintenance due-status context contains invalid due_status values.")
+    allowed_readiness = {"READY", "DUE_SOON_REVIEW", "DUE_NOW_REVIEW", "OVERDUE_REVIEW", "SPARE_PART_REVIEW", "CREW_AUTHORIZATION_REVIEW", "REVIEW_REQUIRED"}
+    if set(phase4_context["maintenance_readiness_status"].dropna().astype(str)) - allowed_readiness:
+        return _result("maintenance_master_data", "FAIL", "Phase 4 maintenance readiness context contains invalid statuses.")
+    for frame, label in [
+        (due, "maintenance due-status context"),
+        (spare_context, "maintenance spare-part context"),
+        (cost, "maintenance cost/downtime context"),
+        (phase4_context, "Phase 4 maintenance readiness context"),
+    ]:
+        if not _all_true(frame, "advisory_only_flag"):
+            return _result("maintenance_master_data", "FAIL", f"{label} must be advisory-only.")
+    if not review.empty:
+        if _to_bool(review["auto_action_allowed"]).any():
+            return _result("maintenance_master_data", "FAIL", "Maintenance manager review queue cannot allow automatic action.")
+        if not _all_true(review, "advisory_only_flag"):
+            return _result("maintenance_master_data", "FAIL", "Maintenance manager review queue must be advisory-only.")
+    if not _all_true(spare_context, "note_no_consumption_flag"):
+        return _result("maintenance_master_data", "FAIL", "Maintenance spare-part context must flag no spare-part consumption.")
+    for column in ["planned_downtime_hours", "estimated_labor_cost", "estimated_spare_part_cost", "estimated_external_service_cost", "estimated_total_maintenance_cost"]:
+        values = pd.to_numeric(cost[column], errors="coerce")
+        if values.isna().any() or (values < 0).any():
+            return _result("maintenance_master_data", "FAIL", f"{column} must be numeric and non-negative.")
+
+    return _result(
+        "maintenance_master_data",
+        "PASS",
+        f"Step 7C maintenance master data valid; plans={len(plans)}, plan_spares={len(plan_spares)}, due_rows={len(due)}, phase4_context_rows={len(phase4_context)}.",
     )
 
 
@@ -2001,6 +2150,8 @@ def _check_no_routing_or_capacity_outputs() -> dict:
         "scheduling_engine",
         "crew_schedule",
         "maintenance_work_order",
+        "spare_part_consumption",
+        "breakdown_event",
         "simulation",
     ]
     bad_files = []
@@ -2098,7 +2249,7 @@ def _result(name: str, status: str, message: str) -> dict:
 
 def _format_report(evidence: dict) -> str:
     lines = [
-        "Phase 4 Initialization Validation with Step 7B Spare Parts SKU Integration",
+        "Phase 4 Initialization Validation with Step 7C Maintenance Master Data and Due-Status Rules",
         f"Generated at UTC: {evidence['generated_at_utc']}",
         f"Overall status: {evidence['overall_status']}",
         f"Fail count: {evidence['fail_count']}",

@@ -1,4 +1,4 @@
-"""Create a clean Phase 4 Step 7B spare-parts review bundle."""
+"""Create a clean Phase 4 Step 7C maintenance master review bundle."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 PHASE4_OUTPUTS = PROJECT_ROOT / "phase 4" / "outputs"
-ZIP_PATH = PROJECT_ROOT / "phase4_step7b_spare_parts_review_bundle.zip"
+ZIP_PATH = PROJECT_ROOT / "phase4_step7c_maintenance_master_review_bundle.zip"
 MANIFEST_PATH = PHASE4_OUTPUTS / "phase4_review_bundle_manifest.txt"
 
 REQUIRED_RELATIVE_FILES = [
@@ -22,10 +22,14 @@ REQUIRED_RELATIVE_FILES = [
     "shared/data/crew_machine_authorizations.csv",
     "shared/data/spare_parts_master.csv",
     "shared/data/machine_spare_part_requirements.csv",
+    "shared/data/maintenance_plans.csv",
+    "shared/data/maintenance_plan_spare_parts.csv",
+    "shared/data/machine_maintenance_state.csv",
     "shared/data/crew_calendar.csv",
     "shared/data/crew_cost_rates.csv",
     "shared/core/workforce_master_data.py",
     "shared/core/spare_parts_master_data.py",
+    "shared/core/maintenance_master_data.py",
     "shared/outputs/workforce_crew_validation.csv",
     "shared/outputs/workforce_crew_capacity_context.csv",
     "shared/outputs/workforce_machine_authorization_context.csv",
@@ -35,6 +39,11 @@ REQUIRED_RELATIVE_FILES = [
     "shared/outputs/spare_part_machine_requirement_context.csv",
     "shared/outputs/spare_part_phase_integration_context.csv",
     "shared/outputs/spare_part_manager_review_queue.csv",
+    "shared/outputs/maintenance_plan_validation.csv",
+    "shared/outputs/maintenance_due_status_context.csv",
+    "shared/outputs/maintenance_spare_part_requirement_context.csv",
+    "shared/outputs/maintenance_cost_downtime_context.csv",
+    "shared/outputs/maintenance_manager_review_queue.csv",
     "phase 4/README.md",
     "phase 4/main.py",
     "phase 4/validate_phase4_initialization.py",
@@ -71,6 +80,7 @@ REQUIRED_RELATIVE_FILES = [
     "phase 4/outputs/phase4_resource_validation.csv",
     "phase 4/outputs/phase4_workforce_resource_context.csv",
     "phase 4/outputs/phase4_spare_part_requirement_context.csv",
+    "phase 4/outputs/phase4_maintenance_readiness_context.csv",
     "phase 4/outputs/phase4_routing_validation.csv",
     "phase 4/outputs/phase4_routing_flow_summary.csv",
     "phase 4/outputs/phase4_capacity_load_by_workstation.csv",
@@ -239,6 +249,16 @@ def _verify_zip() -> tuple[str, list[str]]:
         "shared/outputs/spare_part_machine_requirement_context.csv": "Shared spare-part machine requirement context exists inside the zip",
         "shared/outputs/spare_part_phase_integration_context.csv": "Shared spare-part phase integration context exists inside the zip",
         "shared/outputs/spare_part_manager_review_queue.csv": "Shared spare-part manager review queue exists inside the zip",
+        "shared/data/maintenance_plans.csv": "Shared maintenance plans data exists inside the zip",
+        "shared/data/maintenance_plan_spare_parts.csv": "Shared maintenance plan spare-parts data exists inside the zip",
+        "shared/data/machine_maintenance_state.csv": "Shared machine maintenance state data exists inside the zip",
+        "shared/core/maintenance_master_data.py": "Shared maintenance master data module exists inside the zip",
+        "shared/outputs/maintenance_plan_validation.csv": "Shared maintenance validation output exists inside the zip",
+        "shared/outputs/maintenance_due_status_context.csv": "Shared maintenance due-status context exists inside the zip",
+        "shared/outputs/maintenance_spare_part_requirement_context.csv": "Shared maintenance spare-part requirement context exists inside the zip",
+        "shared/outputs/maintenance_cost_downtime_context.csv": "Shared maintenance cost/downtime context exists inside the zip",
+        "shared/outputs/maintenance_manager_review_queue.csv": "Shared maintenance manager review queue exists inside the zip",
+        "phase 4/outputs/phase4_maintenance_readiness_context.csv": "Phase 4 maintenance readiness context exists inside the zip",
         "phase 1/outputs/phase1_spare_part_demand_context.csv": "Phase 1 spare-part demand context exists inside the zip",
         "phase 2/outputs/phase4_spare_part_supplier_check.csv": "Phase 2 spare-part supplier check exists inside the zip",
         "phase 3/outputs/phase4_spare_part_inventory_check.csv": "Phase 3 spare-part inventory check exists inside the zip",
@@ -376,7 +396,7 @@ def _build_manifest(
 ) -> str:
     zip_size_mb = ZIP_PATH.stat().st_size / (1024 * 1024) if ZIP_PATH.exists() else 0.0
     lines = [
-        "Phase 4 Step 7B Spare Parts Review Bundle Manifest",
+        "Phase 4 Step 7C Maintenance Master Review Bundle Manifest",
         f"Generated zip path: {ZIP_PATH}",
         f"Generated timestamp UTC: {generated_at}",
         f"Included file count: {len(included)}",

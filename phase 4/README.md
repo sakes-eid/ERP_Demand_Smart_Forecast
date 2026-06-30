@@ -37,6 +37,15 @@ Current initialization scope:
 - Phase 4 links spare parts to machines and future maintenance needs through `outputs/phase4_spare_part_requirement_context.csv`.
 - Spare-part context is advisory-only; spare parts are not consumed or reserved.
 - Step 7B does not create maintenance work orders, purchase orders, breakdown forecasts, maintenance schedules, or simulations.
+- Step 7C adds shared maintenance master data and maintenance due-status rules.
+- Maintenance plans define light, medium, heavy, and breakdown-repair-placeholder activities for Phase 4 machines.
+- Maintenance triggers include operations-based, time-based, operations-or-time-based, condition-placeholder, and breakdown-placeholder logic.
+- Light autonomous maintenance can be assigned to production crews only when crew-machine authorization supports `LIGHT` maintenance.
+- Medium and heavy maintenance require maintenance crews.
+- Maintenance spare-part requirements are linked to the Step 7B spare-part SKU layer.
+- Maintenance cost and downtime context are planning estimates only and do not reduce capacity.
+- Step 7C creates Phase 4 maintenance readiness context for future maintenance planning, but does not create maintenance work orders.
+- Step 7C does not consume spare parts, reserve inventory, schedule crews, forecast breakdowns, apply downtime, or run simulation.
 - Routing is the ERP version of the production flowchart.
 - Road Bike and Mountain Bike now have different advisory routings.
 - Parallel subassembly branches are included for both products.
@@ -104,16 +113,18 @@ Run order:
 4. Run Phase 4 MRP net component requirements, component-period summary, and pegging detail.
 5. Validate Phase 4 resource master data.
 6. Validate shared workforce, crew, skill, and machine authorization master data.
-7. Validate Phase 4 routing/workflow master data.
-8. Build Phase 4 workstation, machine-type, and labor-skill capacity load / CRP feasibility.
-9. Build Phase 4 capacity feasibility summary and bottleneck candidates.
-10. Build Phase 4 estimated queue pressure and WIP risk visibility.
-11. Build Phase 4 bottleneck visibility summary.
-12. Build Phase 4 production flow and queue-bottleneck flow view.
-13. Build Phase 4 quality and workstation performance trend detection.
-14. Build Phase 4 quality-adjusted capacity impact estimates.
-15. Run Phase 3 component inventory checks.
-16. Run Phase 2 component supplier checks.
+7. Validate shared spare-part SKU integration.
+8. Validate shared maintenance master data and due-status context.
+9. Validate Phase 4 routing/workflow master data.
+10. Build Phase 4 workstation, machine-type, and labor-skill capacity load / CRP feasibility.
+11. Build Phase 4 capacity feasibility summary and bottleneck candidates.
+12. Build Phase 4 estimated queue pressure and WIP risk visibility.
+13. Build Phase 4 bottleneck visibility summary.
+14. Build Phase 4 production flow and queue-bottleneck flow view.
+15. Build Phase 4 quality and workstation performance trend detection.
+16. Build Phase 4 quality-adjusted capacity impact estimates.
+17. Run Phase 3 component inventory checks.
+18. Run Phase 2 component supplier checks.
 
 The Phase 4 bridges are optional-safe. If a bridge file is missing or fails, Phase 2 and Phase 3 print a warning and continue their existing core pipelines.
 
@@ -139,14 +150,14 @@ Not implemented yet:
 - Step 7A provides shared workforce master data and authorizations; crew scheduling and maintenance planning remain future work.
 - Confirmed bottlenecks from real queue behavior.
 - Real queue measurement, exact wait-time tracking, queue logic, or queue simulation.
-- Shop-floor-confirmed quality measurement, quality-adjusted MRP, maintenance work orders, crew scheduling, layout, or simulation.
+- Shop-floor-confirmed quality measurement, quality-adjusted MRP, maintenance work orders, spare-part consumption, crew scheduling, layout, or simulation.
 - Production order release.
 
 Next likely Phase 4 feature:
 
-- The next real feature after this spare-part integration step is likely maintenance master data or crew-aware capacity planning, but neither is implemented here.
+- The next real feature after this maintenance master-data step is likely maintenance planning logic, crew-aware capacity planning, or maintenance impact analysis, but none of those execution layers are implemented here.
 
 Review bundle:
 
-- `create_phase4_review_bundle.py` generates `phase4_step7b_spare_parts_review_bundle.zip` at the project root for external review.
+- `create_phase4_review_bundle.py` generates `phase4_step7c_maintenance_master_review_bundle.zip` at the project root for external review.
 - The bundle preserves project-relative folder structure and excludes cache, bytecode, virtual environment, and zip artifacts.
