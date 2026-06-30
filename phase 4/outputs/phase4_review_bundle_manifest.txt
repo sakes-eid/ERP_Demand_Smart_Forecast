@@ -1,13 +1,24 @@
-Phase 4 Step 6B Quality-Adjusted Capacity Review Bundle Manifest
-Generated zip path: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase4_step6b_quality_adjusted_capacity_review_bundle.zip
-Generated timestamp UTC: 2026-06-28T17:38:10+00:00
-Included file count: 91
+Phase 4 Step 7A Workforce Review Bundle Manifest
+Generated zip path: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase4_step7a_workforce_review_bundle.zip
+Generated timestamp UTC: 2026-06-30T11:35:30+00:00
+Included file count: 104
 Missing file count: 0
 Excluded file count: 0
-Final zip size MB: 0.243
+Final zip size MB: 0.264
 Verification status: PASS
 
 Verification messages:
+- PASS: Shared workforce crews data exists inside the zip
+- PASS: Shared workforce skills data exists inside the zip
+- PASS: Shared crew skill matrix exists inside the zip
+- PASS: Shared crew machine authorizations exists inside the zip
+- PASS: Shared workforce master data module exists inside the zip
+- PASS: Shared workforce validation output exists inside the zip
+- PASS: Shared workforce crew capacity context exists inside the zip
+- PASS: Shared workforce machine authorization context exists inside the zip
+- PASS: Shared workforce skill coverage summary exists inside the zip
+- PASS: Shared workforce manager review queue exists inside the zip
+- PASS: Phase 4 workforce resource context exists inside the zip
 - PASS: Phase 4 quality history seed data exists inside the zip
 - PASS: Phase 4 quality rules seed data exists inside the zip
 - PASS: Phase 4 rework rules seed data exists inside the zip
@@ -92,6 +103,18 @@ Included files:
 - planning_orchestrator.py
 - shared/validation/integrated_validation_evidence.json
 - shared/validation/integrated_validation_report.txt
+- shared/data/workforce_crews.csv
+- shared/data/workforce_skills.csv
+- shared/data/crew_skill_matrix.csv
+- shared/data/crew_machine_authorizations.csv
+- shared/data/crew_calendar.csv
+- shared/data/crew_cost_rates.csv
+- shared/core/workforce_master_data.py
+- shared/outputs/workforce_crew_validation.csv
+- shared/outputs/workforce_crew_capacity_context.csv
+- shared/outputs/workforce_machine_authorization_context.csv
+- shared/outputs/workforce_skill_coverage_summary.csv
+- shared/outputs/workforce_manager_review_queue.csv
 - phase 4/README.md
 - phase 4/main.py
 - phase 4/validate_phase4_initialization.py
@@ -126,6 +149,7 @@ Included files:
 - phase 4/outputs/phase4_mrp_component_period_summary.csv
 - phase 4/outputs/phase4_mrp_pegging_detail.csv
 - phase 4/outputs/phase4_resource_validation.csv
+- phase 4/outputs/phase4_workforce_resource_context.csv
 - phase 4/outputs/phase4_routing_validation.csv
 - phase 4/outputs/phase4_routing_flow_summary.csv
 - phase 4/outputs/phase4_capacity_load_by_workstation.csv

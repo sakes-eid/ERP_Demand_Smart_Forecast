@@ -2,6 +2,13 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
 from core.bom_explosion_bridge import OUTPUT_FILE, build_bom_component_requirements
 from core.bottleneck_visibility import MANAGER_REVIEW_OUTPUT_FILE as BOTTLENECK_MANAGER_REVIEW_OUTPUT_FILE
 from core.bottleneck_visibility import PERIOD_EVIDENCE_OUTPUT_FILE as BOTTLENECK_PERIOD_EVIDENCE_OUTPUT_FILE
@@ -53,6 +60,13 @@ from core.resource_master_data import validate_resource_master_data
 from core.routing_master_data import FLOW_SUMMARY_OUTPUT_FILE
 from core.routing_master_data import OUTPUT_FILE as ROUTING_VALIDATION_OUTPUT_FILE
 from core.routing_master_data import validate_routing_master_data
+from shared.core.workforce_master_data import CREW_CAPACITY_CONTEXT_FILE
+from shared.core.workforce_master_data import MACHINE_AUTH_CONTEXT_FILE as WORKFORCE_MACHINE_AUTH_CONTEXT_FILE
+from shared.core.workforce_master_data import MANAGER_REVIEW_QUEUE_FILE as WORKFORCE_MANAGER_REVIEW_QUEUE_FILE
+from shared.core.workforce_master_data import PHASE4_WORKFORCE_CONTEXT_FILE
+from shared.core.workforce_master_data import SKILL_COVERAGE_SUMMARY_FILE as WORKFORCE_SKILL_COVERAGE_SUMMARY_FILE
+from shared.core.workforce_master_data import VALIDATION_OUTPUT_FILE as WORKFORCE_VALIDATION_OUTPUT_FILE
+from shared.core.workforce_master_data import build_workforce_master_data_outputs
 
 
 def run_initialization() -> None:
@@ -66,6 +80,7 @@ def run_initialization() -> None:
     requirements = build_bom_component_requirements(planning_run_id=planning_run_id)
     mrp = build_mrp_net_component_requirements(planning_run_id=planning_run_id)
     resource_validation = validate_resource_master_data()
+    workforce_validation, workforce_capacity, workforce_machine_auth, workforce_skill_summary, workforce_review, phase4_workforce_context = build_workforce_master_data_outputs()
     routing_validation = validate_routing_master_data()
     capacity_load, capacity_detail, capacity_validation = build_workstation_capacity_load()
     queue_pressure, queue_summary, queue_review, queue_validation = build_queue_pressure_outputs()
@@ -84,6 +99,18 @@ def run_initialization() -> None:
     print(f"MRP pegging detail written to: {PEGGING_OUTPUT_FILE}")
     print(f"Resource validation rows: {len(resource_validation)}")
     print(f"Resource validation output written to: {RESOURCE_VALIDATION_OUTPUT_FILE}")
+    print(f"Shared workforce validation rows: {len(workforce_validation)}")
+    print(f"Shared workforce validation output written to: {WORKFORCE_VALIDATION_OUTPUT_FILE}")
+    print(f"Workforce crew capacity context rows: {len(workforce_capacity)}")
+    print(f"Workforce crew capacity context output written to: {CREW_CAPACITY_CONTEXT_FILE}")
+    print(f"Workforce machine authorization context rows: {len(workforce_machine_auth)}")
+    print(f"Workforce machine authorization context output written to: {WORKFORCE_MACHINE_AUTH_CONTEXT_FILE}")
+    print(f"Workforce skill coverage summary rows: {len(workforce_skill_summary)}")
+    print(f"Workforce skill coverage summary output written to: {WORKFORCE_SKILL_COVERAGE_SUMMARY_FILE}")
+    print(f"Workforce manager review rows: {len(workforce_review)}")
+    print(f"Workforce manager review output written to: {WORKFORCE_MANAGER_REVIEW_QUEUE_FILE}")
+    print(f"Phase 4 workforce context rows: {len(phase4_workforce_context)}")
+    print(f"Phase 4 workforce context output written to: {PHASE4_WORKFORCE_CONTEXT_FILE}")
     print(f"Routing validation rows: {len(routing_validation)}")
     print(f"Routing validation output written to: {ROUTING_VALIDATION_OUTPUT_FILE}")
     print(f"Routing flow summary written to: {FLOW_SUMMARY_OUTPUT_FILE}")

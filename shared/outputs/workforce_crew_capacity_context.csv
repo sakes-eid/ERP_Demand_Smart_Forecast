@@ -1,0 +1,12 @@
+crew_id,crew_name,crew_type,workers_available,weekly_capacity_hours,soft_utilization_threshold_pct,hard_utilization_threshold_pct,standard_hourly_cost,overtime_hourly_cost,active_flag,future_use_allowed_flag,source_phase,advisory_only_flag
+CREW-PROD-FRAME,Frame Production Crew,PRODUCTION,2,80,80,95,24.0,36.0,True,False,SHARED_STEP7A_WORKFORCE_MASTER_DATA,True
+CREW-PROD-WHEEL,Wheel Assembly Crew,PRODUCTION,3,120,80,95,23.0,34.5,True,False,SHARED_STEP7A_WORKFORCE_MASTER_DATA,True
+CREW-PROD-BRAKE,Brake Assembly Crew,PRODUCTION,2,80,80,95,22.5,33.75,True,False,SHARED_STEP7A_WORKFORCE_MASTER_DATA,True
+CREW-PROD-FINAL,Final Assembly Crew,PRODUCTION,4,160,80,95,24.5,36.75,True,False,SHARED_STEP7A_WORKFORCE_MASTER_DATA,True
+CREW-PROD-QC,Quality Inspection Crew,PRODUCTION,2,80,80,95,26.0,39.0,True,False,SHARED_STEP7A_WORKFORCE_MASTER_DATA,True
+CREW-PROD-PACK,Packaging Crew,PRODUCTION,2,80,80,95,20.5,30.75,True,False,SHARED_STEP7A_WORKFORCE_MASTER_DATA,True
+CREW-MAINT-MECH,Mechanical Maintenance Crew,MAINTENANCE,2,80,75,90,29.0,43.5,True,False,SHARED_STEP7A_WORKFORCE_MASTER_DATA,True
+CREW-MAINT-ELEC,Electrical Maintenance Crew,MAINTENANCE,1,40,75,90,31.0,46.5,True,False,SHARED_STEP7A_WORKFORCE_MASTER_DATA,True
+CREW-MAINT-GEN,General Maintenance Crew,MAINTENANCE,2,80,75,90,25.0,37.5,True,False,SHARED_STEP7A_WORKFORCE_MASTER_DATA,True
+CREW-WH-FUTURE,Future Warehouse Crew,WAREHOUSE,0,0,80,95,0.0,0.0,False,True,SHARED_STEP7A_WORKFORCE_MASTER_DATA,True
+CREW-DEL-FUTURE,Future Delivery Driver Crew,DELIVERY,0,0,80,95,0.0,0.0,False,True,SHARED_STEP7A_WORKFORCE_MASTER_DATA,True

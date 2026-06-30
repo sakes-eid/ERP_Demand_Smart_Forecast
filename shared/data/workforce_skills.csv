@@ -1,0 +1,25 @@
+skill_id,skill_name,skill_category,skill_description,applies_to_crew_type,certification_required_flag,active_flag,future_use_allowed_flag,notes
+SKILL-FRAME-PREP,frame_prep,PRODUCTION_OPERATION,Frame preparation alignment and visual inspection,PRODUCTION,False,True,False,Used by frame production crew.
+SKILL-WHEEL-ASSEMBLY,wheel_assembly,PRODUCTION_OPERATION,Wheel assembly truing and tire preparation,PRODUCTION,False,True,False,Used by wheel assembly crew.
+SKILL-BRAKE-ASSEMBLY,brake_assembly,PRODUCTION_OPERATION,Brake kit assembly fitment and adjustment,PRODUCTION,False,True,False,Used by brake assembly crew.
+SKILL-FORK-SUSP,fork_suspension_prep,PRODUCTION_OPERATION,Fork and suspension preparation for mountain bikes,PRODUCTION,False,True,False,Used by cross-trained frame/final production crews.
+SKILL-FINAL-ASSEMBLY,final_assembly,PRODUCTION_OPERATION,Final bike assembly and integration,PRODUCTION,False,True,False,Used by final assembly crew.
+SKILL-QC-INSPECTION,qc_inspection,QUALITY_INSPECTION,Final inspection and quality checks,PRODUCTION,True,True,False,Certification required for final quality release review.
+SKILL-PACKAGING,packaging,PRODUCTION_OPERATION,Packaging labeling and dispatch prep,PRODUCTION,False,True,False,Used by packaging crew.
+SKILL-CLEANING,cleaning,LIGHT_AUTONOMOUS_MAINTENANCE,Cleaning and basic housekeeping around assigned production equipment,PRODUCTION,False,True,False,Limited autonomous maintenance skill for production crews.
+SKILL-VISUAL-INSPECTION,visual_inspection,LIGHT_AUTONOMOUS_MAINTENANCE,Visual inspection and abnormal condition spotting,PRODUCTION,False,True,False,Limited autonomous maintenance skill for production crews.
+SKILL-LUBRICATION,lubrication,LIGHT_AUTONOMOUS_MAINTENANCE,Simple lubrication of approved machine points,PRODUCTION,False,True,False,Limited autonomous maintenance skill for production crews.
+SKILL-OIL-CHANGE,oil_change,LIGHT_AUTONOMOUS_MAINTENANCE,Simple oil change on approved low-risk equipment,PRODUCTION,False,True,False,Limited autonomous maintenance skill for production crews.
+SKILL-BOLT-TIGHTENING,bolt_tightening,LIGHT_AUTONOMOUS_MAINTENANCE,Basic tightening using approved checks and torque guidance,PRODUCTION,False,True,False,Limited autonomous maintenance skill for production crews.
+SKILL-BASIC-ADJUSTMENT,basic_adjustment,LIGHT_AUTONOMOUS_MAINTENANCE,Basic non-repair adjustment within standard work,PRODUCTION,False,True,False,Limited autonomous maintenance skill for production crews.
+SKILL-ABNORMALITY-REPORTING,abnormality_reporting,LIGHT_AUTONOMOUS_MAINTENANCE,Report abnormal sounds vibration leaks wear or unsafe equipment conditions,PRODUCTION,False,True,False,Limited autonomous maintenance skill for production crews.
+SKILL-MECH-MAINT,mechanical_maintenance,MECHANICAL_MAINTENANCE,Mechanical preventive maintenance and non-electrical asset service,MAINTENANCE,True,True,False,Maintenance crew skill for mechanical assets.
+SKILL-ELEC-MAINT,electrical_maintenance,ELECTRICAL_MAINTENANCE,Electrical maintenance and safe troubleshooting,MAINTENANCE,True,True,False,Maintenance crew skill for electrical systems.
+SKILL-PM,preventive_maintenance,GENERAL_MAINTENANCE,Planned preventive maintenance checks,MAINTENANCE,True,True,False,Maintenance crew skill for PM routines.
+SKILL-MEDIUM-MAINT,medium_maintenance,MEDIUM_MAINTENANCE,Medium mechanical service and adjustment,MAINTENANCE,True,True,False,Maintenance crew skill.
+SKILL-HEAVY-OVERHAUL,heavy_overhaul,HEAVY_MAINTENANCE,Major overhaul and replacement work,MAINTENANCE,True,True,False,Maintenance crew skill for heavy work.
+SKILL-CORRECTIVE,corrective_repair,CORRECTIVE_REPAIR,Corrective repair after failure or abnormal condition,MAINTENANCE,True,True,False,Maintenance crew repair skill.
+SKILL-TROUBLESHOOT,troubleshooting,GENERAL_MAINTENANCE,Structured diagnosis of machine issues,MAINTENANCE,True,True,False,Maintenance troubleshooting skill.
+SKILL-LIGHT-MAINT,light_maintenance,LIGHT_AUTONOMOUS_MAINTENANCE,Light autonomous maintenance standards and approved checks,MAINTENANCE,False,True,False,Maintenance crew can support and audit light maintenance.
+SKILL-FUTURE-WH,future_warehouse_handling,FUTURE_WAREHOUSE,Future warehouse handling skill,WAREHOUSE,False,False,True,Inactive placeholder skill.
+SKILL-FUTURE-DEL,future_delivery_driving,FUTURE_DELIVERY,Future delivery driving skill,DELIVERY,True,False,True,Inactive placeholder skill.

@@ -19,6 +19,7 @@ PHASE4_OUTPUTS = {
     "mrp_net_component_requirements": PHASE4_DIR / "outputs" / "phase4_mrp_net_component_requirements.csv",
     "mrp_component_period_summary": PHASE4_DIR / "outputs" / "phase4_mrp_component_period_summary.csv",
     "mrp_pegging_detail": PHASE4_DIR / "outputs" / "phase4_mrp_pegging_detail.csv",
+    "phase4_workforce_resource_context": PHASE4_DIR / "outputs" / "phase4_workforce_resource_context.csv",
     "capacity_load_by_workstation": PHASE4_DIR / "outputs" / "phase4_capacity_load_by_workstation.csv",
     "capacity_operation_load_detail": PHASE4_DIR / "outputs" / "phase4_capacity_operation_load_detail.csv",
     "capacity_load_by_machine_type": PHASE4_DIR / "outputs" / "phase4_capacity_load_by_machine_type.csv",
@@ -52,10 +53,25 @@ PHASE4_OUTPUTS = {
 }
 EXECUTION_FILE_TOKENS = [
     "production_order",
+    "maintenance_work_order",
     "purchase_order",
     "released_order",
     "inventory_reservation",
 ]
+WORKFORCE_DATA_FILES = {
+    "workforce_crews": PROJECT_ROOT / "shared" / "data" / "workforce_crews.csv",
+    "workforce_skills": PROJECT_ROOT / "shared" / "data" / "workforce_skills.csv",
+    "crew_skill_matrix": PROJECT_ROOT / "shared" / "data" / "crew_skill_matrix.csv",
+    "crew_machine_authorizations": PROJECT_ROOT / "shared" / "data" / "crew_machine_authorizations.csv",
+    "crew_calendar": PROJECT_ROOT / "shared" / "data" / "crew_calendar.csv",
+    "crew_cost_rates": PROJECT_ROOT / "shared" / "data" / "crew_cost_rates.csv",
+}
+WORKFORCE_VALIDATION_FILE = PROJECT_ROOT / "shared" / "outputs" / "workforce_crew_validation.csv"
+WORKFORCE_CREW_CAPACITY_CONTEXT_FILE = PROJECT_ROOT / "shared" / "outputs" / "workforce_crew_capacity_context.csv"
+WORKFORCE_MACHINE_AUTH_CONTEXT_FILE = PROJECT_ROOT / "shared" / "outputs" / "workforce_machine_authorization_context.csv"
+WORKFORCE_SKILL_COVERAGE_SUMMARY_FILE = PROJECT_ROOT / "shared" / "outputs" / "workforce_skill_coverage_summary.csv"
+WORKFORCE_MANAGER_REVIEW_QUEUE_FILE = PROJECT_ROOT / "shared" / "outputs" / "workforce_manager_review_queue.csv"
+PHASE4_WORKFORCE_CONTEXT_FILE = PHASE4_DIR / "outputs" / "phase4_workforce_resource_context.csv"
 RESOURCE_DATA_FILES = {
     "workstations": PHASE4_DIR / "data" / "workstations.csv",
     "machines": PHASE4_DIR / "data" / "machines.csv",
@@ -140,6 +156,7 @@ def main() -> None:
     checks.append(_check_mrp_component_period_summary())
     checks.append(_check_mrp_pegging_detail())
     checks.append(_check_resource_master_data())
+    checks.append(_check_workforce_master_data())
     checks.append(_check_routing_master_data())
     checks.append(_check_capacity_load())
     checks.append(_check_queue_pressure())
@@ -570,6 +587,123 @@ def _check_resource_master_data() -> dict:
             f"workstations={len(frames['workstations'])}, machines={len(frames['machines'])}, "
             f"labor_resources={len(frames['labor_resources'])}, calendar_rows={len(frames['resource_calendar'])}."
         ),
+    )
+
+
+def _check_workforce_master_data() -> dict:
+    for name, path in WORKFORCE_DATA_FILES.items():
+        if not path.exists():
+            return _result("workforce_master_data", "FAIL", f"Shared workforce data file is missing: {path}")
+        if pd.read_csv(path).empty:
+            return _result("workforce_master_data", "FAIL", f"Shared workforce data file has no rows: {path}")
+    for path, label in [
+        (WORKFORCE_VALIDATION_FILE, "workforce validation"),
+        (WORKFORCE_CREW_CAPACITY_CONTEXT_FILE, "workforce crew capacity context"),
+        (WORKFORCE_MACHINE_AUTH_CONTEXT_FILE, "workforce machine authorization context"),
+        (WORKFORCE_SKILL_COVERAGE_SUMMARY_FILE, "workforce skill coverage summary"),
+        (PHASE4_WORKFORCE_CONTEXT_FILE, "Phase 4 workforce resource context"),
+    ]:
+        if not path.exists():
+            return _result("workforce_master_data", "FAIL", f"{label} output is missing: {path}")
+        if pd.read_csv(path).empty:
+            return _result("workforce_master_data", "FAIL", f"{label} output has no rows: {path}")
+    validation = pd.read_csv(WORKFORCE_VALIDATION_FILE)
+    fail_count = int((validation["status"].astype(str).str.upper() == "FAIL").sum()) if "status" in validation.columns else len(validation)
+    if fail_count:
+        return _result("workforce_master_data", "FAIL", f"Workforce validation contains FAIL rows: {fail_count}")
+    crews = pd.read_csv(WORKFORCE_DATA_FILES["workforce_crews"])
+    skills = pd.read_csv(WORKFORCE_DATA_FILES["workforce_skills"])
+    matrix = pd.read_csv(WORKFORCE_DATA_FILES["crew_skill_matrix"])
+    auth = pd.read_csv(WORKFORCE_DATA_FILES["crew_machine_authorizations"])
+    calendar = pd.read_csv(WORKFORCE_DATA_FILES["crew_calendar"])
+    cost = pd.read_csv(WORKFORCE_DATA_FILES["crew_cost_rates"])
+    machines = pd.read_csv(RESOURCE_DATA_FILES["machines"])
+    active_crews = crews[_to_bool(crews["active_flag"])]
+    active_types = set(active_crews["crew_type"].dropna().astype(str).str.strip())
+    if not active_types.issubset({"PRODUCTION", "MAINTENANCE"}):
+        return _result("workforce_master_data", "FAIL", f"Active crew types must be PRODUCTION or MAINTENANCE for Step 7A: {sorted(active_types)}")
+    future_active = crews[_to_bool(crews["active_flag"]) & crews["crew_type"].astype(str).isin({"WAREHOUSE", "DELIVERY", "QUALITY", "SHARED", "SUPERVISORY"})]
+    if not future_active.empty:
+        return _result("workforce_master_data", "FAIL", f"Future crew types are active: {future_active['crew_id'].tolist()}")
+    if not {"PRODUCTION", "MAINTENANCE"}.issubset(active_types):
+        return _result("workforce_master_data", "FAIL", "Production and maintenance crews must both exist as active crew types.")
+    for label, child, child_col, parent, parent_col in [
+        ("skill matrix crew refs", matrix, "crew_id", crews, "crew_id"),
+        ("skill matrix skill refs", matrix, "skill_id", skills, "skill_id"),
+        ("machine authorization crew refs", auth, "crew_id", crews, "crew_id"),
+        ("machine authorization machine refs", auth, "machine_id", machines, "machine_id"),
+        ("crew calendar refs", calendar, "crew_id", crews, "crew_id"),
+        ("crew cost refs", cost, "crew_id", crews, "crew_id"),
+    ]:
+        missing = sorted(set(child[child_col].dropna().astype(str)) - set(parent[parent_col].dropna().astype(str)))
+        if missing:
+            return _result("workforce_master_data", "FAIL", f"{label} missing references: {missing}")
+    crew_capacity = pd.read_csv(WORKFORCE_CREW_CAPACITY_CONTEXT_FILE)
+    machine_context = pd.read_csv(WORKFORCE_MACHINE_AUTH_CONTEXT_FILE)
+    skill_summary = pd.read_csv(WORKFORCE_SKILL_COVERAGE_SUMMARY_FILE)
+    phase4_context = pd.read_csv(PHASE4_WORKFORCE_CONTEXT_FILE)
+    required_phase4_workforce_columns = {
+        "production_operation_skill_count",
+        "light_autonomous_maintenance_skill_count",
+        "maintenance_skill_count",
+        "medium_heavy_maintenance_skill_count",
+        "repair_skill_count",
+        "authorized_light_maintenance_machine_count",
+        "authorized_medium_heavy_maintenance_machine_count",
+        "authorized_repair_machine_count",
+        "crew_role_separation_status",
+    }
+    missing_workforce_columns = sorted(required_phase4_workforce_columns.difference(phase4_context.columns))
+    if missing_workforce_columns:
+        return _result("workforce_master_data", "FAIL", f"Phase 4 workforce context missing Step 7A patch columns: {missing_workforce_columns}")
+    for frame, label in [
+        (crew_capacity, "crew capacity context"),
+        (machine_context, "machine authorization context"),
+        (skill_summary, "skill coverage summary"),
+        (phase4_context, "phase4 workforce context"),
+    ]:
+        if not _all_true(frame, "advisory_only_flag"):
+            return _result("workforce_master_data", "FAIL", f"{label} must be advisory-only.")
+    if set(phase4_context["workforce_context_basis"].dropna().astype(str).str.strip()) != {"SHARED_WORKFORCE_CREW_SKILL_MATRIX"}:
+        return _result("workforce_master_data", "FAIL", "Phase 4 workforce context has an invalid basis.")
+    production_context = phase4_context[phase4_context["crew_type"].astype(str) == "PRODUCTION"]
+    maintenance_context = phase4_context[phase4_context["crew_type"].astype(str) == "MAINTENANCE"]
+    if (pd.to_numeric(production_context["production_operation_skill_count"], errors="coerce").fillna(-1) < 0).any():
+        return _result("workforce_master_data", "FAIL", "Production crew production_operation_skill_count must be non-negative.")
+    if (pd.to_numeric(production_context["light_autonomous_maintenance_skill_count"], errors="coerce").fillna(-1) < 0).any():
+        return _result("workforce_master_data", "FAIL", "Production crew light_autonomous_maintenance_skill_count must be non-negative.")
+    if (pd.to_numeric(production_context["medium_heavy_maintenance_skill_count"], errors="coerce").fillna(0) != 0).any():
+        return _result("workforce_master_data", "FAIL", "Production crews cannot have medium/heavy maintenance skills.")
+    if (pd.to_numeric(production_context["repair_skill_count"], errors="coerce").fillna(0) != 0).any():
+        return _result("workforce_master_data", "FAIL", "Production crews cannot have repair skills.")
+    if (pd.to_numeric(maintenance_context["production_operation_skill_count"], errors="coerce").fillna(0) != 0).any():
+        return _result("workforce_master_data", "FAIL", "Maintenance crews cannot have production operation skills without future SHARED logic.")
+    if (pd.to_numeric(production_context["authorized_medium_heavy_maintenance_machine_count"], errors="coerce").fillna(0) != 0).any():
+        return _result("workforce_master_data", "FAIL", "Production crews cannot have medium/heavy maintenance machine authorization.")
+    if (pd.to_numeric(production_context["authorized_repair_machine_count"], errors="coerce").fillna(0) != 0).any():
+        return _result("workforce_master_data", "FAIL", "Production crews cannot have repair machine authorization.")
+    if set(phase4_context["crew_role_separation_status"].dropna().astype(str).str.strip()) - {"OK", "WARNING", "REVIEW_REQUIRED"}:
+        return _result("workforce_master_data", "FAIL", "Invalid crew role separation status values.")
+    if (phase4_context["crew_role_separation_status"].astype(str) == "REVIEW_REQUIRED").any():
+        return _result("workforce_master_data", "FAIL", "Crew role separation has REVIEW_REQUIRED rows.")
+    future_skill_covered = skill_summary[
+        (~_to_bool(skills["active_flag"]))
+        & skills["skill_category"].astype(str).isin({"FUTURE_WAREHOUSE", "FUTURE_DELIVERY"})
+        & (skill_summary["coverage_status"].astype(str) == "COVERED")
+    ]
+    if not future_skill_covered.empty:
+        return _result("workforce_master_data", "FAIL", f"Inactive future skills must not be marked COVERED: {future_skill_covered['skill_id'].tolist()}")
+    if WORKFORCE_MANAGER_REVIEW_QUEUE_FILE.exists():
+        review = pd.read_csv(WORKFORCE_MANAGER_REVIEW_QUEUE_FILE)
+        if not review.empty:
+            if _to_bool(review["auto_action_allowed"]).any():
+                return _result("workforce_master_data", "FAIL", "Workforce review queue cannot allow automatic action.")
+            if not _all_true(review, "advisory_only_flag"):
+                return _result("workforce_master_data", "FAIL", "Workforce review queue must be advisory-only.")
+    return _result(
+        "workforce_master_data",
+        "PASS",
+        f"Step 7A shared workforce valid; active_production={int((active_crews['crew_type'] == 'PRODUCTION').sum())}, active_maintenance={int((active_crews['crew_type'] == 'MAINTENANCE').sum())}, phase4_context_rows={len(phase4_context)}.",
     )
 
 
@@ -1778,6 +1912,8 @@ def _check_no_routing_or_capacity_outputs() -> dict:
         "shop_floor_schedule",
         "production_sequence",
         "scheduling_engine",
+        "crew_schedule",
+        "maintenance_work_order",
         "simulation",
     ]
     bad_files = []
@@ -1875,7 +2011,7 @@ def _result(name: str, status: str, message: str) -> dict:
 
 def _format_report(evidence: dict) -> str:
     lines = [
-        "Phase 4 Initialization Validation with Step 6B Quality-Adjusted Capacity Impact",
+        "Phase 4 Initialization Validation with Step 7A Shared Workforce Master Data",
         f"Generated at UTC: {evidence['generated_at_utc']}",
         f"Overall status: {evidence['overall_status']}",
         f"Fail count: {evidence['fail_count']}",

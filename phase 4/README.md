@@ -1,6 +1,6 @@
 # Phase 4 Initialization Through Production Flow Visibility
 
-Phase 4 production planning preparation has started. It now includes a simple advisory Master Production Schedule (MPS), MRP net component requirements, component-period MRP summary, pegging detail, production resource master data, routing/workflow master data, CRP feasibility for workstations, machine types, and labor skills, capacity feasibility summary, bottleneck candidates, estimated queue pressure / WIP risk visibility, bottleneck visibility summaries, a production flow view, planning-based quality/workstation performance trends, and quality-adjusted capacity impact estimates. This is still not the full production planning engine.
+Phase 4 production planning preparation has started. It now includes a simple advisory Master Production Schedule (MPS), MRP net component requirements, component-period MRP summary, pegging detail, production resource master data, shared workforce/crew master data, routing/workflow master data, CRP feasibility for workstations, machine types, and labor skills, capacity feasibility summary, bottleneck candidates, estimated queue pressure / WIP risk visibility, bottleneck visibility summaries, a production flow view, planning-based quality/workstation performance trends, and quality-adjusted capacity impact estimates. This is still not the full production planning engine.
 
 Current initialization scope:
 
@@ -17,6 +17,18 @@ Current initialization scope:
 - MRP pegging detail shows which finished product demand caused each component requirement.
 - Resource master data now defines workstations, machines, labor resources, and a simple resource calendar.
 - The resource data will later support routing/workflow, capacity feasibility, queues, bottlenecks, quality, and maintenance.
+- Step 7A adds a shared workforce, crew, skill, and machine authorization layer.
+- The workforce layer sits under `shared/` because production, maintenance, warehouse, delivery, and decision-support logic may all need it later.
+- Active crews are separated into `PRODUCTION` and `MAINTENANCE`.
+- Future crew types such as `WAREHOUSE` and `DELIVERY` are schema-supported but inactive for now.
+- Crew skills and machine authorizations define who can operate, set up, maintain, or repair machines.
+- Step 7A now supports limited light autonomous maintenance by production crews.
+- Production crews can perform light tasks such as cleaning, inspection, lubrication/oil change, tightening, basic adjustment, and abnormality reporting.
+- Production crews cannot perform medium or heavy maintenance, corrective repair, breakdown repair, overhaul, electrical repair, or complex mechanical repair.
+- Maintenance crews own medium/heavy maintenance, troubleshooting, repair, breakdown recovery, and overhaul.
+- Crew role separation is explicit in the Phase 4 workforce context output.
+- `phase 4/outputs/phase4_workforce_resource_context.csv` gives Phase 4 a clean advisory view of production and maintenance crews.
+- Step 7A does not schedule workers, does not change production capacity calculations, and does not create maintenance work orders.
 - Routing is the ERP version of the production flowchart.
 - Road Bike and Mountain Bike now have different advisory routings.
 - Parallel subassembly branches are included for both products.
@@ -83,16 +95,17 @@ Run order:
 3. Run Phase 4 BOM explosion from MPS planned production.
 4. Run Phase 4 MRP net component requirements, component-period summary, and pegging detail.
 5. Validate Phase 4 resource master data.
-6. Validate Phase 4 routing/workflow master data.
-7. Build Phase 4 workstation, machine-type, and labor-skill capacity load / CRP feasibility.
-8. Build Phase 4 capacity feasibility summary and bottleneck candidates.
-9. Build Phase 4 estimated queue pressure and WIP risk visibility.
-10. Build Phase 4 bottleneck visibility summary.
-11. Build Phase 4 production flow and queue-bottleneck flow view.
-12. Build Phase 4 quality and workstation performance trend detection.
-13. Build Phase 4 quality-adjusted capacity impact estimates.
-14. Run Phase 3 component inventory checks.
-15. Run Phase 2 component supplier checks.
+6. Validate shared workforce, crew, skill, and machine authorization master data.
+7. Validate Phase 4 routing/workflow master data.
+8. Build Phase 4 workstation, machine-type, and labor-skill capacity load / CRP feasibility.
+9. Build Phase 4 capacity feasibility summary and bottleneck candidates.
+10. Build Phase 4 estimated queue pressure and WIP risk visibility.
+11. Build Phase 4 bottleneck visibility summary.
+12. Build Phase 4 production flow and queue-bottleneck flow view.
+13. Build Phase 4 quality and workstation performance trend detection.
+14. Build Phase 4 quality-adjusted capacity impact estimates.
+15. Run Phase 3 component inventory checks.
+16. Run Phase 2 component supplier checks.
 
 The Phase 4 bridges are optional-safe. If a bridge file is missing or fails, Phase 2 and Phase 3 print a warning and continue their existing core pipelines.
 
@@ -101,7 +114,9 @@ Guardrails:
 - Outputs are advisory only.
 - No purchase orders are created.
 - No production orders are created.
+- No maintenance work orders are created.
 - No inventory is consumed or auto-reserved.
+- No workforce, maintenance, production, or delivery scheduling is created.
 - Simulation is a separate future phase.
 - Future production release flags should default to `production_order_release_allowed = False`.
 
@@ -113,16 +128,17 @@ Not implemented yet:
 - Step 5B provides bottleneck visibility from CRP and estimated queue evidence; final measured bottleneck confirmation remains future work.
 - Step 5C provides production-flow and queue-bottleneck flow-view data; Streamlit/UI screens remain future work.
 - Step 6B provides planning-based quality-adjusted capacity impact; quality-adjusted MRP remains future work.
+- Step 7A provides shared workforce master data and authorizations; crew scheduling and maintenance planning remain future work.
 - Confirmed bottlenecks from real queue behavior.
 - Real queue measurement, exact wait-time tracking, queue logic, or queue simulation.
-- Shop-floor-confirmed quality measurement, quality-adjusted MRP, maintenance, scheduling, layout, or simulation.
+- Shop-floor-confirmed quality measurement, quality-adjusted MRP, maintenance work orders, crew scheduling, layout, or simulation.
 - Production order release.
 
 Next likely Phase 4 feature:
 
-- The next real feature after this quality-adjusted capacity step is likely quality-adjusted material planning or capacity relief recommendations, but neither is implemented here.
+- The next real feature after this workforce master-data step is likely maintenance master data or crew-aware capacity planning, but neither is implemented here.
 
 Review bundle:
 
-- `create_phase4_review_bundle.py` generates `phase4_step6b_quality_adjusted_capacity_review_bundle.zip` at the project root for external review.
+- `create_phase4_review_bundle.py` generates `phase4_step7a_workforce_review_bundle.zip` at the project root for external review.
 - The bundle preserves project-relative folder structure and excludes cache, bytecode, virtual environment, and zip artifacts.

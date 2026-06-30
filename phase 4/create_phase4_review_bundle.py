@@ -1,4 +1,4 @@
-"""Create a clean Phase 4 Step 6B quality-adjusted capacity review bundle."""
+"""Create a clean Phase 4 Step 7A workforce review bundle."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 PHASE4_OUTPUTS = PROJECT_ROOT / "phase 4" / "outputs"
-ZIP_PATH = PROJECT_ROOT / "phase4_step6b_quality_adjusted_capacity_review_bundle.zip"
+ZIP_PATH = PROJECT_ROOT / "phase4_step7a_workforce_review_bundle.zip"
 MANIFEST_PATH = PHASE4_OUTPUTS / "phase4_review_bundle_manifest.txt"
 
 REQUIRED_RELATIVE_FILES = [
@@ -16,6 +16,18 @@ REQUIRED_RELATIVE_FILES = [
     "planning_orchestrator.py",
     "shared/validation/integrated_validation_evidence.json",
     "shared/validation/integrated_validation_report.txt",
+    "shared/data/workforce_crews.csv",
+    "shared/data/workforce_skills.csv",
+    "shared/data/crew_skill_matrix.csv",
+    "shared/data/crew_machine_authorizations.csv",
+    "shared/data/crew_calendar.csv",
+    "shared/data/crew_cost_rates.csv",
+    "shared/core/workforce_master_data.py",
+    "shared/outputs/workforce_crew_validation.csv",
+    "shared/outputs/workforce_crew_capacity_context.csv",
+    "shared/outputs/workforce_machine_authorization_context.csv",
+    "shared/outputs/workforce_skill_coverage_summary.csv",
+    "shared/outputs/workforce_manager_review_queue.csv",
     "phase 4/README.md",
     "phase 4/main.py",
     "phase 4/validate_phase4_initialization.py",
@@ -50,6 +62,7 @@ REQUIRED_RELATIVE_FILES = [
     "phase 4/outputs/phase4_mrp_component_period_summary.csv",
     "phase 4/outputs/phase4_mrp_pegging_detail.csv",
     "phase 4/outputs/phase4_resource_validation.csv",
+    "phase 4/outputs/phase4_workforce_resource_context.csv",
     "phase 4/outputs/phase4_routing_validation.csv",
     "phase 4/outputs/phase4_routing_flow_summary.csv",
     "phase 4/outputs/phase4_capacity_load_by_workstation.csv",
@@ -205,6 +218,17 @@ def _verify_zip() -> tuple[str, list[str]]:
     name_set = set(names)
 
     required_checks = {
+        "shared/data/workforce_crews.csv": "Shared workforce crews data exists inside the zip",
+        "shared/data/workforce_skills.csv": "Shared workforce skills data exists inside the zip",
+        "shared/data/crew_skill_matrix.csv": "Shared crew skill matrix exists inside the zip",
+        "shared/data/crew_machine_authorizations.csv": "Shared crew machine authorizations exists inside the zip",
+        "shared/core/workforce_master_data.py": "Shared workforce master data module exists inside the zip",
+        "shared/outputs/workforce_crew_validation.csv": "Shared workforce validation output exists inside the zip",
+        "shared/outputs/workforce_crew_capacity_context.csv": "Shared workforce crew capacity context exists inside the zip",
+        "shared/outputs/workforce_machine_authorization_context.csv": "Shared workforce machine authorization context exists inside the zip",
+        "shared/outputs/workforce_skill_coverage_summary.csv": "Shared workforce skill coverage summary exists inside the zip",
+        "shared/outputs/workforce_manager_review_queue.csv": "Shared workforce manager review queue exists inside the zip",
+        "phase 4/outputs/phase4_workforce_resource_context.csv": "Phase 4 workforce resource context exists inside the zip",
         "phase 4/data/quality_history.csv": "Phase 4 quality history seed data exists inside the zip",
         "phase 4/data/quality_rules.csv": "Phase 4 quality rules seed data exists inside the zip",
         "phase 4/data/rework_rules.csv": "Phase 4 rework rules seed data exists inside the zip",
@@ -327,7 +351,7 @@ def _build_manifest(
 ) -> str:
     zip_size_mb = ZIP_PATH.stat().st_size / (1024 * 1024) if ZIP_PATH.exists() else 0.0
     lines = [
-        "Phase 4 Step 6B Quality-Adjusted Capacity Review Bundle Manifest",
+        "Phase 4 Step 7A Workforce Review Bundle Manifest",
         f"Generated zip path: {ZIP_PATH}",
         f"Generated timestamp UTC: {generated_at}",
         f"Included file count: {len(included)}",

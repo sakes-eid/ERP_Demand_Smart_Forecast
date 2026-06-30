@@ -1,0 +1,45 @@
+crew_id,skill_id,skill_level,certified_flag,can_work_unsupervised_flag,max_hours_per_week_for_skill,cross_trained_flag,primary_skill_flag,active_flag,notes
+CREW-PROD-FRAME,SKILL-FRAME-PREP,ADVANCED,True,True,80,False,True,True,Primary frame preparation skill.
+CREW-PROD-FRAME,SKILL-FORK-SUSP,INTERMEDIATE,True,True,30,True,False,True,Cross-trained for fork and suspension preparation.
+CREW-PROD-FRAME,SKILL-CLEANING,BASIC,True,True,4,True,False,True,Light autonomous maintenance only; no repair authority.
+CREW-PROD-FRAME,SKILL-VISUAL-INSPECTION,BASIC,True,True,4,True,False,True,Light autonomous maintenance only; no repair authority.
+CREW-PROD-FRAME,SKILL-LUBRICATION,BASIC,True,True,3,True,False,True,Light autonomous maintenance only; no repair authority.
+CREW-PROD-FRAME,SKILL-ABNORMALITY-REPORTING,BASIC,True,True,2,True,False,True,Report abnormalities to maintenance.
+CREW-PROD-WHEEL,SKILL-WHEEL-ASSEMBLY,ADVANCED,True,True,120,False,True,True,Primary wheel assembly skill.
+CREW-PROD-WHEEL,SKILL-CLEANING,BASIC,True,True,4,True,False,True,Light autonomous maintenance only; no repair authority.
+CREW-PROD-WHEEL,SKILL-VISUAL-INSPECTION,BASIC,True,True,4,True,False,True,Light autonomous maintenance only; no repair authority.
+CREW-PROD-WHEEL,SKILL-BOLT-TIGHTENING,INTERMEDIATE,True,True,4,True,False,True,Approved tightening checks only; no repair authority.
+CREW-PROD-WHEEL,SKILL-ABNORMALITY-REPORTING,BASIC,True,True,2,True,False,True,Report abnormalities to maintenance.
+CREW-PROD-BRAKE,SKILL-BRAKE-ASSEMBLY,ADVANCED,True,True,80,False,True,True,Primary brake assembly skill.
+CREW-PROD-BRAKE,SKILL-CLEANING,BASIC,True,True,3,True,False,True,Light autonomous maintenance only; no repair authority.
+CREW-PROD-BRAKE,SKILL-VISUAL-INSPECTION,BASIC,True,True,4,True,False,True,Light autonomous maintenance only; no repair authority.
+CREW-PROD-BRAKE,SKILL-BASIC-ADJUSTMENT,INTERMEDIATE,True,True,4,True,False,True,Basic adjustment within standard work only.
+CREW-PROD-BRAKE,SKILL-ABNORMALITY-REPORTING,BASIC,True,True,2,True,False,True,Report abnormalities to maintenance.
+CREW-PROD-FINAL,SKILL-FINAL-ASSEMBLY,ADVANCED,True,True,160,False,True,True,Primary final assembly skill.
+CREW-PROD-FINAL,SKILL-FORK-SUSP,INTERMEDIATE,True,True,30,True,False,True,Cross-trained to support suspension integration.
+CREW-PROD-FINAL,SKILL-CLEANING,BASIC,True,True,5,True,False,True,Light autonomous maintenance only; no repair authority.
+CREW-PROD-FINAL,SKILL-VISUAL-INSPECTION,BASIC,True,True,5,True,False,True,Light autonomous maintenance only; no repair authority.
+CREW-PROD-FINAL,SKILL-LUBRICATION,BASIC,True,True,3,True,False,True,Light autonomous maintenance only; no repair authority.
+CREW-PROD-FINAL,SKILL-OIL-CHANGE,BASIC,True,True,2,True,False,True,Approved simple oil-change task only; no repair authority.
+CREW-PROD-FINAL,SKILL-BOLT-TIGHTENING,INTERMEDIATE,True,True,4,True,False,True,Approved tightening checks only; no repair authority.
+CREW-PROD-FINAL,SKILL-ABNORMALITY-REPORTING,BASIC,True,True,2,True,False,True,Report abnormalities to maintenance.
+CREW-PROD-QC,SKILL-QC-INSPECTION,ADVANCED,True,True,80,False,True,True,Primary QC inspection skill.
+CREW-PROD-QC,SKILL-VISUAL-INSPECTION,INTERMEDIATE,True,True,5,True,False,True,Light autonomous inspection support; no repair authority.
+CREW-PROD-QC,SKILL-ABNORMALITY-REPORTING,BASIC,True,True,2,True,False,True,Report abnormalities to maintenance.
+CREW-PROD-PACK,SKILL-PACKAGING,INTERMEDIATE,True,True,80,False,True,True,Primary packaging skill.
+CREW-PROD-PACK,SKILL-CLEANING,BASIC,True,True,4,True,False,True,Light autonomous maintenance only; no repair authority.
+CREW-PROD-PACK,SKILL-ABNORMALITY-REPORTING,BASIC,True,True,2,True,False,True,Report abnormalities to maintenance.
+CREW-MAINT-MECH,SKILL-MECH-MAINT,EXPERT,True,True,80,False,True,True,Primary mechanical maintenance skill.
+CREW-MAINT-MECH,SKILL-PM,ADVANCED,True,True,60,True,False,True,Preventive maintenance skill.
+CREW-MAINT-MECH,SKILL-CORRECTIVE,ADVANCED,True,True,60,True,False,True,Corrective repair skill.
+CREW-MAINT-MECH,SKILL-MEDIUM-MAINT,ADVANCED,True,True,50,True,False,True,Medium maintenance skill.
+CREW-MAINT-MECH,SKILL-HEAVY-OVERHAUL,INTERMEDIATE,True,True,30,True,False,True,Heavy overhaul support.
+CREW-MAINT-MECH,SKILL-TROUBLESHOOT,ADVANCED,True,True,50,True,False,True,Mechanical troubleshooting.
+CREW-MAINT-MECH,SKILL-LIGHT-MAINT,ADVANCED,True,True,30,True,False,True,Can audit and support autonomous maintenance.
+CREW-MAINT-ELEC,SKILL-ELEC-MAINT,EXPERT,True,True,40,False,True,True,Primary electrical maintenance skill.
+CREW-MAINT-ELEC,SKILL-PM,ADVANCED,True,True,30,True,False,True,Preventive maintenance skill.
+CREW-MAINT-ELEC,SKILL-CORRECTIVE,ADVANCED,True,True,30,True,False,True,Corrective repair skill.
+CREW-MAINT-ELEC,SKILL-TROUBLESHOOT,EXPERT,True,True,40,True,False,True,Electrical troubleshooting.
+CREW-MAINT-GEN,SKILL-LIGHT-MAINT,ADVANCED,True,True,80,False,True,True,Primary general light maintenance skill.
+CREW-MAINT-GEN,SKILL-PM,INTERMEDIATE,True,True,50,True,False,True,Preventive support skill.
+CREW-MAINT-GEN,SKILL-CORRECTIVE,INTERMEDIATE,True,True,40,True,False,True,General corrective repair support.

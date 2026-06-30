@@ -1,0 +1,12 @@
+crew_id,standard_hourly_cost,overtime_hourly_cost,maintenance_callout_cost,currency,effective_from,active_flag,notes
+CREW-PROD-FRAME,24.00,36.00,0.00,EUR,2026-01-01,True,Production standard and overtime rate.
+CREW-PROD-WHEEL,23.00,34.50,0.00,EUR,2026-01-01,True,Production standard and overtime rate.
+CREW-PROD-BRAKE,22.50,33.75,0.00,EUR,2026-01-01,True,Production standard and overtime rate.
+CREW-PROD-FINAL,24.50,36.75,0.00,EUR,2026-01-01,True,Production standard and overtime rate.
+CREW-PROD-QC,26.00,39.00,0.00,EUR,2026-01-01,True,Production standard and overtime rate.
+CREW-PROD-PACK,20.50,30.75,0.00,EUR,2026-01-01,True,Production standard and overtime rate.
+CREW-MAINT-MECH,29.00,43.50,120.00,EUR,2026-01-01,True,Maintenance standard overtime and callout rate.
+CREW-MAINT-ELEC,31.00,46.50,150.00,EUR,2026-01-01,True,Maintenance standard overtime and callout rate.
+CREW-MAINT-GEN,25.00,37.50,90.00,EUR,2026-01-01,True,Maintenance standard overtime and callout rate.
+CREW-WH-FUTURE,0.00,0.00,0.00,EUR,2026-01-01,False,Inactive future placeholder.
+CREW-DEL-FUTURE,0.00,0.00,0.00,EUR,2026-01-01,False,Inactive future placeholder.

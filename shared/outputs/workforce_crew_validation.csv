@@ -1,0 +1,47 @@
+check_id,check_name,status,message,affected_rows,advisory_only_flag
+workforce_workforce_crews_exists,workforce_crews exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\shared\data\workforce_crews.csv,0,True
+workforce_workforce_skills_exists,workforce_skills exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\shared\data\workforce_skills.csv,0,True
+workforce_crew_skill_matrix_exists,crew_skill_matrix exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\shared\data\crew_skill_matrix.csv,0,True
+workforce_crew_machine_authorizations_exists,crew_machine_authorizations exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\shared\data\crew_machine_authorizations.csv,0,True
+workforce_crew_calendar_exists,crew_calendar exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\shared\data\crew_calendar.csv,0,True
+workforce_crew_cost_rates_exists,crew_cost_rates exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\shared\data\crew_cost_rates.csv,0,True
+workforce_phase4_machines_exists,phase4_machines exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\data\machines.csv,0,True
+workforce_crews_required_columns,crews required columns,PASS,crews has required columns.,0,True
+workforce_skills_required_columns,skills required columns,PASS,skills has required columns.,0,True
+workforce_skill_matrix_required_columns,skill_matrix required columns,PASS,skill_matrix has required columns.,0,True
+workforce_machine_auth_required_columns,machine_auth required columns,PASS,machine_auth has required columns.,0,True
+workforce_crew_calendar_required_columns,crew_calendar required columns,PASS,crew_calendar has required columns.,0,True
+workforce_crew_cost_required_columns,crew_cost required columns,PASS,crew_cost has required columns.,0,True
+workforce_crews_unique,crew_id unique,PASS,Duplicate crew_id rows: 0,0,True
+workforce_skills_unique,skill_id unique,PASS,Duplicate skill_id rows: 0,0,True
+skill_matrix_crew_refs,crew_id references valid,PASS,crew_id references are valid.,0,True
+skill_matrix_skill_refs,skill_id references valid,PASS,skill_id references are valid.,0,True
+machine_auth_crew_refs,crew_id references valid,PASS,crew_id references are valid.,0,True
+machine_auth_machine_refs,machine_id references valid,PASS,machine_id references are valid.,0,True
+crew_calendar_crew_refs,crew_id references valid,PASS,crew_id references are valid.,0,True
+crew_cost_crew_refs,crew_id references valid,PASS,crew_id references are valid.,0,True
+workforce_active_crew_types,active crews are production or maintenance,PASS,Active crews are limited to PRODUCTION and MAINTENANCE.,0,True
+workforce_future_crew_inactive,future crew types inactive,PASS,Future crew placeholders are inactive and future-use allowed.,0,True
+workforce_allowed_crew_types,crew types allowed,PASS,Crew types are in the allowed list.,0,True
+workforce_crew_numeric_nonnegative,numeric fields non-negative,PASS,Numeric fields are non-negative.,0,True
+workforce_skill_hours_nonnegative,numeric fields non-negative,PASS,Numeric fields are non-negative.,0,True
+workforce_cost_nonnegative,numeric fields non-negative,PASS,Numeric fields are non-negative.,0,True
+workforce_calendar_breaks_nonnegative,numeric fields non-negative,PASS,Numeric fields are non-negative.,0,True
+workforce_skill_levels_valid,skill levels valid,PASS,Skill levels are valid.,0,True
+workforce_authorization_scopes_valid,authorization scopes valid,PASS,Authorization scopes are valid.,0,True
+workforce_maintenance_levels_valid,maintenance levels valid,PASS,Maintenance authorization levels are valid.,0,True
+workforce_calendar_types_valid,calendar types valid,PASS,Calendar types are valid.,0,True
+workforce_production_crews_have_production_skills,production crews have production skills,PASS,Production crews have production skills.,0,True
+workforce_maintenance_crews_have_maintenance_skills,maintenance crews have maintenance skills,PASS,Maintenance crews have maintenance skills.,0,True
+workforce_production_light_autonomous_maintenance_allowed,production light autonomous maintenance allowed,PASS,Production light autonomous maintenance assignments: 22,22,True
+workforce_production_no_medium_heavy_or_repair_skills,production crews have no medium heavy or repair skills,PASS,Production crews have no medium/heavy/repair/electrical/general maintenance skills.,0,True
+workforce_maintenance_not_production_skill_crews,maintenance crews not production operators by skill,PASS,Maintenance crews have no production operation skills.,0,True
+workforce_general_maintenance_not_production,general maintenance treated as maintenance,PASS,GENERAL_MAINTENANCE is not assigned to production crews.,0,True
+workforce_production_not_repair_crews,production crews not repair crews,PASS,Production crews have no repair authorization.,0,True
+workforce_production_maintain_light_only,production crews maintain light only,PASS,Production crews with maintain authorization are limited to LIGHT.,0,True
+workforce_production_no_medium_heavy_machine_auth,production crews no medium heavy machine authorization,PASS,Production crews have no MEDIUM/HEAVY/FULL maintenance machine authorization.,0,True
+workforce_maintenance_not_production_operators,maintenance crews not production operators,PASS,Maintenance crews are not marked as production operators.,0,True
+workforce_certification_requirements_respected,certification requirements respected,PASS,Certification requirements are respected.,0,True
+workforce_shift_times_valid,shift times valid,PASS,Crew shift times are valid where available.,0,True
+workforce_context_outputs_valid,workforce context outputs valid,PASS,Workforce context outputs are valid and advisory-only.,0,True
+workforce_no_blocked_outputs,no workforce blocked outputs,PASS,"No workforce scheduling, work-order, simulation, or execution outputs found.",0,True

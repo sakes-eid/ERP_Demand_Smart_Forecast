@@ -1,0 +1,12 @@
+crew_id,crew_name,crew_type,crew_group,primary_work_area,workers_available,default_shift_hours_per_day,default_workdays_per_week,weekly_capacity_hours,soft_utilization_threshold_pct,hard_utilization_threshold_pct,hourly_wage,active_flag,future_use_allowed_flag,notes
+CREW-PROD-FRAME,Frame Production Crew,PRODUCTION,BIKE_PRODUCTION,Frame and chassis area,2,8,5,80,80,95,24.00,True,False,Production crew for frame preparation and alignment.
+CREW-PROD-WHEEL,Wheel Assembly Crew,PRODUCTION,BIKE_PRODUCTION,Subassembly area,3,8,5,120,80,95,23.00,True,False,Production crew for wheel build and truing operations.
+CREW-PROD-BRAKE,Brake Assembly Crew,PRODUCTION,BIKE_PRODUCTION,Subassembly area,2,8,5,80,80,95,22.50,True,False,Production crew for brake kit preparation and adjustment.
+CREW-PROD-FINAL,Final Assembly Crew,PRODUCTION,BIKE_PRODUCTION,Final assembly area,4,8,5,160,80,95,24.50,True,False,Production crew for final bike assembly.
+CREW-PROD-QC,Quality Inspection Crew,PRODUCTION,BIKE_PRODUCTION,Quality area,2,8,5,80,80,95,26.00,True,False,Production quality inspection crew for final QC.
+CREW-PROD-PACK,Packaging Crew,PRODUCTION,BIKE_PRODUCTION,Packaging area,2,8,5,80,80,95,20.50,True,False,Production crew for packaging finished bikes.
+CREW-MAINT-MECH,Mechanical Maintenance Crew,MAINTENANCE,MAINTENANCE,Maintenance support,2,8,5,80,75,90,29.00,True,False,Maintenance crew for mechanical preventive and corrective work.
+CREW-MAINT-ELEC,Electrical Maintenance Crew,MAINTENANCE,MAINTENANCE,Maintenance support,1,8,5,40,75,90,31.00,True,False,Maintenance crew for electrical troubleshooting and repair.
+CREW-MAINT-GEN,General Maintenance Crew,MAINTENANCE,MAINTENANCE,Maintenance support,2,8,5,80,75,90,25.00,True,False,Maintenance crew for light maintenance and facilities support.
+CREW-WH-FUTURE,Future Warehouse Crew,WAREHOUSE,FUTURE_WORKFORCE,Warehouse,0,8,5,0,80,95,0.00,False,True,Inactive placeholder for future warehouse workforce planning.
+CREW-DEL-FUTURE,Future Delivery Driver Crew,DELIVERY,FUTURE_WORKFORCE,Delivery,0,8,5,0,80,95,0.00,False,True,Inactive placeholder for future delivery workforce planning.
