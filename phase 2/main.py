@@ -2,10 +2,15 @@
 
 import importlib.util
 import os
+import sys
 from datetime import datetime
 from pathlib import Path
 
 import pandas as pd
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
 from config import BACKORDER_ALLOCATIONS_FILE, BACKORDERS_FILE, OUTPUT_DIR, SUPPLIER_TREND_WINDOWS
 from core.backorder_aging import build_backorder_aging
@@ -33,6 +38,7 @@ from core.supply_cleaner import (
     load_supply_inputs,
 )
 from core.supply_generator import create_sample_supply_files
+from shared.core.spare_parts_master_data import build_spare_part_master_data_outputs
 
 
 PHASE4_COMPONENT_SUPPLIER_BRIDGE = (
@@ -54,6 +60,16 @@ def _run_phase4_component_supplier_bridge(supplier_sku_scores: pd.DataFrame) -> 
         return bridge(supplier_sku_scores)
     except Exception as exc:
         print(f"Warning: Phase 4 component supplier bridge failed; continuing Phase 2 core pipeline. Error: {exc}")
+        return pd.DataFrame()
+
+
+def _run_spare_part_supplier_context() -> pd.DataFrame:
+    """Regenerate optional Step 7B spare-part supplier context without blocking Phase 2."""
+    try:
+        _, _, _, _, phase4_context = build_spare_part_master_data_outputs()
+        return pd.read_csv(PROJECT_ROOT / "phase 2" / "outputs" / "phase4_spare_part_supplier_check.csv")
+    except Exception as exc:
+        print(f"Warning: Step 7B spare-part supplier context failed; continuing Phase 2 core pipeline. Error: {exc}")
         return pd.DataFrame()
 
 
@@ -170,6 +186,8 @@ def run_pipeline() -> None:
     save_output(procurement_kpi_summary, "phase2_procurement_kpi_summary.csv")
     phase4_component_supplier_check = _run_phase4_component_supplier_bridge(supplier_sku_scores)
     print(f"Phase 4 component supplier check rows: {len(phase4_component_supplier_check)}")
+    phase4_spare_part_supplier_check = _run_spare_part_supplier_context()
+    print(f"Phase 4 spare-part supplier check rows: {len(phase4_spare_part_supplier_check)}")
 
     print_summary(
         suppliers,

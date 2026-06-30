@@ -1,13 +1,24 @@
-Phase 4 Step 7A Workforce Review Bundle Manifest
-Generated zip path: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase4_step7a_workforce_review_bundle.zip
-Generated timestamp UTC: 2026-06-30T11:35:30+00:00
-Included file count: 104
+Phase 4 Step 7B Spare Parts Review Bundle Manifest
+Generated zip path: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase4_step7b_spare_parts_review_bundle.zip
+Generated timestamp UTC: 2026-06-30T11:56:12+00:00
+Included file count: 118
 Missing file count: 0
 Excluded file count: 0
-Final zip size MB: 0.264
+Final zip size MB: 0.302
 Verification status: PASS
 
 Verification messages:
+- PASS: Shared spare-parts master data exists inside the zip
+- PASS: Shared machine spare-part requirements data exists inside the zip
+- PASS: Shared spare-parts master data module exists inside the zip
+- PASS: Shared spare-part validation output exists inside the zip
+- PASS: Shared spare-part machine requirement context exists inside the zip
+- PASS: Shared spare-part phase integration context exists inside the zip
+- PASS: Shared spare-part manager review queue exists inside the zip
+- PASS: Phase 1 spare-part demand context exists inside the zip
+- PASS: Phase 2 spare-part supplier check exists inside the zip
+- PASS: Phase 3 spare-part inventory check exists inside the zip
+- PASS: Phase 4 spare-part requirement context exists inside the zip
 - PASS: Shared workforce crews data exists inside the zip
 - PASS: Shared workforce skills data exists inside the zip
 - PASS: Shared crew skill matrix exists inside the zip
@@ -107,14 +118,21 @@ Included files:
 - shared/data/workforce_skills.csv
 - shared/data/crew_skill_matrix.csv
 - shared/data/crew_machine_authorizations.csv
+- shared/data/spare_parts_master.csv
+- shared/data/machine_spare_part_requirements.csv
 - shared/data/crew_calendar.csv
 - shared/data/crew_cost_rates.csv
 - shared/core/workforce_master_data.py
+- shared/core/spare_parts_master_data.py
 - shared/outputs/workforce_crew_validation.csv
 - shared/outputs/workforce_crew_capacity_context.csv
 - shared/outputs/workforce_machine_authorization_context.csv
 - shared/outputs/workforce_skill_coverage_summary.csv
 - shared/outputs/workforce_manager_review_queue.csv
+- shared/outputs/spare_part_validation.csv
+- shared/outputs/spare_part_machine_requirement_context.csv
+- shared/outputs/spare_part_phase_integration_context.csv
+- shared/outputs/spare_part_manager_review_queue.csv
 - phase 4/README.md
 - phase 4/main.py
 - phase 4/validate_phase4_initialization.py
@@ -150,6 +168,7 @@ Included files:
 - phase 4/outputs/phase4_mrp_pegging_detail.csv
 - phase 4/outputs/phase4_resource_validation.csv
 - phase 4/outputs/phase4_workforce_resource_context.csv
+- phase 4/outputs/phase4_spare_part_requirement_context.csv
 - phase 4/outputs/phase4_routing_validation.csv
 - phase 4/outputs/phase4_routing_flow_summary.csv
 - phase 4/outputs/phase4_capacity_load_by_workstation.csv
@@ -190,16 +209,22 @@ Included files:
 - phase 4/outputs/phase4_initialization_validation_report.txt
 - phase 4/outputs/phase4_review_bundle_manifest.txt
 - phase 1/core/data_loader.py
+- phase 1/data/products.csv
+- phase 1/data/demand_history.csv
+- phase 1/outputs/phase1_spare_part_demand_context.csv
 - phase 1/outputs/future_forecast_results.csv
 - phase 1/outputs/phase1_demand_context_validation_report.txt
 - phase 1/outputs/phase1_demand_context_validation_summary.csv
 - phase 2/main.py
 - phase 2/data/supplier_sku.csv
 - phase 2/outputs/phase4_component_supplier_check.csv
+- phase 2/outputs/phase4_spare_part_supplier_check.csv
 - phase 2/outputs/phase2_procurement_validation_summary.csv
 - phase 2/outputs/phase2_procurement_validation_report.txt
 - phase 3/main.py
 - phase 3/data/inventory.csv
+- phase 3/data/sku_storage_requirements.csv
 - phase 3/outputs/phase4_component_inventory_check.csv
+- phase 3/outputs/phase4_spare_part_inventory_check.csv
 - phase 3/outputs/phase3_validation_summary.csv
 - phase 3/outputs/phase3_validation_report.txt

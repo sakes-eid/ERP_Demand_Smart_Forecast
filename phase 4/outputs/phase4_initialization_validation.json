@@ -1,6 +1,6 @@
 {
   "validation_name": "phase4_initialization_validation",
-  "generated_at_utc": "2026-06-30T11:35:26+00:00",
+  "generated_at_utc": "2026-06-30T11:56:07+00:00",
   "overall_status": "PASS",
   "fail_count": 0,
   "warning_count": 3,
@@ -71,6 +71,11 @@
       "message": "Step 7A shared workforce valid; active_production=6, active_maintenance=3, phase4_context_rows=9."
     },
     {
+      "check": "spare_part_integration",
+      "status": "PASS",
+      "message": "Step 7B spare-part integration valid; spare_parts=10, requirements=12, phase4_context_rows=12."
+    },
+    {
       "check": "routing_master_data",
       "status": "PASS",
       "message": "Step 3B routing master data valid; routing_rows=13, parallel_groups=2, operation_resource_rows=13."
@@ -118,7 +123,7 @@
     {
       "check": "phase4_run_id_consistency",
       "status": "PASS",
-      "message": "Consistent planning_run_id across Phase 4 outputs: PHASE4-MPS-20260630113452"
+      "message": "Consistent planning_run_id across Phase 4 outputs: PHASE4-MPS-20260630115526"
     },
     {
       "check": "phase4_advisory_only",

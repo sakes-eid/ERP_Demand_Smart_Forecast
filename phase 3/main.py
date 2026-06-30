@@ -2,10 +2,15 @@
 
 import importlib.util
 import os
+import sys
 from datetime import datetime
 from pathlib import Path
 
 import pandas as pd
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
 from config import OUTPUT_DIR, WAREHOUSE_STAGING_RULES
 from core.inventory_cleaner import (
@@ -38,6 +43,7 @@ from core.procurement_requirement_bridge import (
 from core.service_level import build_inventory_service_levels
 from core.warehouse_slotting import build_warehouse_slotting
 from core.warehouse_visualization import build_warehouse_visualization
+from shared.core.spare_parts_master_data import build_spare_part_master_data_outputs
 
 
 PHASE4_COMPONENT_INVENTORY_BRIDGE = (
@@ -59,6 +65,16 @@ def _run_phase4_component_inventory_bridge(inventory: pd.DataFrame) -> pd.DataFr
         return bridge(inventory)
     except Exception as exc:
         print(f"Warning: Phase 4 component inventory bridge failed; continuing Phase 3 core pipeline. Error: {exc}")
+        return pd.DataFrame()
+
+
+def _run_spare_part_inventory_context() -> pd.DataFrame:
+    """Regenerate optional Step 7B spare-part inventory context without blocking Phase 3."""
+    try:
+        build_spare_part_master_data_outputs()
+        return pd.read_csv(PROJECT_ROOT / "phase 3" / "outputs" / "phase4_spare_part_inventory_check.csv")
+    except Exception as exc:
+        print(f"Warning: Step 7B spare-part inventory context failed; continuing Phase 3 core pipeline. Error: {exc}")
         return pd.DataFrame()
 
 
@@ -359,6 +375,8 @@ def run_pipeline() -> None:
     save_output(inventory_employee_task_view, "inventory_employee_task_view.csv")
     phase4_component_inventory_check = _run_phase4_component_inventory_bridge(inventory)
     print(f"Phase 4 component inventory check rows: {len(phase4_component_inventory_check)}")
+    phase4_spare_part_inventory_check = _run_spare_part_inventory_context()
+    print(f"Phase 4 spare-part inventory check rows: {len(phase4_spare_part_inventory_check)}")
 
     print_summary(
         inventory,

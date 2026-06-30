@@ -1,0 +1,11 @@
+spare_part_sku,spare_part_name,spare_part_type,linked_machine_type,linked_machine_id,criticality,unit_cost,currency,storage_type,shelf_life_days,lead_time_sensitivity,emergency_purchase_allowed_flag,substitutable_flag,active_flag,advisory_only_flag,notes
+SP-LUBE-OIL-001,General Machine Lubricating Oil,LUBRICANT,GENERAL_MRO,,HIGH,18.50,EUR,HAZMAT_SHELF,730,HIGH,True,True,True,True,Used for light autonomous lubrication and maintenance.
+SP-BEARING-KIT-001,General Bearing Replacement Kit,BEARING,GENERAL_MRO,,CRITICAL,95.00,EUR,SECURE_PARTS,1460,HIGH,True,True,True,True,Critical rotating equipment spare.
+SP-FRAME-JIG-PAD-001,Frame Jig Wear Pad Kit,FIXTURE,FRAME_ALIGNMENT_FIXTURE,M-FRAME-JIG-001,HIGH,42.00,EUR,SMALL_PARTS,1095,MEDIUM,True,False,True,True,Wear pads for frame jig.
+SP-WHEEL-TRUING-SPARE-001,Wheel Truing Stand Spare Kit,TOOLING,WHEEL_TRUING_STAND,M-WHEEL-TRUE-001,MEDIUM,36.00,EUR,SMALL_PARTS,1095,MEDIUM,True,False,True,True,Spare indicators and adjustment parts.
+SP-BRAKE-BENCH-TOOL-001,Brake Bench Tool Spare Set,TOOLING,BRAKE_ASSEMBLY_TOOLS,M-BRAKE-BENCH-001,MEDIUM,28.00,EUR,TOOL_CRIB,,LOW,False,True,True,True,Replacement hand-tool set for brake bench.
+SP-FORK-SUSP-SEAL-001,Fork Suspension Seal Kit,MECHANICAL,FORK_SUSPENSION_BENCH,M-FORK-BENCH-001,CRITICAL,64.00,EUR,SMALL_PARTS,730,HIGH,True,False,True,True,Critical seal kit for suspension prep bench.
+SP-FINAL-ASM-JIG-001,Final Assembly Jig Spare Kit,FIXTURE,BIKE_ASSEMBLY_STAND,M-FINAL-STAND-001,HIGH,72.00,EUR,SMALL_PARTS,1095,HIGH,True,False,True,True,Jig spares for final assembly stands.
+SP-QC-CALIBRATION-KIT-001,QC Calibration Kit,CALIBRATION,INSPECTION_TOOLS,M-QC-TOOLS-001,CRITICAL,130.00,EUR,SECURE_PARTS,365,HIGH,True,False,True,True,Critical calibration kit for inspection tools.
+SP-PACK-BENCH-SPARE-001,Packaging Bench Spare Kit,GENERAL_MRO,PACKAGING_TOOLS,M-PACK-BENCH-001,LOW,22.00,EUR,SMALL_PARTS,,LOW,False,True,True,True,General packaging bench spares.
+SP-ELECTRICAL-SENSOR-001,General Machine Sensor Kit,SENSOR,GENERAL_MRO,,CRITICAL,115.00,EUR,SECURE_PARTS,1095,HIGH,True,True,True,True,Critical sensor spare for semi-automated and inspection equipment.

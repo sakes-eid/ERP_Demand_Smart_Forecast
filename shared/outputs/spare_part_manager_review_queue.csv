@@ -1,0 +1,4 @@
+review_item_id,spare_part_sku,spare_part_name,issue_type,issue_severity,issue_description,recommended_review_action,auto_action_allowed,advisory_only_flag
+SP-REV-0001,SP-FORK-SUSP-SEAL-001,Fork Suspension Seal Kit,CRITICAL_SPARE_PART_LOW_STOCK,CRITICAL,Critical spare part inventory status is BELOW_REORDER_POINT.,REVIEW_CRITICAL_SPARE_STOCK,False,True
+SP-REV-0002,SP-QC-CALIBRATION-KIT-001,QC Calibration Kit,CRITICAL_SPARE_PART_LOW_STOCK,CRITICAL,Critical spare part inventory status is BELOW_SAFETY_STOCK.,REVIEW_CRITICAL_SPARE_STOCK,False,True
+SP-REV-0003,SP-ELECTRICAL-SENSOR-001,General Machine Sensor Kit,CRITICAL_SPARE_PART_LOW_STOCK,CRITICAL,Critical spare part inventory status is BELOW_REORDER_POINT.,REVIEW_CRITICAL_SPARE_STOCK,False,True

@@ -67,6 +67,12 @@ from shared.core.workforce_master_data import PHASE4_WORKFORCE_CONTEXT_FILE
 from shared.core.workforce_master_data import SKILL_COVERAGE_SUMMARY_FILE as WORKFORCE_SKILL_COVERAGE_SUMMARY_FILE
 from shared.core.workforce_master_data import VALIDATION_OUTPUT_FILE as WORKFORCE_VALIDATION_OUTPUT_FILE
 from shared.core.workforce_master_data import build_workforce_master_data_outputs
+from shared.core.spare_parts_master_data import MACHINE_REQUIREMENT_CONTEXT_FILE as SPARE_MACHINE_REQUIREMENT_CONTEXT_FILE
+from shared.core.spare_parts_master_data import MANAGER_REVIEW_QUEUE_FILE as SPARE_MANAGER_REVIEW_QUEUE_FILE
+from shared.core.spare_parts_master_data import PHASE4_SPARE_PART_CONTEXT_FILE
+from shared.core.spare_parts_master_data import PHASE_INTEGRATION_CONTEXT_FILE as SPARE_PHASE_INTEGRATION_CONTEXT_FILE
+from shared.core.spare_parts_master_data import VALIDATION_OUTPUT_FILE as SPARE_VALIDATION_OUTPUT_FILE
+from shared.core.spare_parts_master_data import build_spare_part_master_data_outputs
 
 
 def run_initialization() -> None:
@@ -81,6 +87,7 @@ def run_initialization() -> None:
     mrp = build_mrp_net_component_requirements(planning_run_id=planning_run_id)
     resource_validation = validate_resource_master_data()
     workforce_validation, workforce_capacity, workforce_machine_auth, workforce_skill_summary, workforce_review, phase4_workforce_context = build_workforce_master_data_outputs()
+    spare_validation, spare_machine_context, spare_phase_context, spare_review, phase4_spare_context = build_spare_part_master_data_outputs()
     routing_validation = validate_routing_master_data()
     capacity_load, capacity_detail, capacity_validation = build_workstation_capacity_load()
     queue_pressure, queue_summary, queue_review, queue_validation = build_queue_pressure_outputs()
@@ -111,6 +118,16 @@ def run_initialization() -> None:
     print(f"Workforce manager review output written to: {WORKFORCE_MANAGER_REVIEW_QUEUE_FILE}")
     print(f"Phase 4 workforce context rows: {len(phase4_workforce_context)}")
     print(f"Phase 4 workforce context output written to: {PHASE4_WORKFORCE_CONTEXT_FILE}")
+    print(f"Shared spare-part validation rows: {len(spare_validation)}")
+    print(f"Shared spare-part validation output written to: {SPARE_VALIDATION_OUTPUT_FILE}")
+    print(f"Spare-part machine requirement context rows: {len(spare_machine_context)}")
+    print(f"Spare-part machine requirement context output written to: {SPARE_MACHINE_REQUIREMENT_CONTEXT_FILE}")
+    print(f"Spare-part phase integration context rows: {len(spare_phase_context)}")
+    print(f"Spare-part phase integration context output written to: {SPARE_PHASE_INTEGRATION_CONTEXT_FILE}")
+    print(f"Spare-part manager review rows: {len(spare_review)}")
+    print(f"Spare-part manager review output written to: {SPARE_MANAGER_REVIEW_QUEUE_FILE}")
+    print(f"Phase 4 spare-part context rows: {len(phase4_spare_context)}")
+    print(f"Phase 4 spare-part context output written to: {PHASE4_SPARE_PART_CONTEXT_FILE}")
     print(f"Routing validation rows: {len(routing_validation)}")
     print(f"Routing validation output written to: {ROUTING_VALIDATION_OUTPUT_FILE}")
     print(f"Routing flow summary written to: {FLOW_SUMMARY_OUTPUT_FILE}")

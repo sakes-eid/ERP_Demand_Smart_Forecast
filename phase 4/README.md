@@ -29,6 +29,14 @@ Current initialization scope:
 - Crew role separation is explicit in the Phase 4 workforce context output.
 - `phase 4/outputs/phase4_workforce_resource_context.csv` gives Phase 4 a clean advisory view of production and maintenance crews.
 - Step 7A does not schedule workers, does not change production capacity calculations, and does not create maintenance work orders.
+- Step 7B adds spare-part SKU integration across Phase 1, Phase 2, Phase 3, and Phase 4/shared context.
+- Spare parts are shared ERP items, not just machine notes.
+- Phase 1 can recognize spare-part demand through maintenance-style intermittent demand rows.
+- Phase 3 can store and check spare parts in inventory.
+- Phase 2 can source spare parts from suppliers.
+- Phase 4 links spare parts to machines and future maintenance needs through `outputs/phase4_spare_part_requirement_context.csv`.
+- Spare-part context is advisory-only; spare parts are not consumed or reserved.
+- Step 7B does not create maintenance work orders, purchase orders, breakdown forecasts, maintenance schedules, or simulations.
 - Routing is the ERP version of the production flowchart.
 - Road Bike and Mountain Bike now have different advisory routings.
 - Parallel subassembly branches are included for both products.
@@ -136,9 +144,9 @@ Not implemented yet:
 
 Next likely Phase 4 feature:
 
-- The next real feature after this workforce master-data step is likely maintenance master data or crew-aware capacity planning, but neither is implemented here.
+- The next real feature after this spare-part integration step is likely maintenance master data or crew-aware capacity planning, but neither is implemented here.
 
 Review bundle:
 
-- `create_phase4_review_bundle.py` generates `phase4_step7a_workforce_review_bundle.zip` at the project root for external review.
+- `create_phase4_review_bundle.py` generates `phase4_step7b_spare_parts_review_bundle.zip` at the project root for external review.
 - The bundle preserves project-relative folder structure and excludes cache, bytecode, virtual environment, and zip artifacts.

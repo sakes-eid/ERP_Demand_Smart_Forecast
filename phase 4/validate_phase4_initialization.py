@@ -72,6 +72,18 @@ WORKFORCE_MACHINE_AUTH_CONTEXT_FILE = PROJECT_ROOT / "shared" / "outputs" / "wor
 WORKFORCE_SKILL_COVERAGE_SUMMARY_FILE = PROJECT_ROOT / "shared" / "outputs" / "workforce_skill_coverage_summary.csv"
 WORKFORCE_MANAGER_REVIEW_QUEUE_FILE = PROJECT_ROOT / "shared" / "outputs" / "workforce_manager_review_queue.csv"
 PHASE4_WORKFORCE_CONTEXT_FILE = PHASE4_DIR / "outputs" / "phase4_workforce_resource_context.csv"
+SPARE_PART_DATA_FILES = {
+    "spare_parts_master": PROJECT_ROOT / "shared" / "data" / "spare_parts_master.csv",
+    "machine_spare_part_requirements": PROJECT_ROOT / "shared" / "data" / "machine_spare_part_requirements.csv",
+}
+SPARE_PART_VALIDATION_FILE = PROJECT_ROOT / "shared" / "outputs" / "spare_part_validation.csv"
+SPARE_PART_MACHINE_CONTEXT_FILE = PROJECT_ROOT / "shared" / "outputs" / "spare_part_machine_requirement_context.csv"
+SPARE_PART_PHASE_CONTEXT_FILE = PROJECT_ROOT / "shared" / "outputs" / "spare_part_phase_integration_context.csv"
+SPARE_PART_MANAGER_REVIEW_FILE = PROJECT_ROOT / "shared" / "outputs" / "spare_part_manager_review_queue.csv"
+PHASE1_SPARE_DEMAND_CONTEXT_FILE = PROJECT_ROOT / "phase 1" / "outputs" / "phase1_spare_part_demand_context.csv"
+PHASE2_SPARE_SUPPLIER_CHECK_FILE = PROJECT_ROOT / "phase 2" / "outputs" / "phase4_spare_part_supplier_check.csv"
+PHASE3_SPARE_INVENTORY_CHECK_FILE = PROJECT_ROOT / "phase 3" / "outputs" / "phase4_spare_part_inventory_check.csv"
+PHASE4_SPARE_PART_CONTEXT_FILE = PHASE4_DIR / "outputs" / "phase4_spare_part_requirement_context.csv"
 RESOURCE_DATA_FILES = {
     "workstations": PHASE4_DIR / "data" / "workstations.csv",
     "machines": PHASE4_DIR / "data" / "machines.csv",
@@ -157,6 +169,7 @@ def main() -> None:
     checks.append(_check_mrp_pegging_detail())
     checks.append(_check_resource_master_data())
     checks.append(_check_workforce_master_data())
+    checks.append(_check_spare_part_integration())
     checks.append(_check_routing_master_data())
     checks.append(_check_capacity_load())
     checks.append(_check_queue_pressure())
@@ -704,6 +717,80 @@ def _check_workforce_master_data() -> dict:
         "workforce_master_data",
         "PASS",
         f"Step 7A shared workforce valid; active_production={int((active_crews['crew_type'] == 'PRODUCTION').sum())}, active_maintenance={int((active_crews['crew_type'] == 'MAINTENANCE').sum())}, phase4_context_rows={len(phase4_context)}.",
+    )
+
+
+def _check_spare_part_integration() -> dict:
+    for name, path in SPARE_PART_DATA_FILES.items():
+        if not path.exists():
+            return _result("spare_part_integration", "FAIL", f"Spare-part data file is missing: {path}")
+        if pd.read_csv(path).empty:
+            return _result("spare_part_integration", "FAIL", f"Spare-part data file has no rows: {path}")
+    required_outputs = [
+        (SPARE_PART_VALIDATION_FILE, "spare-part validation"),
+        (SPARE_PART_MACHINE_CONTEXT_FILE, "spare-part machine requirement context"),
+        (SPARE_PART_PHASE_CONTEXT_FILE, "spare-part phase integration context"),
+        (PHASE1_SPARE_DEMAND_CONTEXT_FILE, "Phase 1 spare-part demand context"),
+        (PHASE2_SPARE_SUPPLIER_CHECK_FILE, "Phase 2 spare-part supplier check"),
+        (PHASE3_SPARE_INVENTORY_CHECK_FILE, "Phase 3 spare-part inventory check"),
+        (PHASE4_SPARE_PART_CONTEXT_FILE, "Phase 4 spare-part requirement context"),
+    ]
+    for path, label in required_outputs:
+        if not path.exists():
+            return _result("spare_part_integration", "FAIL", f"{label} is missing: {path}")
+        if pd.read_csv(path).empty:
+            return _result("spare_part_integration", "FAIL", f"{label} has no rows: {path}")
+    validation = pd.read_csv(SPARE_PART_VALIDATION_FILE)
+    fail_count = int((validation["status"].astype(str).str.upper() == "FAIL").sum()) if "status" in validation.columns else len(validation)
+    if fail_count:
+        return _result("spare_part_integration", "FAIL", f"Spare-part validation contains FAIL rows: {fail_count}")
+
+    spares = pd.read_csv(SPARE_PART_DATA_FILES["spare_parts_master"])
+    requirements = pd.read_csv(SPARE_PART_DATA_FILES["machine_spare_part_requirements"])
+    phase_context = pd.read_csv(SPARE_PART_PHASE_CONTEXT_FILE)
+    supplier = pd.read_csv(PHASE2_SPARE_SUPPLIER_CHECK_FILE)
+    inventory = pd.read_csv(PHASE3_SPARE_INVENTORY_CHECK_FILE)
+    phase4_context = pd.read_csv(PHASE4_SPARE_PART_CONTEXT_FILE)
+    for frame, label in [
+        (spares, "spare parts master"),
+        (requirements, "machine spare part requirements"),
+        (phase_context, "spare part integration context"),
+        (supplier, "spare part supplier check"),
+        (inventory, "spare part inventory check"),
+        (phase4_context, "Phase 4 spare part context"),
+    ]:
+        if "advisory_only_flag" in frame.columns and not _all_true(frame, "advisory_only_flag"):
+            return _result("spare_part_integration", "FAIL", f"{label} must be advisory-only.")
+    if SPARE_PART_MANAGER_REVIEW_FILE.exists():
+        review = pd.read_csv(SPARE_PART_MANAGER_REVIEW_FILE)
+        if not review.empty:
+            if _to_bool(review["auto_action_allowed"]).any():
+                return _result("spare_part_integration", "FAIL", "Spare-part review queue cannot allow automatic action.")
+            if not _all_true(review, "advisory_only_flag"):
+                return _result("spare_part_integration", "FAIL", "Spare-part review queue must be advisory-only.")
+
+    critical_skus = set(spares.loc[spares["criticality"].astype(str) == "CRITICAL", "spare_part_sku"].astype(str))
+    inventory_skus = set(inventory["spare_part_sku"].astype(str))
+    supplier_skus = set(supplier["spare_part_sku"].astype(str))
+    missing_inventory = sorted(critical_skus - inventory_skus)
+    missing_supplier = sorted(critical_skus - supplier_skus)
+    if missing_inventory:
+        return _result("spare_part_integration", "FAIL", f"Critical spare parts missing inventory check rows: {missing_inventory}")
+    if missing_supplier:
+        return _result("spare_part_integration", "FAIL", f"Critical spare parts missing supplier check rows: {missing_supplier}")
+    critical_supplier_gaps = supplier[supplier["spare_part_sku"].astype(str).isin(critical_skus) & supplier["supplier_coverage_status"].astype(str).isin(["NO_SUPPLIER_COVERAGE", "REVIEW_REQUIRED"])]
+    if not critical_supplier_gaps.empty:
+        return _result("spare_part_integration", "FAIL", f"Critical spare parts lack supplier coverage: {critical_supplier_gaps['spare_part_sku'].tolist()}")
+    allowed_integration = {"FULLY_INTEGRATED", "PARTIAL_INTEGRATION_REVIEW", "MISSING_DEMAND_CONTEXT", "MISSING_INVENTORY_CONTEXT", "MISSING_SUPPLIER_CONTEXT", "REVIEW_REQUIRED"}
+    if set(phase_context["integration_status"].dropna().astype(str)) - allowed_integration:
+        return _result("spare_part_integration", "FAIL", "Spare-part integration context contains invalid status values.")
+    allowed_readiness = {"READY", "INVENTORY_REVIEW_REQUIRED", "SUPPLIER_REVIEW_REQUIRED", "INVENTORY_AND_SUPPLIER_REVIEW_REQUIRED", "REVIEW_REQUIRED"}
+    if set(phase4_context["spare_part_readiness_status"].dropna().astype(str)) - allowed_readiness:
+        return _result("spare_part_integration", "FAIL", "Phase 4 spare-part readiness status contains invalid values.")
+    return _result(
+        "spare_part_integration",
+        "PASS",
+        f"Step 7B spare-part integration valid; spare_parts={len(spares)}, requirements={len(requirements)}, phase4_context_rows={len(phase4_context)}.",
     )
 
 
@@ -2011,7 +2098,7 @@ def _result(name: str, status: str, message: str) -> dict:
 
 def _format_report(evidence: dict) -> str:
     lines = [
-        "Phase 4 Initialization Validation with Step 7A Shared Workforce Master Data",
+        "Phase 4 Initialization Validation with Step 7B Spare Parts SKU Integration",
         f"Generated at UTC: {evidence['generated_at_utc']}",
         f"Overall status: {evidence['overall_status']}",
         f"Fail count: {evidence['fail_count']}",

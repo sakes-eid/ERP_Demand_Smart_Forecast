@@ -1,0 +1,26 @@
+check_id,check_name,status,message,affected_rows,advisory_only_flag
+spare_spare_parts_master_exists,spare_parts_master exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\shared\data\spare_parts_master.csv,0,True
+spare_machine_spare_part_requirements_exists,machine_spare_part_requirements exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\shared\data\machine_spare_part_requirements.csv,0,True
+spare_phase4_machines_exists,phase4_machines exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\data\machines.csv,0,True
+spare_phase1_products_exists,phase1_products exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 1\data\products.csv,0,True
+spare_phase1_demand_history_exists,phase1_demand_history exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 1\data\demand_history.csv,0,True
+spare_phase2_supplier_sku_exists,phase2_supplier_sku exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 2\data\supplier_sku.csv,0,True
+spare_phase3_inventory_exists,phase3_inventory exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 3\data\inventory.csv,0,True
+spare_spares_required_columns,spares required columns,PASS,spares has required columns.,0,True
+spare_requirements_required_columns,requirements required columns,PASS,requirements has required columns.,0,True
+spare_part_sku_unique,spare part SKU unique,PASS,Duplicate spare SKUs: 0,0,True
+spare_requirement_sku_refs,spare_part_sku references valid,PASS,spare_part_sku references are valid.,0,True
+spare_requirement_machine_refs,machine_id references valid,PASS,machine_id references are valid.,0,True
+spare_phase1_product_refs,spare_part_sku references valid,PASS,spare_part_sku references are valid.,0,True
+spare_part_types_valid,spare part types valid,PASS,Spare part types are valid.,0,True
+spare_part_criticality_valid,spare criticality valid,PASS,Spare criticality values are valid.,0,True
+spare_maintenance_levels_valid,spare maintenance levels valid,PASS,Maintenance levels are valid.,0,True
+spare_usage_basis_valid,spare usage basis valid,PASS,Usage basis values are valid.,0,True
+spare_master_numeric_nonnegative,numeric fields non-negative,PASS,Numeric fields are non-negative.,0,True
+spare_requirement_quantities_nonnegative,numeric fields non-negative,PASS,Numeric fields are non-negative.,0,True
+critical_spares_linked_to_machine_context,critical spares linked to machine context,PASS,Critical/high spare parts have linked machine type or machine id.,0,True
+spare_master_advisory_only,spare master advisory-only,PASS,Spare data advisory flags are true.,0,True
+critical_spares_have_inventory_records,critical spares have inventory records,PASS,Critical spare parts have inventory records.,0,True
+critical_spares_have_supplier_records,critical spares have supplier records,PASS,Critical spare parts have supplier coverage records.,0,True
+spare_part_context_outputs_valid,spare part context outputs valid,PASS,Spare part context outputs are valid and advisory-only.,0,True
+spare_no_blocked_outputs,no spare-part blocked outputs,PASS,"No spare-part consumption, reservation, work-order, scheduling, or simulation outputs found.",0,True

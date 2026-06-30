@@ -11,3 +11,13 @@ SKU-FIL-009,Replacement Water Filter,Home,Appliance Parts,each,active,2023-01-20
 SKU-GFT-010,Premium Gift Wrap Roll,Stationery,Gift Supplies,roll,active,2024-11-01,,False,
 SKU-BIKE-ROAD-001,Road Bike,Bicycles,Road Bikes,each,active,2026-01-01,,False,
 SKU-BIKE-MT-001,Mountain Bike,Bicycles,Mountain Bikes,each,active,2026-01-01,,False,
+SP-LUBE-OIL-001,General Machine Lubricating Oil,Maintenance Spare Parts,Lubricant,each,active,2026-01-01,,False,730
+SP-BEARING-KIT-001,General Bearing Replacement Kit,Maintenance Spare Parts,Bearing Kit,kit,active,2026-01-01,,False,1460
+SP-FRAME-JIG-PAD-001,Frame Jig Wear Pad Kit,Maintenance Spare Parts,Fixture Spare,kit,active,2026-01-01,,False,1095
+SP-WHEEL-TRUING-SPARE-001,Wheel Truing Stand Spare Kit,Maintenance Spare Parts,Tooling Spare,kit,active,2026-01-01,,False,1095
+SP-BRAKE-BENCH-TOOL-001,Brake Bench Tool Spare Set,Maintenance Spare Parts,Tooling Spare,set,active,2026-01-01,,False,
+SP-FORK-SUSP-SEAL-001,Fork Suspension Seal Kit,Maintenance Spare Parts,Mechanical Spare,kit,active,2026-01-01,,False,730
+SP-FINAL-ASM-JIG-001,Final Assembly Jig Spare Kit,Maintenance Spare Parts,Fixture Spare,kit,active,2026-01-01,,False,1095
+SP-QC-CALIBRATION-KIT-001,QC Calibration Kit,Maintenance Spare Parts,Calibration Kit,kit,active,2026-01-01,,True,365
+SP-PACK-BENCH-SPARE-001,Packaging Bench Spare Kit,Maintenance Spare Parts,General MRO,kit,active,2026-01-01,,False,
+SP-ELECTRICAL-SENSOR-001,General Machine Sensor Kit,Maintenance Spare Parts,Electrical Sensor,kit,active,2026-01-01,,False,1095
