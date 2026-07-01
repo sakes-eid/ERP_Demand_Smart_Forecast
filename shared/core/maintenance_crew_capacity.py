@@ -413,10 +413,18 @@ def _check_existing_validations(checks: list[dict]) -> None:
 
 def _check_no_blocked_outputs(checks: list[dict]) -> None:
     blocked = ["maintenance_schedule", "maintenance_work_order", "production_order", "purchase_order", "inventory_reservation", "spare_part_consumption", "capacity_reduction", "simulation"]
+    allowed_candidate_only = {
+        "maintenance_schedule_candidate_windows.csv",
+        "maintenance_schedule_manager_review_queue.csv",
+        "maintenance_schedule_validation.csv",
+        "phase4_maintenance_schedule_feasibility_context.csv",
+    }
     bad = []
     for folder in [OUTPUT_DIR, PHASE4_OUTPUT_DIR]:
         if folder.exists():
             for path in folder.glob("*"):
+                if path.name.lower() in allowed_candidate_only:
+                    continue
                 if path.is_file() and any(token in path.name.lower() for token in blocked):
                     bad.append(str(path))
     checks.append(_result("maintenance_crew_no_blocked_outputs", "no blocked execution outputs", "FAIL" if bad else "PASS", f"Blocked outputs found: {bad}" if bad else "No work-order, scheduling, reservation, capacity reduction, or simulation outputs found.", len(bad)))

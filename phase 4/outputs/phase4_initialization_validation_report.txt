@@ -1,5 +1,5 @@
 Phase 4 Initialization Validation with Step 7E Maintenance Crew Capacity and Repair Queue Risk
-Generated at UTC: 2026-07-01T12:58:44+00:00
+Generated at UTC: 2026-07-01T14:01:50+00:00
 Overall status: PASS
 Fail count: 0
 Warning count: 3
@@ -23,6 +23,7 @@ Checks:
 - PASS: breakdown_risk_forecast - Step 7D breakdown risk forecast valid; history_rows=22, failure_modes=14, risk_rows=7, phase4_context_rows=7.
 - PASS: maintenance_crew_capacity - Step 7E maintenance crew capacity valid; workload_rows=13, crew_rows=9, queue_rows=14, phase4_context_rows=12.
 - PASS: maintenance_production_impact - Step 7F maintenance production impact valid; availability_rows=7, capacity_rows=7, candidate_rows=26, phase4_context_rows=7.
+- PASS: maintenance_schedule_feasibility - Step 7G maintenance schedule feasibility valid; candidate_windows=225, calendar_rows=10, crew_window_rows=55, phase4_context_rows=7.
 - PASS: routing_master_data - Step 3B routing master data valid; routing_rows=13, parallel_groups=2, operation_resource_rows=13.
 - PASS: capacity_load - Step 4C capacity feasibility summary and bottleneck candidates valid; rows=98, periods=14, workstations=7.
 - PASS: queue_pressure - Step 5A queue pressure valid; pressure_rows=98, summary_rows=7.
@@ -32,8 +33,8 @@ Checks:
 - PASS: quality_adjusted_capacity - Step 6B quality-adjusted capacity valid; impact_rows=182, adjusted_capacity_rows=98, bottleneck_impact_rows=7.
 - PASS: phase3_component_inventory - Phase 3 checked inventory for 10 components.
 - PASS: phase2_component_supplier - Phase 2 checked supplier coverage for 10 shortage rows; missing coverage rows: 0.
-- PASS: phase4_run_id_consistency - Consistent planning_run_id across Phase 4 outputs: PHASE4-MPS-20260701125813
-- PASS: phase4_advisory_only - All checked Phase 4 advisory flags are true: ['master_production_schedule', 'bom_component_requirements', 'mrp_net_component_requirements', 'mrp_component_period_summary', 'mrp_pegging_detail', 'phase4_workforce_resource_context', 'phase4_maintenance_readiness_context', 'phase4_breakdown_risk_context', 'phase4_maintenance_crew_capacity_context', 'phase4_maintenance_production_impact_context', 'capacity_load_by_workstation', 'capacity_operation_load_detail', 'capacity_load_by_machine_type', 'capacity_load_by_labor_skill', 'capacity_constraint_bridge', 'capacity_feasibility_summary', 'bottleneck_candidate_summary', 'capacity_manager_review_queue', 'queue_pressure_by_workstation', 'queue_risk_summary', 'queue_manager_review_queue', 'bottleneck_visibility_summary', 'bottleneck_period_evidence', 'bottleneck_manager_review_queue', 'production_flow_view', 'flow_step_risk_summary', 'flow_manager_review_queue', 'quality_history_clean', 'quality_trend_by_operation', 'quality_trend_by_workstation', 'processing_time_trend_by_workstation', 'workstation_performance_trend_summary', 'quality_manager_review_queue', 'quality_impact_by_operation', 'quality_adjusted_capacity_by_workstation', 'quality_adjusted_bottleneck_impact', 'quality_material_loss_exposure', 'quality_impact_manager_review_queue', 'component_inventory_check', 'component_supplier_check']
+- PASS: phase4_run_id_consistency - Consistent planning_run_id across Phase 4 outputs: PHASE4-MPS-20260701140123
+- PASS: phase4_advisory_only - All checked Phase 4 advisory flags are true: ['master_production_schedule', 'bom_component_requirements', 'mrp_net_component_requirements', 'mrp_component_period_summary', 'mrp_pegging_detail', 'phase4_workforce_resource_context', 'phase4_maintenance_readiness_context', 'phase4_breakdown_risk_context', 'phase4_maintenance_crew_capacity_context', 'phase4_maintenance_production_impact_context', 'phase4_maintenance_schedule_feasibility_context', 'capacity_load_by_workstation', 'capacity_operation_load_detail', 'capacity_load_by_machine_type', 'capacity_load_by_labor_skill', 'capacity_constraint_bridge', 'capacity_feasibility_summary', 'bottleneck_candidate_summary', 'capacity_manager_review_queue', 'queue_pressure_by_workstation', 'queue_risk_summary', 'queue_manager_review_queue', 'bottleneck_visibility_summary', 'bottleneck_period_evidence', 'bottleneck_manager_review_queue', 'production_flow_view', 'flow_step_risk_summary', 'flow_manager_review_queue', 'quality_history_clean', 'quality_trend_by_operation', 'quality_trend_by_workstation', 'processing_time_trend_by_workstation', 'workstation_performance_trend_summary', 'quality_manager_review_queue', 'quality_impact_by_operation', 'quality_adjusted_capacity_by_workstation', 'quality_adjusted_bottleneck_impact', 'quality_material_loss_exposure', 'quality_impact_manager_review_queue', 'component_inventory_check', 'component_supplier_check']
 - PASS: existing_outputs - Existing Phase 1/2/3 outputs exist.
 - PASS: safety_flags - No enabled execution flags found across 5 checked columns.
 - PASS: no_routing_or_capacity_outputs - No UI, quality-adjusted MRP/BOM/procurement, measured/final bottleneck, detailed scheduling, or simulation outputs found.

@@ -108,6 +108,14 @@ from shared.core.maintenance_production_impact import SCHEDULING_CANDIDATE_OUTPU
 from shared.core.maintenance_production_impact import VALIDATION_OUTPUT_FILE as MAINTENANCE_PRODUCTION_IMPACT_VALIDATION_OUTPUT_FILE
 from shared.core.maintenance_production_impact import WINDOW_REQUIREMENTS_OUTPUT_FILE as MAINTENANCE_WINDOW_REQUIREMENTS_OUTPUT_FILE
 from shared.core.maintenance_production_impact import build_maintenance_production_impact_outputs
+from shared.core.maintenance_schedule_feasibility import CALENDAR_FEASIBILITY_FILE as MAINTENANCE_CALENDAR_FEASIBILITY_FILE
+from shared.core.maintenance_schedule_feasibility import CREW_WINDOW_LOAD_FILE as MAINTENANCE_CREW_WINDOW_LOAD_FILE
+from shared.core.maintenance_schedule_feasibility import MACHINE_WINDOW_IMPACT_FILE as MAINTENANCE_MACHINE_WINDOW_IMPACT_FILE
+from shared.core.maintenance_schedule_feasibility import MANAGER_REVIEW_FILE as MAINTENANCE_SCHEDULE_MANAGER_REVIEW_FILE
+from shared.core.maintenance_schedule_feasibility import PHASE4_CONTEXT_FILE as PHASE4_MAINTENANCE_SCHEDULE_FEASIBILITY_CONTEXT_FILE
+from shared.core.maintenance_schedule_feasibility import SCHEDULE_CANDIDATE_WINDOWS_FILE as MAINTENANCE_SCHEDULE_CANDIDATE_WINDOWS_FILE
+from shared.core.maintenance_schedule_feasibility import VALIDATION_OUTPUT_FILE as MAINTENANCE_SCHEDULE_VALIDATION_OUTPUT_FILE
+from shared.core.maintenance_schedule_feasibility import build_maintenance_schedule_feasibility_outputs
 
 
 def run_initialization() -> None:
@@ -127,6 +135,7 @@ def run_initialization() -> None:
     breakdown_validation, breakdown_clean, breakdown_trend, breakdown_risk, breakdown_failure, breakdown_spare, breakdown_crew, breakdown_review, phase4_breakdown_context = build_breakdown_risk_outputs()
     maintenance_crew_validation, maintenance_workload, maintenance_crew_summary, maintenance_repair_queue, maintenance_backlog, maintenance_crew_review, phase4_maintenance_crew_context = build_maintenance_crew_capacity_outputs()
     maintenance_impact_validation, maintenance_availability, maintenance_capacity_impact, maintenance_cost_exposure, maintenance_bottleneck_impact, maintenance_candidates, maintenance_windows, maintenance_impact_review, phase4_maintenance_impact_context = build_maintenance_production_impact_outputs()
+    maintenance_schedule_validation, maintenance_schedule_windows, maintenance_calendar, maintenance_crew_window_load, maintenance_machine_window_impact, maintenance_schedule_review, phase4_maintenance_schedule_context = build_maintenance_schedule_feasibility_outputs()
     routing_validation = validate_routing_master_data()
     capacity_load, capacity_detail, capacity_validation = build_workstation_capacity_load()
     queue_pressure, queue_summary, queue_review, queue_validation = build_queue_pressure_outputs()
@@ -229,6 +238,20 @@ def run_initialization() -> None:
     print(f"Maintenance impact manager review output written to: {MAINTENANCE_IMPACT_MANAGER_REVIEW_OUTPUT_FILE}")
     print(f"Phase 4 maintenance production impact context rows: {len(phase4_maintenance_impact_context)}")
     print(f"Phase 4 maintenance production impact context output written to: {PHASE4_MAINTENANCE_PRODUCTION_IMPACT_CONTEXT_FILE}")
+    print(f"Maintenance schedule validation rows: {len(maintenance_schedule_validation)}")
+    print(f"Maintenance schedule validation output written to: {MAINTENANCE_SCHEDULE_VALIDATION_OUTPUT_FILE}")
+    print(f"Maintenance schedule candidate window rows: {len(maintenance_schedule_windows)}")
+    print(f"Maintenance schedule candidate windows output written to: {MAINTENANCE_SCHEDULE_CANDIDATE_WINDOWS_FILE}")
+    print(f"Maintenance calendar feasibility rows: {len(maintenance_calendar)}")
+    print(f"Maintenance calendar feasibility output written to: {MAINTENANCE_CALENDAR_FEASIBILITY_FILE}")
+    print(f"Maintenance crew window load rows: {len(maintenance_crew_window_load)}")
+    print(f"Maintenance crew window load output written to: {MAINTENANCE_CREW_WINDOW_LOAD_FILE}")
+    print(f"Maintenance machine window impact rows: {len(maintenance_machine_window_impact)}")
+    print(f"Maintenance machine window impact output written to: {MAINTENANCE_MACHINE_WINDOW_IMPACT_FILE}")
+    print(f"Maintenance schedule manager review rows: {len(maintenance_schedule_review)}")
+    print(f"Maintenance schedule manager review output written to: {MAINTENANCE_SCHEDULE_MANAGER_REVIEW_FILE}")
+    print(f"Phase 4 maintenance schedule feasibility context rows: {len(phase4_maintenance_schedule_context)}")
+    print(f"Phase 4 maintenance schedule feasibility context output written to: {PHASE4_MAINTENANCE_SCHEDULE_FEASIBILITY_CONTEXT_FILE}")
     print(f"Routing validation rows: {len(routing_validation)}")
     print(f"Routing validation output written to: {ROUTING_VALIDATION_OUTPUT_FILE}")
     print(f"Routing flow summary written to: {FLOW_SUMMARY_OUTPUT_FILE}")

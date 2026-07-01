@@ -70,6 +70,11 @@ Current initialization scope:
 - Incomplete scheduling candidates are explicitly blocked for review rather than treated as ready for Step 7G.
 - Step 7F does not create maintenance work orders, maintenance schedules, crew dispatch records, spare-part consumption, inventory reservations, purchase orders, applied capacity reductions, or simulation outputs.
 - Step 7F cost exposure is planning-estimate-only and does not create financial postings.
+- Step 7G adds advisory maintenance scheduling and calendar feasibility.
+- Step 7G creates candidate calendar windows from crew calendars and checks crew, skill, spare-part, downtime-window, and production-impact feasibility.
+- Step 7G tracks candidate window load and machine downtime impact without assigning dates, crews, shifts, work orders, or dispatch records.
+- Step 7G outputs remain schedule-candidate-only and use `NOT_SCHEDULED_CANDIDATE_ONLY`.
+- Step 7G does not consume or reserve spare parts, create purchase orders, apply capacity reductions, or run simulation.
 - Routing is the ERP version of the production flowchart.
 - Road Bike and Mountain Bike now have different advisory routings.
 - Parallel subassembly branches are included for both products.
@@ -185,5 +190,5 @@ Next likely Phase 4 feature:
 
 Review bundle:
 
-- `create_phase4_review_bundle.py` generates `phase4_step7f_maintenance_impact_review_bundle.zip` at the project root for external review.
+- `create_phase4_review_bundle.py` generates `phase4_step7g_maintenance_schedule_feasibility_review_bundle.zip` at the project root for external review.
 - The bundle preserves project-relative folder structure and excludes cache, bytecode, virtual environment, and zip artifacts.

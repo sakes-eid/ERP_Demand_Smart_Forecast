@@ -24,6 +24,7 @@ PHASE4_OUTPUTS = {
     "phase4_breakdown_risk_context": PHASE4_DIR / "outputs" / "phase4_breakdown_risk_context.csv",
     "phase4_maintenance_crew_capacity_context": PHASE4_DIR / "outputs" / "phase4_maintenance_crew_capacity_context.csv",
     "phase4_maintenance_production_impact_context": PHASE4_DIR / "outputs" / "phase4_maintenance_production_impact_context.csv",
+    "phase4_maintenance_schedule_feasibility_context": PHASE4_DIR / "outputs" / "phase4_maintenance_schedule_feasibility_context.csv",
     "capacity_load_by_workstation": PHASE4_DIR / "outputs" / "phase4_capacity_load_by_workstation.csv",
     "capacity_operation_load_detail": PHASE4_DIR / "outputs" / "phase4_capacity_operation_load_detail.csv",
     "capacity_load_by_machine_type": PHASE4_DIR / "outputs" / "phase4_capacity_load_by_machine_type.csv",
@@ -139,6 +140,13 @@ MAINTENANCE_WINDOW_REQUIREMENTS_FILE = PROJECT_ROOT / "shared" / "outputs" / "ma
 MAINTENANCE_IMPACT_MANAGER_REVIEW_FILE = PROJECT_ROOT / "shared" / "outputs" / "maintenance_impact_manager_review_queue.csv"
 MAINTENANCE_PRODUCTION_IMPACT_VALIDATION_FILE = PROJECT_ROOT / "shared" / "outputs" / "maintenance_production_impact_validation.csv"
 PHASE4_MAINTENANCE_PRODUCTION_IMPACT_CONTEXT_FILE = PHASE4_DIR / "outputs" / "phase4_maintenance_production_impact_context.csv"
+MAINTENANCE_SCHEDULE_CANDIDATE_WINDOWS_FILE = PROJECT_ROOT / "shared" / "outputs" / "maintenance_schedule_candidate_windows.csv"
+MAINTENANCE_CALENDAR_FEASIBILITY_FILE = PROJECT_ROOT / "shared" / "outputs" / "maintenance_calendar_feasibility.csv"
+MAINTENANCE_CREW_WINDOW_LOAD_FILE = PROJECT_ROOT / "shared" / "outputs" / "maintenance_crew_window_load.csv"
+MAINTENANCE_MACHINE_WINDOW_IMPACT_FILE = PROJECT_ROOT / "shared" / "outputs" / "maintenance_machine_window_impact.csv"
+MAINTENANCE_SCHEDULE_MANAGER_REVIEW_FILE = PROJECT_ROOT / "shared" / "outputs" / "maintenance_schedule_manager_review_queue.csv"
+MAINTENANCE_SCHEDULE_VALIDATION_FILE = PROJECT_ROOT / "shared" / "outputs" / "maintenance_schedule_validation.csv"
+PHASE4_MAINTENANCE_SCHEDULE_FEASIBILITY_CONTEXT_FILE = PHASE4_DIR / "outputs" / "phase4_maintenance_schedule_feasibility_context.csv"
 RESOURCE_DATA_FILES = {
     "workstations": PHASE4_DIR / "data" / "workstations.csv",
     "machines": PHASE4_DIR / "data" / "machines.csv",
@@ -229,6 +237,7 @@ def main() -> None:
     checks.append(_check_breakdown_risk_forecast())
     checks.append(_check_maintenance_crew_capacity())
     checks.append(_check_maintenance_production_impact())
+    checks.append(_check_maintenance_schedule_feasibility())
     checks.append(_check_routing_master_data())
     checks.append(_check_capacity_load())
     checks.append(_check_queue_pressure())
@@ -1394,6 +1403,135 @@ def _check_maintenance_production_impact() -> dict:
         "maintenance_production_impact",
         "PASS",
         f"Step 7F maintenance production impact valid; availability_rows={len(availability)}, capacity_rows={len(capacity)}, candidate_rows={len(candidates)}, phase4_context_rows={len(phase4_context)}.",
+    )
+
+
+def _check_maintenance_schedule_feasibility() -> dict:
+    required_outputs = [
+        (MAINTENANCE_SCHEDULE_CANDIDATE_WINDOWS_FILE, "maintenance schedule candidate windows"),
+        (MAINTENANCE_CALENDAR_FEASIBILITY_FILE, "maintenance calendar feasibility"),
+        (MAINTENANCE_CREW_WINDOW_LOAD_FILE, "maintenance crew window load"),
+        (MAINTENANCE_MACHINE_WINDOW_IMPACT_FILE, "maintenance machine window impact"),
+        (MAINTENANCE_SCHEDULE_MANAGER_REVIEW_FILE, "maintenance schedule manager review queue"),
+        (MAINTENANCE_SCHEDULE_VALIDATION_FILE, "maintenance schedule validation"),
+        (PHASE4_MAINTENANCE_SCHEDULE_FEASIBILITY_CONTEXT_FILE, "Phase 4 maintenance schedule feasibility context"),
+    ]
+    for path, label in required_outputs:
+        if not path.exists():
+            return _result("maintenance_schedule_feasibility", "FAIL", f"{label} output is missing: {path}")
+        if label != "maintenance schedule manager review queue" and pd.read_csv(path).empty:
+            return _result("maintenance_schedule_feasibility", "FAIL", f"{label} output has no rows: {path}")
+
+    validation = pd.read_csv(MAINTENANCE_SCHEDULE_VALIDATION_FILE)
+    fail_count = int((validation["status"].astype(str).str.upper() == "FAIL").sum()) if "status" in validation.columns else len(validation)
+    if fail_count:
+        return _result("maintenance_schedule_feasibility", "FAIL", f"Maintenance schedule validation contains FAIL rows: {fail_count}")
+
+    windows = pd.read_csv(MAINTENANCE_SCHEDULE_CANDIDATE_WINDOWS_FILE)
+    calendar = pd.read_csv(MAINTENANCE_CALENDAR_FEASIBILITY_FILE)
+    crew_load = pd.read_csv(MAINTENANCE_CREW_WINDOW_LOAD_FILE)
+    machine_impact = pd.read_csv(MAINTENANCE_MACHINE_WINDOW_IMPACT_FILE)
+    review = pd.read_csv(MAINTENANCE_SCHEDULE_MANAGER_REVIEW_FILE)
+    phase4_context = pd.read_csv(PHASE4_MAINTENANCE_SCHEDULE_FEASIBILITY_CONTEXT_FILE)
+
+    required_columns = {
+        "windows": {
+            "planning_run_id", "schedule_candidate_window_id", "candidate_id", "machine_id", "candidate_type",
+            "required_skill_id", "required_crew_type", "required_worker_count", "maintenance_level",
+            "estimated_duration_hours", "planned_downtime_hours", "candidate_window_period",
+            "candidate_window_day", "candidate_window_shift", "crew_capacity_available_flag",
+            "spare_part_ready_flag", "production_bottleneck_sensitive_flag", "schedule_feasibility_status",
+            "scheduling_priority_score", "recommended_scheduling_priority", "schedule_assignment_status",
+            "note_no_schedule_created_flag", "advisory_only_flag",
+        },
+        "calendar": {
+            "planning_run_id", "candidate_window_period", "candidate_window_day", "candidate_window_shift",
+            "feasible_candidate_count", "blocked_candidate_count", "crew_blocked_count", "spare_part_blocked_count",
+            "production_impact_blocked_count", "highest_priority_candidate_id", "calendar_feasibility_status",
+            "advisory_only_flag",
+        },
+        "crew_load": {
+            "planning_run_id", "candidate_window_period", "candidate_window_day", "candidate_window_shift",
+            "required_crew_type", "required_skill_id", "available_crew_hours", "candidate_required_hours",
+            "remaining_crew_hours", "crew_window_utilization_pct", "crew_window_status",
+            "double_booking_risk_flag", "note_no_dispatch_created_flag", "advisory_only_flag",
+        },
+        "machine_impact": {
+            "planning_run_id", "schedule_candidate_window_id", "candidate_id", "machine_id", "workstation_id",
+            "planned_downtime_hours", "production_impact_level", "bottleneck_impact_level",
+            "machine_availability_impact_level", "estimated_capacity_at_risk_hours", "window_impact_level",
+            "note_no_capacity_reduction_applied_flag", "advisory_only_flag",
+        },
+        "review": {
+            "review_item_id", "planning_run_id", "candidate_id", "schedule_candidate_window_id", "machine_id",
+            "issue_type", "issue_severity", "issue_description", "recommended_review_action",
+            "auto_action_allowed", "advisory_only_flag",
+        },
+        "phase4": {
+            "planning_run_id", "machine_id", "machine_name", "feasible_candidate_window_count",
+            "blocked_candidate_window_count", "highest_recommended_scheduling_priority",
+            "best_schedule_feasibility_status", "main_schedule_blocker", "scheduling_feasibility_ready_flag",
+            "confirmation_status", "source_phase", "advisory_only_flag",
+        },
+    }
+    frames = {
+        "windows": windows,
+        "calendar": calendar,
+        "crew_load": crew_load,
+        "machine_impact": machine_impact,
+        "review": review,
+        "phase4": phase4_context,
+    }
+    for label, columns in required_columns.items():
+        missing = sorted(columns.difference(frames[label].columns))
+        if missing:
+            return _result("maintenance_schedule_feasibility", "FAIL", f"{label} missing columns: {missing}")
+
+    numeric_checks = [
+        (windows, ["required_worker_count", "estimated_duration_hours", "planned_downtime_hours", "scheduling_priority_score"], "windows"),
+        (calendar, ["feasible_candidate_count", "blocked_candidate_count", "crew_blocked_count", "spare_part_blocked_count", "production_impact_blocked_count"], "calendar"),
+        (crew_load, ["available_crew_hours", "candidate_required_hours", "crew_window_utilization_pct"], "crew_load"),
+        (machine_impact, ["planned_downtime_hours", "estimated_capacity_at_risk_hours"], "machine_impact"),
+        (phase4_context, ["feasible_candidate_window_count", "blocked_candidate_window_count"], "phase4_context"),
+    ]
+    for frame, columns, label in numeric_checks:
+        for column in columns:
+            values = pd.to_numeric(frame[column], errors="coerce")
+            if values.isna().any() or (values < 0).any():
+                return _result("maintenance_schedule_feasibility", "FAIL", f"{label}.{column} must be numeric and non-negative.")
+
+    allowed_status = {"FEASIBLE_CANDIDATE", "BLOCKED_BY_CREW", "BLOCKED_BY_SPARE_PART", "BLOCKED_BY_PRODUCTION_IMPACT", "MULTI_BLOCKED", "REVIEW_REQUIRED"}
+    if set(windows["schedule_feasibility_status"].dropna().astype(str)) - allowed_status:
+        return _result("maintenance_schedule_feasibility", "FAIL", "Schedule feasibility contains invalid status values.")
+    allowed_crew_status = {"AVAILABLE", "HIGH_UTILIZATION_WARNING", "OVERLOADED", "NO_ACTIVE_COVERAGE", "REVIEW_REQUIRED"}
+    if set(crew_load["crew_window_status"].dropna().astype(str)) - allowed_crew_status:
+        return _result("maintenance_schedule_feasibility", "FAIL", "Crew window load contains invalid status values.")
+    if set(windows["schedule_assignment_status"].astype(str)) != {"NOT_SCHEDULED_CANDIDATE_ONLY"}:
+        return _result("maintenance_schedule_feasibility", "FAIL", "Step 7G candidate windows must not create schedule assignments.")
+    if not _all_true(windows, "note_no_schedule_created_flag"):
+        return _result("maintenance_schedule_feasibility", "FAIL", "Step 7G candidate windows cannot create real schedules.")
+    if not _all_true(crew_load, "note_no_dispatch_created_flag"):
+        return _result("maintenance_schedule_feasibility", "FAIL", "Step 7G crew window load cannot create dispatch records.")
+    if not _all_true(machine_impact, "note_no_capacity_reduction_applied_flag"):
+        return _result("maintenance_schedule_feasibility", "FAIL", "Step 7G machine window impact cannot reduce production capacity.")
+    expected_confirmation = "ADVISORY_SCHEDULE_FEASIBILITY_ONLY_NOT_EXECUTION_CONFIRMED"
+    if set(phase4_context["confirmation_status"].dropna().astype(str)) != {expected_confirmation}:
+        return _result("maintenance_schedule_feasibility", "FAIL", "Phase 4 schedule feasibility confirmation status is invalid.")
+    for label, frame in frames.items():
+        if not _all_true(frame, "advisory_only_flag"):
+            return _result("maintenance_schedule_feasibility", "FAIL", f"{label} must be advisory-only.")
+    if not review.empty:
+        if _to_bool(review["auto_action_allowed"]).any():
+            return _result("maintenance_schedule_feasibility", "FAIL", "Maintenance schedule review queue cannot allow automatic action.")
+        if not _all_true(review, "advisory_only_flag"):
+            return _result("maintenance_schedule_feasibility", "FAIL", "Maintenance schedule review queue must be advisory-only.")
+    incomplete = windows[windows[["required_skill_id", "required_crew_type", "maintenance_level"]].apply(lambda s: s.map(_is_blank_value)).any(axis=1)]
+    if not incomplete.empty and (incomplete["schedule_feasibility_status"].astype(str) != "REVIEW_REQUIRED").any():
+        return _result("maintenance_schedule_feasibility", "FAIL", "Incomplete Step 7G candidates must be marked REVIEW_REQUIRED.")
+    return _result(
+        "maintenance_schedule_feasibility",
+        "PASS",
+        f"Step 7G maintenance schedule feasibility valid; candidate_windows={len(windows)}, calendar_rows={len(calendar)}, crew_window_rows={len(crew_load)}, phase4_context_rows={len(phase4_context)}.",
     )
 
 
@@ -2565,10 +2703,15 @@ def _check_safety_flags() -> dict:
 
 def _check_no_execution_outputs() -> dict:
     bad_files = []
+    allowed_candidate_only_files = {
+        PHASE4_MAINTENANCE_SCHEDULE_FEASIBILITY_CONTEXT_FILE.name.lower(),
+    }
     for path in (PHASE4_DIR / "outputs").glob("*"):
         if not path.is_file():
             continue
         lower_name = path.name.lower()
+        if lower_name in allowed_candidate_only_files:
+            continue
         if any(token in lower_name for token in EXECUTION_FILE_TOKENS):
             bad_files.append(str(path))
     if bad_files:

@@ -1,0 +1,51 @@
+check_id,check_name,status,message,affected_rows,advisory_only_flag
+S7G-001,maintenance_scheduling_candidate_backlog_exists,PASS,maintenance_scheduling_candidate_backlog rows=26,26,True
+S7G-002,maintenance_window_requirements_exists,PASS,maintenance_window_requirements rows=26,26,True
+S7G-003,maintenance_crew_capacity_summary_exists,PASS,maintenance_crew_capacity_summary rows=9,9,True
+S7G-004,maintenance_workload_by_skill_exists,PASS,maintenance_workload_by_skill rows=13,13,True
+S7G-005,maintenance_repair_queue_risk_exists,PASS,maintenance_repair_queue_risk rows=14,14,True
+S7G-006,maintenance_production_capacity_impact_exists,PASS,maintenance_production_capacity_impact rows=7,7,True
+S7G-007,maintenance_bottleneck_impact_exists,PASS,maintenance_bottleneck_impact rows=7,7,True
+S7G-008,maintenance_machine_availability_impact_exists,PASS,maintenance_machine_availability_impact rows=7,7,True
+S7G-009,spare_part_phase_integration_context_exists,PASS,spare_part_phase_integration_context rows=10,10,True
+S7G-010,crew_calendar_exists,PASS,crew_calendar rows=47,47,True
+S7G-011,workforce_crews_exists,PASS,workforce_crews rows=11,11,True
+S7G-012,phase4_maintenance_production_impact_context_exists,PASS,phase4_maintenance_production_impact_context rows=7,7,True
+S7G-013,phase4_capacity_feasibility_summary_exists,PASS,phase4_capacity_feasibility_summary rows=14,14,True
+S7G-014,phase4_bottleneck_visibility_summary_exists,PASS,phase4_bottleneck_visibility_summary rows=7,7,True
+S7G-015,phase4_production_flow_view_exists,PASS,phase4_production_flow_view rows=13,13,True
+S7G-016,maintenance_schedule_candidate_windows_not_empty,PASS,maintenance_schedule_candidate_windows rows=225,225,True
+S7G-017,maintenance_calendar_feasibility_not_empty,PASS,maintenance_calendar_feasibility rows=10,10,True
+S7G-018,maintenance_crew_window_load_not_empty,PASS,maintenance_crew_window_load rows=55,55,True
+S7G-019,maintenance_machine_window_impact_not_empty,PASS,maintenance_machine_window_impact rows=225,225,True
+S7G-020,maintenance_schedule_manager_review_queue_not_empty,PASS,maintenance_schedule_manager_review_queue rows=436,436,True
+S7G-021,phase4_maintenance_schedule_feasibility_context_not_empty,PASS,phase4_maintenance_schedule_feasibility_context rows=7,7,True
+S7G-022,maintenance_schedule_candidate_windows_required_columns,PASS,missing=[],0,True
+S7G-023,maintenance_calendar_feasibility_required_columns,PASS,missing=[],0,True
+S7G-024,maintenance_crew_window_load_required_columns,PASS,missing=[],0,True
+S7G-025,maintenance_machine_window_impact_required_columns,PASS,missing=[],0,True
+S7G-026,maintenance_schedule_manager_review_queue_required_columns,PASS,missing=[],0,True
+S7G-027,phase4_maintenance_schedule_feasibility_context_required_columns,PASS,missing=[],0,True
+S7G-028,numeric_fields_non_negative,PASS,negative_rows=0,0,True
+S7G-029,schedule_assignment_candidate_only,PASS,No confirmed schedule assignments are created.,225,True
+S7G-030,no_schedule_created_flag,PASS,Candidate windows must not create schedules.,225,True
+S7G-031,no_dispatch_created_flag,PASS,Crew window load must not create dispatch records.,55,True
+S7G-032,no_capacity_reduction_applied_flag,PASS,Machine window impact must not reduce capacity.,225,True
+S7G-033,phase4_confirmation_status,PASS,ADVISORY_SCHEDULE_FEASIBILITY_ONLY_NOT_EXECUTION_CONFIRMED,7,True
+S7G-034,valid_schedule_feasibility_status,PASS,invalid=0,0,True
+S7G-035,valid_crew_window_status,PASS,invalid=0,0,True
+S7G-036,incomplete_candidates_review_required,PASS,bad_incomplete=0,0,True
+S7G-037,maintenance_schedule_candidate_windows_advisory_only,PASS,maintenance_schedule_candidate_windows advisory_only_flag must be True.,225,True
+S7G-038,maintenance_calendar_feasibility_advisory_only,PASS,maintenance_calendar_feasibility advisory_only_flag must be True.,10,True
+S7G-039,maintenance_crew_window_load_advisory_only,PASS,maintenance_crew_window_load advisory_only_flag must be True.,55,True
+S7G-040,maintenance_machine_window_impact_advisory_only,PASS,maintenance_machine_window_impact advisory_only_flag must be True.,225,True
+S7G-041,maintenance_schedule_manager_review_queue_advisory_only,PASS,maintenance_schedule_manager_review_queue advisory_only_flag must be True.,436,True
+S7G-042,phase4_maintenance_schedule_feasibility_context_advisory_only,PASS,phase4_maintenance_schedule_feasibility_context advisory_only_flag must be True.,7,True
+S7G-043,review_queue_no_auto_action,PASS,Review queue cannot allow auto action.,436,True
+S7G-044,workforce_validation_no_fail_rows,PASS,fail_count=0,0,True
+S7G-045,spare_part_validation_no_fail_rows,PASS,fail_count=0,0,True
+S7G-046,maintenance_plan_validation_no_fail_rows,PASS,fail_count=0,0,True
+S7G-047,breakdown_validation_no_fail_rows,PASS,fail_count=0,0,True
+S7G-048,maintenance_crew_capacity_validation_no_fail_rows,PASS,fail_count=0,0,True
+S7G-049,maintenance_production_impact_validation_no_fail_rows,PASS,fail_count=0,0,True
+S7G-050,no_forbidden_execution_outputs,PASS,No forbidden execution outputs found.,0,True

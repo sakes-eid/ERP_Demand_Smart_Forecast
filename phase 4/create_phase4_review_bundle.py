@@ -1,4 +1,4 @@
-"""Create a clean Phase 4 Step 7F maintenance impact review bundle."""
+"""Create a clean Phase 4 Step 7G maintenance schedule feasibility review bundle."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 PHASE4_OUTPUTS = PROJECT_ROOT / "phase 4" / "outputs"
-ZIP_PATH = PROJECT_ROOT / "phase4_step7f_maintenance_impact_review_bundle.zip"
+ZIP_PATH = PROJECT_ROOT / "phase4_step7g_maintenance_schedule_feasibility_review_bundle.zip"
 MANIFEST_PATH = PHASE4_OUTPUTS / "phase4_review_bundle_manifest.txt"
 
 REQUIRED_RELATIVE_FILES = [
@@ -36,6 +36,7 @@ REQUIRED_RELATIVE_FILES = [
     "shared/core/breakdown_risk_forecast.py",
     "shared/core/maintenance_crew_capacity.py",
     "shared/core/maintenance_production_impact.py",
+    "shared/core/maintenance_schedule_feasibility.py",
     "shared/outputs/workforce_crew_validation.csv",
     "shared/outputs/workforce_crew_capacity_context.csv",
     "shared/outputs/workforce_machine_authorization_context.csv",
@@ -72,6 +73,12 @@ REQUIRED_RELATIVE_FILES = [
     "shared/outputs/maintenance_window_requirements.csv",
     "shared/outputs/maintenance_impact_manager_review_queue.csv",
     "shared/outputs/maintenance_production_impact_validation.csv",
+    "shared/outputs/maintenance_schedule_candidate_windows.csv",
+    "shared/outputs/maintenance_calendar_feasibility.csv",
+    "shared/outputs/maintenance_crew_window_load.csv",
+    "shared/outputs/maintenance_machine_window_impact.csv",
+    "shared/outputs/maintenance_schedule_manager_review_queue.csv",
+    "shared/outputs/maintenance_schedule_validation.csv",
     "phase 4/README.md",
     "phase 4/main.py",
     "phase 4/validate_phase4_initialization.py",
@@ -112,6 +119,7 @@ REQUIRED_RELATIVE_FILES = [
     "phase 4/outputs/phase4_breakdown_risk_context.csv",
     "phase 4/outputs/phase4_maintenance_crew_capacity_context.csv",
     "phase 4/outputs/phase4_maintenance_production_impact_context.csv",
+    "phase 4/outputs/phase4_maintenance_schedule_feasibility_context.csv",
     "phase 4/outputs/phase4_routing_validation.csv",
     "phase 4/outputs/phase4_routing_flow_summary.csv",
     "phase 4/outputs/phase4_capacity_load_by_workstation.csv",
@@ -321,6 +329,14 @@ def _verify_zip() -> tuple[str, list[str]]:
         "shared/outputs/maintenance_impact_manager_review_queue.csv": "Shared maintenance impact manager review queue exists inside the zip",
         "shared/outputs/maintenance_production_impact_validation.csv": "Shared maintenance production impact validation exists inside the zip",
         "phase 4/outputs/phase4_maintenance_production_impact_context.csv": "Phase 4 maintenance production impact context exists inside the zip",
+        "shared/core/maintenance_schedule_feasibility.py": "Shared maintenance schedule feasibility module exists inside the zip",
+        "shared/outputs/maintenance_schedule_candidate_windows.csv": "Shared maintenance schedule candidate windows output exists inside the zip",
+        "shared/outputs/maintenance_calendar_feasibility.csv": "Shared maintenance calendar feasibility output exists inside the zip",
+        "shared/outputs/maintenance_crew_window_load.csv": "Shared maintenance crew window load output exists inside the zip",
+        "shared/outputs/maintenance_machine_window_impact.csv": "Shared maintenance machine window impact output exists inside the zip",
+        "shared/outputs/maintenance_schedule_manager_review_queue.csv": "Shared maintenance schedule manager review queue exists inside the zip",
+        "shared/outputs/maintenance_schedule_validation.csv": "Shared maintenance schedule validation exists inside the zip",
+        "phase 4/outputs/phase4_maintenance_schedule_feasibility_context.csv": "Phase 4 maintenance schedule feasibility context exists inside the zip",
         "phase 1/outputs/phase1_spare_part_demand_context.csv": "Phase 1 spare-part demand context exists inside the zip",
         "phase 2/outputs/phase4_spare_part_supplier_check.csv": "Phase 2 spare-part supplier check exists inside the zip",
         "phase 3/outputs/phase4_spare_part_inventory_check.csv": "Phase 3 spare-part inventory check exists inside the zip",
@@ -458,7 +474,7 @@ def _build_manifest(
 ) -> str:
     zip_size_mb = ZIP_PATH.stat().st_size / (1024 * 1024) if ZIP_PATH.exists() else 0.0
     lines = [
-        "Phase 4 Step 7F Maintenance Impact Review Bundle Manifest",
+        "Phase 4 Step 7G Maintenance Schedule Feasibility Review Bundle Manifest",
         f"Generated zip path: {ZIP_PATH}",
         f"Generated timestamp UTC: {generated_at}",
         f"Included file count: {len(included)}",
