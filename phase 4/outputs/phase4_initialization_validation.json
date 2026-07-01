@@ -1,6 +1,6 @@
 {
   "validation_name": "phase4_initialization_validation",
-  "generated_at_utc": "2026-07-01T12:27:55+00:00",
+  "generated_at_utc": "2026-07-01T12:58:44+00:00",
   "overall_status": "PASS",
   "fail_count": 0,
   "warning_count": 3,
@@ -91,6 +91,11 @@
       "message": "Step 7E maintenance crew capacity valid; workload_rows=13, crew_rows=9, queue_rows=14, phase4_context_rows=12."
     },
     {
+      "check": "maintenance_production_impact",
+      "status": "PASS",
+      "message": "Step 7F maintenance production impact valid; availability_rows=7, capacity_rows=7, candidate_rows=26, phase4_context_rows=7."
+    },
+    {
       "check": "routing_master_data",
       "status": "PASS",
       "message": "Step 3B routing master data valid; routing_rows=13, parallel_groups=2, operation_resource_rows=13."
@@ -138,12 +143,12 @@
     {
       "check": "phase4_run_id_consistency",
       "status": "PASS",
-      "message": "Consistent planning_run_id across Phase 4 outputs: PHASE4-MPS-20260701122722"
+      "message": "Consistent planning_run_id across Phase 4 outputs: PHASE4-MPS-20260701125813"
     },
     {
       "check": "phase4_advisory_only",
       "status": "PASS",
-      "message": "All checked Phase 4 advisory flags are true: ['master_production_schedule', 'bom_component_requirements', 'mrp_net_component_requirements', 'mrp_component_period_summary', 'mrp_pegging_detail', 'phase4_workforce_resource_context', 'phase4_maintenance_readiness_context', 'phase4_breakdown_risk_context', 'phase4_maintenance_crew_capacity_context', 'capacity_load_by_workstation', 'capacity_operation_load_detail', 'capacity_load_by_machine_type', 'capacity_load_by_labor_skill', 'capacity_constraint_bridge', 'capacity_feasibility_summary', 'bottleneck_candidate_summary', 'capacity_manager_review_queue', 'queue_pressure_by_workstation', 'queue_risk_summary', 'queue_manager_review_queue', 'bottleneck_visibility_summary', 'bottleneck_period_evidence', 'bottleneck_manager_review_queue', 'production_flow_view', 'flow_step_risk_summary', 'flow_manager_review_queue', 'quality_history_clean', 'quality_trend_by_operation', 'quality_trend_by_workstation', 'processing_time_trend_by_workstation', 'workstation_performance_trend_summary', 'quality_manager_review_queue', 'quality_impact_by_operation', 'quality_adjusted_capacity_by_workstation', 'quality_adjusted_bottleneck_impact', 'quality_material_loss_exposure', 'quality_impact_manager_review_queue', 'component_inventory_check', 'component_supplier_check']"
+      "message": "All checked Phase 4 advisory flags are true: ['master_production_schedule', 'bom_component_requirements', 'mrp_net_component_requirements', 'mrp_component_period_summary', 'mrp_pegging_detail', 'phase4_workforce_resource_context', 'phase4_maintenance_readiness_context', 'phase4_breakdown_risk_context', 'phase4_maintenance_crew_capacity_context', 'phase4_maintenance_production_impact_context', 'capacity_load_by_workstation', 'capacity_operation_load_detail', 'capacity_load_by_machine_type', 'capacity_load_by_labor_skill', 'capacity_constraint_bridge', 'capacity_feasibility_summary', 'bottleneck_candidate_summary', 'capacity_manager_review_queue', 'queue_pressure_by_workstation', 'queue_risk_summary', 'queue_manager_review_queue', 'bottleneck_visibility_summary', 'bottleneck_period_evidence', 'bottleneck_manager_review_queue', 'production_flow_view', 'flow_step_risk_summary', 'flow_manager_review_queue', 'quality_history_clean', 'quality_trend_by_operation', 'quality_trend_by_workstation', 'processing_time_trend_by_workstation', 'workstation_performance_trend_summary', 'quality_manager_review_queue', 'quality_impact_by_operation', 'quality_adjusted_capacity_by_workstation', 'quality_adjusted_bottleneck_impact', 'quality_material_loss_exposure', 'quality_impact_manager_review_queue', 'component_inventory_check', 'component_supplier_check']"
     },
     {
       "check": "existing_outputs",

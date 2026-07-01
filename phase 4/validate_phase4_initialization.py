@@ -23,6 +23,7 @@ PHASE4_OUTPUTS = {
     "phase4_maintenance_readiness_context": PHASE4_DIR / "outputs" / "phase4_maintenance_readiness_context.csv",
     "phase4_breakdown_risk_context": PHASE4_DIR / "outputs" / "phase4_breakdown_risk_context.csv",
     "phase4_maintenance_crew_capacity_context": PHASE4_DIR / "outputs" / "phase4_maintenance_crew_capacity_context.csv",
+    "phase4_maintenance_production_impact_context": PHASE4_DIR / "outputs" / "phase4_maintenance_production_impact_context.csv",
     "capacity_load_by_workstation": PHASE4_DIR / "outputs" / "phase4_capacity_load_by_workstation.csv",
     "capacity_operation_load_detail": PHASE4_DIR / "outputs" / "phase4_capacity_operation_load_detail.csv",
     "capacity_load_by_machine_type": PHASE4_DIR / "outputs" / "phase4_capacity_load_by_machine_type.csv",
@@ -57,6 +58,8 @@ PHASE4_OUTPUTS = {
 EXECUTION_FILE_TOKENS = [
     "production_order",
     "maintenance_work_order",
+    "maintenance_schedule",
+    "crew_dispatch",
     "spare_part_consumption",
     "purchase_order",
     "released_order",
@@ -64,6 +67,7 @@ EXECUTION_FILE_TOKENS = [
     "finite_schedule",
     "dispatch_schedule",
     "crew_schedule",
+    "capacity_reduction",
     "simulation",
     "breakdown_event",
 ]
@@ -126,6 +130,15 @@ MAINTENANCE_BACKLOG_RISK_SUMMARY_FILE = PROJECT_ROOT / "shared" / "outputs" / "m
 MAINTENANCE_CREW_CAPACITY_MANAGER_REVIEW_FILE = PROJECT_ROOT / "shared" / "outputs" / "maintenance_crew_capacity_manager_review_queue.csv"
 MAINTENANCE_CREW_CAPACITY_VALIDATION_FILE = PROJECT_ROOT / "shared" / "outputs" / "maintenance_crew_capacity_validation.csv"
 PHASE4_MAINTENANCE_CREW_CAPACITY_CONTEXT_FILE = PHASE4_DIR / "outputs" / "phase4_maintenance_crew_capacity_context.csv"
+MAINTENANCE_MACHINE_AVAILABILITY_IMPACT_FILE = PROJECT_ROOT / "shared" / "outputs" / "maintenance_machine_availability_impact.csv"
+MAINTENANCE_PRODUCTION_CAPACITY_IMPACT_FILE = PROJECT_ROOT / "shared" / "outputs" / "maintenance_production_capacity_impact.csv"
+MAINTENANCE_BREAKDOWN_COST_EXPOSURE_FILE = PROJECT_ROOT / "shared" / "outputs" / "maintenance_breakdown_cost_exposure.csv"
+MAINTENANCE_BOTTLENECK_IMPACT_FILE = PROJECT_ROOT / "shared" / "outputs" / "maintenance_bottleneck_impact.csv"
+MAINTENANCE_SCHEDULING_CANDIDATE_BACKLOG_FILE = PROJECT_ROOT / "shared" / "outputs" / "maintenance_scheduling_candidate_backlog.csv"
+MAINTENANCE_WINDOW_REQUIREMENTS_FILE = PROJECT_ROOT / "shared" / "outputs" / "maintenance_window_requirements.csv"
+MAINTENANCE_IMPACT_MANAGER_REVIEW_FILE = PROJECT_ROOT / "shared" / "outputs" / "maintenance_impact_manager_review_queue.csv"
+MAINTENANCE_PRODUCTION_IMPACT_VALIDATION_FILE = PROJECT_ROOT / "shared" / "outputs" / "maintenance_production_impact_validation.csv"
+PHASE4_MAINTENANCE_PRODUCTION_IMPACT_CONTEXT_FILE = PHASE4_DIR / "outputs" / "phase4_maintenance_production_impact_context.csv"
 RESOURCE_DATA_FILES = {
     "workstations": PHASE4_DIR / "data" / "workstations.csv",
     "machines": PHASE4_DIR / "data" / "machines.csv",
@@ -215,6 +228,7 @@ def main() -> None:
     checks.append(_check_maintenance_master_data())
     checks.append(_check_breakdown_risk_forecast())
     checks.append(_check_maintenance_crew_capacity())
+    checks.append(_check_maintenance_production_impact())
     checks.append(_check_routing_master_data())
     checks.append(_check_capacity_load())
     checks.append(_check_queue_pressure())
@@ -1220,6 +1234,166 @@ def _check_maintenance_crew_capacity() -> dict:
         "maintenance_crew_capacity",
         "PASS",
         f"Step 7E maintenance crew capacity valid; workload_rows={len(workload)}, crew_rows={len(crew_summary)}, queue_rows={len(queue)}, phase4_context_rows={len(phase4_context)}.",
+    )
+
+
+def _check_maintenance_production_impact() -> dict:
+    required_outputs = [
+        (MAINTENANCE_MACHINE_AVAILABILITY_IMPACT_FILE, "machine availability impact"),
+        (MAINTENANCE_PRODUCTION_CAPACITY_IMPACT_FILE, "production capacity impact"),
+        (MAINTENANCE_BREAKDOWN_COST_EXPOSURE_FILE, "breakdown cost exposure"),
+        (MAINTENANCE_BOTTLENECK_IMPACT_FILE, "maintenance bottleneck impact"),
+        (MAINTENANCE_SCHEDULING_CANDIDATE_BACKLOG_FILE, "scheduling candidate backlog"),
+        (MAINTENANCE_WINDOW_REQUIREMENTS_FILE, "maintenance window requirements"),
+        (MAINTENANCE_IMPACT_MANAGER_REVIEW_FILE, "maintenance impact manager review queue"),
+        (MAINTENANCE_PRODUCTION_IMPACT_VALIDATION_FILE, "maintenance production impact validation"),
+        (PHASE4_MAINTENANCE_PRODUCTION_IMPACT_CONTEXT_FILE, "Phase 4 maintenance production impact context"),
+    ]
+    for path, label in required_outputs:
+        if not path.exists():
+            return _result("maintenance_production_impact", "FAIL", f"{label} output is missing: {path}")
+        if label != "maintenance impact manager review queue" and pd.read_csv(path).empty:
+            return _result("maintenance_production_impact", "FAIL", f"{label} output has no rows: {path}")
+
+    validation = pd.read_csv(MAINTENANCE_PRODUCTION_IMPACT_VALIDATION_FILE)
+    fail_count = int((validation["status"].astype(str).str.upper() == "FAIL").sum()) if "status" in validation.columns else len(validation)
+    if fail_count:
+        return _result("maintenance_production_impact", "FAIL", f"Maintenance production impact validation contains FAIL rows: {fail_count}")
+
+    availability = pd.read_csv(MAINTENANCE_MACHINE_AVAILABILITY_IMPACT_FILE)
+    capacity = pd.read_csv(MAINTENANCE_PRODUCTION_CAPACITY_IMPACT_FILE)
+    cost = pd.read_csv(MAINTENANCE_BREAKDOWN_COST_EXPOSURE_FILE)
+    bottleneck = pd.read_csv(MAINTENANCE_BOTTLENECK_IMPACT_FILE)
+    candidates = pd.read_csv(MAINTENANCE_SCHEDULING_CANDIDATE_BACKLOG_FILE)
+    windows = pd.read_csv(MAINTENANCE_WINDOW_REQUIREMENTS_FILE)
+    review = pd.read_csv(MAINTENANCE_IMPACT_MANAGER_REVIEW_FILE)
+    phase4_context = pd.read_csv(PHASE4_MAINTENANCE_PRODUCTION_IMPACT_CONTEXT_FILE)
+
+    required_columns = {
+        "availability": {
+            "machine_id", "maintenance_due_signal", "breakdown_risk_level", "planned_maintenance_downtime_hours",
+            "expected_breakdown_downtime_hours", "expected_repair_hours", "repair_queue_risk_level",
+            "spare_part_blocker_flag", "crew_capacity_blocker_flag", "total_downtime_exposure_hours",
+            "machine_availability_impact_score", "machine_availability_impact_level", "confirmation_status", "advisory_only_flag",
+        },
+        "capacity": {
+            "machine_id", "workstation_id", "current_capacity_status", "current_utilization_pct",
+            "quality_adjusted_utilization_pct", "capacity_at_risk_hours", "estimated_utilization_increase_if_downtime_applied_pct",
+            "capacity_impact_level", "note_no_capacity_reduction_applied_flag", "confirmation_status", "advisory_only_flag",
+        },
+        "cost": {
+            "machine_id", "planned_maintenance_cost", "expected_breakdown_repair_cost", "expected_spare_part_exposure_cost",
+            "expected_downtime_cost_exposure", "total_maintenance_breakdown_cost_exposure", "cost_exposure_level",
+            "note_no_financial_posting_flag", "confirmation_status", "advisory_only_flag",
+        },
+        "bottleneck": {
+            "machine_id", "workstation_id", "original_bottleneck_visibility_level", "bottleneck_worsening_score",
+            "bottleneck_risk_after_maintenance_breakdown", "confirmation_status", "advisory_only_flag",
+        },
+        "candidates": {
+            "candidate_id", "candidate_type", "machine_id", "required_skill_id", "required_crew_type",
+            "required_worker_count", "maintenance_level", "required_authorization_level",
+            "can_be_performed_by_production_flag", "can_be_performed_by_maintenance_flag",
+            "candidate_requirement_completeness_status", "estimated_duration_hours",
+            "planned_downtime_hours", "recommended_scheduling_priority", "scheduling_blocker_status",
+            "schedule_assignment_status", "note_no_schedule_created_flag", "confirmation_status", "advisory_only_flag",
+        },
+        "windows": {
+            "candidate_id", "machine_id", "required_downtime_window_hours", "required_crew_type", "required_skill_id",
+            "maintenance_level", "required_authorization_level", "candidate_requirement_completeness_status",
+            "spare_part_ready_flag", "crew_ready_flag", "note_no_calendar_assignment_flag", "advisory_only_flag",
+        },
+        "phase4": {
+            "machine_id", "machine_availability_impact_level", "capacity_impact_level",
+            "bottleneck_risk_after_maintenance_breakdown", "cost_exposure_level", "recommended_scheduling_priority",
+            "scheduling_blocker_status", "candidate_requirement_completeness_status",
+            "maintenance_impact_planning_ready_flag", "step7g_ready_candidate_flag",
+            "confirmation_status", "advisory_only_flag",
+        },
+    }
+    frames = {
+        "availability": availability,
+        "capacity": capacity,
+        "cost": cost,
+        "bottleneck": bottleneck,
+        "candidates": candidates,
+        "windows": windows,
+        "phase4": phase4_context,
+    }
+    for label, columns in required_columns.items():
+        missing = sorted(columns.difference(frames[label].columns))
+        if missing:
+            return _result("maintenance_production_impact", "FAIL", f"{label} missing columns: {missing}")
+
+    numeric_checks = [
+        (availability, ["planned_maintenance_downtime_hours", "expected_breakdown_downtime_hours", "expected_repair_hours", "total_downtime_exposure_hours", "machine_availability_impact_score"], "availability"),
+        (capacity, ["current_utilization_pct", "quality_adjusted_utilization_pct", "capacity_at_risk_hours", "estimated_utilization_increase_if_downtime_applied_pct"], "capacity"),
+        (cost, ["planned_maintenance_cost", "expected_breakdown_repair_cost", "expected_spare_part_exposure_cost", "expected_downtime_cost_exposure", "total_maintenance_breakdown_cost_exposure"], "cost"),
+        (bottleneck, ["total_downtime_exposure_hours", "bottleneck_worsening_score"], "bottleneck"),
+        (candidates, ["estimated_duration_hours", "planned_downtime_hours", "required_worker_count", "recommended_scheduling_priority"], "candidates"),
+        (windows, ["required_downtime_window_hours", "required_worker_count"], "windows"),
+    ]
+    for frame, columns, label in numeric_checks:
+        for column in columns:
+            values = pd.to_numeric(frame[column], errors="coerce")
+            if values.isna().any() or (values < 0).any():
+                return _result("maintenance_production_impact", "FAIL", f"{label}.{column} must be numeric and non-negative.")
+
+    expected_confirmation = "PLANNING_IMPACT_ESTIMATE_ONLY_NOT_EXECUTION_CONFIRMED"
+    for frame, label in [(availability, "availability"), (capacity, "capacity"), (cost, "cost"), (bottleneck, "bottleneck"), (candidates, "candidates"), (phase4_context, "Phase 4 context")]:
+        if set(frame["confirmation_status"].dropna().astype(str)) != {expected_confirmation}:
+            return _result("maintenance_production_impact", "FAIL", f"{label} confirmation status is invalid.")
+    if not _all_true(capacity, "note_no_capacity_reduction_applied_flag"):
+        return _result("maintenance_production_impact", "FAIL", "Capacity impact cannot apply capacity reduction.")
+    if not _all_true(cost, "note_no_financial_posting_flag"):
+        return _result("maintenance_production_impact", "FAIL", "Cost exposure cannot create financial postings.")
+    if not _all_true(candidates, "note_no_schedule_created_flag") or set(candidates["schedule_assignment_status"].astype(str)) != {"NOT_SCHEDULED_CANDIDATE_ONLY"}:
+        return _result("maintenance_production_impact", "FAIL", "Scheduling candidates must remain unscheduled candidate-only rows.")
+    if not _all_true(windows, "note_no_calendar_assignment_flag"):
+        return _result("maintenance_production_impact", "FAIL", "Maintenance window requirements cannot assign calendar slots.")
+    for frame, label in [(availability, "availability"), (capacity, "capacity"), (cost, "cost"), (bottleneck, "bottleneck"), (candidates, "candidates"), (windows, "windows"), (phase4_context, "Phase 4 context")]:
+        if not _all_true(frame, "advisory_only_flag"):
+            return _result("maintenance_production_impact", "FAIL", f"{label} must be advisory-only.")
+    if not review.empty:
+        if _to_bool(review["auto_action_allowed"]).any():
+            return _result("maintenance_production_impact", "FAIL", "Maintenance impact review queue cannot allow automatic action.")
+        if not _all_true(review, "advisory_only_flag"):
+            return _result("maintenance_production_impact", "FAIL", "Maintenance impact review queue must be advisory-only.")
+    allowed_candidate_types = {"PLANNED_MAINTENANCE", "DUE_MAINTENANCE", "OVERDUE_MAINTENANCE", "BREAKDOWN_RISK_PREVENTIVE_REVIEW", "REPAIR_RISK_REVIEW"}
+    if set(candidates["candidate_type"].dropna().astype(str)) - allowed_candidate_types:
+        return _result("maintenance_production_impact", "FAIL", "Scheduling candidate backlog contains invalid candidate types.")
+    plan_types = {"PLANNED_MAINTENANCE", "DUE_MAINTENANCE", "OVERDUE_MAINTENANCE"}
+    plan_candidates = candidates[candidates["candidate_type"].astype(str).isin(plan_types)]
+    for column in ["required_skill_id", "required_crew_type", "maintenance_level", "required_authorization_level"]:
+        if plan_candidates[column].apply(_is_blank_value).any():
+            return _result("maintenance_production_impact", "FAIL", f"Maintenance-plan candidates cannot have blank {column}.")
+    if (pd.to_numeric(plan_candidates["required_worker_count"], errors="coerce").fillna(0) <= 0).any():
+        return _result("maintenance_production_impact", "FAIL", "Maintenance-plan candidates cannot have missing required_worker_count.")
+    ready_candidates = candidates[candidates["scheduling_blocker_status"].astype(str) == "READY_FOR_STEP7G"]
+    ready_required_columns = ["required_skill_id", "required_crew_type", "maintenance_level", "required_authorization_level"]
+    for column in ready_required_columns:
+        if ready_candidates[column].apply(_is_blank_value).any():
+            return _result("maintenance_production_impact", "FAIL", f"Step 7G-ready candidates cannot have blank {column}.")
+    if (pd.to_numeric(ready_candidates["required_worker_count"], errors="coerce").fillna(0) <= 0).any():
+        return _result("maintenance_production_impact", "FAIL", "Step 7G-ready candidates cannot have missing required_worker_count.")
+    if (ready_candidates["candidate_requirement_completeness_status"].astype(str) != "COMPLETE").any():
+        return _result("maintenance_production_impact", "FAIL", "Step 7G-ready candidates must have COMPLETE requirement status.")
+    invalid_completeness = set(candidates["candidate_requirement_completeness_status"].dropna().astype(str)) - {"COMPLETE", "INCOMPLETE_REVIEW_REQUIRED"}
+    if invalid_completeness:
+        return _result("maintenance_production_impact", "FAIL", "Scheduling candidates contain invalid completeness status values.")
+    for frame, column, label in [
+        (availability, "machine_availability_impact_level", "availability"),
+        (capacity, "capacity_impact_level", "capacity"),
+        (cost, "cost_exposure_level", "cost"),
+        (bottleneck, "bottleneck_risk_after_maintenance_breakdown", "bottleneck"),
+    ]:
+        if set(frame[column].dropna().astype(str)) - {"LOW", "MEDIUM", "HIGH", "CRITICAL", "REVIEW_REQUIRED"}:
+            return _result("maintenance_production_impact", "FAIL", f"{label} contains invalid impact levels.")
+
+    return _result(
+        "maintenance_production_impact",
+        "PASS",
+        f"Step 7F maintenance production impact valid; availability_rows={len(availability)}, capacity_rows={len(capacity)}, candidate_rows={len(candidates)}, phase4_context_rows={len(phase4_context)}.",
     )
 
 
@@ -2521,6 +2695,13 @@ def _split_ids(value: object) -> list[str]:
 
 def _to_bool(series: pd.Series) -> pd.Series:
     return series.astype(str).str.strip().str.lower().isin({"true", "1", "yes", "y"})
+
+
+def _is_blank_value(value: object) -> bool:
+    if value is None:
+        return True
+    text = str(value).strip()
+    return text == "" or text.lower() in {"nan", "none", "nat"}
 
 
 def _result(name: str, status: str, message: str) -> dict:

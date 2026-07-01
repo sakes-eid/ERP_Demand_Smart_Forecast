@@ -98,6 +98,16 @@ from shared.core.maintenance_crew_capacity import REPAIR_QUEUE_RISK_FILE as MAIN
 from shared.core.maintenance_crew_capacity import VALIDATION_OUTPUT_FILE as MAINTENANCE_CREW_CAPACITY_VALIDATION_OUTPUT_FILE
 from shared.core.maintenance_crew_capacity import WORKLOAD_BY_SKILL_FILE as MAINTENANCE_WORKLOAD_BY_SKILL_FILE
 from shared.core.maintenance_crew_capacity import build_maintenance_crew_capacity_outputs
+from shared.core.maintenance_production_impact import BOTTLENECK_IMPACT_OUTPUT_FILE as MAINTENANCE_BOTTLENECK_IMPACT_OUTPUT_FILE
+from shared.core.maintenance_production_impact import COST_EXPOSURE_OUTPUT_FILE as MAINTENANCE_BREAKDOWN_COST_EXPOSURE_OUTPUT_FILE
+from shared.core.maintenance_production_impact import MACHINE_AVAILABILITY_OUTPUT_FILE as MAINTENANCE_MACHINE_AVAILABILITY_OUTPUT_FILE
+from shared.core.maintenance_production_impact import MANAGER_REVIEW_OUTPUT_FILE as MAINTENANCE_IMPACT_MANAGER_REVIEW_OUTPUT_FILE
+from shared.core.maintenance_production_impact import PHASE4_CONTEXT_OUTPUT_FILE as PHASE4_MAINTENANCE_PRODUCTION_IMPACT_CONTEXT_FILE
+from shared.core.maintenance_production_impact import PRODUCTION_CAPACITY_OUTPUT_FILE as MAINTENANCE_PRODUCTION_CAPACITY_IMPACT_OUTPUT_FILE
+from shared.core.maintenance_production_impact import SCHEDULING_CANDIDATE_OUTPUT_FILE as MAINTENANCE_SCHEDULING_CANDIDATE_OUTPUT_FILE
+from shared.core.maintenance_production_impact import VALIDATION_OUTPUT_FILE as MAINTENANCE_PRODUCTION_IMPACT_VALIDATION_OUTPUT_FILE
+from shared.core.maintenance_production_impact import WINDOW_REQUIREMENTS_OUTPUT_FILE as MAINTENANCE_WINDOW_REQUIREMENTS_OUTPUT_FILE
+from shared.core.maintenance_production_impact import build_maintenance_production_impact_outputs
 
 
 def run_initialization() -> None:
@@ -116,6 +126,7 @@ def run_initialization() -> None:
     maintenance_validation, maintenance_due, maintenance_spare, maintenance_cost, maintenance_review, phase4_maintenance_context = build_maintenance_master_data_outputs()
     breakdown_validation, breakdown_clean, breakdown_trend, breakdown_risk, breakdown_failure, breakdown_spare, breakdown_crew, breakdown_review, phase4_breakdown_context = build_breakdown_risk_outputs()
     maintenance_crew_validation, maintenance_workload, maintenance_crew_summary, maintenance_repair_queue, maintenance_backlog, maintenance_crew_review, phase4_maintenance_crew_context = build_maintenance_crew_capacity_outputs()
+    maintenance_impact_validation, maintenance_availability, maintenance_capacity_impact, maintenance_cost_exposure, maintenance_bottleneck_impact, maintenance_candidates, maintenance_windows, maintenance_impact_review, phase4_maintenance_impact_context = build_maintenance_production_impact_outputs()
     routing_validation = validate_routing_master_data()
     capacity_load, capacity_detail, capacity_validation = build_workstation_capacity_load()
     queue_pressure, queue_summary, queue_review, queue_validation = build_queue_pressure_outputs()
@@ -200,6 +211,24 @@ def run_initialization() -> None:
     print(f"Maintenance crew capacity manager review output written to: {MAINTENANCE_CREW_MANAGER_REVIEW_QUEUE_FILE}")
     print(f"Phase 4 maintenance crew capacity context rows: {len(phase4_maintenance_crew_context)}")
     print(f"Phase 4 maintenance crew capacity context output written to: {PHASE4_CREW_CAPACITY_CONTEXT_FILE}")
+    print(f"Maintenance production impact validation rows: {len(maintenance_impact_validation)}")
+    print(f"Maintenance production impact validation output written to: {MAINTENANCE_PRODUCTION_IMPACT_VALIDATION_OUTPUT_FILE}")
+    print(f"Machine availability impact rows: {len(maintenance_availability)}")
+    print(f"Machine availability impact output written to: {MAINTENANCE_MACHINE_AVAILABILITY_OUTPUT_FILE}")
+    print(f"Maintenance production capacity impact rows: {len(maintenance_capacity_impact)}")
+    print(f"Maintenance production capacity impact output written to: {MAINTENANCE_PRODUCTION_CAPACITY_IMPACT_OUTPUT_FILE}")
+    print(f"Maintenance breakdown cost exposure rows: {len(maintenance_cost_exposure)}")
+    print(f"Maintenance breakdown cost exposure output written to: {MAINTENANCE_BREAKDOWN_COST_EXPOSURE_OUTPUT_FILE}")
+    print(f"Maintenance bottleneck impact rows: {len(maintenance_bottleneck_impact)}")
+    print(f"Maintenance bottleneck impact output written to: {MAINTENANCE_BOTTLENECK_IMPACT_OUTPUT_FILE}")
+    print(f"Maintenance scheduling candidate rows: {len(maintenance_candidates)}")
+    print(f"Maintenance scheduling candidate output written to: {MAINTENANCE_SCHEDULING_CANDIDATE_OUTPUT_FILE}")
+    print(f"Maintenance window requirement rows: {len(maintenance_windows)}")
+    print(f"Maintenance window requirement output written to: {MAINTENANCE_WINDOW_REQUIREMENTS_OUTPUT_FILE}")
+    print(f"Maintenance impact manager review rows: {len(maintenance_impact_review)}")
+    print(f"Maintenance impact manager review output written to: {MAINTENANCE_IMPACT_MANAGER_REVIEW_OUTPUT_FILE}")
+    print(f"Phase 4 maintenance production impact context rows: {len(phase4_maintenance_impact_context)}")
+    print(f"Phase 4 maintenance production impact context output written to: {PHASE4_MAINTENANCE_PRODUCTION_IMPACT_CONTEXT_FILE}")
     print(f"Routing validation rows: {len(routing_validation)}")
     print(f"Routing validation output written to: {ROUTING_VALIDATION_OUTPUT_FILE}")
     print(f"Routing flow summary written to: {FLOW_SUMMARY_OUTPUT_FILE}")

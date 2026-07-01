@@ -63,6 +63,13 @@ Current initialization scope:
 - No active maintenance crew coverage creates repair queue risk, backlog no-coverage visibility, and manager review rows.
 - Repair queue risk is estimated from maintenance plans, breakdown risk, crew skill coverage, and spare-part readiness.
 - Step 7E does not schedule crews, create repair tasks, create maintenance work orders, consume spare parts, reserve inventory, reduce capacity, or run simulation.
+- Step 7F estimates maintenance and breakdown impact on machine availability, production capacity risk, bottleneck worsening risk, and cost exposure.
+- Step 7F combines maintenance due-status, breakdown forecasts, spare-part readiness, maintenance crew capacity, repair queue risk, existing capacity outputs, bottleneck visibility, and quality-adjusted capacity.
+- Step 7F prepares scheduling candidate backlog and maintenance window requirement rows for future Step 7G, but every row remains `NOT_SCHEDULED_CANDIDATE_ONLY`.
+- Step 7F scheduling candidates now carry complete Step 7G resource requirements where available, including required skill, crew type, worker count, maintenance level, and authorization level.
+- Incomplete scheduling candidates are explicitly blocked for review rather than treated as ready for Step 7G.
+- Step 7F does not create maintenance work orders, maintenance schedules, crew dispatch records, spare-part consumption, inventory reservations, purchase orders, applied capacity reductions, or simulation outputs.
+- Step 7F cost exposure is planning-estimate-only and does not create financial postings.
 - Routing is the ERP version of the production flowchart.
 - Road Bike and Mountain Bike now have different advisory routings.
 - Parallel subassembly branches are included for both products.
@@ -178,5 +185,5 @@ Next likely Phase 4 feature:
 
 Review bundle:
 
-- `create_phase4_review_bundle.py` generates `phase4_step7e_maintenance_crew_capacity_review_bundle.zip` at the project root for external review.
+- `create_phase4_review_bundle.py` generates `phase4_step7f_maintenance_impact_review_bundle.zip` at the project root for external review.
 - The bundle preserves project-relative folder structure and excludes cache, bytecode, virtual environment, and zip artifacts.

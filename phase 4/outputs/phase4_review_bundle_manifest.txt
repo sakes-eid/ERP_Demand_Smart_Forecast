@@ -1,10 +1,10 @@
-Phase 4 Step 7E Maintenance Crew Capacity Review Bundle Manifest
-Generated zip path: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase4_step7e_maintenance_crew_capacity_review_bundle.zip
-Generated timestamp UTC: 2026-07-01T12:27:55+00:00
-Included file count: 149
+Phase 4 Step 7F Maintenance Impact Review Bundle Manifest
+Generated zip path: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase4_step7f_maintenance_impact_review_bundle.zip
+Generated timestamp UTC: 2026-07-01T12:58:44+00:00
+Included file count: 159
 Missing file count: 0
 Excluded file count: 0
-Final zip size MB: 0.363
+Final zip size MB: 0.387
 Verification status: PASS
 
 Verification messages:
@@ -46,6 +46,16 @@ Verification messages:
 - PASS: Shared maintenance crew capacity manager review queue exists inside the zip
 - PASS: Shared maintenance crew capacity validation exists inside the zip
 - PASS: Phase 4 maintenance crew capacity context exists inside the zip
+- PASS: Shared maintenance production impact module exists inside the zip
+- PASS: Shared machine availability impact output exists inside the zip
+- PASS: Shared production capacity impact output exists inside the zip
+- PASS: Shared maintenance breakdown cost exposure output exists inside the zip
+- PASS: Shared maintenance bottleneck impact output exists inside the zip
+- PASS: Shared scheduling candidate backlog output exists inside the zip
+- PASS: Shared maintenance window requirements output exists inside the zip
+- PASS: Shared maintenance impact manager review queue exists inside the zip
+- PASS: Shared maintenance production impact validation exists inside the zip
+- PASS: Phase 4 maintenance production impact context exists inside the zip
 - PASS: Phase 1 spare-part demand context exists inside the zip
 - PASS: Phase 2 spare-part supplier check exists inside the zip
 - PASS: Phase 3 spare-part inventory check exists inside the zip
@@ -164,6 +174,7 @@ Included files:
 - shared/core/maintenance_master_data.py
 - shared/core/breakdown_risk_forecast.py
 - shared/core/maintenance_crew_capacity.py
+- shared/core/maintenance_production_impact.py
 - shared/outputs/workforce_crew_validation.csv
 - shared/outputs/workforce_crew_capacity_context.csv
 - shared/outputs/workforce_machine_authorization_context.csv
@@ -192,6 +203,14 @@ Included files:
 - shared/outputs/maintenance_backlog_risk_summary.csv
 - shared/outputs/maintenance_crew_capacity_manager_review_queue.csv
 - shared/outputs/maintenance_crew_capacity_validation.csv
+- shared/outputs/maintenance_machine_availability_impact.csv
+- shared/outputs/maintenance_production_capacity_impact.csv
+- shared/outputs/maintenance_breakdown_cost_exposure.csv
+- shared/outputs/maintenance_bottleneck_impact.csv
+- shared/outputs/maintenance_scheduling_candidate_backlog.csv
+- shared/outputs/maintenance_window_requirements.csv
+- shared/outputs/maintenance_impact_manager_review_queue.csv
+- shared/outputs/maintenance_production_impact_validation.csv
 - phase 4/README.md
 - phase 4/main.py
 - phase 4/validate_phase4_initialization.py
@@ -231,6 +250,7 @@ Included files:
 - phase 4/outputs/phase4_maintenance_readiness_context.csv
 - phase 4/outputs/phase4_breakdown_risk_context.csv
 - phase 4/outputs/phase4_maintenance_crew_capacity_context.csv
+- phase 4/outputs/phase4_maintenance_production_impact_context.csv
 - phase 4/outputs/phase4_routing_validation.csv
 - phase 4/outputs/phase4_routing_flow_summary.csv
 - phase 4/outputs/phase4_capacity_load_by_workstation.csv

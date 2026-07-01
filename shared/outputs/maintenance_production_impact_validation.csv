@@ -1,0 +1,65 @@
+check_id,check_name,status,message,affected_rows,advisory_only_flag
+maintenance_impact_input_machines,machines input exists,PASS,machines rows: 7,0,True
+maintenance_impact_input_workstations,workstations input exists,PASS,workstations rows: 7,0,True
+maintenance_impact_input_maintenance_plans,maintenance_plans input exists,PASS,maintenance_plans rows: 17,0,True
+maintenance_impact_input_maintenance_due_status_context,maintenance_due_status_context input exists,PASS,maintenance_due_status_context rows: 17,0,True
+maintenance_impact_input_maintenance_cost_downtime_context,maintenance_cost_downtime_context input exists,PASS,maintenance_cost_downtime_context rows: 17,0,True
+maintenance_impact_input_maintenance_spare_part_requirement_context,maintenance_spare_part_requirement_context input exists,PASS,maintenance_spare_part_requirement_context rows: 15,0,True
+maintenance_impact_input_breakdown_risk_forecast,breakdown_risk_forecast input exists,PASS,breakdown_risk_forecast rows: 7,0,True
+maintenance_impact_input_breakdown_failure_mode_exposure,breakdown_failure_mode_exposure input exists,PASS,breakdown_failure_mode_exposure rows: 14,0,True
+maintenance_impact_input_breakdown_spare_part_exposure,breakdown_spare_part_exposure input exists,PASS,breakdown_spare_part_exposure rows: 14,0,True
+maintenance_impact_input_breakdown_crew_skill_exposure,breakdown_crew_skill_exposure input exists,PASS,breakdown_crew_skill_exposure rows: 14,0,True
+maintenance_impact_input_maintenance_workload_by_skill,maintenance_workload_by_skill input exists,PASS,maintenance_workload_by_skill rows: 13,0,True
+maintenance_impact_input_maintenance_repair_queue_risk,maintenance_repair_queue_risk input exists,PASS,maintenance_repair_queue_risk rows: 14,0,True
+maintenance_impact_input_maintenance_backlog_risk_summary,maintenance_backlog_risk_summary input exists,PASS,maintenance_backlog_risk_summary rows: 1,0,True
+maintenance_impact_input_phase4_maintenance_crew_capacity_context,phase4_maintenance_crew_capacity_context input exists,PASS,phase4_maintenance_crew_capacity_context rows: 12,0,True
+maintenance_impact_input_phase4_capacity_load_by_machine_type,phase4_capacity_load_by_machine_type input exists,PASS,phase4_capacity_load_by_machine_type rows: 98,0,True
+maintenance_impact_input_phase4_capacity_load_by_workstation,phase4_capacity_load_by_workstation input exists,PASS,phase4_capacity_load_by_workstation rows: 98,0,True
+maintenance_impact_input_phase4_quality_adjusted_capacity_by_workstation,phase4_quality_adjusted_capacity_by_workstation input exists,PASS,phase4_quality_adjusted_capacity_by_workstation rows: 98,0,True
+maintenance_impact_input_phase4_bottleneck_visibility_summary,phase4_bottleneck_visibility_summary input exists,PASS,phase4_bottleneck_visibility_summary rows: 7,0,True
+maintenance_impact_input_phase4_production_flow_view,phase4_production_flow_view input exists,PASS,phase4_production_flow_view rows: 13,0,True
+maintenance_impact_availability_not_empty,availability not empty,PASS,availability rows: 7,0,True
+maintenance_impact_availability_required_columns,availability required columns,PASS,availability has required columns.,0,True
+maintenance_impact_availability_advisory,availability advisory,PASS,Non-advisory rows: 0,0,True
+maintenance_impact_capacity_not_empty,capacity not empty,PASS,capacity rows: 7,0,True
+maintenance_impact_capacity_required_columns,capacity required columns,PASS,capacity has required columns.,0,True
+maintenance_impact_capacity_advisory,capacity advisory,PASS,Non-advisory rows: 0,0,True
+maintenance_impact_cost_not_empty,cost not empty,PASS,cost rows: 7,0,True
+maintenance_impact_cost_required_columns,cost required columns,PASS,cost has required columns.,0,True
+maintenance_impact_cost_advisory,cost advisory,PASS,Non-advisory rows: 0,0,True
+maintenance_impact_bottleneck_not_empty,bottleneck not empty,PASS,bottleneck rows: 7,0,True
+maintenance_impact_bottleneck_required_columns,bottleneck required columns,PASS,bottleneck has required columns.,0,True
+maintenance_impact_bottleneck_advisory,bottleneck advisory,PASS,Non-advisory rows: 0,0,True
+maintenance_impact_candidates_not_empty,candidates not empty,PASS,candidates rows: 26,0,True
+maintenance_impact_candidates_required_columns,candidates required columns,PASS,candidates has required columns.,0,True
+maintenance_impact_candidates_advisory,candidates advisory,PASS,Non-advisory rows: 0,0,True
+maintenance_impact_windows_not_empty,windows not empty,PASS,windows rows: 26,0,True
+maintenance_impact_windows_required_columns,windows required columns,PASS,windows has required columns.,0,True
+maintenance_impact_windows_advisory,windows advisory,PASS,Non-advisory rows: 0,0,True
+maintenance_impact_review_not_empty,review not empty,PASS,review rows: 64,0,True
+maintenance_impact_review_required_columns,review required columns,PASS,review has required columns.,0,True
+maintenance_impact_review_advisory,review advisory,PASS,Non-advisory rows: 0,0,True
+maintenance_impact_phase4_not_empty,phase4 not empty,PASS,phase4 rows: 7,0,True
+maintenance_impact_phase4_required_columns,phase4 required columns,PASS,phase4 has required columns.,0,True
+maintenance_impact_phase4_advisory,phase4 advisory,PASS,Non-advisory rows: 0,0,True
+maintenance_impact_availability_numeric,availability numeric non-negative,PASS,Invalid numeric cells: 0,0,True
+maintenance_impact_capacity_numeric,capacity numeric non-negative,PASS,Invalid numeric cells: 0,0,True
+maintenance_impact_cost_numeric,cost numeric non-negative,PASS,Invalid numeric cells: 0,0,True
+maintenance_impact_bottleneck_numeric,bottleneck numeric non-negative,PASS,Invalid numeric cells: 0,0,True
+maintenance_impact_candidates_numeric,candidates numeric non-negative,PASS,Invalid numeric cells: 0,0,True
+maintenance_impact_windows_numeric,windows numeric non-negative,PASS,Invalid numeric cells: 0,0,True
+maintenance_impact_no_capacity_reduction,no capacity reduction applied,PASS,Capacity impact is advisory-only.,0,True
+maintenance_impact_no_financial_posting,no financial posting,PASS,Cost exposure is advisory-only.,0,True
+maintenance_impact_no_schedule_created,no schedule created,PASS,Scheduling candidates are not scheduled.,0,True
+maintenance_impact_no_calendar_assignment,no calendar assignment,PASS,Window requirements do not assign calendar slots.,0,True
+maintenance_impact_confirmation_status,confirmation status,PASS,Invalid confirmation rows: 0,0,True
+maintenance_impact_review_queue_safe,review queue safe,PASS,Review queue does not allow automatic action.,0,True
+maintenance_impact_plan_candidate_requirements_complete,maintenance-plan candidate requirements complete,PASS,Missing required candidate fields: 0,0,True
+maintenance_impact_ready_candidates_complete,Step 7G-ready candidates complete,PASS,Step 7G-ready candidates have complete requirements.,0,True
+maintenance_impact_candidate_completeness_values,candidate completeness values valid,PASS,Candidate completeness values are valid.,0,True
+maintenance_impact_existing_workforce_validation,existing workforce validation,PASS,workforce validation FAIL rows: 0,0,True
+maintenance_impact_existing_spare-part_validation,existing spare-part validation,PASS,spare-part validation FAIL rows: 0,0,True
+maintenance_impact_existing_maintenance_validation,existing maintenance validation,PASS,maintenance validation FAIL rows: 0,0,True
+maintenance_impact_existing_breakdown_validation,existing breakdown validation,PASS,breakdown validation FAIL rows: 0,0,True
+maintenance_impact_existing_maintenance crew capacity_validation,existing maintenance crew capacity validation,PASS,maintenance crew capacity validation FAIL rows: 0,0,True
+maintenance_impact_no_blocked_outputs,no blocked execution outputs,PASS,"No scheduling, work-order, dispatch, reservation, consumption, reduction, or simulation outputs found.",0,True
