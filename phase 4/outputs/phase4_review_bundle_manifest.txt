@@ -1,10 +1,10 @@
-Phase 4 Step 7D Breakdown Risk Review Bundle Manifest
-Generated zip path: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase4_step7d_breakdown_risk_review_bundle.zip
-Generated timestamp UTC: 2026-06-30T13:55:19+00:00
-Included file count: 141
+Phase 4 Step 7E Maintenance Crew Capacity Review Bundle Manifest
+Generated zip path: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase4_step7e_maintenance_crew_capacity_review_bundle.zip
+Generated timestamp UTC: 2026-07-01T12:27:55+00:00
+Included file count: 149
 Missing file count: 0
 Excluded file count: 0
-Final zip size MB: 0.347
+Final zip size MB: 0.363
 Verification status: PASS
 
 Verification messages:
@@ -38,6 +38,14 @@ Verification messages:
 - PASS: Shared breakdown manager review queue exists inside the zip
 - PASS: Shared breakdown validation output exists inside the zip
 - PASS: Phase 4 breakdown risk context exists inside the zip
+- PASS: Shared maintenance crew capacity module exists inside the zip
+- PASS: Shared maintenance workload by skill exists inside the zip
+- PASS: Shared maintenance crew capacity summary exists inside the zip
+- PASS: Shared maintenance repair queue risk exists inside the zip
+- PASS: Shared maintenance backlog risk summary exists inside the zip
+- PASS: Shared maintenance crew capacity manager review queue exists inside the zip
+- PASS: Shared maintenance crew capacity validation exists inside the zip
+- PASS: Phase 4 maintenance crew capacity context exists inside the zip
 - PASS: Phase 1 spare-part demand context exists inside the zip
 - PASS: Phase 2 spare-part supplier check exists inside the zip
 - PASS: Phase 3 spare-part inventory check exists inside the zip
@@ -155,6 +163,7 @@ Included files:
 - shared/core/spare_parts_master_data.py
 - shared/core/maintenance_master_data.py
 - shared/core/breakdown_risk_forecast.py
+- shared/core/maintenance_crew_capacity.py
 - shared/outputs/workforce_crew_validation.csv
 - shared/outputs/workforce_crew_capacity_context.csv
 - shared/outputs/workforce_machine_authorization_context.csv
@@ -177,6 +186,12 @@ Included files:
 - shared/outputs/breakdown_crew_skill_exposure.csv
 - shared/outputs/breakdown_manager_review_queue.csv
 - shared/outputs/breakdown_validation.csv
+- shared/outputs/maintenance_workload_by_skill.csv
+- shared/outputs/maintenance_crew_capacity_summary.csv
+- shared/outputs/maintenance_repair_queue_risk.csv
+- shared/outputs/maintenance_backlog_risk_summary.csv
+- shared/outputs/maintenance_crew_capacity_manager_review_queue.csv
+- shared/outputs/maintenance_crew_capacity_validation.csv
 - phase 4/README.md
 - phase 4/main.py
 - phase 4/validate_phase4_initialization.py
@@ -215,6 +230,7 @@ Included files:
 - phase 4/outputs/phase4_spare_part_requirement_context.csv
 - phase 4/outputs/phase4_maintenance_readiness_context.csv
 - phase 4/outputs/phase4_breakdown_risk_context.csv
+- phase 4/outputs/phase4_maintenance_crew_capacity_context.csv
 - phase 4/outputs/phase4_routing_validation.csv
 - phase 4/outputs/phase4_routing_flow_summary.csv
 - phase 4/outputs/phase4_capacity_load_by_workstation.csv

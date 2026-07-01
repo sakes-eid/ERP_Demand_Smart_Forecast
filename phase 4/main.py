@@ -90,6 +90,14 @@ from shared.core.breakdown_risk_forecast import PHASE4_BREAKDOWN_CONTEXT_FILE
 from shared.core.breakdown_risk_forecast import SPARE_PART_EXPOSURE_FILE as BREAKDOWN_SPARE_PART_EXPOSURE_FILE
 from shared.core.breakdown_risk_forecast import VALIDATION_OUTPUT_FILE as BREAKDOWN_VALIDATION_OUTPUT_FILE
 from shared.core.breakdown_risk_forecast import build_breakdown_risk_outputs
+from shared.core.maintenance_crew_capacity import BACKLOG_RISK_SUMMARY_FILE as MAINTENANCE_BACKLOG_RISK_SUMMARY_FILE
+from shared.core.maintenance_crew_capacity import CREW_CAPACITY_SUMMARY_FILE as MAINTENANCE_CREW_CAPACITY_SUMMARY_FILE
+from shared.core.maintenance_crew_capacity import MANAGER_REVIEW_QUEUE_FILE as MAINTENANCE_CREW_MANAGER_REVIEW_QUEUE_FILE
+from shared.core.maintenance_crew_capacity import PHASE4_CREW_CAPACITY_CONTEXT_FILE
+from shared.core.maintenance_crew_capacity import REPAIR_QUEUE_RISK_FILE as MAINTENANCE_REPAIR_QUEUE_RISK_FILE
+from shared.core.maintenance_crew_capacity import VALIDATION_OUTPUT_FILE as MAINTENANCE_CREW_CAPACITY_VALIDATION_OUTPUT_FILE
+from shared.core.maintenance_crew_capacity import WORKLOAD_BY_SKILL_FILE as MAINTENANCE_WORKLOAD_BY_SKILL_FILE
+from shared.core.maintenance_crew_capacity import build_maintenance_crew_capacity_outputs
 
 
 def run_initialization() -> None:
@@ -107,6 +115,7 @@ def run_initialization() -> None:
     spare_validation, spare_machine_context, spare_phase_context, spare_review, phase4_spare_context = build_spare_part_master_data_outputs()
     maintenance_validation, maintenance_due, maintenance_spare, maintenance_cost, maintenance_review, phase4_maintenance_context = build_maintenance_master_data_outputs()
     breakdown_validation, breakdown_clean, breakdown_trend, breakdown_risk, breakdown_failure, breakdown_spare, breakdown_crew, breakdown_review, phase4_breakdown_context = build_breakdown_risk_outputs()
+    maintenance_crew_validation, maintenance_workload, maintenance_crew_summary, maintenance_repair_queue, maintenance_backlog, maintenance_crew_review, phase4_maintenance_crew_context = build_maintenance_crew_capacity_outputs()
     routing_validation = validate_routing_master_data()
     capacity_load, capacity_detail, capacity_validation = build_workstation_capacity_load()
     queue_pressure, queue_summary, queue_review, queue_validation = build_queue_pressure_outputs()
@@ -177,6 +186,20 @@ def run_initialization() -> None:
     print(f"Breakdown manager review output written to: {BREAKDOWN_MANAGER_REVIEW_QUEUE_FILE}")
     print(f"Phase 4 breakdown risk context rows: {len(phase4_breakdown_context)}")
     print(f"Phase 4 breakdown risk context output written to: {PHASE4_BREAKDOWN_CONTEXT_FILE}")
+    print(f"Maintenance crew capacity validation rows: {len(maintenance_crew_validation)}")
+    print(f"Maintenance crew capacity validation output written to: {MAINTENANCE_CREW_CAPACITY_VALIDATION_OUTPUT_FILE}")
+    print(f"Maintenance workload by skill rows: {len(maintenance_workload)}")
+    print(f"Maintenance workload by skill output written to: {MAINTENANCE_WORKLOAD_BY_SKILL_FILE}")
+    print(f"Maintenance crew capacity summary rows: {len(maintenance_crew_summary)}")
+    print(f"Maintenance crew capacity summary output written to: {MAINTENANCE_CREW_CAPACITY_SUMMARY_FILE}")
+    print(f"Maintenance repair queue risk rows: {len(maintenance_repair_queue)}")
+    print(f"Maintenance repair queue risk output written to: {MAINTENANCE_REPAIR_QUEUE_RISK_FILE}")
+    print(f"Maintenance backlog risk summary rows: {len(maintenance_backlog)}")
+    print(f"Maintenance backlog risk summary output written to: {MAINTENANCE_BACKLOG_RISK_SUMMARY_FILE}")
+    print(f"Maintenance crew capacity manager review rows: {len(maintenance_crew_review)}")
+    print(f"Maintenance crew capacity manager review output written to: {MAINTENANCE_CREW_MANAGER_REVIEW_QUEUE_FILE}")
+    print(f"Phase 4 maintenance crew capacity context rows: {len(phase4_maintenance_crew_context)}")
+    print(f"Phase 4 maintenance crew capacity context output written to: {PHASE4_CREW_CAPACITY_CONTEXT_FILE}")
     print(f"Routing validation rows: {len(routing_validation)}")
     print(f"Routing validation output written to: {ROUTING_VALIDATION_OUTPUT_FILE}")
     print(f"Routing flow summary written to: {FLOW_SUMMARY_OUTPUT_FILE}")

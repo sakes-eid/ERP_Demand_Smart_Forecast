@@ -353,10 +353,11 @@ def _build_spare_part_exposure(failure_exposure: pd.DataFrame, risk: pd.DataFram
     frame = frame.merge(status, left_on="likely_spare_part_sku", right_on="spare_part_sku", how="left", suffixes=("", "_ctx"))
     frame["expected_spare_part_exposure_qty"] = pd.to_numeric(frame["expected_breakdown_count_next_period"], errors="coerce").fillna(0).clip(lower=0).round(4)
     frame["breakdown_spare_part_review_required_flag"] = ~frame["spare_part_readiness_status_ctx"].fillna("REVIEW_REQUIRED").eq("READY")
+    frame["spare_part_readiness_status"] = frame["spare_part_readiness_status_ctx"].fillna("REVIEW_REQUIRED")
     frame["note_no_consumption_flag"] = True
     frame["source_phase"] = SOURCE_PHASE
     frame["advisory_only_flag"] = True
-    return frame.rename(columns={"spare_part_readiness_status_ctx": "spare_part_readiness_status"})[["planning_run_id", "machine_id", "machine_name", "failure_mode_id", "likely_spare_part_sku", "spare_part_name", "criticality", "expected_breakdown_count_next_period", "expected_spare_part_exposure_qty", "inventory_status", "supplier_coverage_status", "spare_part_readiness_status", "breakdown_spare_part_review_required_flag", "note_no_consumption_flag", "source_phase", "advisory_only_flag"]].copy()
+    return frame[["planning_run_id", "machine_id", "machine_name", "failure_mode_id", "likely_spare_part_sku", "spare_part_name", "criticality", "expected_breakdown_count_next_period", "expected_spare_part_exposure_qty", "inventory_status", "supplier_coverage_status", "spare_part_readiness_status", "breakdown_spare_part_review_required_flag", "note_no_consumption_flag", "source_phase", "advisory_only_flag"]].copy()
 
 
 def _build_crew_skill_exposure(failure_exposure: pd.DataFrame, skills: pd.DataFrame, crews: pd.DataFrame, crew_skills: pd.DataFrame, auth: pd.DataFrame) -> pd.DataFrame:

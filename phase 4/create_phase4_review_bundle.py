@@ -1,4 +1,4 @@
-"""Create a clean Phase 4 Step 7D breakdown risk review bundle."""
+"""Create a clean Phase 4 Step 7E maintenance crew capacity review bundle."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 PHASE4_OUTPUTS = PROJECT_ROOT / "phase 4" / "outputs"
-ZIP_PATH = PROJECT_ROOT / "phase4_step7d_breakdown_risk_review_bundle.zip"
+ZIP_PATH = PROJECT_ROOT / "phase4_step7e_maintenance_crew_capacity_review_bundle.zip"
 MANIFEST_PATH = PHASE4_OUTPUTS / "phase4_review_bundle_manifest.txt"
 
 REQUIRED_RELATIVE_FILES = [
@@ -34,6 +34,7 @@ REQUIRED_RELATIVE_FILES = [
     "shared/core/spare_parts_master_data.py",
     "shared/core/maintenance_master_data.py",
     "shared/core/breakdown_risk_forecast.py",
+    "shared/core/maintenance_crew_capacity.py",
     "shared/outputs/workforce_crew_validation.csv",
     "shared/outputs/workforce_crew_capacity_context.csv",
     "shared/outputs/workforce_machine_authorization_context.csv",
@@ -56,6 +57,12 @@ REQUIRED_RELATIVE_FILES = [
     "shared/outputs/breakdown_crew_skill_exposure.csv",
     "shared/outputs/breakdown_manager_review_queue.csv",
     "shared/outputs/breakdown_validation.csv",
+    "shared/outputs/maintenance_workload_by_skill.csv",
+    "shared/outputs/maintenance_crew_capacity_summary.csv",
+    "shared/outputs/maintenance_repair_queue_risk.csv",
+    "shared/outputs/maintenance_backlog_risk_summary.csv",
+    "shared/outputs/maintenance_crew_capacity_manager_review_queue.csv",
+    "shared/outputs/maintenance_crew_capacity_validation.csv",
     "phase 4/README.md",
     "phase 4/main.py",
     "phase 4/validate_phase4_initialization.py",
@@ -94,6 +101,7 @@ REQUIRED_RELATIVE_FILES = [
     "phase 4/outputs/phase4_spare_part_requirement_context.csv",
     "phase 4/outputs/phase4_maintenance_readiness_context.csv",
     "phase 4/outputs/phase4_breakdown_risk_context.csv",
+    "phase 4/outputs/phase4_maintenance_crew_capacity_context.csv",
     "phase 4/outputs/phase4_routing_validation.csv",
     "phase 4/outputs/phase4_routing_flow_summary.csv",
     "phase 4/outputs/phase4_capacity_load_by_workstation.csv",
@@ -285,6 +293,14 @@ def _verify_zip() -> tuple[str, list[str]]:
         "shared/outputs/breakdown_manager_review_queue.csv": "Shared breakdown manager review queue exists inside the zip",
         "shared/outputs/breakdown_validation.csv": "Shared breakdown validation output exists inside the zip",
         "phase 4/outputs/phase4_breakdown_risk_context.csv": "Phase 4 breakdown risk context exists inside the zip",
+        "shared/core/maintenance_crew_capacity.py": "Shared maintenance crew capacity module exists inside the zip",
+        "shared/outputs/maintenance_workload_by_skill.csv": "Shared maintenance workload by skill exists inside the zip",
+        "shared/outputs/maintenance_crew_capacity_summary.csv": "Shared maintenance crew capacity summary exists inside the zip",
+        "shared/outputs/maintenance_repair_queue_risk.csv": "Shared maintenance repair queue risk exists inside the zip",
+        "shared/outputs/maintenance_backlog_risk_summary.csv": "Shared maintenance backlog risk summary exists inside the zip",
+        "shared/outputs/maintenance_crew_capacity_manager_review_queue.csv": "Shared maintenance crew capacity manager review queue exists inside the zip",
+        "shared/outputs/maintenance_crew_capacity_validation.csv": "Shared maintenance crew capacity validation exists inside the zip",
+        "phase 4/outputs/phase4_maintenance_crew_capacity_context.csv": "Phase 4 maintenance crew capacity context exists inside the zip",
         "phase 1/outputs/phase1_spare_part_demand_context.csv": "Phase 1 spare-part demand context exists inside the zip",
         "phase 2/outputs/phase4_spare_part_supplier_check.csv": "Phase 2 spare-part supplier check exists inside the zip",
         "phase 3/outputs/phase4_spare_part_inventory_check.csv": "Phase 3 spare-part inventory check exists inside the zip",
@@ -422,7 +438,7 @@ def _build_manifest(
 ) -> str:
     zip_size_mb = ZIP_PATH.stat().st_size / (1024 * 1024) if ZIP_PATH.exists() else 0.0
     lines = [
-        "Phase 4 Step 7D Breakdown Risk Review Bundle Manifest",
+        "Phase 4 Step 7E Maintenance Crew Capacity Review Bundle Manifest",
         f"Generated zip path: {ZIP_PATH}",
         f"Generated timestamp UTC: {generated_at}",
         f"Included file count: {len(included)}",

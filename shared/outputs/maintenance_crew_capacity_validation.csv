@@ -1,0 +1,41 @@
+check_id,check_name,status,message,affected_rows,advisory_only_flag
+maintenance_crew_maintenance_plans_exists,maintenance_plans exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\shared\data\maintenance_plans.csv,0,True
+maintenance_crew_workforce_skills_exists,workforce_skills exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\shared\data\workforce_skills.csv,0,True
+maintenance_crew_crew_skill_matrix_exists,crew_skill_matrix exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\shared\data\crew_skill_matrix.csv,0,True
+maintenance_crew_workforce_crew_capacity_context_exists,workforce_crew_capacity_context exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\shared\outputs\workforce_crew_capacity_context.csv,0,True
+maintenance_crew_workforce_machine_authorization_context_exists,workforce_machine_authorization_context exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\shared\outputs\workforce_machine_authorization_context.csv,0,True
+maintenance_crew_maintenance_due_status_context_exists,maintenance_due_status_context exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\shared\outputs\maintenance_due_status_context.csv,0,True
+maintenance_crew_breakdown_risk_forecast_exists,breakdown_risk_forecast exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\shared\outputs\breakdown_risk_forecast.csv,0,True
+maintenance_crew_breakdown_crew_skill_exposure_exists,breakdown_crew_skill_exposure exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\shared\outputs\breakdown_crew_skill_exposure.csv,0,True
+maintenance_crew_breakdown_spare_part_exposure_exists,breakdown_spare_part_exposure exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\shared\outputs\breakdown_spare_part_exposure.csv,0,True
+maintenance_crew_phase4_machines_exists,phase4_machines exists,PASS,Loaded C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase 4\data\machines.csv,0,True
+maintenance_crew_workload_not_empty,workload output not empty,PASS,workload rows: 13,0,True
+maintenance_crew_workload_advisory,workload advisory,PASS,workload advisory-only flags are true.,0,True
+maintenance_crew_crew_summary_not_empty,crew summary output not empty,PASS,crew summary rows: 9,0,True
+maintenance_crew_crew_summary_advisory,crew summary advisory,PASS,crew summary advisory-only flags are true.,0,True
+maintenance_crew_repair_queue_risk_not_empty,repair queue risk output not empty,PASS,repair queue risk rows: 14,0,True
+maintenance_crew_repair_queue_risk_advisory,repair queue risk advisory,PASS,repair queue risk advisory-only flags are true.,0,True
+maintenance_crew_backlog_summary_not_empty,backlog summary output not empty,PASS,backlog summary rows: 1,0,True
+maintenance_crew_backlog_summary_advisory,backlog summary advisory,PASS,backlog summary advisory-only flags are true.,0,True
+maintenance_crew_Phase_4_context_not_empty,Phase 4 context output not empty,PASS,Phase 4 context rows: 12,0,True
+maintenance_crew_Phase_4_context_advisory,Phase 4 context advisory,PASS,Phase 4 context advisory-only flags are true.,0,True
+maintenance_crew_workload_required_columns,workload required columns,PASS,workload has required columns.,0,True
+maintenance_crew_queue_required_columns,queue required columns,PASS,queue has required columns.,0,True
+maintenance_crew_phase4_required_columns,phase4 required columns,PASS,phase4 has required columns.,0,True
+maintenance_crew_workload_numeric,workload numeric non-negative,PASS,Numeric fields are non-negative.,0,True
+maintenance_crew_crew_summary_numeric,crew summary numeric non-negative,PASS,Numeric fields are non-negative.,0,True
+maintenance_crew_repair_queue_numeric,repair queue numeric non-negative,PASS,Numeric fields are non-negative.,0,True
+maintenance_crew_backlog_numeric,backlog numeric non-negative,PASS,Numeric fields are non-negative.,0,True
+maintenance_crew_production_light_only,production crews used only for light maintenance,PASS,Production crews are only included for LIGHT maintenance capacity.,0,True
+maintenance_crew_no_production_repair_capacity,production crews not counted for repair,PASS,Expected breakdown repair uses maintenance crews only.,0,True
+maintenance_crew_repair_feasible_requires_maintenance,repair feasible requires maintenance crew,PASS,Repair workload is not made feasible by production light-maintenance capacity.,0,True
+maintenance_crew_queue_no_coverage_rollup,queue no coverage rolls into backlog,PASS,Repair queue no-coverage rows are reflected in backlog no-coverage count.,4,True
+maintenance_crew_no_coverage_review_rows,no coverage review rows exist,PASS,Every no-coverage repair exposure has a manager review row.,0,True
+maintenance_crew_queue_measurement_type,queue measurement type,PASS,Repair queue measurement is estimated from planning data.,0,True
+maintenance_crew_queue_no_actuals,queue actual flags disabled,PASS,No actual repair queue/wait time or scheduling flags are enabled.,0,True
+maintenance_crew_review_queue_safe,review queue safe,PASS,Review queue has no automatic action.,0,True
+maintenance_crew_existing_workforce_validation,existing workforce validation,PASS,workforce validation FAIL rows: 0,0,True
+maintenance_crew_existing_spare-part_validation,existing spare-part validation,PASS,spare-part validation FAIL rows: 0,0,True
+maintenance_crew_existing_maintenance_validation,existing maintenance validation,PASS,maintenance validation FAIL rows: 0,0,True
+maintenance_crew_existing_breakdown_validation,existing breakdown validation,PASS,breakdown validation FAIL rows: 0,0,True
+maintenance_crew_no_blocked_outputs,no blocked execution outputs,PASS,"No work-order, scheduling, reservation, capacity reduction, or simulation outputs found.",0,True

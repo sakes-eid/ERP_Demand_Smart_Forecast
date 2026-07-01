@@ -22,6 +22,7 @@ PHASE4_OUTPUTS = {
     "phase4_workforce_resource_context": PHASE4_DIR / "outputs" / "phase4_workforce_resource_context.csv",
     "phase4_maintenance_readiness_context": PHASE4_DIR / "outputs" / "phase4_maintenance_readiness_context.csv",
     "phase4_breakdown_risk_context": PHASE4_DIR / "outputs" / "phase4_breakdown_risk_context.csv",
+    "phase4_maintenance_crew_capacity_context": PHASE4_DIR / "outputs" / "phase4_maintenance_crew_capacity_context.csv",
     "capacity_load_by_workstation": PHASE4_DIR / "outputs" / "phase4_capacity_load_by_workstation.csv",
     "capacity_operation_load_detail": PHASE4_DIR / "outputs" / "phase4_capacity_operation_load_detail.csv",
     "capacity_load_by_machine_type": PHASE4_DIR / "outputs" / "phase4_capacity_load_by_machine_type.csv",
@@ -118,6 +119,13 @@ BREAKDOWN_CREW_SKILL_EXPOSURE_FILE = PROJECT_ROOT / "shared" / "outputs" / "brea
 BREAKDOWN_MANAGER_REVIEW_FILE = PROJECT_ROOT / "shared" / "outputs" / "breakdown_manager_review_queue.csv"
 PHASE4_BREAKDOWN_CONTEXT_FILE = PHASE4_DIR / "outputs" / "phase4_breakdown_risk_context.csv"
 BREAKDOWN_NEW_MACHINE_ID = "M-FORK-BENCH-001"
+MAINTENANCE_WORKLOAD_BY_SKILL_FILE = PROJECT_ROOT / "shared" / "outputs" / "maintenance_workload_by_skill.csv"
+MAINTENANCE_CREW_CAPACITY_SUMMARY_FILE = PROJECT_ROOT / "shared" / "outputs" / "maintenance_crew_capacity_summary.csv"
+MAINTENANCE_REPAIR_QUEUE_RISK_FILE = PROJECT_ROOT / "shared" / "outputs" / "maintenance_repair_queue_risk.csv"
+MAINTENANCE_BACKLOG_RISK_SUMMARY_FILE = PROJECT_ROOT / "shared" / "outputs" / "maintenance_backlog_risk_summary.csv"
+MAINTENANCE_CREW_CAPACITY_MANAGER_REVIEW_FILE = PROJECT_ROOT / "shared" / "outputs" / "maintenance_crew_capacity_manager_review_queue.csv"
+MAINTENANCE_CREW_CAPACITY_VALIDATION_FILE = PROJECT_ROOT / "shared" / "outputs" / "maintenance_crew_capacity_validation.csv"
+PHASE4_MAINTENANCE_CREW_CAPACITY_CONTEXT_FILE = PHASE4_DIR / "outputs" / "phase4_maintenance_crew_capacity_context.csv"
 RESOURCE_DATA_FILES = {
     "workstations": PHASE4_DIR / "data" / "workstations.csv",
     "machines": PHASE4_DIR / "data" / "machines.csv",
@@ -206,6 +214,7 @@ def main() -> None:
     checks.append(_check_spare_part_integration())
     checks.append(_check_maintenance_master_data())
     checks.append(_check_breakdown_risk_forecast())
+    checks.append(_check_maintenance_crew_capacity())
     checks.append(_check_routing_master_data())
     checks.append(_check_capacity_load())
     checks.append(_check_queue_pressure())
@@ -1058,6 +1067,159 @@ def _check_breakdown_risk_forecast() -> dict:
         "breakdown_risk_forecast",
         "PASS",
         f"Step 7D breakdown risk forecast valid; history_rows={len(history)}, failure_modes={len(failure_modes)}, risk_rows={len(risk)}, phase4_context_rows={len(phase4_context)}.",
+    )
+
+
+def _check_maintenance_crew_capacity() -> dict:
+    required_outputs = [
+        (MAINTENANCE_WORKLOAD_BY_SKILL_FILE, "maintenance workload by skill"),
+        (MAINTENANCE_CREW_CAPACITY_SUMMARY_FILE, "maintenance crew capacity summary"),
+        (MAINTENANCE_REPAIR_QUEUE_RISK_FILE, "maintenance repair queue risk"),
+        (MAINTENANCE_BACKLOG_RISK_SUMMARY_FILE, "maintenance backlog risk summary"),
+        (MAINTENANCE_CREW_CAPACITY_MANAGER_REVIEW_FILE, "maintenance crew capacity manager review queue"),
+        (MAINTENANCE_CREW_CAPACITY_VALIDATION_FILE, "maintenance crew capacity validation"),
+        (PHASE4_MAINTENANCE_CREW_CAPACITY_CONTEXT_FILE, "Phase 4 maintenance crew capacity context"),
+    ]
+    for path, label in required_outputs:
+        if not path.exists():
+            return _result("maintenance_crew_capacity", "FAIL", f"{label} output is missing: {path}")
+        if label != "maintenance crew capacity manager review queue" and pd.read_csv(path).empty:
+            return _result("maintenance_crew_capacity", "FAIL", f"{label} output has no rows: {path}")
+
+    validation = pd.read_csv(MAINTENANCE_CREW_CAPACITY_VALIDATION_FILE)
+    fail_count = int((validation["status"].astype(str).str.upper() == "FAIL").sum()) if "status" in validation.columns else len(validation)
+    if fail_count:
+        return _result("maintenance_crew_capacity", "FAIL", f"Maintenance crew capacity validation contains FAIL rows: {fail_count}")
+
+    workload = pd.read_csv(MAINTENANCE_WORKLOAD_BY_SKILL_FILE)
+    crew_summary = pd.read_csv(MAINTENANCE_CREW_CAPACITY_SUMMARY_FILE)
+    queue = pd.read_csv(MAINTENANCE_REPAIR_QUEUE_RISK_FILE)
+    backlog = pd.read_csv(MAINTENANCE_BACKLOG_RISK_SUMMARY_FILE)
+    review = pd.read_csv(MAINTENANCE_CREW_CAPACITY_MANAGER_REVIEW_FILE)
+    phase4_context = pd.read_csv(PHASE4_MAINTENANCE_CREW_CAPACITY_CONTEXT_FILE)
+    required_workload = {
+        "planning_run_id",
+        "required_skill_id",
+        "required_skill_name",
+        "maintenance_level",
+        "workload_source",
+        "planned_maintenance_hours",
+        "expected_repair_hours",
+        "total_required_hours",
+        "active_maintenance_crew_count",
+        "light_authorized_production_crew_count",
+        "available_crew_hours",
+        "utilization_pct",
+        "capacity_status",
+        "backlog_hours",
+        "skill_coverage_status",
+        "source_phase",
+        "advisory_only_flag",
+    }
+    required_queue = {
+        "planning_run_id",
+        "machine_id",
+        "machine_name",
+        "required_skill_id",
+        "breakdown_risk_level",
+        "expected_repair_hours_next_period",
+        "spare_part_readiness_status",
+        "crew_skill_coverage_status",
+        "crew_capacity_status",
+        "active_maintenance_crew_count",
+        "estimated_repair_queue_risk_score",
+        "estimated_repair_queue_risk_level",
+        "repair_queue_risk_reason",
+        "queue_measurement_type",
+        "actual_repair_queue_available_flag",
+        "actual_wait_time_available_flag",
+        "note_no_scheduling_flag",
+        "source_phase",
+        "advisory_only_flag",
+    }
+    required_phase4 = {
+        "planning_run_id",
+        "machine_id",
+        "machine_name",
+        "breakdown_risk_level",
+        "maintenance_due_signal",
+        "required_skill_id",
+        "crew_capacity_status",
+        "estimated_repair_queue_risk_level",
+        "backlog_risk_level",
+        "maintenance_crew_planning_ready_flag",
+        "source_phase",
+        "advisory_only_flag",
+    }
+    for frame, required, label in [(workload, required_workload, "workload"), (queue, required_queue, "repair queue"), (phase4_context, required_phase4, "Phase 4 context")]:
+        missing = sorted(required.difference(frame.columns))
+        if missing:
+            return _result("maintenance_crew_capacity", "FAIL", f"{label} missing columns: {missing}")
+    for frame, columns, label in [
+        (workload, ["planned_maintenance_hours", "expected_repair_hours", "total_required_hours", "available_crew_hours", "utilization_pct", "backlog_hours"], "workload"),
+        (crew_summary, ["available_hours", "assigned_planning_workload_hours", "utilization_pct"], "crew summary"),
+        (queue, ["expected_repair_hours_next_period", "estimated_repair_queue_risk_score"], "repair queue"),
+        (backlog, ["total_planned_maintenance_hours", "total_expected_repair_hours", "total_required_maintenance_hours", "total_available_maintenance_hours", "total_backlog_hours"], "backlog"),
+    ]:
+        for column in columns:
+            values = pd.to_numeric(frame[column], errors="coerce")
+            if values.isna().any() or (values < 0).any():
+                return _result("maintenance_crew_capacity", "FAIL", f"{label}.{column} must be numeric and non-negative.")
+    prod_nonlight = workload[(pd.to_numeric(workload["light_authorized_production_crew_count"], errors="coerce").fillna(0) > 0) & (workload["maintenance_level"].astype(str) != "LIGHT")]
+    if not prod_nonlight.empty:
+        return _result("maintenance_crew_capacity", "FAIL", "Production crews can only support LIGHT autonomous maintenance.")
+    repair_prod = workload[
+        (workload["workload_source"].astype(str) == "EXPECTED_BREAKDOWN_REPAIR")
+        & (pd.to_numeric(workload["light_authorized_production_crew_count"], errors="coerce").fillna(0) > 0)
+    ]
+    if not repair_prod.empty:
+        return _result("maintenance_crew_capacity", "FAIL", "Production crews cannot contribute capacity to expected breakdown repair.")
+    repair_bad_feasible = workload[
+        (workload["workload_source"].astype(str) == "EXPECTED_BREAKDOWN_REPAIR")
+        & (workload["capacity_status"].astype(str) == "FEASIBLE")
+        & (pd.to_numeric(workload["active_maintenance_crew_count"], errors="coerce").fillna(0) <= 0)
+        & (pd.to_numeric(workload["expected_repair_hours"], errors="coerce").fillna(0) > 0)
+    ]
+    if not repair_bad_feasible.empty:
+        return _result("maintenance_crew_capacity", "FAIL", "Breakdown repair cannot be marked FEASIBLE without active maintenance crew coverage.")
+    queue_no_coverage = queue[
+        queue["crew_skill_coverage_status"].astype(str).eq("NO_ACTIVE_COVERAGE")
+        | queue["crew_capacity_status"].astype(str).eq("NO_ACTIVE_COVERAGE")
+    ]
+    backlog_no_coverage = int(pd.to_numeric(backlog["no_coverage_skill_count"], errors="coerce").fillna(0).max()) if "no_coverage_skill_count" in backlog.columns else 0
+    if not queue_no_coverage.empty and backlog_no_coverage <= 0:
+        return _result("maintenance_crew_capacity", "FAIL", "Repair queue NO_ACTIVE_COVERAGE must roll up into backlog no_coverage_skill_count.")
+    if not queue_no_coverage.empty:
+        no_coverage_review = review[review["issue_type"].astype(str) == "NO_ACTIVE_CREW_COVERAGE"] if "issue_type" in review.columns else pd.DataFrame()
+        required_pairs = queue_no_coverage[["machine_id", "required_skill_id"]].drop_duplicates()
+        actual_pairs = no_coverage_review[["machine_id", "required_skill_id"]].drop_duplicates() if not no_coverage_review.empty else pd.DataFrame(columns=["machine_id", "required_skill_id"])
+        missing_pairs = required_pairs.merge(actual_pairs, on=["machine_id", "required_skill_id"], how="left", indicator=True)
+        if (missing_pairs["_merge"] == "left_only").any():
+            return _result("maintenance_crew_capacity", "FAIL", "Every no-coverage repair skill must generate a NO_ACTIVE_CREW_COVERAGE review row.")
+    if set(queue["queue_measurement_type"].dropna().astype(str)) != {"ESTIMATED_FROM_MAINTENANCE_PLAN_AND_BREAKDOWN_RISK"}:
+        return _result("maintenance_crew_capacity", "FAIL", "Repair queue risk must be estimated from maintenance/breakdown planning data.")
+    if _to_bool(queue["actual_repair_queue_available_flag"]).any() or _to_bool(queue["actual_wait_time_available_flag"]).any():
+        return _result("maintenance_crew_capacity", "FAIL", "Actual repair queue and wait-time flags must be False.")
+    if not _all_true(queue, "note_no_scheduling_flag"):
+        return _result("maintenance_crew_capacity", "FAIL", "Repair queue risk must flag no scheduling.")
+    for frame, label in [(workload, "workload"), (crew_summary, "crew summary"), (queue, "repair queue"), (backlog, "backlog"), (phase4_context, "Phase 4 context")]:
+        if not _all_true(frame, "advisory_only_flag"):
+            return _result("maintenance_crew_capacity", "FAIL", f"{label} must be advisory-only.")
+    if not review.empty:
+        if _to_bool(review["auto_action_allowed"]).any():
+            return _result("maintenance_crew_capacity", "FAIL", "Maintenance crew capacity review queue cannot allow automatic action.")
+        if not _all_true(review, "advisory_only_flag"):
+            return _result("maintenance_crew_capacity", "FAIL", "Maintenance crew capacity review queue must be advisory-only.")
+    allowed_status = {"FEASIBLE", "HIGH_UTILIZATION_WARNING", "OVERLOADED", "NO_ACTIVE_COVERAGE", "REVIEW_REQUIRED"}
+    if set(workload["capacity_status"].dropna().astype(str)) - allowed_status:
+        return _result("maintenance_crew_capacity", "FAIL", "Maintenance workload contains invalid capacity status values.")
+    allowed_queue = {"LOW", "MEDIUM", "HIGH", "CRITICAL", "REVIEW_REQUIRED"}
+    if set(queue["estimated_repair_queue_risk_level"].dropna().astype(str)) - allowed_queue:
+        return _result("maintenance_crew_capacity", "FAIL", "Repair queue risk contains invalid level values.")
+    return _result(
+        "maintenance_crew_capacity",
+        "PASS",
+        f"Step 7E maintenance crew capacity valid; workload_rows={len(workload)}, crew_rows={len(crew_summary)}, queue_rows={len(queue)}, phase4_context_rows={len(phase4_context)}.",
     )
 
 
@@ -2367,7 +2529,7 @@ def _result(name: str, status: str, message: str) -> dict:
 
 def _format_report(evidence: dict) -> str:
     lines = [
-        "Phase 4 Initialization Validation with Step 7D Breakdown History, OEM Reliability Baseline, Forecast, and Trend Detection",
+        "Phase 4 Initialization Validation with Step 7E Maintenance Crew Capacity and Repair Queue Risk",
         f"Generated at UTC: {evidence['generated_at_utc']}",
         f"Overall status: {evidence['overall_status']}",
         f"Fail count: {evidence['fail_count']}",
