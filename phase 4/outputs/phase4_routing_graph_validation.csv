@@ -1,0 +1,37 @@
+check_id,check_name,status,message,affected_rows,advisory_only_flag
+S8A-001,product_routings_exists,PASS,product_routings rows=13,13,True
+S8A-002,routing_parallel_groups_exists,PASS,routing_parallel_groups rows=2,2,True
+S8A-003,routing_operation_resources_exists,PASS,routing_operation_resources rows=13,13,True
+S8A-004,workstations_exists,PASS,workstations rows=7,7,True
+S8A-005,machines_exists,PASS,machines rows=7,7,True
+S8A-006,phase4_production_flow_view_exists,PASS,phase4_production_flow_view rows=13,13,True
+S8A-007,phase4_capacity_operation_load_detail_exists,PASS,phase4_capacity_operation_load_detail rows=182,182,True
+S8A-008,phase4_quality_impact_by_operation_exists,PASS,phase4_quality_impact_by_operation rows=182,182,True
+S8A-009,phase4_bottleneck_visibility_summary_exists,PASS,phase4_bottleneck_visibility_summary rows=7,7,True
+S8A-010,phase4_queue_risk_summary_exists,PASS,phase4_queue_risk_summary rows=7,7,True
+S8A-011,phase4_maintenance_production_impact_context_exists,PASS,phase4_maintenance_production_impact_context rows=7,7,True
+S8A-012,phase4_maintenance_schedule_feasibility_context_exists,PASS,phase4_maintenance_schedule_feasibility_context rows=7,7,True
+S8A-013,nodes_not_empty,PASS,nodes rows=13,13,True
+S8A-014,edges_not_empty,PASS,edges rows=14,14,True
+S8A-015,critical_not_empty,PASS,critical rows=2,2,True
+S8A-016,slack_not_empty,PASS,slack rows=13,13,True
+S8A-017,nodes_required_columns,PASS,missing=[],0,True
+S8A-018,edges_required_columns,PASS,missing=[],0,True
+S8A-019,critical_required_columns,PASS,missing=[],0,True
+S8A-020,slack_required_columns,PASS,missing=[],0,True
+S8A-021,bike_products_present,PASS,"products=['SKU-BIKE-MT-001', 'SKU-BIKE-ROAD-001']",2,True
+S8A-022,edge_operation_ids_reference_nodes,PASS,invalid=[],0,True
+S8A-023,routing_graph_has_no_cycles,PASS,cycle_product_count=0,0,True
+S8A-024,parallel_operations_represented,PASS,Parallel operations represented.,5,True
+S8A-025,merge_operations_represented,PASS,merge_count=2,2,True
+S8A-026,final_assembly_marked_merge,PASS,Final Assembly merge node check.,2,True
+S8A-027,cycle_times_non_negative,PASS,bad_cycle_rows=0,0,True
+S8A-028,critical_path_exists_for_both_products,PASS,"critical_products=['SKU-BIKE-MT-001', 'SKU-BIKE-ROAD-001']",2,True
+S8A-029,critical_path_duration_positive,PASS,bad_duration_rows=0,0,True
+S8A-030,critical_path_operation_per_product,PASS,missing=[],0,True
+S8A-031,visual_json_valid_data_only,PASS,Routing graph visual JSON is valid data-only structure.,0,True
+S8A-032,nodes_advisory_only,PASS,nodes advisory_only flag.,13,True
+S8A-033,edges_advisory_only,PASS,edges advisory_only flag.,14,True
+S8A-034,critical_advisory_only,PASS,critical advisory_only flag.,2,True
+S8A-035,slack_advisory_only,PASS,slack advisory_only flag.,13,True
+S8A-036,no_forbidden_execution_outputs,PASS,No production schedule/order/dispatch/reservation/consumption/reduction/simulation outputs found.,0,True

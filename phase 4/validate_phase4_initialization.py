@@ -53,6 +53,10 @@ PHASE4_OUTPUTS = {
     "quality_adjusted_bottleneck_impact": PHASE4_DIR / "outputs" / "phase4_quality_adjusted_bottleneck_impact.csv",
     "quality_material_loss_exposure": PHASE4_DIR / "outputs" / "phase4_quality_material_loss_exposure.csv",
     "quality_impact_manager_review_queue": PHASE4_DIR / "outputs" / "phase4_quality_impact_manager_review_queue.csv",
+    "routing_graph_nodes": PHASE4_DIR / "outputs" / "phase4_routing_graph_nodes.csv",
+    "routing_graph_edges": PHASE4_DIR / "outputs" / "phase4_routing_graph_edges.csv",
+    "critical_path_by_product": PHASE4_DIR / "outputs" / "phase4_critical_path_by_product.csv",
+    "operation_slack_analysis": PHASE4_DIR / "outputs" / "phase4_operation_slack_analysis.csv",
     "component_inventory_check": PROJECT_ROOT / "phase 3" / "outputs" / "phase4_component_inventory_check.csv",
     "component_supplier_check": PROJECT_ROOT / "phase 2" / "outputs" / "phase4_component_supplier_check.csv",
 }
@@ -198,6 +202,12 @@ QUALITY_ADJUSTED_BOTTLENECK_FILE = PHASE4_DIR / "outputs" / "phase4_quality_adju
 QUALITY_MATERIAL_LOSS_FILE = PHASE4_DIR / "outputs" / "phase4_quality_material_loss_exposure.csv"
 QUALITY_IMPACT_MANAGER_REVIEW_QUEUE_FILE = PHASE4_DIR / "outputs" / "phase4_quality_impact_manager_review_queue.csv"
 QUALITY_ADJUSTED_CAPACITY_VALIDATION_FILE = PHASE4_DIR / "outputs" / "phase4_quality_adjusted_capacity_validation.csv"
+ROUTING_GRAPH_NODES_FILE = PHASE4_DIR / "outputs" / "phase4_routing_graph_nodes.csv"
+ROUTING_GRAPH_EDGES_FILE = PHASE4_DIR / "outputs" / "phase4_routing_graph_edges.csv"
+ROUTING_GRAPH_CRITICAL_PATH_FILE = PHASE4_DIR / "outputs" / "phase4_critical_path_by_product.csv"
+ROUTING_GRAPH_SLACK_FILE = PHASE4_DIR / "outputs" / "phase4_operation_slack_analysis.csv"
+ROUTING_GRAPH_VISUAL_JSON_FILE = PHASE4_DIR / "outputs" / "phase4_routing_graph_visual_data.json"
+ROUTING_GRAPH_VALIDATION_FILE = PHASE4_DIR / "outputs" / "phase4_routing_graph_validation.csv"
 
 
 def main() -> None:
@@ -245,6 +255,7 @@ def main() -> None:
     checks.append(_check_production_flow_view())
     checks.append(_check_quality_trends())
     checks.append(_check_quality_adjusted_capacity())
+    checks.append(_check_routing_graph_analysis())
     checks.append(_check_phase3_inventory_check())
     checks.append(_check_phase2_supplier_check())
     checks.append(_check_phase4_run_id_consistency())
@@ -1532,6 +1543,132 @@ def _check_maintenance_schedule_feasibility() -> dict:
         "maintenance_schedule_feasibility",
         "PASS",
         f"Step 7G maintenance schedule feasibility valid; candidate_windows={len(windows)}, calendar_rows={len(calendar)}, crew_window_rows={len(crew_load)}, phase4_context_rows={len(phase4_context)}.",
+    )
+
+
+def _check_routing_graph_analysis() -> dict:
+    required_outputs = [
+        (ROUTING_GRAPH_NODES_FILE, "routing graph nodes"),
+        (ROUTING_GRAPH_EDGES_FILE, "routing graph edges"),
+        (ROUTING_GRAPH_CRITICAL_PATH_FILE, "critical path by product"),
+        (ROUTING_GRAPH_SLACK_FILE, "operation slack analysis"),
+        (ROUTING_GRAPH_VISUAL_JSON_FILE, "routing graph visual JSON"),
+        (ROUTING_GRAPH_VALIDATION_FILE, "routing graph validation"),
+    ]
+    for path, label in required_outputs:
+        if not path.exists():
+            return _result("routing_graph_analysis", "FAIL", f"{label} output is missing: {path}")
+        if path.suffix.lower() == ".csv" and pd.read_csv(path).empty:
+            return _result("routing_graph_analysis", "FAIL", f"{label} output has no rows: {path}")
+
+    validation = pd.read_csv(ROUTING_GRAPH_VALIDATION_FILE)
+    fail_count = int((validation["status"].astype(str).str.upper() == "FAIL").sum()) if "status" in validation.columns else len(validation)
+    if fail_count:
+        return _result("routing_graph_analysis", "FAIL", f"Routing graph validation contains FAIL rows: {fail_count}")
+
+    nodes = pd.read_csv(ROUTING_GRAPH_NODES_FILE)
+    edges = pd.read_csv(ROUTING_GRAPH_EDGES_FILE)
+    critical = pd.read_csv(ROUTING_GRAPH_CRITICAL_PATH_FILE)
+    slack = pd.read_csv(ROUTING_GRAPH_SLACK_FILE)
+    try:
+        visual = json.loads(ROUTING_GRAPH_VISUAL_JSON_FILE.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        return _result("routing_graph_analysis", "FAIL", f"Routing graph visual JSON is invalid: {exc}")
+
+    required_columns = {
+        "nodes": {
+            "planning_run_id", "finished_sku", "finished_product_name", "routing_id", "routing_version",
+            "operation_id", "operation_sequence", "operation_name", "operation_type", "workstation_id",
+            "workstation_name", "machine_id", "machine_name", "setup_time_minutes", "run_time_minutes",
+            "base_cycle_time_minutes", "quality_adjusted_cycle_time_minutes", "maintenance_risk_context_level",
+            "queue_risk_level", "bottleneck_visibility_level", "can_run_in_parallel_flag",
+            "join_required_before_next_flag", "graph_node_type", "source_phase", "advisory_only_flag",
+        },
+        "edges": {
+            "planning_run_id", "finished_sku", "from_operation_id", "to_operation_id", "dependency_type",
+            "edge_lag_minutes", "parallel_group_id", "merge_edge_flag", "edge_validation_status",
+            "source_phase", "advisory_only_flag",
+        },
+        "critical": {
+            "planning_run_id", "finished_sku", "finished_product_name", "critical_path_sequence",
+            "critical_path_operation_count", "total_base_cycle_time_minutes",
+            "total_quality_adjusted_cycle_time_minutes", "critical_path_duration_minutes",
+            "critical_path_duration_hours", "critical_path_main_constraint", "critical_path_risk_level",
+            "critical_path_reason", "bottleneck_alignment_status", "source_phase", "advisory_only_flag",
+        },
+        "slack": {
+            "planning_run_id", "finished_sku", "operation_id", "operation_name", "workstation_id",
+            "workstation_name", "earliest_start_offset_minutes", "earliest_finish_offset_minutes",
+            "latest_start_offset_minutes", "latest_finish_offset_minutes", "slack_time_minutes",
+            "slack_status", "critical_path_flag", "low_slack_warning_flag", "bottleneck_visibility_level",
+            "queue_risk_level", "operation_schedule_sensitivity", "source_phase", "advisory_only_flag",
+        },
+    }
+    frames = {"nodes": nodes, "edges": edges, "critical": critical, "slack": slack}
+    for label, columns in required_columns.items():
+        missing = sorted(columns.difference(frames[label].columns))
+        if missing:
+            return _result("routing_graph_analysis", "FAIL", f"{label} missing columns: {missing}")
+
+    products = set(nodes["finished_sku"].dropna().astype(str))
+    if not {"SKU-BIKE-ROAD-001", "SKU-BIKE-MT-001"}.issubset(products):
+        return _result("routing_graph_analysis", "FAIL", "Road Bike and Mountain Bike must both appear in routing graph nodes.")
+    edge_products = set(edges["finished_sku"].dropna().astype(str))
+    if not {"SKU-BIKE-ROAD-001", "SKU-BIKE-MT-001"}.issubset(edge_products):
+        return _result("routing_graph_analysis", "FAIL", "Road Bike and Mountain Bike must both appear in routing graph edges.")
+    valid_nodes = set(nodes["operation_id"].astype(str))
+    invalid_edge_refs = (set(edges["from_operation_id"].astype(str)) | set(edges["to_operation_id"].astype(str))) - valid_nodes
+    if invalid_edge_refs:
+        return _result("routing_graph_analysis", "FAIL", f"Routing graph edges reference missing nodes: {sorted(invalid_edge_refs)}")
+    for _, group in edges.groupby("finished_sku"):
+        operation_ids = sorted(set(group["from_operation_id"].astype(str)) | set(group["to_operation_id"].astype(str)))
+        routing_like = pd.DataFrame({
+            "routing_id": [str(group["finished_sku"].iloc[0])] * len(operation_ids),
+            "operation_id": operation_ids,
+            "successor_operation_ids": [""] * len(operation_ids),
+        })
+        succ_map = group.groupby("from_operation_id")["to_operation_id"].apply(lambda s: ";".join(s.astype(str))).to_dict()
+        routing_like["successor_operation_ids"] = routing_like["operation_id"].map(succ_map).fillna("")
+        if _routing_has_cycle(routing_like):
+            return _result("routing_graph_analysis", "FAIL", "Routing graph contains a cycle.")
+    if not _to_bool(nodes["can_run_in_parallel_flag"]).any():
+        return _result("routing_graph_analysis", "FAIL", "Parallel operations are not represented.")
+    if not (nodes["graph_node_type"].astype(str) == "MERGE_OPERATION").any():
+        return _result("routing_graph_analysis", "FAIL", "Merge operations are not represented.")
+    final_nodes = nodes[nodes["operation_name"].astype(str).str.contains("Final Assembly", case=False, na=False)]
+    if final_nodes.empty or not (final_nodes["graph_node_type"].astype(str) == "MERGE_OPERATION").all():
+        return _result("routing_graph_analysis", "FAIL", "Final Assembly must be marked as a merge node.")
+    for frame, columns, label in [
+        (nodes, ["setup_time_minutes", "run_time_minutes", "base_cycle_time_minutes", "quality_adjusted_cycle_time_minutes"], "nodes"),
+        (critical, ["critical_path_duration_minutes", "critical_path_duration_hours"], "critical"),
+        (slack, ["slack_time_minutes"], "slack"),
+    ]:
+        for column in columns:
+            values = pd.to_numeric(frame[column], errors="coerce")
+            if values.isna().any() or (values < 0).any():
+                return _result("routing_graph_analysis", "FAIL", f"{label}.{column} must be numeric and non-negative.")
+    if (pd.to_numeric(critical["critical_path_duration_minutes"], errors="coerce").fillna(0) <= 0).any():
+        return _result("routing_graph_analysis", "FAIL", "Critical path duration must be positive for each product.")
+    critical_counts = slack.groupby("finished_sku")["critical_path_flag"].apply(lambda s: int(_to_bool(s).sum())).to_dict()
+    if any(count <= 0 for count in critical_counts.values()):
+        return _result("routing_graph_analysis", "FAIL", f"At least one critical path operation required per product: {critical_counts}")
+    if set(nodes["graph_node_type"].dropna().astype(str)) - {"START_OPERATION", "NORMAL_OPERATION", "PARALLEL_BRANCH_OPERATION", "MERGE_OPERATION", "END_OPERATION", "REVIEW_REQUIRED"}:
+        return _result("routing_graph_analysis", "FAIL", "Routing graph nodes contain invalid node types.")
+    if set(edges["dependency_type"].dropna().astype(str)) - {"FINISH_TO_START", "PARALLEL_BRANCH", "MERGE_DEPENDENCY", "REVIEW_REQUIRED"}:
+        return _result("routing_graph_analysis", "FAIL", "Routing graph edges contain invalid dependency types.")
+    if set(slack["slack_status"].dropna().astype(str)) - {"ZERO_SLACK_CRITICAL", "LOW_SLACK_WARNING", "HAS_SLACK", "REVIEW_REQUIRED"}:
+        return _result("routing_graph_analysis", "FAIL", "Slack analysis contains invalid slack status values.")
+    if set(critical["bottleneck_alignment_status"].dropna().astype(str)) - {"ALIGNED_WITH_TOP_BOTTLENECK", "DIFFERENT_FROM_TOP_BOTTLENECK", "PARTIALLY_ALIGNED", "REVIEW_REQUIRED"}:
+        return _result("routing_graph_analysis", "FAIL", "Critical path output contains invalid bottleneck alignment values.")
+    if not bool(visual.get("advisory_only_flag")) or not bool(visual.get("metadata", {}).get("data_only_no_ui_flag")):
+        return _result("routing_graph_analysis", "FAIL", "Routing graph visual JSON must be advisory-only data, not UI.")
+    for label, frame in frames.items():
+        if not _all_true(frame, "advisory_only_flag"):
+            return _result("routing_graph_analysis", "FAIL", f"{label} must be advisory-only.")
+    return _result(
+        "routing_graph_analysis",
+        "PASS",
+        f"Step 8A routing graph valid; node_rows={len(nodes)}, edge_rows={len(edges)}, critical_rows={len(critical)}, slack_rows={len(slack)}.",
     )
 
 

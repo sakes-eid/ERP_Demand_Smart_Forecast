@@ -1,4 +1,4 @@
-"""Create a clean Phase 4 Step 7G maintenance schedule feasibility review bundle."""
+"""Create a clean Phase 4 Step 8A routing graph review bundle."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 PHASE4_OUTPUTS = PROJECT_ROOT / "phase 4" / "outputs"
-ZIP_PATH = PROJECT_ROOT / "phase4_step7g_maintenance_schedule_feasibility_review_bundle.zip"
+ZIP_PATH = PROJECT_ROOT / "phase4_step8a_routing_graph_review_bundle.zip"
 MANIFEST_PATH = PHASE4_OUTPUTS / "phase4_review_bundle_manifest.txt"
 
 REQUIRED_RELATIVE_FILES = [
@@ -101,6 +101,7 @@ REQUIRED_RELATIVE_FILES = [
     "phase 4/core/mrp_net_requirements.py",
     "phase 4/core/resource_master_data.py",
     "phase 4/core/routing_master_data.py",
+    "phase 4/core/routing_graph_analysis.py",
     "phase 4/core/capacity_load.py",
     "phase 4/core/queue_pressure.py",
     "phase 4/core/bottleneck_visibility.py",
@@ -156,6 +157,12 @@ REQUIRED_RELATIVE_FILES = [
     "phase 4/outputs/phase4_quality_material_loss_exposure.csv",
     "phase 4/outputs/phase4_quality_impact_manager_review_queue.csv",
     "phase 4/outputs/phase4_quality_adjusted_capacity_validation.csv",
+    "phase 4/outputs/phase4_routing_graph_nodes.csv",
+    "phase 4/outputs/phase4_routing_graph_edges.csv",
+    "phase 4/outputs/phase4_critical_path_by_product.csv",
+    "phase 4/outputs/phase4_operation_slack_analysis.csv",
+    "phase 4/outputs/phase4_routing_graph_visual_data.json",
+    "phase 4/outputs/phase4_routing_graph_validation.csv",
     "phase 4/outputs/phase4_initialization_validation.json",
     "phase 4/outputs/phase4_initialization_validation_report.txt",
     "phase 4/outputs/phase4_review_bundle_manifest.txt",
@@ -370,6 +377,13 @@ def _verify_zip() -> tuple[str, list[str]]:
         "phase 4/outputs/phase4_quality_material_loss_exposure.csv": "Phase 4 quality material loss exposure output exists inside the zip",
         "phase 4/outputs/phase4_quality_impact_manager_review_queue.csv": "Phase 4 quality impact manager review queue exists inside the zip",
         "phase 4/outputs/phase4_quality_adjusted_capacity_validation.csv": "Phase 4 quality-adjusted capacity validation exists inside the zip",
+        "phase 4/core/routing_graph_analysis.py": "Phase 4 routing graph analysis module exists inside the zip",
+        "phase 4/outputs/phase4_routing_graph_nodes.csv": "Phase 4 routing graph nodes output exists inside the zip",
+        "phase 4/outputs/phase4_routing_graph_edges.csv": "Phase 4 routing graph edges output exists inside the zip",
+        "phase 4/outputs/phase4_critical_path_by_product.csv": "Phase 4 critical path output exists inside the zip",
+        "phase 4/outputs/phase4_operation_slack_analysis.csv": "Phase 4 operation slack analysis output exists inside the zip",
+        "phase 4/outputs/phase4_routing_graph_visual_data.json": "Phase 4 routing graph visual JSON exists inside the zip",
+        "phase 4/outputs/phase4_routing_graph_validation.csv": "Phase 4 routing graph validation exists inside the zip",
         "phase 4/core/production_flow_view.py": "Phase 4 production flow view module exists inside the zip",
         "phase 4/outputs/phase4_production_flow_view.csv": "Phase 4 production flow view exists inside the zip",
         "phase 4/outputs/phase4_flow_step_risk_summary.csv": "Phase 4 flow-step risk summary exists inside the zip",
@@ -474,7 +488,7 @@ def _build_manifest(
 ) -> str:
     zip_size_mb = ZIP_PATH.stat().st_size / (1024 * 1024) if ZIP_PATH.exists() else 0.0
     lines = [
-        "Phase 4 Step 7G Maintenance Schedule Feasibility Review Bundle Manifest",
+        "Phase 4 Step 8A Routing Graph Review Bundle Manifest",
         f"Generated zip path: {ZIP_PATH}",
         f"Generated timestamp UTC: {generated_at}",
         f"Included file count: {len(included)}",

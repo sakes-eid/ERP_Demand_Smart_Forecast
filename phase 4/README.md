@@ -75,6 +75,12 @@ Current initialization scope:
 - Step 7G tracks candidate window load and machine downtime impact without assigning dates, crews, shifts, work orders, or dispatch records.
 - Step 7G outputs remain schedule-candidate-only and use `NOT_SCHEDULED_CANDIDATE_ONLY`.
 - Step 7G does not consume or reserve spare parts, create purchase orders, apply capacity reductions, or run simulation.
+- Step 8A adds a production routing graph and critical path analysis for Road Bike and Mountain Bike.
+- Step 8A builds operation nodes and precedence edges, including parallel branches and merge points.
+- Step 8A calculates operation cycle times, longest dependent operation chains, slack, zero-slack critical operations, and low-slack warnings.
+- Step 8A keeps critical path analysis separate from bottleneck analysis; the critical path is routing-time dependency, while bottlenecks come from capacity, queue, and resource evidence.
+- Step 8A creates data-only graph JSON for future visualization, but no UI or scheduler is built.
+- Step 8A does not create production schedules, production orders, dispatch records, inventory reservations, capacity reductions, or simulation outputs.
 - Routing is the ERP version of the production flowchart.
 - Road Bike and Mountain Bike now have different advisory routings.
 - Parallel subassembly branches are included for both products.
@@ -190,5 +196,5 @@ Next likely Phase 4 feature:
 
 Review bundle:
 
-- `create_phase4_review_bundle.py` generates `phase4_step7g_maintenance_schedule_feasibility_review_bundle.zip` at the project root for external review.
+- `create_phase4_review_bundle.py` generates `phase4_step8a_routing_graph_review_bundle.zip` at the project root for external review.
 - The bundle preserves project-relative folder structure and excludes cache, bytecode, virtual environment, and zip artifacts.

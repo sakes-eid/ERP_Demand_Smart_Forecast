@@ -60,6 +60,13 @@ from core.resource_master_data import validate_resource_master_data
 from core.routing_master_data import FLOW_SUMMARY_OUTPUT_FILE
 from core.routing_master_data import OUTPUT_FILE as ROUTING_VALIDATION_OUTPUT_FILE
 from core.routing_master_data import validate_routing_master_data
+from core.routing_graph_analysis import CRITICAL_PATH_OUTPUT_FILE as ROUTING_GRAPH_CRITICAL_PATH_OUTPUT_FILE
+from core.routing_graph_analysis import EDGES_OUTPUT_FILE as ROUTING_GRAPH_EDGES_OUTPUT_FILE
+from core.routing_graph_analysis import NODES_OUTPUT_FILE as ROUTING_GRAPH_NODES_OUTPUT_FILE
+from core.routing_graph_analysis import SLACK_OUTPUT_FILE as ROUTING_GRAPH_SLACK_OUTPUT_FILE
+from core.routing_graph_analysis import VALIDATION_OUTPUT_FILE as ROUTING_GRAPH_VALIDATION_OUTPUT_FILE
+from core.routing_graph_analysis import VISUAL_JSON_OUTPUT_FILE as ROUTING_GRAPH_VISUAL_JSON_OUTPUT_FILE
+from core.routing_graph_analysis import build_routing_graph_analysis_outputs
 from shared.core.workforce_master_data import CREW_CAPACITY_CONTEXT_FILE
 from shared.core.workforce_master_data import MACHINE_AUTH_CONTEXT_FILE as WORKFORCE_MACHINE_AUTH_CONTEXT_FILE
 from shared.core.workforce_master_data import MANAGER_REVIEW_QUEUE_FILE as WORKFORCE_MANAGER_REVIEW_QUEUE_FILE
@@ -143,6 +150,7 @@ def run_initialization() -> None:
     flow_view, flow_summary, flow_review, flow_validation = build_production_flow_view_outputs()
     quality_history, quality_operation, quality_workstation, processing_trend, performance_summary, quality_review, quality_validation = build_quality_trend_outputs()
     quality_impact, quality_adjusted_capacity, quality_bottleneck_impact, quality_material_loss, quality_impact_review, quality_adjusted_validation = build_quality_adjusted_capacity_outputs()
+    routing_graph_nodes, routing_graph_edges, critical_path, slack_analysis, routing_graph_visual, routing_graph_validation = build_routing_graph_analysis_outputs()
     print("Phase 4 initialization bridge completed.")
     print(f"MPS rows: {len(mps)}")
     print(f"MPS output written to: {MPS_OUTPUT_FILE}")
@@ -317,6 +325,17 @@ def run_initialization() -> None:
     print(f"Quality impact manager review output written to: {QUALITY_IMPACT_MANAGER_REVIEW_OUTPUT_FILE}")
     print(f"Quality-adjusted capacity validation rows: {len(quality_adjusted_validation)}")
     print(f"Quality-adjusted capacity validation output written to: {QUALITY_ADJUSTED_VALIDATION_OUTPUT_FILE}")
+    print(f"Routing graph node rows: {len(routing_graph_nodes)}")
+    print(f"Routing graph nodes output written to: {ROUTING_GRAPH_NODES_OUTPUT_FILE}")
+    print(f"Routing graph edge rows: {len(routing_graph_edges)}")
+    print(f"Routing graph edges output written to: {ROUTING_GRAPH_EDGES_OUTPUT_FILE}")
+    print(f"Critical path rows: {len(critical_path)}")
+    print(f"Critical path output written to: {ROUTING_GRAPH_CRITICAL_PATH_OUTPUT_FILE}")
+    print(f"Operation slack analysis rows: {len(slack_analysis)}")
+    print(f"Operation slack analysis output written to: {ROUTING_GRAPH_SLACK_OUTPUT_FILE}")
+    print(f"Routing graph visual JSON written to: {ROUTING_GRAPH_VISUAL_JSON_OUTPUT_FILE}")
+    print(f"Routing graph validation rows: {len(routing_graph_validation)}")
+    print(f"Routing graph validation output written to: {ROUTING_GRAPH_VALIDATION_OUTPUT_FILE}")
 
 
 if __name__ == "__main__":

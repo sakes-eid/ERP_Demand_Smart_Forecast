@@ -1,10 +1,10 @@
-Phase 4 Step 7G Maintenance Schedule Feasibility Review Bundle Manifest
-Generated zip path: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase4_step7g_maintenance_schedule_feasibility_review_bundle.zip
-Generated timestamp UTC: 2026-07-01T14:01:50+00:00
-Included file count: 167
+Phase 4 Step 8A Routing Graph Review Bundle Manifest
+Generated zip path: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase4_step8a_routing_graph_review_bundle.zip
+Generated timestamp UTC: 2026-07-02T13:55:05+00:00
+Included file count: 174
 Missing file count: 0
 Excluded file count: 0
-Final zip size MB: 0.409
+Final zip size MB: 0.425
 Verification status: PASS
 
 Verification messages:
@@ -97,6 +97,13 @@ Verification messages:
 - PASS: Phase 4 quality material loss exposure output exists inside the zip
 - PASS: Phase 4 quality impact manager review queue exists inside the zip
 - PASS: Phase 4 quality-adjusted capacity validation exists inside the zip
+- PASS: Phase 4 routing graph analysis module exists inside the zip
+- PASS: Phase 4 routing graph nodes output exists inside the zip
+- PASS: Phase 4 routing graph edges output exists inside the zip
+- PASS: Phase 4 critical path output exists inside the zip
+- PASS: Phase 4 operation slack analysis output exists inside the zip
+- PASS: Phase 4 routing graph visual JSON exists inside the zip
+- PASS: Phase 4 routing graph validation exists inside the zip
 - PASS: Phase 4 production flow view module exists inside the zip
 - PASS: Phase 4 production flow view exists inside the zip
 - PASS: Phase 4 flow-step risk summary exists inside the zip
@@ -248,6 +255,7 @@ Included files:
 - phase 4/core/mrp_net_requirements.py
 - phase 4/core/resource_master_data.py
 - phase 4/core/routing_master_data.py
+- phase 4/core/routing_graph_analysis.py
 - phase 4/core/capacity_load.py
 - phase 4/core/queue_pressure.py
 - phase 4/core/bottleneck_visibility.py
@@ -303,6 +311,12 @@ Included files:
 - phase 4/outputs/phase4_quality_material_loss_exposure.csv
 - phase 4/outputs/phase4_quality_impact_manager_review_queue.csv
 - phase 4/outputs/phase4_quality_adjusted_capacity_validation.csv
+- phase 4/outputs/phase4_routing_graph_nodes.csv
+- phase 4/outputs/phase4_routing_graph_edges.csv
+- phase 4/outputs/phase4_critical_path_by_product.csv
+- phase 4/outputs/phase4_operation_slack_analysis.csv
+- phase 4/outputs/phase4_routing_graph_visual_data.json
+- phase 4/outputs/phase4_routing_graph_validation.csv
 - phase 4/outputs/phase4_initialization_validation.json
 - phase 4/outputs/phase4_initialization_validation_report.txt
 - phase 4/outputs/phase4_review_bundle_manifest.txt
