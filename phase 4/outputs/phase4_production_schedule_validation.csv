@@ -1,0 +1,54 @@
+check_id,check_name,status,message,affected_rows,advisory_only_flag
+load_phase4_master_production_schedule,Load Phase4 Master Production Schedule,PASS,phase4_master_production_schedule rows=28,28,True
+load_phase4_mrp_component_period_summary,Load Phase4 Mrp Component Period Summary,PASS,phase4_mrp_component_period_summary rows=140,140,True
+load_phase4_mrp_pegging_detail,Load Phase4 Mrp Pegging Detail,PASS,phase4_mrp_pegging_detail rows=196,196,True
+load_phase4_routing_graph_nodes,Load Phase4 Routing Graph Nodes,PASS,phase4_routing_graph_nodes rows=13,13,True
+load_phase4_routing_graph_edges,Load Phase4 Routing Graph Edges,PASS,phase4_routing_graph_edges rows=14,14,True
+load_phase4_critical_path_by_product,Load Phase4 Critical Path By Product,PASS,phase4_critical_path_by_product rows=2,2,True
+load_phase4_operation_slack_analysis,Load Phase4 Operation Slack Analysis,PASS,phase4_operation_slack_analysis rows=13,13,True
+load_phase4_capacity_load_by_workstation,Load Phase4 Capacity Load By Workstation,PASS,phase4_capacity_load_by_workstation rows=98,98,True
+load_phase4_capacity_load_by_machine_type,Load Phase4 Capacity Load By Machine Type,PASS,phase4_capacity_load_by_machine_type rows=98,98,True
+load_phase4_capacity_load_by_labor_skill,Load Phase4 Capacity Load By Labor Skill,PASS,phase4_capacity_load_by_labor_skill rows=98,98,True
+load_phase4_queue_risk_summary,Load Phase4 Queue Risk Summary,PASS,phase4_queue_risk_summary rows=7,7,True
+load_phase4_bottleneck_visibility_summary,Load Phase4 Bottleneck Visibility Summary,PASS,phase4_bottleneck_visibility_summary rows=7,7,True
+load_phase4_quality_adjusted_capacity_by_workstation,Load Phase4 Quality Adjusted Capacity By Workstation,PASS,phase4_quality_adjusted_capacity_by_workstation rows=98,98,True
+load_phase4_maintenance_schedule_feasibility_context,Load Phase4 Maintenance Schedule Feasibility Context,PASS,phase4_maintenance_schedule_feasibility_context rows=7,7,True
+load_phase4_maintenance_production_impact_context,Load Phase4 Maintenance Production Impact Context,PASS,phase4_maintenance_production_impact_context rows=7,7,True
+load_phase4_component_inventory_check,Load Phase4 Component Inventory Check,PASS,phase4_component_inventory_check rows=10,10,True
+load_phase4_component_supplier_check,Load Phase4 Component Supplier Check,PASS,phase4_component_supplier_check rows=10,10,True
+production_schedule_candidates,Production Schedule Candidates,PASS,production_schedule_candidates row_count=28,28,True
+operation_schedule_candidate_detail,Operation Schedule Candidate Detail,PASS,operation_schedule_candidate_detail row_count=182,182,True
+production_schedule_material_readiness,Production Schedule Material Readiness,PASS,production_schedule_material_readiness row_count=196,196,True
+production_schedule_capacity_check,Production Schedule Capacity Check,PASS,production_schedule_capacity_check row_count=182,182,True
+production_calendar_candidate_view,Production Calendar Candidate View,PASS,production_calendar_candidate_view row_count=182,182,True
+production_schedule_manager_review_queue,Production Schedule Manager Review Queue,PASS,production_schedule_manager_review_queue row_count=164,164,True
+production_schedule_candidates_required_columns,Production Schedule Candidates Required Columns,PASS,missing=[],0,True
+operation_schedule_candidate_detail_required_columns,Operation Schedule Candidate Detail Required Columns,PASS,missing=[],0,True
+production_schedule_material_readiness_required_columns,Production Schedule Material Readiness Required Columns,PASS,missing=[],0,True
+production_schedule_capacity_check_required_columns,Production Schedule Capacity Check Required Columns,PASS,missing=[],0,True
+production_calendar_candidate_view_required_columns,Production Calendar Candidate View Required Columns,PASS,missing=[],0,True
+production_schedule_manager_review_queue_required_columns,Production Schedule Manager Review Queue Required Columns,PASS,missing=[],0,True
+road_and_mountain_bike_included,Road And Mountain Bike Included,PASS,"products=['SKU-BIKE-MT-001', 'SKU-BIKE-ROAD-001']",2,True
+positive_mps_rows_generate_candidates,Positive Mps Rows Generate Candidates,PASS,"candidate_rows=28, positive_mps_rows=28",0,True
+operation_precedence_respected,Operation Precedence Respected,PASS,All operation candidate detail rows should have precedence OK.,0,True
+parallel_operations_represented,Parallel Operations Represented,PASS,Parallel operation detail rows are represented.,70,True
+merge_operations_represented,Merge Operations Represented,PASS,Merge operation detail rows are represented.,28,True
+final_assembly_waits_for_branches,Final Assembly Waits For Branches,PASS,Final Assembly candidate rows are merge operations with predecessors.,28,True
+critical_path_flags_carried,Critical Path Flags Carried,PASS,Critical path flags carried from Step 8A.,140,True
+no_inventory_consumption,No Inventory Consumption,PASS,Material readiness does not consume inventory.,196,True
+no_inventory_reservation,No Inventory Reservation,PASS,Material readiness does not reserve inventory.,196,True
+no_capacity_change,No Capacity Change,PASS,Capacity check does not modify capacity.,182,True
+period_mrp_material_readiness_used,Period Mrp Material Readiness Used,PASS,Material readiness must use period-level MRP and not mark all rows as horizon inventory review.,20,True
+covered_period_rows_not_blocked,Covered Period Rows Not Blocked,PASS,covered_period_blocker_rows=0,0,True
+capacity_maintenance_status_separated,Capacity Maintenance Status Separated,PASS,Capacity feasibility status must not contain MAINTENANCE_REVIEW_REQUIRED.,0,True
+no_production_order_created,No Production Order Created,PASS,No production orders created.,28,True
+candidate_assignment_only,Candidate Assignment Only,PASS,Schedule assignment status remains candidate-only.,210,True
+production_schedule_candidates_advisory_only,Production Schedule Candidates Advisory Only,PASS,production_schedule_candidates advisory-only flag true.,28,True
+operation_schedule_candidate_detail_advisory_only,Operation Schedule Candidate Detail Advisory Only,PASS,operation_schedule_candidate_detail advisory-only flag true.,182,True
+production_schedule_material_readiness_advisory_only,Production Schedule Material Readiness Advisory Only,PASS,production_schedule_material_readiness advisory-only flag true.,196,True
+production_schedule_capacity_check_advisory_only,Production Schedule Capacity Check Advisory Only,PASS,production_schedule_capacity_check advisory-only flag true.,182,True
+production_calendar_candidate_view_advisory_only,Production Calendar Candidate View Advisory Only,PASS,production_calendar_candidate_view advisory-only flag true.,182,True
+production_schedule_manager_review_queue_advisory_only,Production Schedule Manager Review Queue Advisory Only,PASS,production_schedule_manager_review_queue advisory-only flag true.,164,True
+manager_review_no_auto_action,Manager Review No Auto Action,PASS,Manager review queue has auto_action_allowed False.,164,True
+valid_schedule_candidate_statuses,Valid Schedule Candidate Statuses,PASS,"statuses=['MAINTENANCE_BLOCKED', 'MULTI_BLOCKED']",28,True
+no_forbidden_step8b_outputs,No Forbidden Step8B Outputs,PASS,forbidden_outputs=[],0,True

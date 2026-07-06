@@ -29,12 +29,12 @@ HUMAN_REVIEW,primary_expiry_review_count,2.0,count,Mandatory review blocks actio
 HUMAN_REVIEW,primary_policy_review_count,17.0,count,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.
 HUMAN_REVIEW,primary_phase4_review_count,0.0,count,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.
 HUMAN_REVIEW,primary_finance_review_count,0.0,count,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.
-OPTIMIZATION_RESULTS,total_baseline_operational_cost,250365.93,value,Optimization result metric.,Optimization result metric.
-OPTIMIZATION_RESULTS,total_selected_operational_cost,119983.17,value,Optimization result metric.,Optimization result metric.
-OPTIMIZATION_RESULTS,total_operational_saving,130382.76,value,Optimization result metric.,Optimization result metric.
-OPTIMIZATION_RESULTS,total_baseline_penalty_adjusted_cost,366815.93,value,Optimization result metric.,Optimization result metric.
-OPTIMIZATION_RESULTS,total_selected_penalty_adjusted_cost,167833.17,value,Optimization result metric.,Optimization result metric.
-OPTIMIZATION_RESULTS,total_penalty_adjusted_saving,198982.76,value,Optimization result metric.,Optimization result metric.
+OPTIMIZATION_RESULTS,total_baseline_operational_cost,250221.2,value,Optimization result metric.,Optimization result metric.
+OPTIMIZATION_RESULTS,total_selected_operational_cost,119843.44,value,Optimization result metric.,Optimization result metric.
+OPTIMIZATION_RESULTS,total_operational_saving,130377.76,value,Optimization result metric.,Optimization result metric.
+OPTIMIZATION_RESULTS,total_baseline_penalty_adjusted_cost,366571.2,value,Optimization result metric.,Optimization result metric.
+OPTIMIZATION_RESULTS,total_selected_penalty_adjusted_cost,167593.44,value,Optimization result metric.,Optimization result metric.
+OPTIMIZATION_RESULTS,total_penalty_adjusted_saving,198977.76,value,Optimization result metric.,Optimization result metric.
 OPTIMIZATION_RESULTS,operational_saving_sku_count,4.0,value,Optimization result metric.,Optimization result metric.
 OPTIMIZATION_RESULTS,penalty_avoidance_sku_count,11.0,value,Optimization result metric.,Optimization result metric.
 OPTIMIZATION_RESULTS,review_required_sku_count,17.0,value,Optimization result metric.,Optimization result metric.

@@ -1,4 +1,4 @@
-"""Create a clean Phase 4 Step 8A routing graph review bundle."""
+"""Create a clean Phase 4 Step 8B production schedule candidates review bundle."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 PHASE4_OUTPUTS = PROJECT_ROOT / "phase 4" / "outputs"
-ZIP_PATH = PROJECT_ROOT / "phase4_step8a_routing_graph_review_bundle.zip"
+ZIP_PATH = PROJECT_ROOT / "phase4_step8b_production_schedule_candidates_review_bundle.zip"
 MANIFEST_PATH = PHASE4_OUTPUTS / "phase4_review_bundle_manifest.txt"
 
 REQUIRED_RELATIVE_FILES = [
@@ -108,6 +108,7 @@ REQUIRED_RELATIVE_FILES = [
     "phase 4/core/production_flow_view.py",
     "phase 4/core/quality_trends.py",
     "phase 4/core/quality_adjusted_capacity.py",
+    "phase 4/core/production_schedule_candidates.py",
     "phase 4/outputs/phase4_master_production_schedule.csv",
     "phase 4/outputs/phase4_bom_component_requirements.csv",
     "phase 4/outputs/phase4_mrp_net_component_requirements.csv",
@@ -163,6 +164,13 @@ REQUIRED_RELATIVE_FILES = [
     "phase 4/outputs/phase4_operation_slack_analysis.csv",
     "phase 4/outputs/phase4_routing_graph_visual_data.json",
     "phase 4/outputs/phase4_routing_graph_validation.csv",
+    "phase 4/outputs/phase4_production_schedule_candidates.csv",
+    "phase 4/outputs/phase4_operation_schedule_candidate_detail.csv",
+    "phase 4/outputs/phase4_production_schedule_material_readiness.csv",
+    "phase 4/outputs/phase4_production_schedule_capacity_check.csv",
+    "phase 4/outputs/phase4_production_calendar_candidate_view.csv",
+    "phase 4/outputs/phase4_production_schedule_manager_review_queue.csv",
+    "phase 4/outputs/phase4_production_schedule_validation.csv",
     "phase 4/outputs/phase4_initialization_validation.json",
     "phase 4/outputs/phase4_initialization_validation_report.txt",
     "phase 4/outputs/phase4_review_bundle_manifest.txt",
@@ -384,6 +392,14 @@ def _verify_zip() -> tuple[str, list[str]]:
         "phase 4/outputs/phase4_operation_slack_analysis.csv": "Phase 4 operation slack analysis output exists inside the zip",
         "phase 4/outputs/phase4_routing_graph_visual_data.json": "Phase 4 routing graph visual JSON exists inside the zip",
         "phase 4/outputs/phase4_routing_graph_validation.csv": "Phase 4 routing graph validation exists inside the zip",
+        "phase 4/core/production_schedule_candidates.py": "Phase 4 production schedule candidates module exists inside the zip",
+        "phase 4/outputs/phase4_production_schedule_candidates.csv": "Phase 4 production schedule candidates output exists inside the zip",
+        "phase 4/outputs/phase4_operation_schedule_candidate_detail.csv": "Phase 4 operation schedule candidate detail output exists inside the zip",
+        "phase 4/outputs/phase4_production_schedule_material_readiness.csv": "Phase 4 production schedule material readiness output exists inside the zip",
+        "phase 4/outputs/phase4_production_schedule_capacity_check.csv": "Phase 4 production schedule capacity check output exists inside the zip",
+        "phase 4/outputs/phase4_production_calendar_candidate_view.csv": "Phase 4 production calendar candidate view exists inside the zip",
+        "phase 4/outputs/phase4_production_schedule_manager_review_queue.csv": "Phase 4 production schedule manager review queue exists inside the zip",
+        "phase 4/outputs/phase4_production_schedule_validation.csv": "Phase 4 production schedule validation exists inside the zip",
         "phase 4/core/production_flow_view.py": "Phase 4 production flow view module exists inside the zip",
         "phase 4/outputs/phase4_production_flow_view.csv": "Phase 4 production flow view exists inside the zip",
         "phase 4/outputs/phase4_flow_step_risk_summary.csv": "Phase 4 flow-step risk summary exists inside the zip",
@@ -488,7 +504,7 @@ def _build_manifest(
 ) -> str:
     zip_size_mb = ZIP_PATH.stat().st_size / (1024 * 1024) if ZIP_PATH.exists() else 0.0
     lines = [
-        "Phase 4 Step 8A Routing Graph Review Bundle Manifest",
+        "Phase 4 Step 8B Production Schedule Candidates Review Bundle Manifest",
         f"Generated zip path: {ZIP_PATH}",
         f"Generated timestamp UTC: {generated_at}",
         f"Included file count: {len(included)}",

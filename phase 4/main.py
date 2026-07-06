@@ -67,6 +67,14 @@ from core.routing_graph_analysis import SLACK_OUTPUT_FILE as ROUTING_GRAPH_SLACK
 from core.routing_graph_analysis import VALIDATION_OUTPUT_FILE as ROUTING_GRAPH_VALIDATION_OUTPUT_FILE
 from core.routing_graph_analysis import VISUAL_JSON_OUTPUT_FILE as ROUTING_GRAPH_VISUAL_JSON_OUTPUT_FILE
 from core.routing_graph_analysis import build_routing_graph_analysis_outputs
+from core.production_schedule_candidates import CALENDAR_VIEW_OUTPUT_FILE as PRODUCTION_SCHEDULE_CALENDAR_VIEW_OUTPUT_FILE
+from core.production_schedule_candidates import CAPACITY_CHECK_OUTPUT_FILE as PRODUCTION_SCHEDULE_CAPACITY_CHECK_OUTPUT_FILE
+from core.production_schedule_candidates import MANAGER_REVIEW_OUTPUT_FILE as PRODUCTION_SCHEDULE_MANAGER_REVIEW_OUTPUT_FILE
+from core.production_schedule_candidates import MATERIAL_READINESS_OUTPUT_FILE as PRODUCTION_SCHEDULE_MATERIAL_READINESS_OUTPUT_FILE
+from core.production_schedule_candidates import OPERATION_DETAIL_OUTPUT_FILE as PRODUCTION_SCHEDULE_OPERATION_DETAIL_OUTPUT_FILE
+from core.production_schedule_candidates import SCHEDULE_CANDIDATES_OUTPUT_FILE as PRODUCTION_SCHEDULE_CANDIDATES_OUTPUT_FILE
+from core.production_schedule_candidates import VALIDATION_OUTPUT_FILE as PRODUCTION_SCHEDULE_VALIDATION_OUTPUT_FILE
+from core.production_schedule_candidates import build_production_schedule_candidate_outputs
 from shared.core.workforce_master_data import CREW_CAPACITY_CONTEXT_FILE
 from shared.core.workforce_master_data import MACHINE_AUTH_CONTEXT_FILE as WORKFORCE_MACHINE_AUTH_CONTEXT_FILE
 from shared.core.workforce_master_data import MANAGER_REVIEW_QUEUE_FILE as WORKFORCE_MANAGER_REVIEW_QUEUE_FILE
@@ -151,6 +159,7 @@ def run_initialization() -> None:
     quality_history, quality_operation, quality_workstation, processing_trend, performance_summary, quality_review, quality_validation = build_quality_trend_outputs()
     quality_impact, quality_adjusted_capacity, quality_bottleneck_impact, quality_material_loss, quality_impact_review, quality_adjusted_validation = build_quality_adjusted_capacity_outputs()
     routing_graph_nodes, routing_graph_edges, critical_path, slack_analysis, routing_graph_visual, routing_graph_validation = build_routing_graph_analysis_outputs()
+    production_schedule_candidates, production_operation_detail, production_material_readiness, production_capacity_check, production_calendar_view, production_schedule_review, production_schedule_validation = build_production_schedule_candidate_outputs()
     print("Phase 4 initialization bridge completed.")
     print(f"MPS rows: {len(mps)}")
     print(f"MPS output written to: {MPS_OUTPUT_FILE}")
@@ -336,6 +345,20 @@ def run_initialization() -> None:
     print(f"Routing graph visual JSON written to: {ROUTING_GRAPH_VISUAL_JSON_OUTPUT_FILE}")
     print(f"Routing graph validation rows: {len(routing_graph_validation)}")
     print(f"Routing graph validation output written to: {ROUTING_GRAPH_VALIDATION_OUTPUT_FILE}")
+    print(f"Production schedule candidate rows: {len(production_schedule_candidates)}")
+    print(f"Production schedule candidates output written to: {PRODUCTION_SCHEDULE_CANDIDATES_OUTPUT_FILE}")
+    print(f"Operation schedule candidate detail rows: {len(production_operation_detail)}")
+    print(f"Operation schedule candidate detail output written to: {PRODUCTION_SCHEDULE_OPERATION_DETAIL_OUTPUT_FILE}")
+    print(f"Production schedule material readiness rows: {len(production_material_readiness)}")
+    print(f"Production schedule material readiness output written to: {PRODUCTION_SCHEDULE_MATERIAL_READINESS_OUTPUT_FILE}")
+    print(f"Production schedule capacity check rows: {len(production_capacity_check)}")
+    print(f"Production schedule capacity check output written to: {PRODUCTION_SCHEDULE_CAPACITY_CHECK_OUTPUT_FILE}")
+    print(f"Production calendar candidate view rows: {len(production_calendar_view)}")
+    print(f"Production calendar candidate view output written to: {PRODUCTION_SCHEDULE_CALENDAR_VIEW_OUTPUT_FILE}")
+    print(f"Production schedule manager review rows: {len(production_schedule_review)}")
+    print(f"Production schedule manager review output written to: {PRODUCTION_SCHEDULE_MANAGER_REVIEW_OUTPUT_FILE}")
+    print(f"Production schedule validation rows: {len(production_schedule_validation)}")
+    print(f"Production schedule validation output written to: {PRODUCTION_SCHEDULE_VALIDATION_OUTPUT_FILE}")
 
 
 if __name__ == "__main__":

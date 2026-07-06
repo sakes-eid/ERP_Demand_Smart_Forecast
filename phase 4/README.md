@@ -81,6 +81,11 @@ Current initialization scope:
 - Step 8A keeps critical path analysis separate from bottleneck analysis; the critical path is routing-time dependency, while bottlenecks come from capacity, queue, and resource evidence.
 - Step 8A creates data-only graph JSON for future visualization, but no UI or scheduler is built.
 - Step 8A does not create production schedules, production orders, dispatch records, inventory reservations, capacity reductions, or simulation outputs.
+- Step 8B creates advisory production schedule candidates from MPS rows, routing graph precedence, critical-path/slack evidence, material readiness, capacity feasibility, queue/bottleneck risk, and maintenance risk.
+- Step 8B material readiness uses the period-level MRP component summary first, so covered component-period rows are not blocked just because later full-horizon shortages exist.
+- Step 8B separates production capacity feasibility from maintenance feasibility; maintenance risk is shown separately and does not rewrite capacity status.
+- Step 8B uses period/day/shift candidate placeholders only; it does not create confirmed production schedules, production orders, worker dispatch, inventory reservations, inventory consumption, purchase orders, capacity reductions, or simulation outputs.
+- Step 8B carries parallel-branch and merge-operation evidence forward so Final Assembly waits for required branch predecessors in the candidate detail.
 - Routing is the ERP version of the production flowchart.
 - Road Bike and Mountain Bike now have different advisory routings.
 - Parallel subassembly branches are included for both products.
@@ -160,8 +165,10 @@ Run order:
 16. Build Phase 4 production flow and queue-bottleneck flow view.
 17. Build Phase 4 quality and workstation performance trend detection.
 18. Build Phase 4 quality-adjusted capacity impact estimates.
-19. Run Phase 3 component inventory checks.
-20. Run Phase 2 component supplier checks.
+19. Build Phase 4 routing graph, critical path, and slack analysis.
+20. Build advisory Phase 4 production schedule candidates.
+21. Run Phase 3 component inventory checks.
+22. Run Phase 2 component supplier checks.
 
 The Phase 4 bridges are optional-safe. If a bridge file is missing or fails, Phase 2 and Phase 3 print a warning and continue their existing core pipelines.
 
@@ -173,6 +180,7 @@ Guardrails:
 - No maintenance work orders are created.
 - No inventory is consumed or auto-reserved.
 - No workforce, maintenance, production, or delivery scheduling is created.
+- Production schedule candidates are advisory only and remain `NOT_SCHEDULED_CANDIDATE_ONLY`.
 - Simulation is a separate future phase.
 - Future production release flags should default to `production_order_release_allowed = False`.
 
@@ -196,5 +204,5 @@ Next likely Phase 4 feature:
 
 Review bundle:
 
-- `create_phase4_review_bundle.py` generates `phase4_step8a_routing_graph_review_bundle.zip` at the project root for external review.
+- `create_phase4_review_bundle.py` generates `phase4_step8b_production_schedule_candidates_review_bundle.zip` at the project root for external review.
 - The bundle preserves project-relative folder structure and excludes cache, bytecode, virtual environment, and zip artifacts.

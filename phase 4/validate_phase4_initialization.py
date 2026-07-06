@@ -57,6 +57,11 @@ PHASE4_OUTPUTS = {
     "routing_graph_edges": PHASE4_DIR / "outputs" / "phase4_routing_graph_edges.csv",
     "critical_path_by_product": PHASE4_DIR / "outputs" / "phase4_critical_path_by_product.csv",
     "operation_slack_analysis": PHASE4_DIR / "outputs" / "phase4_operation_slack_analysis.csv",
+    "production_schedule_candidates": PHASE4_DIR / "outputs" / "phase4_production_schedule_candidates.csv",
+    "operation_schedule_candidate_detail": PHASE4_DIR / "outputs" / "phase4_operation_schedule_candidate_detail.csv",
+    "production_schedule_material_readiness": PHASE4_DIR / "outputs" / "phase4_production_schedule_material_readiness.csv",
+    "production_schedule_capacity_check": PHASE4_DIR / "outputs" / "phase4_production_schedule_capacity_check.csv",
+    "production_calendar_candidate_view": PHASE4_DIR / "outputs" / "phase4_production_calendar_candidate_view.csv",
     "component_inventory_check": PROJECT_ROOT / "phase 3" / "outputs" / "phase4_component_inventory_check.csv",
     "component_supplier_check": PROJECT_ROOT / "phase 2" / "outputs" / "phase4_component_supplier_check.csv",
 }
@@ -208,6 +213,13 @@ ROUTING_GRAPH_CRITICAL_PATH_FILE = PHASE4_DIR / "outputs" / "phase4_critical_pat
 ROUTING_GRAPH_SLACK_FILE = PHASE4_DIR / "outputs" / "phase4_operation_slack_analysis.csv"
 ROUTING_GRAPH_VISUAL_JSON_FILE = PHASE4_DIR / "outputs" / "phase4_routing_graph_visual_data.json"
 ROUTING_GRAPH_VALIDATION_FILE = PHASE4_DIR / "outputs" / "phase4_routing_graph_validation.csv"
+PRODUCTION_SCHEDULE_CANDIDATES_FILE = PHASE4_DIR / "outputs" / "phase4_production_schedule_candidates.csv"
+PRODUCTION_OPERATION_DETAIL_FILE = PHASE4_DIR / "outputs" / "phase4_operation_schedule_candidate_detail.csv"
+PRODUCTION_MATERIAL_READINESS_FILE = PHASE4_DIR / "outputs" / "phase4_production_schedule_material_readiness.csv"
+PRODUCTION_CAPACITY_CHECK_FILE = PHASE4_DIR / "outputs" / "phase4_production_schedule_capacity_check.csv"
+PRODUCTION_CALENDAR_VIEW_FILE = PHASE4_DIR / "outputs" / "phase4_production_calendar_candidate_view.csv"
+PRODUCTION_SCHEDULE_REVIEW_FILE = PHASE4_DIR / "outputs" / "phase4_production_schedule_manager_review_queue.csv"
+PRODUCTION_SCHEDULE_VALIDATION_FILE = PHASE4_DIR / "outputs" / "phase4_production_schedule_validation.csv"
 
 
 def main() -> None:
@@ -256,6 +268,7 @@ def main() -> None:
     checks.append(_check_quality_trends())
     checks.append(_check_quality_adjusted_capacity())
     checks.append(_check_routing_graph_analysis())
+    checks.append(_check_production_schedule_candidates())
     checks.append(_check_phase3_inventory_check())
     checks.append(_check_phase2_supplier_check())
     checks.append(_check_phase4_run_id_consistency())
@@ -1672,6 +1685,138 @@ def _check_routing_graph_analysis() -> dict:
     )
 
 
+def _check_production_schedule_candidates() -> dict:
+    required_outputs = [
+        (PRODUCTION_SCHEDULE_CANDIDATES_FILE, "production schedule candidates"),
+        (PRODUCTION_OPERATION_DETAIL_FILE, "operation schedule candidate detail"),
+        (PRODUCTION_MATERIAL_READINESS_FILE, "production schedule material readiness"),
+        (PRODUCTION_CAPACITY_CHECK_FILE, "production schedule capacity check"),
+        (PRODUCTION_CALENDAR_VIEW_FILE, "production calendar candidate view"),
+        (PRODUCTION_SCHEDULE_REVIEW_FILE, "production schedule manager review queue"),
+        (PRODUCTION_SCHEDULE_VALIDATION_FILE, "production schedule validation"),
+    ]
+    for path, label in required_outputs:
+        if not path.exists():
+            return _result("production_schedule_candidates", "FAIL", f"{label} output is missing: {path}")
+        if path.suffix.lower() == ".csv" and pd.read_csv(path).empty:
+            return _result("production_schedule_candidates", "FAIL", f"{label} output has no rows: {path}")
+
+    validation = pd.read_csv(PRODUCTION_SCHEDULE_VALIDATION_FILE)
+    fail_count = int((validation["status"].astype(str).str.upper() == "FAIL").sum()) if "status" in validation.columns else len(validation)
+    if fail_count:
+        return _result("production_schedule_candidates", "FAIL", f"Production schedule validation contains FAIL rows: {fail_count}")
+
+    candidates = pd.read_csv(PRODUCTION_SCHEDULE_CANDIDATES_FILE)
+    details = pd.read_csv(PRODUCTION_OPERATION_DETAIL_FILE)
+    material = pd.read_csv(PRODUCTION_MATERIAL_READINESS_FILE)
+    capacity = pd.read_csv(PRODUCTION_CAPACITY_CHECK_FILE)
+    calendar = pd.read_csv(PRODUCTION_CALENDAR_VIEW_FILE)
+    review = pd.read_csv(PRODUCTION_SCHEDULE_REVIEW_FILE)
+    required_columns = {
+        "candidates": {
+            "planning_run_id", "schedule_candidate_id", "finished_sku", "finished_product_name", "mps_period_start", "mps_period_end",
+            "planned_production_qty", "candidate_schedule_period", "candidate_schedule_day", "candidate_schedule_shift",
+            "schedule_candidate_status", "schedule_priority_score", "recommended_schedule_priority", "material_readiness_status",
+            "capacity_feasibility_status", "maintenance_feasibility_status", "critical_path_risk_flag", "bottleneck_risk_flag",
+            "queue_risk_flag", "schedule_assignment_status", "note_no_production_order_created_flag", "source_phase", "advisory_only_flag",
+        },
+        "details": {
+            "planning_run_id", "schedule_candidate_id", "finished_sku", "operation_id", "operation_name", "operation_sequence",
+            "predecessor_operation_ids", "successor_operation_ids", "workstation_id", "workstation_name", "machine_id", "machine_name",
+            "candidate_schedule_period", "candidate_schedule_day", "candidate_schedule_shift", "estimated_operation_duration_minutes",
+            "earliest_start_offset_minutes", "earliest_finish_offset_minutes", "slack_time_minutes", "critical_path_flag",
+            "can_run_in_parallel_flag", "merge_operation_flag", "operation_precedence_status", "operation_schedule_status",
+            "source_phase", "advisory_only_flag",
+        },
+        "material": {
+            "planning_run_id", "schedule_candidate_id", "finished_sku", "component_sku", "required_qty", "available_qty",
+            "mrp_period_status", "period_gross_requirement_qty", "period_net_requirement_qty", "projected_component_ending_inventory",
+            "projected_component_shortage_qty", "inventory_coverage_basis", "supplier_coverage_status",
+            "material_readiness_status", "material_blocker_flag", "note_no_inventory_consumption_flag",
+            "note_no_inventory_reservation_flag", "source_phase", "advisory_only_flag",
+        },
+        "capacity": {
+            "planning_run_id", "schedule_candidate_id", "operation_id", "workstation_id", "machine_id", "required_hours",
+            "available_hours_reference", "current_utilization_pct", "quality_adjusted_utilization_pct", "maintenance_impact_level",
+            "capacity_feasibility_status", "capacity_blocker_flag", "note_no_capacity_change_flag", "source_phase", "advisory_only_flag",
+        },
+        "calendar": {
+            "planning_run_id", "candidate_schedule_period", "candidate_schedule_day", "candidate_schedule_shift", "finished_sku",
+            "operation_id", "operation_name", "workstation_id", "machine_id", "schedule_candidate_status", "recommended_schedule_priority",
+            "critical_path_flag", "bottleneck_risk_flag", "material_blocker_flag", "capacity_blocker_flag", "maintenance_blocker_flag",
+            "schedule_assignment_status", "source_phase", "advisory_only_flag",
+        },
+        "review": {
+            "review_item_id", "planning_run_id", "schedule_candidate_id", "finished_sku", "operation_id", "issue_type",
+            "issue_severity", "issue_description", "recommended_review_action", "auto_action_allowed", "advisory_only_flag",
+        },
+    }
+    frames = {"candidates": candidates, "details": details, "material": material, "capacity": capacity, "calendar": calendar, "review": review}
+    for label, columns in required_columns.items():
+        missing = sorted(columns.difference(frames[label].columns))
+        if missing:
+            return _result("production_schedule_candidates", "FAIL", f"{label} missing columns: {missing}")
+
+    products = set(candidates["finished_sku"].dropna().astype(str))
+    if not {"SKU-BIKE-ROAD-001", "SKU-BIKE-MT-001"}.issubset(products):
+        return _result("production_schedule_candidates", "FAIL", f"Road Bike and Mountain Bike must be included; products={sorted(products)}")
+    mps = pd.read_csv(PHASE4_OUTPUTS["master_production_schedule"])
+    positive_mps_count = len(mps[pd.to_numeric(mps["planned_production_qty"], errors="coerce").fillna(0) > 0])
+    if len(candidates) != positive_mps_count:
+        return _result("production_schedule_candidates", "FAIL", f"Only positive MPS rows should generate candidates; candidates={len(candidates)}, positive_mps={positive_mps_count}")
+    if not (details["operation_precedence_status"].astype(str) == "PRECEDENCE_OK").all():
+        return _result("production_schedule_candidates", "FAIL", "Operation precedence is not respected for all candidate detail rows.")
+    if not _to_bool(details["can_run_in_parallel_flag"]).any():
+        return _result("production_schedule_candidates", "FAIL", "Parallel operations are not represented in schedule detail.")
+    if not _to_bool(details["merge_operation_flag"]).any():
+        return _result("production_schedule_candidates", "FAIL", "Merge operations are not represented in schedule detail.")
+    final_detail = details[details["operation_name"].astype(str).str.contains("Final Assembly", case=False, na=False)]
+    if final_detail.empty or not _to_bool(final_detail["merge_operation_flag"]).all() or not final_detail["predecessor_operation_ids"].astype(str).str.len().gt(0).all():
+        return _result("production_schedule_candidates", "FAIL", "Final Assembly candidate rows must be merge operations with predecessor branches.")
+    if not _to_bool(details["critical_path_flag"]).any():
+        return _result("production_schedule_candidates", "FAIL", "Critical path flags were not carried into operation schedule detail.")
+    valid_status = {"FEASIBLE_CANDIDATE", "MATERIAL_BLOCKED", "CAPACITY_BLOCKED", "MAINTENANCE_BLOCKED", "MULTI_BLOCKED", "REVIEW_REQUIRED"}
+    if set(candidates["schedule_candidate_status"].dropna().astype(str)) - valid_status:
+        return _result("production_schedule_candidates", "FAIL", "Invalid schedule_candidate_status values found.")
+    valid_material_status = {"MATERIAL_READY", "INVENTORY_REVIEW_REQUIRED", "SUPPLIER_COVERED_REVIEW", "MATERIAL_BLOCKED", "MATERIAL_REVIEW_REQUIRED"}
+    if set(material["material_readiness_status"].dropna().astype(str)) - valid_material_status:
+        return _result("production_schedule_candidates", "FAIL", "Invalid material_readiness_status values found.")
+    covered_period_rows = material[
+        (pd.to_numeric(material["period_net_requirement_qty"], errors="coerce").fillna(0) <= 0)
+        & (pd.to_numeric(material["projected_component_ending_inventory"], errors="coerce").fillna(0) > 0)
+        & (pd.to_numeric(material["projected_component_shortage_qty"], errors="coerce").fillna(0) <= 0)
+    ]
+    if not covered_period_rows.empty and material["material_readiness_status"].astype(str).eq("INVENTORY_REVIEW_REQUIRED").all():
+        return _result("production_schedule_candidates", "FAIL", "Period-level MRP has covered rows but all material rows are marked INVENTORY_REVIEW_REQUIRED.")
+    if not covered_period_rows.empty and _to_bool(covered_period_rows["material_blocker_flag"]).any():
+        return _result("production_schedule_candidates", "FAIL", "Covered period-level MRP rows must not be marked as material blockers.")
+    if not (material["inventory_coverage_basis"].astype(str) == "PERIOD_LEVEL_MRP_PROJECTED_INVENTORY").any():
+        return _result("production_schedule_candidates", "FAIL", "Material readiness must use period-level MRP projected inventory when available.")
+    valid_capacity_status = {"FEASIBLE", "HIGH_UTILIZATION_WARNING", "CAPACITY_BLOCKED", "REVIEW_REQUIRED"}
+    if set(capacity["capacity_feasibility_status"].dropna().astype(str)) - valid_capacity_status:
+        return _result("production_schedule_candidates", "FAIL", "Capacity feasibility status must stay separate from maintenance feasibility.")
+    if set(candidates["schedule_assignment_status"].dropna().astype(str)) != {"NOT_SCHEDULED_CANDIDATE_ONLY"}:
+        return _result("production_schedule_candidates", "FAIL", "Production schedule candidates must remain candidate-only.")
+    if set(calendar["schedule_assignment_status"].dropna().astype(str)) != {"NOT_SCHEDULED_CANDIDATE_ONLY"}:
+        return _result("production_schedule_candidates", "FAIL", "Calendar view must remain candidate-only.")
+    if not _all_true(candidates, "note_no_production_order_created_flag"):
+        return _result("production_schedule_candidates", "FAIL", "No-production-order flag must be True for all candidates.")
+    if not _all_true(material, "note_no_inventory_consumption_flag") or not _all_true(material, "note_no_inventory_reservation_flag"):
+        return _result("production_schedule_candidates", "FAIL", "Material readiness must not consume or reserve inventory.")
+    if not _all_true(capacity, "note_no_capacity_change_flag"):
+        return _result("production_schedule_candidates", "FAIL", "Capacity checks must not change capacity.")
+    for label, frame in frames.items():
+        if not _all_true(frame, "advisory_only_flag"):
+            return _result("production_schedule_candidates", "FAIL", f"{label} must be advisory-only.")
+    if not _all_false(review, "auto_action_allowed"):
+        return _result("production_schedule_candidates", "FAIL", "Production schedule review queue must not allow automatic action.")
+    return _result(
+        "production_schedule_candidates",
+        "PASS",
+        f"Step 8B advisory production schedule candidates valid; candidate_rows={len(candidates)}, operation_detail_rows={len(details)}, material_rows={len(material)}, capacity_rows={len(capacity)}.",
+    )
+
+
 def _check_routing_master_data() -> dict:
     missing_files = [name for name, path in ROUTING_DATA_FILES.items() if not path.exists()]
     if missing_files:
@@ -2925,6 +3070,10 @@ def _resource_calendar_invalid_reference_count(frames: dict[str, pd.DataFrame]) 
 
 def _all_true(df: pd.DataFrame, column: str) -> bool:
     return column in df.columns and bool(_to_bool(df[column]).all())
+
+
+def _all_false(df: pd.DataFrame, column: str) -> bool:
+    return column in df.columns and bool((~_to_bool(df[column])).all())
 
 
 def _valid_period_sequences(mps: pd.DataFrame) -> bool:

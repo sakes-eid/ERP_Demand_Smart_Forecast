@@ -454,6 +454,13 @@ def _check_no_forbidden_outputs(checks: list[dict]) -> None:
         VISUAL_JSON_OUTPUT_FILE.name,
         VALIDATION_OUTPUT_FILE.name,
         "phase4_master_production_schedule.csv",
+        "phase4_production_schedule_candidates.csv",
+        "phase4_operation_schedule_candidate_detail.csv",
+        "phase4_production_schedule_material_readiness.csv",
+        "phase4_production_schedule_capacity_check.csv",
+        "phase4_production_calendar_candidate_view.csv",
+        "phase4_production_schedule_manager_review_queue.csv",
+        "phase4_production_schedule_validation.csv",
     }
     blocked = ["production_schedule", "production_order", "worker_dispatch", "inventory_reservation", "inventory_consumption", "purchase_order", "capacity_reduction", "simulation"]
     bad = []

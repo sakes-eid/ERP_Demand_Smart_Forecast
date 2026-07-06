@@ -10,17 +10,17 @@ Review Load,monitor_rate,3.12,%,Informational,INFO,Share that should be monitore
 Review Load,no_action_rate,0.0,%,Informational,INFO,Share requiring no action.
 Review Load,mandatory_multi_department_review_rate,18.75,%,Lower is better,WATCH,Share with multiple mandatory review gates.
 Review Load,urgent_action_rate,59.38,%,Lower is better,WATCH,Share of urgent final decisions.
-Cost,projected_operational_saving,130382.76000000001,currency,Positive,GOOD,Estimated operating cost saving.
-Cost,projected_penalty_adjusted_saving,198982.76,currency,Positive,INFO,Penalty-adjusted saving includes risk/review penalties.
+Cost,projected_operational_saving,130377.76000000001,currency,Positive,GOOD,Estimated operating cost saving.
+Cost,projected_penalty_adjusted_saving,198977.76,currency,Positive,INFO,Penalty-adjusted saving includes risk/review penalties.
 Optimization,selected_scenarios_with_review_rate,53.12,%,Lower is better,WATCH,Selected scenarios needing review.
 Optimization,selected_scenarios_no_hard_blocker_rate,100.0,%,100%,GOOD,Selected scenarios without hard blockers.
 Warehouse,warehouse_capacity_pressure_rate,37.5,%,Lower is better,WATCH,Projected capacity pressure by location.
 Inventory Health,expiry_risk_rate,6.25,%,Lower is better,WATCH,SKUs with expiry risk.
 Review Load,phase4_review_rate,50.0,%,As needed,INFO,SKUs needing Phase 4 production review.
 Service Level,average_service_level,0.9537500000000001,ratio,Policy dependent,INFO,Average configured service level.
-Service Level,average_safety_stock,42.375,units,Policy dependent,INFO,Average calculated safety stock.
-Inventory Health,total_recommended_order_quantity,5875.0,units,Policy dependent,INFO,Total recommended order quantity from Step 6.
-Optimization,average_scenarios_tested_per_sku,19.90625,scenarios/SKU,Controlled by config,INFO,Average Step 12 scenarios tested per SKU.
+Service Level,average_safety_stock,42.40625,units,Policy dependent,INFO,Average calculated safety stock.
+Inventory Health,total_recommended_order_quantity,5867.0,units,Policy dependent,INFO,Total recommended order quantity from Step 6.
+Optimization,average_scenarios_tested_per_sku,19.6875,scenarios/SKU,Controlled by config,INFO,Average Step 12 scenarios tested per SKU.
 Review Load,phase4_blocking_review_rate,18.75,%,As needed,INFO,Phase 4 blocking review share.
 Review Load,owner_assignment_completeness_rate,100.0,%,100%,GOOD,Rows with execution owner populated.
 Optimization,proposed_operational_action_completeness_rate,100.0,%,100%,GOOD,Rows with proposed operational action populated.
