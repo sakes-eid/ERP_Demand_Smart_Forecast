@@ -1,0 +1,8 @@
+workstation_id,workstation_name,setup_sensitive_flag,setup_capacity_loss_tracked_flag,batching_recommended_flag,max_recommended_family_switches_per_shift,default_setup_policy,active_flag,advisory_only_flag,notes
+WS-FRAME-PREP,Frame Preparation Station,True,True,True,2,BATCH_SIMILAR_OPERATIONS,True,True,Frame setup should batch similar frame families when possible.
+WS-WHEEL-SUB,Wheel Subassembly Station,True,True,True,3,BATCH_SIMILAR_OPERATIONS,True,True,Wheel subassembly has moderate fixture setup sensitivity.
+WS-BRAKE-SUB,Brake Subassembly Station,True,True,True,3,BATCH_SIMILAR_OPERATIONS,True,True,Brake bench setup has moderate tooling sensitivity.
+WS-FORK-SUSP,Fork and Suspension Prep Station,True,True,True,2,MINIMIZE_FAMILY_SWITCHES,True,True,Fork prep uses specialized setup and should minimize switches.
+WS-FINAL-ASM,Final Assembly Station,True,True,True,1,BALANCE_SETUP_AND_WIP,True,True,Final assembly should balance setup loss with WIP and critical path needs.
+WS-QC,Final Quality Control Station,True,True,False,4,PRIORITIZE_CRITICAL_PATH,True,True,QC setup should protect critical path and safety checks.
+WS-PACK,Packaging Station,False,True,True,4,BATCH_SIMILAR_OPERATIONS,True,True,Packaging setup impact is low but batching remains useful.

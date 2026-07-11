@@ -1,0 +1,56 @@
+check_id,check_name,status,message,affected_rows,advisory_only_flag
+SETUP8E-001,product_routings_loaded,PASS,product_routings loaded with 13 rows.,13,True
+SETUP8E-002,routing_parallel_groups_loaded,PASS,routing_parallel_groups loaded with 2 rows.,2,True
+SETUP8E-003,setup_families_loaded,PASS,setup_families loaded with 13 rows.,13,True
+SETUP8E-004,setup_changeover_matrix_loaded,PASS,setup_changeover_matrix loaded with 25 rows.,25,True
+SETUP8E-005,workstation_setup_rules_loaded,PASS,workstation_setup_rules loaded with 7 rows.,7,True
+SETUP8E-006,phase4_routing_graph_nodes_loaded,PASS,phase4_routing_graph_nodes loaded with 13 rows.,13,True
+SETUP8E-007,phase4_routing_graph_edges_loaded,PASS,phase4_routing_graph_edges loaded with 14 rows.,14,True
+SETUP8E-008,phase4_critical_path_by_product_loaded,PASS,phase4_critical_path_by_product loaded with 2 rows.,2,True
+SETUP8E-009,phase4_operation_slack_analysis_loaded,PASS,phase4_operation_slack_analysis loaded with 13 rows.,13,True
+SETUP8E-010,phase4_wip_item_master_loaded,PASS,phase4_wip_item_master loaded with 14 rows.,14,True
+SETUP8E-011,phase4_wip_operation_flow_map_loaded,PASS,phase4_wip_operation_flow_map loaded with 14 rows.,14,True
+SETUP8E-012,phase4_wip_batch_ledger_loaded,PASS,phase4_wip_batch_ledger loaded with 9 rows.,9,True
+SETUP8E-013,phase4_wip_buffer_status_loaded,PASS,phase4_wip_buffer_status loaded with 14 rows.,14,True
+SETUP8E-014,phase4_wip_aware_schedule_feasibility_loaded,PASS,phase4_wip_aware_schedule_feasibility loaded with 224 rows.,224,True
+SETUP8E-015,phase4_wip_buffer_impact_on_schedule_loaded,PASS,phase4_wip_buffer_impact_on_schedule loaded with 14 rows.,14,True
+SETUP8E-016,phase4_production_schedule_candidates_loaded,PASS,phase4_production_schedule_candidates loaded with 28 rows.,28,True
+SETUP8E-017,phase4_operation_schedule_candidate_detail_loaded,PASS,phase4_operation_schedule_candidate_detail loaded with 182 rows.,182,True
+SETUP8E-018,phase4_capacity_load_by_workstation_loaded,PASS,phase4_capacity_load_by_workstation loaded with 98 rows.,98,True
+SETUP8E-019,phase4_capacity_load_by_machine_type_loaded,PASS,phase4_capacity_load_by_machine_type loaded with 98 rows.,98,True
+SETUP8E-020,phase4_capacity_load_by_labor_skill_loaded,PASS,phase4_capacity_load_by_labor_skill loaded with 98 rows.,98,True
+SETUP8E-021,phase4_bottleneck_visibility_summary_loaded,PASS,phase4_bottleneck_visibility_summary loaded with 7 rows.,7,True
+SETUP8E-022,phase4_queue_risk_summary_loaded,PASS,phase4_queue_risk_summary loaded with 7 rows.,7,True
+SETUP8E-023,wip_buffer_access_rules_not_empty,PASS,wip_buffer_access_rules rows=19,19,True
+SETUP8E-024,wip_buffer_access_validation_not_empty,PASS,wip_buffer_access_validation rows=71,71,True
+SETUP8E-025,setup_family_master_not_empty,PASS,setup_family_master rows=13,13,True
+SETUP8E-026,setup_changeover_matrix_not_empty,PASS,setup_changeover_matrix rows=25,25,True
+SETUP8E-027,operation_setup_profile_not_empty,PASS,operation_setup_profile rows=13,13,True
+SETUP8E-028,setup_sequence_impact_analysis_not_empty,PASS,setup_sequence_impact_analysis rows=182,182,True
+SETUP8E-029,setup_manager_review_queue_not_empty,PASS,setup_manager_review_queue rows=70,70,True
+SETUP8E-030,access_rules_required_columns,PASS,Required columns present.,0,True
+SETUP8E-031,access_validation_required_columns,PASS,Required columns present.,0,True
+SETUP8E-032,families_required_columns,PASS,Required columns present.,0,True
+SETUP8E-033,matrix_required_columns,PASS,Required columns present.,0,True
+SETUP8E-034,profiles_required_columns,PASS,Required columns present.,0,True
+SETUP8E-035,sequence_required_columns,PASS,Required columns present.,0,True
+SETUP8E-036,review_required_columns,PASS,Required columns present.,0,True
+SETUP8E-037,access_rule_operation_refs_valid,PASS,Invalid operations: [],0,True
+SETUP8E-038,access_rule_wip_refs_valid,PASS,Invalid WIP refs: [],0,True
+SETUP8E-039,access_rule_buffer_refs_valid,PASS,Invalid buffer refs: [],0,True
+SETUP8E-040,no_self_output_consumption,PASS,Operations must not consume own output buffer.,0,True
+SETUP8E-041,wip_access_validation_no_fail,PASS,WIP access validation FAIL rows=0,0,True
+SETUP8E-042,schedulable_operations_profiled,PASS,Missing setup profiles: [],0,True
+SETUP8E-043,changeover_family_refs_valid,PASS,Invalid setup family refs: [],0,True
+SETUP8E-044,changeover_time_non_negative,PASS,Changeover times must be numeric and non-negative.,0,True
+SETUP8E-045,self_changeover_zero,PASS,Self-to-self changeover should be zero or near zero.,0,True
+SETUP8E-046,high_setup_impact_reviewed,PASS,High setup impacts require manager review rows.,0,True
+SETUP8E-047,batching_opportunities_reviewed,PASS,Batching opportunities require manager review rows.,70,True
+SETUP8E-048,no_schedule_reordering,PASS,Setup impact analysis did not reorder or optimize the schedule; it only evaluates candidate order.,0,True
+SETUP8E-049,advisory_only_outputs,PASS,All Step 8E outputs must be advisory-only.,7,True
+SETUP8E-050,review_auto_action_disabled,PASS,Manager review auto_action_allowed must be False.,70,True
+SETUP8E-051,Step 8A routing graph validation_no_fail,PASS,Step 8A routing graph validation FAIL rows=0.,0,True
+SETUP8E-052,Step 8B schedule validation_no_fail,PASS,Step 8B schedule validation FAIL rows=0.,0,True
+SETUP8E-053,Step 8C WIP validation_no_fail,PASS,Step 8C WIP validation FAIL rows=0.,0,True
+SETUP8E-054,Step 8D WIP-aware validation_no_fail,PASS,Step 8D WIP-aware validation FAIL rows=0.,0,True
+SETUP8E-055,forbidden_outputs_absent,PASS,No forbidden execution outputs found.,0,True

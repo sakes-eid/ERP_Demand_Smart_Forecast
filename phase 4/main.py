@@ -92,6 +92,15 @@ from core.wip_aware_schedule_feasibility import WIP_CONTINUITY_RECOMMENDATIONS_O
 from core.wip_aware_schedule_feasibility import WIP_MAINTENANCE_OPPORTUNITY_OUTPUT_FILE
 from core.wip_aware_schedule_feasibility import WIP_SUPPLY_DEMAND_OUTPUT_FILE
 from core.wip_aware_schedule_feasibility import build_wip_aware_schedule_feasibility_outputs
+from core.setup_changeover_rules import CHANGEOVER_MATRIX_OUTPUT_FILE as SETUP_CHANGEOVER_MATRIX_OUTPUT_FILE
+from core.setup_changeover_rules import OPERATION_SETUP_PROFILE_OUTPUT_FILE
+from core.setup_changeover_rules import SETUP_FAMILY_OUTPUT_FILE
+from core.setup_changeover_rules import SETUP_MANAGER_REVIEW_OUTPUT_FILE
+from core.setup_changeover_rules import SETUP_SEQUENCE_IMPACT_OUTPUT_FILE
+from core.setup_changeover_rules import SETUP_VALIDATION_OUTPUT_FILE
+from core.setup_changeover_rules import WIP_ACCESS_RULES_OUTPUT_FILE
+from core.setup_changeover_rules import WIP_ACCESS_VALIDATION_OUTPUT_FILE
+from core.setup_changeover_rules import build_setup_changeover_outputs
 from shared.core.workforce_master_data import CREW_CAPACITY_CONTEXT_FILE
 from shared.core.workforce_master_data import MACHINE_AUTH_CONTEXT_FILE as WORKFORCE_MACHINE_AUTH_CONTEXT_FILE
 from shared.core.workforce_master_data import MANAGER_REVIEW_QUEUE_FILE as WORKFORCE_MANAGER_REVIEW_QUEUE_FILE
@@ -179,6 +188,7 @@ def run_initialization() -> None:
     production_schedule_candidates, production_operation_detail, production_material_readiness, production_capacity_check, production_calendar_view, production_schedule_review, production_schedule_validation = build_production_schedule_candidate_outputs()
     wip_items, wip_flow_map, wip_ledger, wip_buffer_status, wip_quality_status, wip_continuity, wip_review, wip_validation = build_wip_batch_tracking_outputs()
     wip_aware_feasibility, wip_supply_demand, wip_buffer_impact, wip_continuity_recommendations, wip_maintenance_opportunity, wip_aware_review, wip_aware_validation = build_wip_aware_schedule_feasibility_outputs()
+    wip_access_rules, wip_access_validation, setup_family_master, setup_changeover_matrix, operation_setup_profile, setup_sequence_impact, setup_review, setup_validation = build_setup_changeover_outputs()
     print("Phase 4 initialization bridge completed.")
     print(f"MPS rows: {len(mps)}")
     print(f"MPS output written to: {MPS_OUTPUT_FILE}")
@@ -408,6 +418,22 @@ def run_initialization() -> None:
     print(f"WIP-aware schedule manager review output written to: {WIP_AWARE_REVIEW_OUTPUT_FILE}")
     print(f"WIP-aware schedule validation rows: {len(wip_aware_validation)}")
     print(f"WIP-aware schedule validation output written to: {WIP_AWARE_VALIDATION_OUTPUT_FILE}")
+    print(f"WIP buffer access rule rows: {len(wip_access_rules)}")
+    print(f"WIP buffer access rules output written to: {WIP_ACCESS_RULES_OUTPUT_FILE}")
+    print(f"WIP buffer access validation rows: {len(wip_access_validation)}")
+    print(f"WIP buffer access validation output written to: {WIP_ACCESS_VALIDATION_OUTPUT_FILE}")
+    print(f"Setup family master rows: {len(setup_family_master)}")
+    print(f"Setup family master output written to: {SETUP_FAMILY_OUTPUT_FILE}")
+    print(f"Setup changeover matrix rows: {len(setup_changeover_matrix)}")
+    print(f"Setup changeover matrix output written to: {SETUP_CHANGEOVER_MATRIX_OUTPUT_FILE}")
+    print(f"Operation setup profile rows: {len(operation_setup_profile)}")
+    print(f"Operation setup profile output written to: {OPERATION_SETUP_PROFILE_OUTPUT_FILE}")
+    print(f"Setup sequence impact rows: {len(setup_sequence_impact)}")
+    print(f"Setup sequence impact output written to: {SETUP_SEQUENCE_IMPACT_OUTPUT_FILE}")
+    print(f"Setup manager review rows: {len(setup_review)}")
+    print(f"Setup manager review output written to: {SETUP_MANAGER_REVIEW_OUTPUT_FILE}")
+    print(f"Setup/changeover validation rows: {len(setup_validation)}")
+    print(f"Setup/changeover validation output written to: {SETUP_VALIDATION_OUTPUT_FILE}")
 
 
 if __name__ == "__main__":

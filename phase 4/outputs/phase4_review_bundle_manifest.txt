@@ -1,10 +1,10 @@
-Phase 4 Step 8B Production Schedule Candidates Review Bundle Manifest
-Generated zip path: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase4_step8d_wip_aware_schedule_review_bundle.zip
-Generated timestamp UTC: 2026-07-11T13:47:34+00:00
-Included file count: 202
+Phase 4 Step 8E Setup and Changeover Review Bundle Manifest
+Generated zip path: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase4_step8e_setup_changeover_review_bundle.zip
+Generated timestamp UTC: 2026-07-11T14:15:44+00:00
+Included file count: 214
 Missing file count: 0
 Excluded file count: 0
-Final zip size MB: 0.498
+Final zip size MB: 0.521
 Verification status: PASS
 
 Verification messages:
@@ -132,6 +132,18 @@ Verification messages:
 - PASS: Phase 4 WIP maintenance opportunity analysis output exists inside the zip
 - PASS: Phase 4 WIP-aware schedule manager review queue exists inside the zip
 - PASS: Phase 4 WIP-aware schedule validation output exists inside the zip
+- PASS: Phase 4 setup families data exists inside the zip
+- PASS: Phase 4 setup changeover matrix data exists inside the zip
+- PASS: Phase 4 workstation setup rules data exists inside the zip
+- PASS: Phase 4 setup/changeover rules module exists inside the zip
+- PASS: Phase 4 WIP buffer access rules output exists inside the zip
+- PASS: Phase 4 WIP buffer access validation output exists inside the zip
+- PASS: Phase 4 setup family master output exists inside the zip
+- PASS: Phase 4 setup changeover matrix output exists inside the zip
+- PASS: Phase 4 operation setup profile output exists inside the zip
+- PASS: Phase 4 setup sequence impact output exists inside the zip
+- PASS: Phase 4 setup manager review queue exists inside the zip
+- PASS: Phase 4 setup/changeover validation output exists inside the zip
 - PASS: Phase 4 production flow view module exists inside the zip
 - PASS: Phase 4 production flow view exists inside the zip
 - PASS: Phase 4 flow-step risk summary exists inside the zip
@@ -279,6 +291,9 @@ Included files:
 - phase 4/data/wip_items.csv
 - phase 4/data/wip_buffer_locations.csv
 - phase 4/data/wip_batch_seed.csv
+- phase 4/data/setup_families.csv
+- phase 4/data/setup_changeover_matrix.csv
+- phase 4/data/workstation_setup_rules.csv
 - phase 4/core/bom_explosion_bridge.py
 - phase 4/core/component_inventory_bridge.py
 - phase 4/core/component_supplier_bridge.py
@@ -296,6 +311,7 @@ Included files:
 - phase 4/core/production_schedule_candidates.py
 - phase 4/core/wip_batch_tracking.py
 - phase 4/core/wip_aware_schedule_feasibility.py
+- phase 4/core/setup_changeover_rules.py
 - phase 4/outputs/phase4_master_production_schedule.csv
 - phase 4/outputs/phase4_bom_component_requirements.csv
 - phase 4/outputs/phase4_mrp_net_component_requirements.csv
@@ -373,6 +389,14 @@ Included files:
 - phase 4/outputs/phase4_wip_maintenance_opportunity_analysis.csv
 - phase 4/outputs/phase4_wip_aware_schedule_manager_review_queue.csv
 - phase 4/outputs/phase4_wip_aware_schedule_validation.csv
+- phase 4/outputs/phase4_wip_buffer_access_rules.csv
+- phase 4/outputs/phase4_wip_buffer_access_validation.csv
+- phase 4/outputs/phase4_setup_family_master.csv
+- phase 4/outputs/phase4_setup_changeover_matrix.csv
+- phase 4/outputs/phase4_operation_setup_profile.csv
+- phase 4/outputs/phase4_setup_sequence_impact_analysis.csv
+- phase 4/outputs/phase4_setup_manager_review_queue.csv
+- phase 4/outputs/phase4_setup_changeover_validation.csv
 - phase 4/outputs/phase4_initialization_validation.json
 - phase 4/outputs/phase4_initialization_validation_report.txt
 - phase 4/outputs/phase4_review_bundle_manifest.txt

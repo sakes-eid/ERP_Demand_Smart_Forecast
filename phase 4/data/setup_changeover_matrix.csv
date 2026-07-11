@@ -1,0 +1,26 @@
+from_setup_family_id,to_setup_family_id,workstation_id,machine_type_id,changeover_time_minutes,changeover_complexity,cleaning_required_flag,tool_change_required_flag,quality_check_required_flag,preferred_sequence_flag,avoid_sequence_flag,active_flag,advisory_only_flag,notes
+ROAD_FRAME_PREP,ROAD_FRAME_PREP,WS-FRAME-PREP,FRAME_ALIGNMENT_FIXTURE,0,NONE,False,False,False,True,False,True,True,Same family no changeover.
+MTB_FRAME_PREP,MTB_FRAME_PREP,WS-FRAME-PREP,FRAME_ALIGNMENT_FIXTURE,0,NONE,False,False,False,True,False,True,True,Same family no changeover.
+ROAD_FRAME_PREP,MTB_FRAME_PREP,WS-FRAME-PREP,FRAME_ALIGNMENT_FIXTURE,18,MEDIUM,False,True,True,False,False,True,True,Frame jig adjustment between road and mountain frames.
+MTB_FRAME_PREP,ROAD_FRAME_PREP,WS-FRAME-PREP,FRAME_ALIGNMENT_FIXTURE,18,MEDIUM,False,True,True,False,False,True,True,Frame jig adjustment between mountain and road frames.
+ROAD_WHEEL_SUBASSEMBLY,ROAD_WHEEL_SUBASSEMBLY,WS-WHEEL-SUB,WHEEL_TRUING_STAND,0,NONE,False,False,False,True,False,True,True,Same family no changeover.
+MTB_WHEEL_SUBASSEMBLY,MTB_WHEEL_SUBASSEMBLY,WS-WHEEL-SUB,WHEEL_TRUING_STAND,0,NONE,False,False,False,True,False,True,True,Same family no changeover.
+ROAD_WHEEL_SUBASSEMBLY,MTB_WHEEL_SUBASSEMBLY,WS-WHEEL-SUB,WHEEL_TRUING_STAND,10,LOW,False,True,True,False,False,True,True,Wheel truing fixture adjustment.
+MTB_WHEEL_SUBASSEMBLY,ROAD_WHEEL_SUBASSEMBLY,WS-WHEEL-SUB,WHEEL_TRUING_STAND,10,LOW,False,True,True,False,False,True,True,Wheel truing fixture adjustment.
+ROAD_BRAKE_SUBASSEMBLY,ROAD_BRAKE_SUBASSEMBLY,WS-BRAKE-SUB,BRAKE_ASSEMBLY_TOOLS,0,NONE,False,False,False,True,False,True,True,Same family no changeover.
+MTB_BRAKE_SUBASSEMBLY,MTB_BRAKE_SUBASSEMBLY,WS-BRAKE-SUB,BRAKE_ASSEMBLY_TOOLS,0,NONE,False,False,False,True,False,True,True,Same family no changeover.
+ROAD_BRAKE_SUBASSEMBLY,MTB_BRAKE_SUBASSEMBLY,WS-BRAKE-SUB,BRAKE_ASSEMBLY_TOOLS,12,LOW,False,True,True,False,False,True,True,Brake bench tooling adjustment.
+MTB_BRAKE_SUBASSEMBLY,ROAD_BRAKE_SUBASSEMBLY,WS-BRAKE-SUB,BRAKE_ASSEMBLY_TOOLS,12,LOW,False,True,True,False,False,True,True,Brake bench tooling adjustment.
+FORK_PREP,FORK_PREP,WS-FORK-SUSP,FORK_SUSPENSION_BENCH,0,NONE,False,False,False,True,False,True,True,Same family no changeover.
+ROAD_FINAL_ASSEMBLY,ROAD_FINAL_ASSEMBLY,WS-FINAL-ASM,BIKE_ASSEMBLY_STAND,0,NONE,False,False,False,True,False,True,True,Same family no changeover.
+MTB_FINAL_ASSEMBLY,MTB_FINAL_ASSEMBLY,WS-FINAL-ASM,BIKE_ASSEMBLY_STAND,0,NONE,False,False,False,True,False,True,True,Same family no changeover.
+ROAD_FINAL_ASSEMBLY,MTB_FINAL_ASSEMBLY,WS-FINAL-ASM,BIKE_ASSEMBLY_STAND,24,HIGH,False,True,True,False,True,True,True,Final assembly stand and checklist changeover.
+MTB_FINAL_ASSEMBLY,ROAD_FINAL_ASSEMBLY,WS-FINAL-ASM,BIKE_ASSEMBLY_STAND,24,HIGH,False,True,True,False,True,True,True,Final assembly stand and checklist changeover.
+ROAD_QC_TESTING,ROAD_QC_TESTING,WS-QC,INSPECTION_TOOLS,0,NONE,False,False,False,True,False,True,True,Same family no changeover.
+MTB_QC_TESTING,MTB_QC_TESTING,WS-QC,INSPECTION_TOOLS,0,NONE,False,False,False,True,False,True,True,Same family no changeover.
+ROAD_QC_TESTING,MTB_QC_TESTING,WS-QC,INSPECTION_TOOLS,8,LOW,False,False,True,False,False,True,True,QC checklist and fixture review.
+MTB_QC_TESTING,ROAD_QC_TESTING,WS-QC,INSPECTION_TOOLS,8,LOW,False,False,True,False,False,True,True,QC checklist and fixture review.
+ROAD_PACKAGING,ROAD_PACKAGING,WS-PACK,PACKAGING_TOOLS,0,NONE,False,False,False,True,False,True,True,Same family no changeover.
+MTB_PACKAGING,MTB_PACKAGING,WS-PACK,PACKAGING_TOOLS,0,NONE,False,False,False,True,False,True,True,Same family no changeover.
+ROAD_PACKAGING,MTB_PACKAGING,WS-PACK,PACKAGING_TOOLS,6,LOW,False,False,False,False,False,True,True,Packaging label and carton adjustment.
+MTB_PACKAGING,ROAD_PACKAGING,WS-PACK,PACKAGING_TOOLS,6,LOW,False,False,False,False,False,True,True,Packaging label and carton adjustment.

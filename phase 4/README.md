@@ -96,6 +96,11 @@ Current initialization scope:
 - Step 8D can reduce WIP/predecessor/material-style blockers when accepted WIP is available, but it does not hide real capacity or maintenance blockers.
 - Step 8D identifies advisory upstream maintenance opportunities after WIP targets are reached, but it does not schedule maintenance or create work orders.
 - Step 8D does not consume WIP, move WIP, create WIP transactions, reserve inventory, create production orders, confirm schedules, dispatch workers, create purchase orders, apply capacity reductions, or run simulation.
+- Step 8E adds strict WIP buffer access rules and setup/changeover rules for future scheduling.
+- Step 8E enforces that an operation can consume only WIP directly mapped to that operation as the consumer and can produce only into its own output WIP buffer.
+- Step 8E merge operations can consume multiple WIP buffers only when those buffers directly map to the merge operation.
+- Step 8E setup families and changeover matrix rows estimate setup penalties and batching opportunities without reordering the advisory schedule.
+- Step 8E does not consume WIP, create WIP transactions, reorder schedules, create production orders, confirm schedules, dispatch workers, create purchase orders, create maintenance work orders, apply capacity reductions, or run simulation.
 - Routing is the ERP version of the production flowchart.
 - Road Bike and Mountain Bike now have different advisory routings.
 - Parallel subassembly branches are included for both products.
@@ -179,8 +184,9 @@ Run order:
 20. Build advisory Phase 4 production schedule candidates.
 21. Build advisory Phase 4 WIP batch tracking and buffer foundation.
 22. Build advisory Phase 4 WIP-aware schedule feasibility.
-23. Run Phase 3 component inventory checks.
-24. Run Phase 2 component supplier checks.
+23. Build advisory Phase 4 strict WIP buffer access and setup/changeover foundation.
+24. Run Phase 3 component inventory checks.
+25. Run Phase 2 component supplier checks.
 
 The Phase 4 bridges are optional-safe. If a bridge file is missing or fails, Phase 2 and Phase 3 print a warning and continue their existing core pipelines.
 
@@ -195,6 +201,7 @@ Guardrails:
 - Production schedule candidates are advisory only and remain `NOT_SCHEDULED_CANDIDATE_ONLY`.
 - WIP tracking is advisory only; no WIP or component inventory is consumed or reserved.
 - WIP-aware schedule feasibility is advisory only and does not create WIP transactions or confirmed schedules.
+- Setup/changeover analysis is advisory only and does not reorder candidate schedules.
 - Simulation is a separate future phase.
 - Future production release flags should default to `production_order_release_allowed = False`.
 
@@ -218,5 +225,5 @@ Next likely Phase 4 feature:
 
 Review bundle:
 
-- `create_phase4_review_bundle.py` generates `phase4_step8d_wip_aware_schedule_review_bundle.zip` at the project root for external review.
+- `create_phase4_review_bundle.py` generates `phase4_step8e_setup_changeover_review_bundle.zip` at the project root for external review.
 - The bundle preserves project-relative folder structure and excludes cache, bytecode, virtual environment, and zip artifacts.

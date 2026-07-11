@@ -73,6 +73,11 @@ PHASE4_OUTPUTS = {
     "wip_buffer_impact_on_schedule": PHASE4_DIR / "outputs" / "phase4_wip_buffer_impact_on_schedule.csv",
     "wip_based_continuity_recommendations": PHASE4_DIR / "outputs" / "phase4_wip_based_continuity_recommendations.csv",
     "wip_maintenance_opportunity_analysis": PHASE4_DIR / "outputs" / "phase4_wip_maintenance_opportunity_analysis.csv",
+    "wip_buffer_access_rules": PHASE4_DIR / "outputs" / "phase4_wip_buffer_access_rules.csv",
+    "setup_family_master": PHASE4_DIR / "outputs" / "phase4_setup_family_master.csv",
+    "setup_changeover_matrix": PHASE4_DIR / "outputs" / "phase4_setup_changeover_matrix.csv",
+    "operation_setup_profile": PHASE4_DIR / "outputs" / "phase4_operation_setup_profile.csv",
+    "setup_sequence_impact_analysis": PHASE4_DIR / "outputs" / "phase4_setup_sequence_impact_analysis.csv",
     "component_inventory_check": PROJECT_ROOT / "phase 3" / "outputs" / "phase4_component_inventory_check.csv",
     "component_supplier_check": PROJECT_ROOT / "phase 2" / "outputs" / "phase4_component_supplier_check.csv",
 }
@@ -254,6 +259,17 @@ WIP_CONTINUITY_RECOMMENDATIONS_FILE = PHASE4_DIR / "outputs" / "phase4_wip_based
 WIP_MAINTENANCE_OPPORTUNITY_FILE = PHASE4_DIR / "outputs" / "phase4_wip_maintenance_opportunity_analysis.csv"
 WIP_AWARE_REVIEW_FILE = PHASE4_DIR / "outputs" / "phase4_wip_aware_schedule_manager_review_queue.csv"
 WIP_AWARE_VALIDATION_FILE = PHASE4_DIR / "outputs" / "phase4_wip_aware_schedule_validation.csv"
+SETUP_FAMILIES_DATA_FILE = PHASE4_DIR / "data" / "setup_families.csv"
+SETUP_CHANGEOVER_DATA_FILE = PHASE4_DIR / "data" / "setup_changeover_matrix.csv"
+WORKSTATION_SETUP_RULES_DATA_FILE = PHASE4_DIR / "data" / "workstation_setup_rules.csv"
+WIP_ACCESS_RULES_FILE = PHASE4_DIR / "outputs" / "phase4_wip_buffer_access_rules.csv"
+WIP_ACCESS_VALIDATION_FILE = PHASE4_DIR / "outputs" / "phase4_wip_buffer_access_validation.csv"
+SETUP_FAMILY_MASTER_FILE = PHASE4_DIR / "outputs" / "phase4_setup_family_master.csv"
+SETUP_CHANGEOVER_MATRIX_FILE = PHASE4_DIR / "outputs" / "phase4_setup_changeover_matrix.csv"
+OPERATION_SETUP_PROFILE_FILE = PHASE4_DIR / "outputs" / "phase4_operation_setup_profile.csv"
+SETUP_SEQUENCE_IMPACT_FILE = PHASE4_DIR / "outputs" / "phase4_setup_sequence_impact_analysis.csv"
+SETUP_REVIEW_FILE = PHASE4_DIR / "outputs" / "phase4_setup_manager_review_queue.csv"
+SETUP_VALIDATION_FILE = PHASE4_DIR / "outputs" / "phase4_setup_changeover_validation.csv"
 
 
 def main() -> None:
@@ -305,6 +321,7 @@ def main() -> None:
     checks.append(_check_production_schedule_candidates())
     checks.append(_check_wip_batch_tracking())
     checks.append(_check_wip_aware_schedule_feasibility())
+    checks.append(_check_setup_changeover_rules())
     checks.append(_check_phase3_inventory_check())
     checks.append(_check_phase2_supplier_check())
     checks.append(_check_phase4_run_id_consistency())
@@ -2091,6 +2108,149 @@ def _check_wip_aware_schedule_feasibility() -> dict:
         "wip_aware_schedule_feasibility",
         "PASS",
         f"Step 8D WIP-aware schedule feasibility valid; rows={len(feasibility)}, balance_rows={len(balance)}, buffer_rows={len(buffer_impact)}.",
+    )
+
+
+def _check_setup_changeover_rules() -> dict:
+    required_files = [
+        (SETUP_FAMILIES_DATA_FILE, "setup families data"),
+        (SETUP_CHANGEOVER_DATA_FILE, "setup changeover matrix data"),
+        (WORKSTATION_SETUP_RULES_DATA_FILE, "workstation setup rules data"),
+        (WIP_ACCESS_RULES_FILE, "WIP buffer access rules"),
+        (WIP_ACCESS_VALIDATION_FILE, "WIP buffer access validation"),
+        (SETUP_FAMILY_MASTER_FILE, "setup family master"),
+        (SETUP_CHANGEOVER_MATRIX_FILE, "setup changeover matrix"),
+        (OPERATION_SETUP_PROFILE_FILE, "operation setup profile"),
+        (SETUP_SEQUENCE_IMPACT_FILE, "setup sequence impact"),
+        (SETUP_REVIEW_FILE, "setup manager review queue"),
+        (SETUP_VALIDATION_FILE, "setup/changeover validation"),
+    ]
+    for path, label in required_files:
+        if not path.exists():
+            return _result("setup_changeover_rules", "FAIL", f"{label} file is missing: {path}")
+        if pd.read_csv(path).empty:
+            return _result("setup_changeover_rules", "FAIL", f"{label} file has no rows: {path}")
+
+    validation = pd.read_csv(SETUP_VALIDATION_FILE)
+    fail_count = int((validation["status"].astype(str).str.upper() == "FAIL").sum()) if "status" in validation.columns else len(validation)
+    if fail_count:
+        return _result("setup_changeover_rules", "FAIL", f"Setup/changeover validation contains FAIL rows: {fail_count}")
+
+    access_rules = pd.read_csv(WIP_ACCESS_RULES_FILE)
+    access_validation = pd.read_csv(WIP_ACCESS_VALIDATION_FILE)
+    families = pd.read_csv(SETUP_FAMILY_MASTER_FILE)
+    matrix = pd.read_csv(SETUP_CHANGEOVER_MATRIX_FILE)
+    profiles = pd.read_csv(OPERATION_SETUP_PROFILE_FILE)
+    sequence = pd.read_csv(SETUP_SEQUENCE_IMPACT_FILE)
+    review = pd.read_csv(SETUP_REVIEW_FILE)
+    nodes = pd.read_csv(ROUTING_GRAPH_NODES_FILE)
+    wip_items = pd.read_csv(WIP_ITEM_MASTER_FILE)
+    buffers = pd.read_csv(WIP_BUFFER_STATUS_FILE)
+
+    required_columns = {
+        "access_rules": {
+            "planning_run_id", "finished_sku", "operation_id", "operation_name", "workstation_id", "allowed_input_wip_item_id",
+            "allowed_input_wip_buffer_id", "allowed_output_wip_item_id", "allowed_output_wip_buffer_id", "predecessor_operation_id",
+            "successor_operation_id", "buffer_access_rule_type", "merge_operation_flag", "parallel_branch_flag", "access_rule_status",
+            "source_phase", "advisory_only_flag",
+        },
+        "access_validation": {
+            "validation_check_id", "planning_run_id", "finished_sku", "operation_id", "operation_name", "checked_wip_item_id",
+            "checked_wip_buffer_id", "validation_check_name", "validation_status", "validation_severity", "validation_message",
+            "source_phase", "advisory_only_flag",
+        },
+        "families": {
+            "planning_run_id", "setup_family_id", "setup_family_name", "setup_family_type", "finished_sku", "operation_id",
+            "workstation_id", "machine_type_id", "default_setup_time_minutes", "setup_sensitive_flag", "batching_preferred_flag",
+            "active_flag", "advisory_only_flag", "notes", "source_phase",
+        },
+        "matrix": {
+            "planning_run_id", "from_setup_family_id", "to_setup_family_id", "workstation_id", "machine_type_id",
+            "changeover_time_minutes", "changeover_complexity", "cleaning_required_flag", "tool_change_required_flag",
+            "quality_check_required_flag", "preferred_sequence_flag", "avoid_sequence_flag", "active_flag", "advisory_only_flag",
+            "notes", "source_phase",
+        },
+        "profiles": {
+            "planning_run_id", "finished_sku", "operation_id", "operation_name", "workstation_id", "machine_type_id",
+            "setup_family_id", "setup_family_name", "setup_sensitive_flag", "batching_preferred_flag", "critical_path_flag",
+            "bottleneck_risk_flag", "queue_risk_flag", "default_setup_time_minutes", "setup_profile_status", "source_phase",
+            "advisory_only_flag",
+        },
+        "sequence": {
+            "planning_run_id", "schedule_candidate_id", "finished_sku", "operation_id", "operation_name", "workstation_id",
+            "candidate_schedule_period", "candidate_schedule_day", "candidate_schedule_shift", "previous_setup_family_id",
+            "current_setup_family_id", "changeover_time_minutes", "changeover_complexity", "setup_penalty_flag",
+            "preferred_sequence_flag", "avoid_sequence_flag", "batching_opportunity_flag", "estimated_setup_capacity_loss_minutes",
+            "setup_sequence_status", "source_phase", "advisory_only_flag",
+        },
+        "review": {
+            "review_item_id", "planning_run_id", "schedule_candidate_id", "finished_sku", "operation_id", "workstation_id",
+            "wip_item_id", "wip_buffer_id", "setup_family_id", "issue_type", "issue_severity", "issue_description",
+            "recommended_review_action", "auto_action_allowed", "advisory_only_flag",
+        },
+    }
+    frames = {"access_rules": access_rules, "access_validation": access_validation, "families": families, "matrix": matrix, "profiles": profiles, "sequence": sequence, "review": review}
+    for label, columns in required_columns.items():
+        missing = sorted(columns.difference(frames[label].columns))
+        if missing:
+            return _result("setup_changeover_rules", "FAIL", f"{label} missing columns: {missing}")
+
+    if int((access_validation["validation_status"].astype(str).str.upper() == "FAIL").sum()):
+        return _result("setup_changeover_rules", "FAIL", "WIP buffer access validation contains FAIL rows.")
+    valid_ops = set(nodes["operation_id"].astype(str))
+    access_ops = set(access_rules["operation_id"].astype(str))
+    if not access_ops <= valid_ops:
+        return _result("setup_changeover_rules", "FAIL", f"WIP access rules reference invalid operations: {sorted(access_ops - valid_ops)}")
+    valid_wip = set(wip_items["wip_item_id"].astype(str))
+    wip_refs = set(access_rules["allowed_input_wip_item_id"].dropna().astype(str)) | set(access_rules["allowed_output_wip_item_id"].dropna().astype(str))
+    wip_refs.discard("")
+    if not wip_refs <= valid_wip:
+        return _result("setup_changeover_rules", "FAIL", f"WIP access rules reference invalid WIP items: {sorted(wip_refs - valid_wip)}")
+    valid_buffers = set(buffers["wip_buffer_id"].astype(str))
+    buffer_refs = set(access_rules["allowed_input_wip_buffer_id"].dropna().astype(str)) | set(access_rules["allowed_output_wip_buffer_id"].dropna().astype(str))
+    buffer_refs.discard("")
+    if not buffer_refs <= valid_buffers:
+        return _result("setup_changeover_rules", "FAIL", f"WIP access rules reference invalid buffers: {sorted(buffer_refs - valid_buffers)}")
+    self_consumption = access_rules[
+        (access_rules["allowed_input_wip_item_id"].astype(str) != "")
+        & (access_rules["allowed_input_wip_item_id"].astype(str) == access_rules["allowed_output_wip_item_id"].astype(str))
+    ]
+    if not self_consumption.empty:
+        return _result("setup_changeover_rules", "FAIL", "An operation can consume from its own output buffer.")
+    profile_ready = profiles[profiles["setup_profile_status"].astype(str) == "SETUP_PROFILE_READY"]
+    missing_profile_ops = set(nodes["operation_id"].astype(str)) - set(profile_ready["operation_id"].astype(str))
+    if missing_profile_ops:
+        return _result("setup_changeover_rules", "FAIL", f"Schedulable operations missing setup profiles: {sorted(missing_profile_ops)}")
+    family_ids = set(families["setup_family_id"].astype(str))
+    if not set(profiles["setup_family_id"].dropna().astype(str)) <= family_ids:
+        return _result("setup_changeover_rules", "FAIL", "Operation setup profile references invalid setup families.")
+    matrix_refs = set(matrix["from_setup_family_id"].astype(str)) | set(matrix["to_setup_family_id"].astype(str))
+    if not matrix_refs <= family_ids:
+        return _result("setup_changeover_rules", "FAIL", f"Changeover matrix references invalid setup families: {sorted(matrix_refs - family_ids)}")
+    changeover = pd.to_numeric(matrix["changeover_time_minutes"], errors="coerce")
+    if changeover.isna().any() or (changeover < 0).any():
+        return _result("setup_changeover_rules", "FAIL", "Changeover times must be numeric and non-negative.")
+    self_bad = matrix[
+        (matrix["from_setup_family_id"].astype(str) == matrix["to_setup_family_id"].astype(str))
+        & (pd.to_numeric(matrix["changeover_time_minutes"], errors="coerce").fillna(999) > 0.001)
+    ]
+    if not self_bad.empty:
+        return _result("setup_changeover_rules", "FAIL", "Self-to-self changeover must be zero or near zero.")
+    high_rows = sequence[sequence["setup_sequence_status"].astype(str) == "HIGH_SETUP_IMPACT"]
+    if not high_rows.empty and review[review["issue_type"].astype(str) == "HIGH_SETUP_IMPACT"].empty:
+        return _result("setup_changeover_rules", "FAIL", "High setup impact rows must be sent to manager review.")
+    batching_rows = sequence[_to_bool(sequence["batching_opportunity_flag"])]
+    if not batching_rows.empty and review[review["issue_type"].astype(str) == "BATCHING_OPPORTUNITY_REVIEW"].empty:
+        return _result("setup_changeover_rules", "FAIL", "Batching opportunity rows must be sent to manager review.")
+    for label, frame in frames.items():
+        if not _all_true(frame, "advisory_only_flag"):
+            return _result("setup_changeover_rules", "FAIL", f"{label} contains non-advisory rows.")
+    if not _all_false(review, "auto_action_allowed"):
+        return _result("setup_changeover_rules", "FAIL", "Setup manager review queue must not allow automatic action.")
+    return _result(
+        "setup_changeover_rules",
+        "PASS",
+        f"Step 8E setup/changeover and WIP access rules valid; access_rules={len(access_rules)}, setup_profiles={len(profiles)}, sequence_rows={len(sequence)}.",
     )
 
 

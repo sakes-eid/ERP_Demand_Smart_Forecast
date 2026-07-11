@@ -1,4 +1,4 @@
-"""Create a clean Phase 4 Step 8D WIP-aware schedule review bundle."""
+"""Create a clean Phase 4 Step 8E setup/changeover review bundle."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 PHASE4_OUTPUTS = PROJECT_ROOT / "phase 4" / "outputs"
-ZIP_PATH = PROJECT_ROOT / "phase4_step8d_wip_aware_schedule_review_bundle.zip"
+ZIP_PATH = PROJECT_ROOT / "phase4_step8e_setup_changeover_review_bundle.zip"
 MANIFEST_PATH = PHASE4_OUTPUTS / "phase4_review_bundle_manifest.txt"
 
 REQUIRED_RELATIVE_FILES = [
@@ -97,6 +97,9 @@ REQUIRED_RELATIVE_FILES = [
     "phase 4/data/wip_items.csv",
     "phase 4/data/wip_buffer_locations.csv",
     "phase 4/data/wip_batch_seed.csv",
+    "phase 4/data/setup_families.csv",
+    "phase 4/data/setup_changeover_matrix.csv",
+    "phase 4/data/workstation_setup_rules.csv",
     "phase 4/core/bom_explosion_bridge.py",
     "phase 4/core/component_inventory_bridge.py",
     "phase 4/core/component_supplier_bridge.py",
@@ -114,6 +117,7 @@ REQUIRED_RELATIVE_FILES = [
     "phase 4/core/production_schedule_candidates.py",
     "phase 4/core/wip_batch_tracking.py",
     "phase 4/core/wip_aware_schedule_feasibility.py",
+    "phase 4/core/setup_changeover_rules.py",
     "phase 4/outputs/phase4_master_production_schedule.csv",
     "phase 4/outputs/phase4_bom_component_requirements.csv",
     "phase 4/outputs/phase4_mrp_net_component_requirements.csv",
@@ -191,6 +195,14 @@ REQUIRED_RELATIVE_FILES = [
     "phase 4/outputs/phase4_wip_maintenance_opportunity_analysis.csv",
     "phase 4/outputs/phase4_wip_aware_schedule_manager_review_queue.csv",
     "phase 4/outputs/phase4_wip_aware_schedule_validation.csv",
+    "phase 4/outputs/phase4_wip_buffer_access_rules.csv",
+    "phase 4/outputs/phase4_wip_buffer_access_validation.csv",
+    "phase 4/outputs/phase4_setup_family_master.csv",
+    "phase 4/outputs/phase4_setup_changeover_matrix.csv",
+    "phase 4/outputs/phase4_operation_setup_profile.csv",
+    "phase 4/outputs/phase4_setup_sequence_impact_analysis.csv",
+    "phase 4/outputs/phase4_setup_manager_review_queue.csv",
+    "phase 4/outputs/phase4_setup_changeover_validation.csv",
     "phase 4/outputs/phase4_initialization_validation.json",
     "phase 4/outputs/phase4_initialization_validation_report.txt",
     "phase 4/outputs/phase4_review_bundle_manifest.txt",
@@ -440,6 +452,18 @@ def _verify_zip() -> tuple[str, list[str]]:
         "phase 4/outputs/phase4_wip_maintenance_opportunity_analysis.csv": "Phase 4 WIP maintenance opportunity analysis output exists inside the zip",
         "phase 4/outputs/phase4_wip_aware_schedule_manager_review_queue.csv": "Phase 4 WIP-aware schedule manager review queue exists inside the zip",
         "phase 4/outputs/phase4_wip_aware_schedule_validation.csv": "Phase 4 WIP-aware schedule validation output exists inside the zip",
+        "phase 4/data/setup_families.csv": "Phase 4 setup families data exists inside the zip",
+        "phase 4/data/setup_changeover_matrix.csv": "Phase 4 setup changeover matrix data exists inside the zip",
+        "phase 4/data/workstation_setup_rules.csv": "Phase 4 workstation setup rules data exists inside the zip",
+        "phase 4/core/setup_changeover_rules.py": "Phase 4 setup/changeover rules module exists inside the zip",
+        "phase 4/outputs/phase4_wip_buffer_access_rules.csv": "Phase 4 WIP buffer access rules output exists inside the zip",
+        "phase 4/outputs/phase4_wip_buffer_access_validation.csv": "Phase 4 WIP buffer access validation output exists inside the zip",
+        "phase 4/outputs/phase4_setup_family_master.csv": "Phase 4 setup family master output exists inside the zip",
+        "phase 4/outputs/phase4_setup_changeover_matrix.csv": "Phase 4 setup changeover matrix output exists inside the zip",
+        "phase 4/outputs/phase4_operation_setup_profile.csv": "Phase 4 operation setup profile output exists inside the zip",
+        "phase 4/outputs/phase4_setup_sequence_impact_analysis.csv": "Phase 4 setup sequence impact output exists inside the zip",
+        "phase 4/outputs/phase4_setup_manager_review_queue.csv": "Phase 4 setup manager review queue exists inside the zip",
+        "phase 4/outputs/phase4_setup_changeover_validation.csv": "Phase 4 setup/changeover validation output exists inside the zip",
         "phase 4/core/production_flow_view.py": "Phase 4 production flow view module exists inside the zip",
         "phase 4/outputs/phase4_production_flow_view.csv": "Phase 4 production flow view exists inside the zip",
         "phase 4/outputs/phase4_flow_step_risk_summary.csv": "Phase 4 flow-step risk summary exists inside the zip",
@@ -544,7 +568,7 @@ def _build_manifest(
 ) -> str:
     zip_size_mb = ZIP_PATH.stat().st_size / (1024 * 1024) if ZIP_PATH.exists() else 0.0
     lines = [
-        "Phase 4 Step 8B Production Schedule Candidates Review Bundle Manifest",
+        "Phase 4 Step 8E Setup and Changeover Review Bundle Manifest",
         f"Generated zip path: {ZIP_PATH}",
         f"Generated timestamp UTC: {generated_at}",
         f"Included file count: {len(included)}",
