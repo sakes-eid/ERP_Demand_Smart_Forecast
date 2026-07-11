@@ -1,4 +1,4 @@
-"""Create a clean Phase 4 Step 8C WIP tracking review bundle."""
+"""Create a clean Phase 4 Step 8D WIP-aware schedule review bundle."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 PHASE4_OUTPUTS = PROJECT_ROOT / "phase 4" / "outputs"
-ZIP_PATH = PROJECT_ROOT / "phase4_step8c_wip_tracking_review_bundle.zip"
+ZIP_PATH = PROJECT_ROOT / "phase4_step8d_wip_aware_schedule_review_bundle.zip"
 MANIFEST_PATH = PHASE4_OUTPUTS / "phase4_review_bundle_manifest.txt"
 
 REQUIRED_RELATIVE_FILES = [
@@ -113,6 +113,7 @@ REQUIRED_RELATIVE_FILES = [
     "phase 4/core/quality_adjusted_capacity.py",
     "phase 4/core/production_schedule_candidates.py",
     "phase 4/core/wip_batch_tracking.py",
+    "phase 4/core/wip_aware_schedule_feasibility.py",
     "phase 4/outputs/phase4_master_production_schedule.csv",
     "phase 4/outputs/phase4_bom_component_requirements.csv",
     "phase 4/outputs/phase4_mrp_net_component_requirements.csv",
@@ -183,6 +184,13 @@ REQUIRED_RELATIVE_FILES = [
     "phase 4/outputs/phase4_wip_line_continuity_analysis.csv",
     "phase 4/outputs/phase4_wip_manager_review_queue.csv",
     "phase 4/outputs/phase4_wip_validation.csv",
+    "phase 4/outputs/phase4_wip_aware_schedule_feasibility.csv",
+    "phase 4/outputs/phase4_wip_supply_demand_balance.csv",
+    "phase 4/outputs/phase4_wip_buffer_impact_on_schedule.csv",
+    "phase 4/outputs/phase4_wip_based_continuity_recommendations.csv",
+    "phase 4/outputs/phase4_wip_maintenance_opportunity_analysis.csv",
+    "phase 4/outputs/phase4_wip_aware_schedule_manager_review_queue.csv",
+    "phase 4/outputs/phase4_wip_aware_schedule_validation.csv",
     "phase 4/outputs/phase4_initialization_validation.json",
     "phase 4/outputs/phase4_initialization_validation_report.txt",
     "phase 4/outputs/phase4_review_bundle_manifest.txt",
@@ -424,6 +432,14 @@ def _verify_zip() -> tuple[str, list[str]]:
         "phase 4/outputs/phase4_wip_line_continuity_analysis.csv": "Phase 4 WIP line continuity output exists inside the zip",
         "phase 4/outputs/phase4_wip_manager_review_queue.csv": "Phase 4 WIP manager review queue exists inside the zip",
         "phase 4/outputs/phase4_wip_validation.csv": "Phase 4 WIP validation output exists inside the zip",
+        "phase 4/core/wip_aware_schedule_feasibility.py": "Phase 4 WIP-aware schedule feasibility module exists inside the zip",
+        "phase 4/outputs/phase4_wip_aware_schedule_feasibility.csv": "Phase 4 WIP-aware schedule feasibility output exists inside the zip",
+        "phase 4/outputs/phase4_wip_supply_demand_balance.csv": "Phase 4 WIP supply-demand balance output exists inside the zip",
+        "phase 4/outputs/phase4_wip_buffer_impact_on_schedule.csv": "Phase 4 WIP buffer impact on schedule output exists inside the zip",
+        "phase 4/outputs/phase4_wip_based_continuity_recommendations.csv": "Phase 4 WIP-based continuity recommendations output exists inside the zip",
+        "phase 4/outputs/phase4_wip_maintenance_opportunity_analysis.csv": "Phase 4 WIP maintenance opportunity analysis output exists inside the zip",
+        "phase 4/outputs/phase4_wip_aware_schedule_manager_review_queue.csv": "Phase 4 WIP-aware schedule manager review queue exists inside the zip",
+        "phase 4/outputs/phase4_wip_aware_schedule_validation.csv": "Phase 4 WIP-aware schedule validation output exists inside the zip",
         "phase 4/core/production_flow_view.py": "Phase 4 production flow view module exists inside the zip",
         "phase 4/outputs/phase4_production_flow_view.csv": "Phase 4 production flow view exists inside the zip",
         "phase 4/outputs/phase4_flow_step_risk_summary.csv": "Phase 4 flow-step risk summary exists inside the zip",

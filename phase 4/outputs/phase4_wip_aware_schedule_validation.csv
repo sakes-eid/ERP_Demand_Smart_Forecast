@@ -1,0 +1,56 @@
+check_id,check_name,status,message,affected_rows,advisory_only_flag
+WIP8D-001,phase4_production_schedule_candidates_loaded,PASS,phase4_production_schedule_candidates loaded with 28 rows.,28,True
+WIP8D-002,phase4_operation_schedule_candidate_detail_loaded,PASS,phase4_operation_schedule_candidate_detail loaded with 182 rows.,182,True
+WIP8D-003,phase4_production_schedule_capacity_check_loaded,PASS,phase4_production_schedule_capacity_check loaded with 182 rows.,182,True
+WIP8D-004,phase4_production_schedule_material_readiness_loaded,PASS,phase4_production_schedule_material_readiness loaded with 196 rows.,196,True
+WIP8D-005,phase4_wip_item_master_loaded,PASS,phase4_wip_item_master loaded with 14 rows.,14,True
+WIP8D-006,phase4_wip_operation_flow_map_loaded,PASS,phase4_wip_operation_flow_map loaded with 14 rows.,14,True
+WIP8D-007,phase4_wip_batch_ledger_loaded,PASS,phase4_wip_batch_ledger loaded with 9 rows.,9,True
+WIP8D-008,phase4_wip_buffer_status_loaded,PASS,phase4_wip_buffer_status loaded with 14 rows.,14,True
+WIP8D-009,phase4_wip_quality_status_loaded,PASS,phase4_wip_quality_status loaded with 9 rows.,9,True
+WIP8D-010,phase4_wip_line_continuity_analysis_loaded,PASS,phase4_wip_line_continuity_analysis loaded with 14 rows.,14,True
+WIP8D-011,phase4_routing_graph_nodes_loaded,PASS,phase4_routing_graph_nodes loaded with 13 rows.,13,True
+WIP8D-012,phase4_routing_graph_edges_loaded,PASS,phase4_routing_graph_edges loaded with 14 rows.,14,True
+WIP8D-013,phase4_critical_path_by_product_loaded,PASS,phase4_critical_path_by_product loaded with 2 rows.,2,True
+WIP8D-014,phase4_operation_slack_analysis_loaded,PASS,phase4_operation_slack_analysis loaded with 13 rows.,13,True
+WIP8D-015,phase4_bottleneck_visibility_summary_loaded,PASS,phase4_bottleneck_visibility_summary loaded with 7 rows.,7,True
+WIP8D-016,phase4_queue_risk_summary_loaded,PASS,phase4_queue_risk_summary loaded with 7 rows.,7,True
+WIP8D-017,phase4_maintenance_schedule_feasibility_context_loaded,PASS,phase4_maintenance_schedule_feasibility_context loaded with 7 rows.,7,True
+WIP8D-018,phase4_maintenance_production_impact_context_loaded,PASS,phase4_maintenance_production_impact_context loaded with 7 rows.,7,True
+WIP8D-019,wip_aware_schedule_feasibility_not_empty,PASS,wip_aware_schedule_feasibility rows=224,224,True
+WIP8D-020,wip_supply_demand_balance_not_empty,PASS,wip_supply_demand_balance rows=224,224,True
+WIP8D-021,wip_buffer_impact_on_schedule_not_empty,PASS,wip_buffer_impact_on_schedule rows=14,14,True
+WIP8D-022,wip_based_continuity_recommendations_not_empty,PASS,wip_based_continuity_recommendations rows=224,224,True
+WIP8D-023,wip_maintenance_opportunity_analysis_not_empty,PASS,wip_maintenance_opportunity_analysis rows=11,11,True
+WIP8D-024,wip_aware_schedule_manager_review_queue_not_empty,PASS,wip_aware_schedule_manager_review_queue rows=539,539,True
+WIP8D-025,feasibility_required_columns,PASS,Required columns present.,0,True
+WIP8D-026,balance_required_columns,PASS,Required columns present.,0,True
+WIP8D-027,buffer_impact_required_columns,PASS,Required columns present.,0,True
+WIP8D-028,recommendations_required_columns,PASS,Required columns present.,0,True
+WIP8D-029,maintenance_opportunity_required_columns,PASS,Required columns present.,0,True
+WIP8D-030,review_required_columns,PASS,Required columns present.,0,True
+WIP8D-031,step8b_candidates_represented,PASS,Step 8B operation candidates represented in WIP-aware feasibility.,224,True
+WIP8D-032,valid_wip_references,PASS,Invalid WIP refs: [],0,True
+WIP8D-033,valid_buffer_references,PASS,Invalid buffer refs: [],0,True
+WIP8D-034,valid_operation_references,PASS,Invalid operation refs: [],0,True
+WIP8D-035,feasibility_numeric_non_negative,PASS,Bad numeric values=0,0,True
+WIP8D-036,balance_numeric_non_negative,PASS,Bad numeric values=0,0,True
+WIP8D-037,buffer_impact_numeric_non_negative,PASS,Bad numeric values=0,0,True
+WIP8D-038,downstream_resume_requires_accepted_wip,PASS,Downstream resume flag requires accepted WIP.,0,True
+WIP8D-039,upstream_build_false_when_full,PASS,Upstream build must not be true for full-buffer blocked rows.,0,True
+WIP8D-040,wip_reduction_requires_resume,PASS,WIP blocker reduction requires accepted WIP resume support.,0,True
+WIP8D-041,capacity_blockers_not_hidden_by_wip,PASS,Capacity blockers remain visible after WIP.,0,True
+WIP8D-042,maintenance_blockers_not_hidden_by_wip,PASS,Maintenance blockers remain visible after WIP.,0,True
+WIP8D-043,valid_wip_aware_status,PASS,WIP-aware status values valid.,224,True
+WIP8D-044,valid_balance_status,PASS,Balance status values valid.,224,True
+WIP8D-045,valid_buffer_impact_status,PASS,Buffer impact status values valid.,14,True
+WIP8D-046,valid_recommendation_actions,PASS,Recommendation action values valid.,224,True
+WIP8D-047,valid_maintenance_opportunity_status,PASS,Maintenance opportunity status values valid.,11,True
+WIP8D-048,no_wip_consumption,PASS,No WIP consumption flag must be True.,224,True
+WIP8D-049,no_maintenance_orders,PASS,No maintenance order flag must be True.,11,True
+WIP8D-050,advisory_only_outputs,PASS,All Step 8D outputs are advisory-only.,6,True
+WIP8D-051,review_auto_action_disabled,PASS,Review queue auto action must be False.,539,True
+WIP8D-052,Step 8A routing graph validation_no_fail,PASS,Step 8A routing graph validation FAIL rows=0.,0,True
+WIP8D-053,Step 8B production schedule validation_no_fail,PASS,Step 8B production schedule validation FAIL rows=0.,0,True
+WIP8D-054,Step 8C WIP validation_no_fail,PASS,Step 8C WIP validation FAIL rows=0.,0,True
+WIP8D-055,forbidden_outputs_absent,PASS,No forbidden execution/scheduling/transaction outputs found.,0,True

@@ -84,6 +84,14 @@ from core.wip_batch_tracking import WIP_MANAGER_REVIEW_OUTPUT_FILE
 from core.wip_batch_tracking import WIP_QUALITY_STATUS_OUTPUT_FILE
 from core.wip_batch_tracking import WIP_VALIDATION_OUTPUT_FILE
 from core.wip_batch_tracking import build_wip_batch_tracking_outputs
+from core.wip_aware_schedule_feasibility import WIP_AWARE_FEASIBILITY_OUTPUT_FILE
+from core.wip_aware_schedule_feasibility import WIP_AWARE_REVIEW_OUTPUT_FILE
+from core.wip_aware_schedule_feasibility import WIP_AWARE_VALIDATION_OUTPUT_FILE
+from core.wip_aware_schedule_feasibility import WIP_BUFFER_IMPACT_OUTPUT_FILE
+from core.wip_aware_schedule_feasibility import WIP_CONTINUITY_RECOMMENDATIONS_OUTPUT_FILE
+from core.wip_aware_schedule_feasibility import WIP_MAINTENANCE_OPPORTUNITY_OUTPUT_FILE
+from core.wip_aware_schedule_feasibility import WIP_SUPPLY_DEMAND_OUTPUT_FILE
+from core.wip_aware_schedule_feasibility import build_wip_aware_schedule_feasibility_outputs
 from shared.core.workforce_master_data import CREW_CAPACITY_CONTEXT_FILE
 from shared.core.workforce_master_data import MACHINE_AUTH_CONTEXT_FILE as WORKFORCE_MACHINE_AUTH_CONTEXT_FILE
 from shared.core.workforce_master_data import MANAGER_REVIEW_QUEUE_FILE as WORKFORCE_MANAGER_REVIEW_QUEUE_FILE
@@ -170,6 +178,7 @@ def run_initialization() -> None:
     routing_graph_nodes, routing_graph_edges, critical_path, slack_analysis, routing_graph_visual, routing_graph_validation = build_routing_graph_analysis_outputs()
     production_schedule_candidates, production_operation_detail, production_material_readiness, production_capacity_check, production_calendar_view, production_schedule_review, production_schedule_validation = build_production_schedule_candidate_outputs()
     wip_items, wip_flow_map, wip_ledger, wip_buffer_status, wip_quality_status, wip_continuity, wip_review, wip_validation = build_wip_batch_tracking_outputs()
+    wip_aware_feasibility, wip_supply_demand, wip_buffer_impact, wip_continuity_recommendations, wip_maintenance_opportunity, wip_aware_review, wip_aware_validation = build_wip_aware_schedule_feasibility_outputs()
     print("Phase 4 initialization bridge completed.")
     print(f"MPS rows: {len(mps)}")
     print(f"MPS output written to: {MPS_OUTPUT_FILE}")
@@ -385,6 +394,20 @@ def run_initialization() -> None:
     print(f"WIP manager review output written to: {WIP_MANAGER_REVIEW_OUTPUT_FILE}")
     print(f"WIP validation rows: {len(wip_validation)}")
     print(f"WIP validation output written to: {WIP_VALIDATION_OUTPUT_FILE}")
+    print(f"WIP-aware schedule feasibility rows: {len(wip_aware_feasibility)}")
+    print(f"WIP-aware schedule feasibility output written to: {WIP_AWARE_FEASIBILITY_OUTPUT_FILE}")
+    print(f"WIP supply-demand balance rows: {len(wip_supply_demand)}")
+    print(f"WIP supply-demand balance output written to: {WIP_SUPPLY_DEMAND_OUTPUT_FILE}")
+    print(f"WIP buffer impact rows: {len(wip_buffer_impact)}")
+    print(f"WIP buffer impact output written to: {WIP_BUFFER_IMPACT_OUTPUT_FILE}")
+    print(f"WIP continuity recommendation rows: {len(wip_continuity_recommendations)}")
+    print(f"WIP continuity recommendation output written to: {WIP_CONTINUITY_RECOMMENDATIONS_OUTPUT_FILE}")
+    print(f"WIP maintenance opportunity rows: {len(wip_maintenance_opportunity)}")
+    print(f"WIP maintenance opportunity output written to: {WIP_MAINTENANCE_OPPORTUNITY_OUTPUT_FILE}")
+    print(f"WIP-aware schedule manager review rows: {len(wip_aware_review)}")
+    print(f"WIP-aware schedule manager review output written to: {WIP_AWARE_REVIEW_OUTPUT_FILE}")
+    print(f"WIP-aware schedule validation rows: {len(wip_aware_validation)}")
+    print(f"WIP-aware schedule validation output written to: {WIP_AWARE_VALIDATION_OUTPUT_FILE}")
 
 
 if __name__ == "__main__":

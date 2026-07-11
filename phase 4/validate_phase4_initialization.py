@@ -68,11 +68,21 @@ PHASE4_OUTPUTS = {
     "wip_buffer_status": PHASE4_DIR / "outputs" / "phase4_wip_buffer_status.csv",
     "wip_quality_status": PHASE4_DIR / "outputs" / "phase4_wip_quality_status.csv",
     "wip_line_continuity_analysis": PHASE4_DIR / "outputs" / "phase4_wip_line_continuity_analysis.csv",
+    "wip_aware_schedule_feasibility": PHASE4_DIR / "outputs" / "phase4_wip_aware_schedule_feasibility.csv",
+    "wip_supply_demand_balance": PHASE4_DIR / "outputs" / "phase4_wip_supply_demand_balance.csv",
+    "wip_buffer_impact_on_schedule": PHASE4_DIR / "outputs" / "phase4_wip_buffer_impact_on_schedule.csv",
+    "wip_based_continuity_recommendations": PHASE4_DIR / "outputs" / "phase4_wip_based_continuity_recommendations.csv",
+    "wip_maintenance_opportunity_analysis": PHASE4_DIR / "outputs" / "phase4_wip_maintenance_opportunity_analysis.csv",
     "component_inventory_check": PROJECT_ROOT / "phase 3" / "outputs" / "phase4_component_inventory_check.csv",
     "component_supplier_check": PROJECT_ROOT / "phase 2" / "outputs" / "phase4_component_supplier_check.csv",
 }
 EXECUTION_FILE_TOKENS = [
     "production_order",
+    "actual_wip_consumption",
+    "wip_transaction",
+    "component_inventory_consumption",
+    "confirmed_production_schedule",
+    "worker_dispatch",
     "maintenance_work_order",
     "maintenance_schedule",
     "crew_dispatch",
@@ -237,6 +247,13 @@ WIP_QUALITY_STATUS_FILE = PHASE4_DIR / "outputs" / "phase4_wip_quality_status.cs
 WIP_CONTINUITY_FILE = PHASE4_DIR / "outputs" / "phase4_wip_line_continuity_analysis.csv"
 WIP_REVIEW_FILE = PHASE4_DIR / "outputs" / "phase4_wip_manager_review_queue.csv"
 WIP_VALIDATION_FILE = PHASE4_DIR / "outputs" / "phase4_wip_validation.csv"
+WIP_AWARE_FEASIBILITY_FILE = PHASE4_DIR / "outputs" / "phase4_wip_aware_schedule_feasibility.csv"
+WIP_SUPPLY_DEMAND_FILE = PHASE4_DIR / "outputs" / "phase4_wip_supply_demand_balance.csv"
+WIP_BUFFER_IMPACT_FILE = PHASE4_DIR / "outputs" / "phase4_wip_buffer_impact_on_schedule.csv"
+WIP_CONTINUITY_RECOMMENDATIONS_FILE = PHASE4_DIR / "outputs" / "phase4_wip_based_continuity_recommendations.csv"
+WIP_MAINTENANCE_OPPORTUNITY_FILE = PHASE4_DIR / "outputs" / "phase4_wip_maintenance_opportunity_analysis.csv"
+WIP_AWARE_REVIEW_FILE = PHASE4_DIR / "outputs" / "phase4_wip_aware_schedule_manager_review_queue.csv"
+WIP_AWARE_VALIDATION_FILE = PHASE4_DIR / "outputs" / "phase4_wip_aware_schedule_validation.csv"
 
 
 def main() -> None:
@@ -287,6 +304,7 @@ def main() -> None:
     checks.append(_check_routing_graph_analysis())
     checks.append(_check_production_schedule_candidates())
     checks.append(_check_wip_batch_tracking())
+    checks.append(_check_wip_aware_schedule_feasibility())
     checks.append(_check_phase3_inventory_check())
     checks.append(_check_phase2_supplier_check())
     checks.append(_check_phase4_run_id_consistency())
@@ -1930,6 +1948,149 @@ def _check_wip_batch_tracking() -> dict:
         "wip_batch_tracking",
         "PASS",
         f"Step 8C WIP tracking valid; items={len(item_master)}, batches={len(ledger)}, buffers={len(buffer_status)}, continuity_rows={len(continuity)}.",
+    )
+
+
+def _check_wip_aware_schedule_feasibility() -> dict:
+    required_files = [
+        (WIP_AWARE_FEASIBILITY_FILE, "WIP-aware schedule feasibility"),
+        (WIP_SUPPLY_DEMAND_FILE, "WIP supply-demand balance"),
+        (WIP_BUFFER_IMPACT_FILE, "WIP buffer impact on schedule"),
+        (WIP_CONTINUITY_RECOMMENDATIONS_FILE, "WIP continuity recommendations"),
+        (WIP_MAINTENANCE_OPPORTUNITY_FILE, "WIP maintenance opportunity analysis"),
+        (WIP_AWARE_REVIEW_FILE, "WIP-aware schedule manager review queue"),
+        (WIP_AWARE_VALIDATION_FILE, "WIP-aware schedule validation"),
+    ]
+    for path, label in required_files:
+        if not path.exists():
+            return _result("wip_aware_schedule_feasibility", "FAIL", f"{label} file is missing: {path}")
+        if pd.read_csv(path).empty:
+            return _result("wip_aware_schedule_feasibility", "FAIL", f"{label} file has no rows: {path}")
+
+    validation = pd.read_csv(WIP_AWARE_VALIDATION_FILE)
+    fail_count = int((validation["status"].astype(str).str.upper() == "FAIL").sum()) if "status" in validation.columns else len(validation)
+    if fail_count:
+        return _result("wip_aware_schedule_feasibility", "FAIL", f"WIP-aware schedule validation contains FAIL rows: {fail_count}")
+
+    feasibility = pd.read_csv(WIP_AWARE_FEASIBILITY_FILE)
+    balance = pd.read_csv(WIP_SUPPLY_DEMAND_FILE)
+    buffer_impact = pd.read_csv(WIP_BUFFER_IMPACT_FILE)
+    recommendations = pd.read_csv(WIP_CONTINUITY_RECOMMENDATIONS_FILE)
+    maintenance = pd.read_csv(WIP_MAINTENANCE_OPPORTUNITY_FILE)
+    review = pd.read_csv(WIP_AWARE_REVIEW_FILE)
+    candidates = pd.read_csv(PRODUCTION_SCHEDULE_CANDIDATES_FILE)
+    details = pd.read_csv(PRODUCTION_OPERATION_DETAIL_FILE)
+    wip_items = pd.read_csv(WIP_ITEM_MASTER_FILE)
+    buffers = pd.read_csv(WIP_BUFFER_STATUS_FILE)
+    nodes = pd.read_csv(ROUTING_GRAPH_NODES_FILE)
+
+    required_columns = {
+        "feasibility": {
+            "planning_run_id", "schedule_candidate_id", "finished_sku", "operation_id", "operation_name", "workstation_id", "machine_id",
+            "candidate_schedule_period", "candidate_schedule_day", "candidate_schedule_shift", "original_schedule_candidate_status",
+            "original_material_readiness_status", "original_capacity_feasibility_status", "original_maintenance_feasibility_status",
+            "required_input_wip_item_id", "output_wip_item_id", "related_wip_buffer_id", "accepted_wip_available_qty", "required_wip_qty",
+            "wip_shortage_qty", "available_buffer_capacity_qty", "downstream_can_resume_from_wip_flag", "upstream_can_build_wip_flag",
+            "wip_reduces_schedule_blocker_flag", "remaining_material_blocker_flag", "remaining_capacity_blocker_flag",
+            "remaining_maintenance_blocker_flag", "remaining_wip_blocker_flag", "wip_aware_schedule_status", "wip_aware_feasibility_score",
+            "source_phase", "advisory_only_flag",
+        },
+        "balance": {
+            "planning_run_id", "finished_sku", "operation_id", "operation_name", "required_input_wip_item_id", "wip_buffer_id",
+            "accepted_wip_available_qty", "required_wip_qty", "wip_surplus_qty", "wip_shortage_qty", "wip_coverage_pct",
+            "downstream_can_consume_wip_flag", "note_no_wip_consumption_flag", "balance_status", "source_phase", "advisory_only_flag",
+        },
+        "buffer_impact": {
+            "planning_run_id", "wip_buffer_id", "wip_buffer_name", "wip_item_id", "linked_workstation_id", "current_wip_qty",
+            "accepted_wip_qty", "blocked_wip_qty", "min_buffer_qty", "target_buffer_qty", "max_buffer_qty", "available_buffer_capacity_qty",
+            "buffer_utilization_pct", "buffer_status", "upstream_can_continue_flag", "downstream_can_resume_from_wip_flag",
+            "impacted_schedule_candidate_count", "schedule_blockers_reduced_count", "schedule_blockers_remaining_count",
+            "buffer_schedule_impact_status", "source_phase", "advisory_only_flag",
+        },
+        "recommendations": {
+            "recommendation_id", "planning_run_id", "finished_sku", "schedule_candidate_id", "blocking_operation_id",
+            "blocking_operation_name", "blocking_reason", "upstream_operation_id", "upstream_operation_name", "downstream_operation_id",
+            "downstream_operation_name", "wip_item_id", "wip_buffer_id", "current_accepted_wip_qty", "target_buffer_qty",
+            "available_buffer_capacity_qty", "recommended_action", "recommendation_reason", "expected_schedule_effect",
+            "auto_action_allowed", "advisory_only_flag",
+        },
+        "maintenance": {
+            "planning_run_id", "workstation_id", "machine_id", "operation_id", "operation_name", "wip_item_id", "wip_buffer_id",
+            "current_accepted_wip_qty", "target_buffer_qty", "max_buffer_qty", "downstream_can_resume_from_wip_flag",
+            "upstream_can_pause_after_target_flag", "maintenance_opportunity_flag", "maintenance_opportunity_reason",
+            "related_maintenance_blocker_flag", "advisory_maintenance_window_candidate_status", "note_no_maintenance_order_created_flag",
+            "source_phase", "advisory_only_flag",
+        },
+        "review": {
+            "review_item_id", "planning_run_id", "schedule_candidate_id", "finished_sku", "operation_id", "wip_item_id",
+            "wip_buffer_id", "issue_type", "issue_severity", "issue_description", "recommended_review_action",
+            "auto_action_allowed", "advisory_only_flag",
+        },
+    }
+    frames = {"feasibility": feasibility, "balance": balance, "buffer_impact": buffer_impact, "recommendations": recommendations, "maintenance": maintenance, "review": review}
+    for label, columns in required_columns.items():
+        missing = sorted(columns.difference(frames[label].columns))
+        if missing:
+            return _result("wip_aware_schedule_feasibility", "FAIL", f"{label} missing columns: {missing}")
+
+    represented_candidates = set(details["schedule_candidate_id"].astype(str)) <= set(feasibility["schedule_candidate_id"].astype(str))
+    if not represented_candidates:
+        return _result("wip_aware_schedule_feasibility", "FAIL", "Not all Step 8B schedule operation candidates are represented.")
+
+    valid_wip = set(wip_items["wip_item_id"].astype(str))
+    wip_refs = set(feasibility["required_input_wip_item_id"].dropna().astype(str)) | set(feasibility["output_wip_item_id"].dropna().astype(str))
+    wip_refs.discard("")
+    if not wip_refs <= valid_wip:
+        return _result("wip_aware_schedule_feasibility", "FAIL", f"Invalid WIP item references: {sorted(wip_refs - valid_wip)}")
+    valid_buffers = set(buffers["wip_buffer_id"].astype(str))
+    buffer_refs = set(feasibility["related_wip_buffer_id"].dropna().astype(str)) | set(balance["wip_buffer_id"].dropna().astype(str)) | set(buffer_impact["wip_buffer_id"].dropna().astype(str))
+    buffer_refs.discard("")
+    if not buffer_refs <= valid_buffers:
+        return _result("wip_aware_schedule_feasibility", "FAIL", f"Invalid WIP buffer references: {sorted(buffer_refs - valid_buffers)}")
+    valid_ops = set(nodes["operation_id"].astype(str))
+    op_refs = set(feasibility["operation_id"].dropna().astype(str)) | set(balance["operation_id"].dropna().astype(str))
+    op_refs.discard("")
+    if not op_refs <= valid_ops:
+        return _result("wip_aware_schedule_feasibility", "FAIL", f"Invalid operation references: {sorted(op_refs - valid_ops)}")
+
+    for frame, columns, label in [
+        (feasibility, ["accepted_wip_available_qty", "required_wip_qty", "wip_shortage_qty", "available_buffer_capacity_qty", "wip_aware_feasibility_score"], "feasibility"),
+        (balance, ["accepted_wip_available_qty", "required_wip_qty", "wip_shortage_qty", "wip_surplus_qty", "wip_coverage_pct"], "balance"),
+        (buffer_impact, ["current_wip_qty", "accepted_wip_qty", "blocked_wip_qty", "available_buffer_capacity_qty", "buffer_utilization_pct"], "buffer_impact"),
+        (maintenance, ["current_accepted_wip_qty", "target_buffer_qty", "max_buffer_qty"], "maintenance"),
+    ]:
+        for column in columns:
+            values = pd.to_numeric(frame[column], errors="coerce")
+            if values.isna().any() or (values < 0).any():
+                return _result("wip_aware_schedule_feasibility", "FAIL", f"{label}.{column} must be numeric and non-negative.")
+
+    if not feasibility[_to_bool(feasibility["downstream_can_resume_from_wip_flag"]) & (pd.to_numeric(feasibility["accepted_wip_available_qty"], errors="coerce").fillna(0) <= 0)].empty:
+        return _result("wip_aware_schedule_feasibility", "FAIL", "downstream_can_resume_from_wip_flag requires accepted WIP.")
+    if not feasibility[_to_bool(feasibility["upstream_can_build_wip_flag"]) & (feasibility["wip_aware_schedule_status"].astype(str) == "WIP_BUFFER_FULL_BLOCKED")].empty:
+        return _result("wip_aware_schedule_feasibility", "FAIL", "upstream_can_build_wip_flag must be False when buffer is full.")
+    if not feasibility[_to_bool(feasibility["wip_reduces_schedule_blocker_flag"]) & ~_to_bool(feasibility["downstream_can_resume_from_wip_flag"])].empty:
+        return _result("wip_aware_schedule_feasibility", "FAIL", "WIP blocker reduction requires accepted WIP support.")
+    capacity_hidden = feasibility[_to_bool(feasibility["remaining_capacity_blocker_flag"]) & ~feasibility["wip_aware_schedule_status"].astype(str).isin(["CAPACITY_STILL_BLOCKED", "MULTI_BLOCKED_AFTER_WIP"])]
+    if not capacity_hidden.empty:
+        return _result("wip_aware_schedule_feasibility", "FAIL", "Capacity blockers are hidden by WIP-aware status.")
+    maintenance_hidden = feasibility[_to_bool(feasibility["remaining_maintenance_blocker_flag"]) & ~feasibility["wip_aware_schedule_status"].astype(str).isin(["MAINTENANCE_STILL_BLOCKED", "MULTI_BLOCKED_AFTER_WIP"])]
+    if not maintenance_hidden.empty:
+        return _result("wip_aware_schedule_feasibility", "FAIL", "Maintenance blockers are hidden by WIP-aware status.")
+    if not _all_true(balance, "note_no_wip_consumption_flag"):
+        return _result("wip_aware_schedule_feasibility", "FAIL", "WIP supply-demand balance must keep note_no_wip_consumption_flag True.")
+    if not _all_true(maintenance, "note_no_maintenance_order_created_flag"):
+        return _result("wip_aware_schedule_feasibility", "FAIL", "Maintenance opportunity output must keep note_no_maintenance_order_created_flag True.")
+    for label, frame in frames.items():
+        if not _all_true(frame, "advisory_only_flag"):
+            return _result("wip_aware_schedule_feasibility", "FAIL", f"{label} contains non-advisory rows.")
+    if not _all_false(review, "auto_action_allowed") or not _all_false(recommendations, "auto_action_allowed"):
+        return _result("wip_aware_schedule_feasibility", "FAIL", "WIP-aware review/recommendation auto action must be False.")
+    if not candidates.empty and not set(candidates["schedule_candidate_id"].astype(str)) <= set(feasibility["schedule_candidate_id"].astype(str)):
+        return _result("wip_aware_schedule_feasibility", "FAIL", "Step 8B schedule candidates are not represented in Step 8D.")
+    return _result(
+        "wip_aware_schedule_feasibility",
+        "PASS",
+        f"Step 8D WIP-aware schedule feasibility valid; rows={len(feasibility)}, balance_rows={len(balance)}, buffer_rows={len(buffer_impact)}.",
     )
 
 
