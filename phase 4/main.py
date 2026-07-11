@@ -75,6 +75,15 @@ from core.production_schedule_candidates import OPERATION_DETAIL_OUTPUT_FILE as 
 from core.production_schedule_candidates import SCHEDULE_CANDIDATES_OUTPUT_FILE as PRODUCTION_SCHEDULE_CANDIDATES_OUTPUT_FILE
 from core.production_schedule_candidates import VALIDATION_OUTPUT_FILE as PRODUCTION_SCHEDULE_VALIDATION_OUTPUT_FILE
 from core.production_schedule_candidates import build_production_schedule_candidate_outputs
+from core.wip_batch_tracking import WIP_BATCH_LEDGER_OUTPUT_FILE
+from core.wip_batch_tracking import WIP_BUFFER_STATUS_OUTPUT_FILE
+from core.wip_batch_tracking import WIP_CONTINUITY_OUTPUT_FILE
+from core.wip_batch_tracking import WIP_FLOW_MAP_OUTPUT_FILE
+from core.wip_batch_tracking import WIP_ITEM_MASTER_OUTPUT_FILE
+from core.wip_batch_tracking import WIP_MANAGER_REVIEW_OUTPUT_FILE
+from core.wip_batch_tracking import WIP_QUALITY_STATUS_OUTPUT_FILE
+from core.wip_batch_tracking import WIP_VALIDATION_OUTPUT_FILE
+from core.wip_batch_tracking import build_wip_batch_tracking_outputs
 from shared.core.workforce_master_data import CREW_CAPACITY_CONTEXT_FILE
 from shared.core.workforce_master_data import MACHINE_AUTH_CONTEXT_FILE as WORKFORCE_MACHINE_AUTH_CONTEXT_FILE
 from shared.core.workforce_master_data import MANAGER_REVIEW_QUEUE_FILE as WORKFORCE_MANAGER_REVIEW_QUEUE_FILE
@@ -160,6 +169,7 @@ def run_initialization() -> None:
     quality_impact, quality_adjusted_capacity, quality_bottleneck_impact, quality_material_loss, quality_impact_review, quality_adjusted_validation = build_quality_adjusted_capacity_outputs()
     routing_graph_nodes, routing_graph_edges, critical_path, slack_analysis, routing_graph_visual, routing_graph_validation = build_routing_graph_analysis_outputs()
     production_schedule_candidates, production_operation_detail, production_material_readiness, production_capacity_check, production_calendar_view, production_schedule_review, production_schedule_validation = build_production_schedule_candidate_outputs()
+    wip_items, wip_flow_map, wip_ledger, wip_buffer_status, wip_quality_status, wip_continuity, wip_review, wip_validation = build_wip_batch_tracking_outputs()
     print("Phase 4 initialization bridge completed.")
     print(f"MPS rows: {len(mps)}")
     print(f"MPS output written to: {MPS_OUTPUT_FILE}")
@@ -359,6 +369,22 @@ def run_initialization() -> None:
     print(f"Production schedule manager review output written to: {PRODUCTION_SCHEDULE_MANAGER_REVIEW_OUTPUT_FILE}")
     print(f"Production schedule validation rows: {len(production_schedule_validation)}")
     print(f"Production schedule validation output written to: {PRODUCTION_SCHEDULE_VALIDATION_OUTPUT_FILE}")
+    print(f"WIP item master rows: {len(wip_items)}")
+    print(f"WIP item master output written to: {WIP_ITEM_MASTER_OUTPUT_FILE}")
+    print(f"WIP operation flow map rows: {len(wip_flow_map)}")
+    print(f"WIP operation flow map output written to: {WIP_FLOW_MAP_OUTPUT_FILE}")
+    print(f"WIP batch ledger rows: {len(wip_ledger)}")
+    print(f"WIP batch ledger output written to: {WIP_BATCH_LEDGER_OUTPUT_FILE}")
+    print(f"WIP buffer status rows: {len(wip_buffer_status)}")
+    print(f"WIP buffer status output written to: {WIP_BUFFER_STATUS_OUTPUT_FILE}")
+    print(f"WIP quality status rows: {len(wip_quality_status)}")
+    print(f"WIP quality status output written to: {WIP_QUALITY_STATUS_OUTPUT_FILE}")
+    print(f"WIP line continuity rows: {len(wip_continuity)}")
+    print(f"WIP line continuity output written to: {WIP_CONTINUITY_OUTPUT_FILE}")
+    print(f"WIP manager review rows: {len(wip_review)}")
+    print(f"WIP manager review output written to: {WIP_MANAGER_REVIEW_OUTPUT_FILE}")
+    print(f"WIP validation rows: {len(wip_validation)}")
+    print(f"WIP validation output written to: {WIP_VALIDATION_OUTPUT_FILE}")
 
 
 if __name__ == "__main__":

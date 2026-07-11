@@ -86,6 +86,11 @@ Current initialization scope:
 - Step 8B separates production capacity feasibility from maintenance feasibility; maintenance risk is shown separately and does not rewrite capacity status.
 - Step 8B uses period/day/shift candidate placeholders only; it does not create confirmed production schedules, production orders, worker dispatch, inventory reservations, inventory consumption, purchase orders, capacity reductions, or simulation outputs.
 - Step 8B carries parallel-branch and merge-operation evidence forward so Final Assembly waits for required branch predecessors in the candidate detail.
+- Step 8C adds advisory WIP item, WIP buffer, and WIP batch tracking foundations between routing operations.
+- Step 8C creates a WIP ledger, WIP quality status, WIP buffer status, and line continuity analysis so upstream operations can be reviewed for useful WIP buildup when downstream operations are blocked.
+- Step 8C distinguishes WIP on the production line, in line-side buffers, in WIP storage, on quality hold, in rework hold, or scrapped.
+- Step 8C maintenance opportunity flags are advisory only; they do not create maintenance schedules or work orders.
+- Step 8C does not consume WIP, consume component inventory, reserve inventory, create production orders, confirm schedules, dispatch workers, create purchase orders, apply capacity reductions, or run simulation.
 - Routing is the ERP version of the production flowchart.
 - Road Bike and Mountain Bike now have different advisory routings.
 - Parallel subassembly branches are included for both products.
@@ -167,8 +172,9 @@ Run order:
 18. Build Phase 4 quality-adjusted capacity impact estimates.
 19. Build Phase 4 routing graph, critical path, and slack analysis.
 20. Build advisory Phase 4 production schedule candidates.
-21. Run Phase 3 component inventory checks.
-22. Run Phase 2 component supplier checks.
+21. Build advisory Phase 4 WIP batch tracking and buffer foundation.
+22. Run Phase 3 component inventory checks.
+23. Run Phase 2 component supplier checks.
 
 The Phase 4 bridges are optional-safe. If a bridge file is missing or fails, Phase 2 and Phase 3 print a warning and continue their existing core pipelines.
 
@@ -181,6 +187,7 @@ Guardrails:
 - No inventory is consumed or auto-reserved.
 - No workforce, maintenance, production, or delivery scheduling is created.
 - Production schedule candidates are advisory only and remain `NOT_SCHEDULED_CANDIDATE_ONLY`.
+- WIP tracking is advisory only; no WIP or component inventory is consumed or reserved.
 - Simulation is a separate future phase.
 - Future production release flags should default to `production_order_release_allowed = False`.
 
@@ -204,5 +211,5 @@ Next likely Phase 4 feature:
 
 Review bundle:
 
-- `create_phase4_review_bundle.py` generates `phase4_step8b_production_schedule_candidates_review_bundle.zip` at the project root for external review.
+- `create_phase4_review_bundle.py` generates `phase4_step8c_wip_tracking_review_bundle.zip` at the project root for external review.
 - The bundle preserves project-relative folder structure and excludes cache, bytecode, virtual environment, and zip artifacts.

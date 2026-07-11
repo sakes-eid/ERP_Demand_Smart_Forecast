@@ -1,0 +1,15 @@
+wip_buffer_id,wip_buffer_name,wip_item_id,linked_workstation_id,location_type,max_buffer_qty,target_buffer_qty,min_buffer_qty,overflow_policy,quality_hold_allowed_flag,rework_hold_allowed_flag,active_flag,advisory_only_flag,notes
+BUF-ROAD-FRAME-WHEEL,Road Frame Wheel Branch Line Buffer,WIP-ROAD-FRAME-TO-WHEEL,WS-WHEEL-SUB,LINE_SIDE_BUFFER,80,50,10,MANAGER_REVIEW,True,True,True,True,Line-side frame buffer before wheel branch.
+BUF-ROAD-FRAME-BRAKE,Road Frame Brake Branch Line Buffer,WIP-ROAD-FRAME-TO-BRAKE,WS-BRAKE-SUB,LINE_SIDE_BUFFER,80,50,10,MANAGER_REVIEW,True,True,True,True,Line-side frame buffer before brake branch.
+BUF-ROAD-WHEEL,Road Wheel Set WIP Storage,WIP-ROAD-WHEEL-SET-READY,WS-FINAL-ASM,WIP_STORAGE,120,80,20,TEMPORARY_OVERFLOW_ALLOWED,True,True,True,True,WIP storage protects final assembly from wheel branch disruption.
+BUF-ROAD-BRAKE,Road Brake Set WIP Storage,WIP-ROAD-BRAKE-SET-READY,WS-FINAL-ASM,WIP_STORAGE,120,80,20,TEMPORARY_OVERFLOW_ALLOWED,True,True,True,True,WIP storage protects final assembly from brake branch disruption.
+BUF-ROAD-ASM,Road Assembled Bike QC Buffer,WIP-ROAD-FINAL-ASSEMBLY-READY,WS-QC,QUALITY_HOLD,60,35,5,MANAGER_REVIEW,True,True,True,True,Quality buffer after road final assembly.
+BUF-ROAD-QC,Road QC Passed Packaging Buffer,WIP-ROAD-QC-PASSED,WS-PACK,LINE_SIDE_BUFFER,60,35,5,MANAGER_REVIEW,True,False,True,True,Packaging buffer after QC.
+BUF-MT-FRAME-FORK,Mountain Frame Fork Branch Line Buffer,WIP-MT-FRAME-TO-FORK,WS-FORK-SUSP,LINE_SIDE_BUFFER,80,50,10,MANAGER_REVIEW,True,True,True,True,Line-side frame buffer before fork branch.
+BUF-MT-FRAME-WHEEL,Mountain Frame Wheel Branch Line Buffer,WIP-MT-FRAME-TO-WHEEL,WS-WHEEL-SUB,LINE_SIDE_BUFFER,80,50,10,MANAGER_REVIEW,True,True,True,True,Line-side frame buffer before wheel branch.
+BUF-MT-FRAME-BRAKE,Mountain Frame Brake Branch Line Buffer,WIP-MT-FRAME-TO-BRAKE,WS-BRAKE-SUB,LINE_SIDE_BUFFER,80,50,10,MANAGER_REVIEW,True,True,True,True,Line-side frame buffer before brake branch.
+BUF-MT-FORK,Mountain Fork WIP Storage,WIP-MT-FORK-READY,WS-FINAL-ASM,WIP_STORAGE,120,80,20,TEMPORARY_OVERFLOW_ALLOWED,True,True,True,True,Fork WIP storage protects final assembly.
+BUF-MT-WHEEL,Mountain Wheel Set WIP Storage,WIP-MT-WHEEL-SET-READY,WS-FINAL-ASM,WIP_STORAGE,120,80,20,TEMPORARY_OVERFLOW_ALLOWED,True,True,True,True,Wheel WIP storage protects final assembly.
+BUF-MT-BRAKE,Mountain Brake Set WIP Storage,WIP-MT-BRAKE-SET-READY,WS-FINAL-ASM,WIP_STORAGE,120,80,20,TEMPORARY_OVERFLOW_ALLOWED,True,True,True,True,Brake WIP storage protects final assembly.
+BUF-MT-ASM,Mountain Assembled Bike QC Buffer,WIP-MT-FINAL-ASSEMBLY-READY,WS-QC,QUALITY_HOLD,60,35,5,MANAGER_REVIEW,True,True,True,True,Quality buffer after mountain final assembly.
+BUF-MT-QC,Mountain QC Passed Packaging Buffer,WIP-MT-QC-PASSED,WS-PACK,LINE_SIDE_BUFFER,60,35,5,MANAGER_REVIEW,True,False,True,True,Packaging buffer after QC.

@@ -1,0 +1,55 @@
+check_id,check_name,status,message,affected_rows,advisory_only_flag
+load_wip_items,Load Wip Items,PASS,wip_items rows=14,14,True
+load_wip_buffer_locations,Load Wip Buffer Locations,PASS,wip_buffer_locations rows=14,14,True
+load_wip_batch_seed,Load Wip Batch Seed,PASS,wip_batch_seed rows=9,9,True
+load_product_routings,Load Product Routings,PASS,product_routings rows=13,13,True
+load_routing_parallel_groups,Load Routing Parallel Groups,PASS,routing_parallel_groups rows=2,2,True
+load_phase4_routing_graph_nodes,Load Phase4 Routing Graph Nodes,PASS,phase4_routing_graph_nodes rows=13,13,True
+load_phase4_routing_graph_edges,Load Phase4 Routing Graph Edges,PASS,phase4_routing_graph_edges rows=14,14,True
+load_phase4_operation_slack_analysis,Load Phase4 Operation Slack Analysis,PASS,phase4_operation_slack_analysis rows=13,13,True
+load_phase4_production_schedule_candidates,Load Phase4 Production Schedule Candidates,PASS,phase4_production_schedule_candidates rows=28,28,True
+load_phase4_operation_schedule_candidate_detail,Load Phase4 Operation Schedule Candidate Detail,PASS,phase4_operation_schedule_candidate_detail rows=182,182,True
+load_phase4_production_flow_view,Load Phase4 Production Flow View,PASS,phase4_production_flow_view rows=13,13,True
+load_phase4_quality_impact_by_operation,Load Phase4 Quality Impact By Operation,PASS,phase4_quality_impact_by_operation rows=182,182,True
+load_phase4_production_schedule_capacity_check,Load Phase4 Production Schedule Capacity Check,PASS,phase4_production_schedule_capacity_check rows=182,182,True
+load_phase4_maintenance_schedule_feasibility_context,Load Phase4 Maintenance Schedule Feasibility Context,PASS,phase4_maintenance_schedule_feasibility_context rows=7,7,True
+load_phase4_maintenance_production_impact_context,Load Phase4 Maintenance Production Impact Context,PASS,phase4_maintenance_production_impact_context rows=7,7,True
+wip_item_master,Wip Item Master,PASS,wip_item_master rows=14,14,True
+wip_operation_flow_map,Wip Operation Flow Map,PASS,wip_operation_flow_map rows=14,14,True
+wip_batch_ledger,Wip Batch Ledger,PASS,wip_batch_ledger rows=9,9,True
+wip_buffer_status,Wip Buffer Status,PASS,wip_buffer_status rows=14,14,True
+wip_quality_status,Wip Quality Status,PASS,wip_quality_status rows=9,9,True
+wip_line_continuity_analysis,Wip Line Continuity Analysis,PASS,wip_line_continuity_analysis rows=14,14,True
+wip_manager_review_queue,Wip Manager Review Queue,PASS,wip_manager_review_queue rows=11,11,True
+wip_items,Wip Items,PASS,wip_items rows=14,14,True
+wip_buffer_locations,Wip Buffer Locations,PASS,wip_buffer_locations rows=14,14,True
+wip_batch_seed,Wip Batch Seed,PASS,wip_batch_seed rows=9,9,True
+wip_item_master_required_columns,Wip Item Master Required Columns,PASS,missing=[],0,True
+wip_operation_flow_map_required_columns,Wip Operation Flow Map Required Columns,PASS,missing=[],0,True
+wip_batch_ledger_required_columns,Wip Batch Ledger Required Columns,PASS,missing=[],0,True
+wip_buffer_status_required_columns,Wip Buffer Status Required Columns,PASS,missing=[],0,True
+wip_quality_status_required_columns,Wip Quality Status Required Columns,PASS,missing=[],0,True
+wip_line_continuity_analysis_required_columns,Wip Line Continuity Analysis Required Columns,PASS,missing=[],0,True
+wip_manager_review_queue_required_columns,Wip Manager Review Queue Required Columns,PASS,missing=[],0,True
+unique_wip_items,Unique Wip Items,PASS,wip_item_id values must be unique.,0,True
+unique_seed_batches,Unique Seed Batches,PASS,Seed wip_batch_id values must be unique.,0,True
+unique_ledger_batches,Unique Ledger Batches,PASS,Ledger wip_batch_id values must be unique.,0,True
+flow_map_valid_operations,Flow Map Valid Operations,PASS,invalid_ops=[],0,True
+batches_valid_wip_items,Batches Valid Wip Items,PASS,WIP batches must reference valid WIP items.,0,True
+batches_valid_next_operations,Batches Valid Next Operations,PASS,invalid_next_ops=[],0,True
+buffers_valid_wip_items,Buffers Valid Wip Items,PASS,WIP buffers must reference valid WIP items.,0,True
+ledger_non_negative_numeric,Ledger Non Negative Numeric,PASS,invalid_numeric_rows=0,0,True
+buffer_status_non_negative_numeric,Buffer Status Non Negative Numeric,PASS,invalid_numeric_rows=0,0,True
+quality_balances_valid_or_review,Quality Balances Valid Or Review,PASS,Quality balance statuses must be valid.,9,True
+off_line_flags,Off Line Flags,PASS,Buffer/hold locations must be off production line.,9,True
+callable_only_accepted,Callable Only Accepted,PASS,Callable WIP must be accepted or partially accepted.,0,True
+no_wip_consumption,No Wip Consumption,PASS,No WIP consumption flag must be True.,9,True
+wip_item_master_advisory_only,Wip Item Master Advisory Only,PASS,wip_item_master advisory-only.,14,True
+wip_operation_flow_map_advisory_only,Wip Operation Flow Map Advisory Only,PASS,wip_operation_flow_map advisory-only.,14,True
+wip_batch_ledger_advisory_only,Wip Batch Ledger Advisory Only,PASS,wip_batch_ledger advisory-only.,9,True
+wip_buffer_status_advisory_only,Wip Buffer Status Advisory Only,PASS,wip_buffer_status advisory-only.,14,True
+wip_quality_status_advisory_only,Wip Quality Status Advisory Only,PASS,wip_quality_status advisory-only.,9,True
+wip_line_continuity_analysis_advisory_only,Wip Line Continuity Analysis Advisory Only,PASS,wip_line_continuity_analysis advisory-only.,14,True
+wip_manager_review_queue_advisory_only,Wip Manager Review Queue Advisory Only,PASS,wip_manager_review_queue advisory-only.,11,True
+review_no_auto_action,Review No Auto Action,PASS,Review queue auto_action_allowed must be False.,11,True
+no_forbidden_wip_outputs,No Forbidden Wip Outputs,PASS,bad=[],0,True

@@ -62,6 +62,12 @@ PHASE4_OUTPUTS = {
     "production_schedule_material_readiness": PHASE4_DIR / "outputs" / "phase4_production_schedule_material_readiness.csv",
     "production_schedule_capacity_check": PHASE4_DIR / "outputs" / "phase4_production_schedule_capacity_check.csv",
     "production_calendar_candidate_view": PHASE4_DIR / "outputs" / "phase4_production_calendar_candidate_view.csv",
+    "wip_item_master": PHASE4_DIR / "outputs" / "phase4_wip_item_master.csv",
+    "wip_operation_flow_map": PHASE4_DIR / "outputs" / "phase4_wip_operation_flow_map.csv",
+    "wip_batch_ledger": PHASE4_DIR / "outputs" / "phase4_wip_batch_ledger.csv",
+    "wip_buffer_status": PHASE4_DIR / "outputs" / "phase4_wip_buffer_status.csv",
+    "wip_quality_status": PHASE4_DIR / "outputs" / "phase4_wip_quality_status.csv",
+    "wip_line_continuity_analysis": PHASE4_DIR / "outputs" / "phase4_wip_line_continuity_analysis.csv",
     "component_inventory_check": PROJECT_ROOT / "phase 3" / "outputs" / "phase4_component_inventory_check.csv",
     "component_supplier_check": PROJECT_ROOT / "phase 2" / "outputs" / "phase4_component_supplier_check.csv",
 }
@@ -220,6 +226,17 @@ PRODUCTION_CAPACITY_CHECK_FILE = PHASE4_DIR / "outputs" / "phase4_production_sch
 PRODUCTION_CALENDAR_VIEW_FILE = PHASE4_DIR / "outputs" / "phase4_production_calendar_candidate_view.csv"
 PRODUCTION_SCHEDULE_REVIEW_FILE = PHASE4_DIR / "outputs" / "phase4_production_schedule_manager_review_queue.csv"
 PRODUCTION_SCHEDULE_VALIDATION_FILE = PHASE4_DIR / "outputs" / "phase4_production_schedule_validation.csv"
+WIP_ITEMS_DATA_FILE = PHASE4_DIR / "data" / "wip_items.csv"
+WIP_BUFFERS_DATA_FILE = PHASE4_DIR / "data" / "wip_buffer_locations.csv"
+WIP_BATCH_SEED_FILE = PHASE4_DIR / "data" / "wip_batch_seed.csv"
+WIP_ITEM_MASTER_FILE = PHASE4_DIR / "outputs" / "phase4_wip_item_master.csv"
+WIP_FLOW_MAP_FILE = PHASE4_DIR / "outputs" / "phase4_wip_operation_flow_map.csv"
+WIP_BATCH_LEDGER_FILE = PHASE4_DIR / "outputs" / "phase4_wip_batch_ledger.csv"
+WIP_BUFFER_STATUS_FILE = PHASE4_DIR / "outputs" / "phase4_wip_buffer_status.csv"
+WIP_QUALITY_STATUS_FILE = PHASE4_DIR / "outputs" / "phase4_wip_quality_status.csv"
+WIP_CONTINUITY_FILE = PHASE4_DIR / "outputs" / "phase4_wip_line_continuity_analysis.csv"
+WIP_REVIEW_FILE = PHASE4_DIR / "outputs" / "phase4_wip_manager_review_queue.csv"
+WIP_VALIDATION_FILE = PHASE4_DIR / "outputs" / "phase4_wip_validation.csv"
 
 
 def main() -> None:
@@ -269,6 +286,7 @@ def main() -> None:
     checks.append(_check_quality_adjusted_capacity())
     checks.append(_check_routing_graph_analysis())
     checks.append(_check_production_schedule_candidates())
+    checks.append(_check_wip_batch_tracking())
     checks.append(_check_phase3_inventory_check())
     checks.append(_check_phase2_supplier_check())
     checks.append(_check_phase4_run_id_consistency())
@@ -1814,6 +1832,104 @@ def _check_production_schedule_candidates() -> dict:
         "production_schedule_candidates",
         "PASS",
         f"Step 8B advisory production schedule candidates valid; candidate_rows={len(candidates)}, operation_detail_rows={len(details)}, material_rows={len(material)}, capacity_rows={len(capacity)}.",
+    )
+
+
+def _check_wip_batch_tracking() -> dict:
+    required_files = [
+        (WIP_ITEMS_DATA_FILE, "WIP item data"),
+        (WIP_BUFFERS_DATA_FILE, "WIP buffer data"),
+        (WIP_BATCH_SEED_FILE, "WIP batch seed data"),
+        (WIP_ITEM_MASTER_FILE, "WIP item master"),
+        (WIP_FLOW_MAP_FILE, "WIP operation flow map"),
+        (WIP_BATCH_LEDGER_FILE, "WIP batch ledger"),
+        (WIP_BUFFER_STATUS_FILE, "WIP buffer status"),
+        (WIP_QUALITY_STATUS_FILE, "WIP quality status"),
+        (WIP_CONTINUITY_FILE, "WIP line continuity analysis"),
+        (WIP_REVIEW_FILE, "WIP manager review queue"),
+        (WIP_VALIDATION_FILE, "WIP validation"),
+    ]
+    for path, label in required_files:
+        if not path.exists():
+            return _result("wip_batch_tracking", "FAIL", f"{label} file is missing: {path}")
+        if pd.read_csv(path).empty:
+            return _result("wip_batch_tracking", "FAIL", f"{label} file has no rows: {path}")
+
+    validation = pd.read_csv(WIP_VALIDATION_FILE)
+    fail_count = int((validation["status"].astype(str).str.upper() == "FAIL").sum()) if "status" in validation.columns else len(validation)
+    if fail_count:
+        return _result("wip_batch_tracking", "FAIL", f"WIP validation contains FAIL rows: {fail_count}")
+
+    wip_items = pd.read_csv(WIP_ITEMS_DATA_FILE)
+    wip_buffers = pd.read_csv(WIP_BUFFERS_DATA_FILE)
+    seed = pd.read_csv(WIP_BATCH_SEED_FILE)
+    item_master = pd.read_csv(WIP_ITEM_MASTER_FILE)
+    flow_map = pd.read_csv(WIP_FLOW_MAP_FILE)
+    ledger = pd.read_csv(WIP_BATCH_LEDGER_FILE)
+    buffer_status = pd.read_csv(WIP_BUFFER_STATUS_FILE)
+    quality_status = pd.read_csv(WIP_QUALITY_STATUS_FILE)
+    continuity = pd.read_csv(WIP_CONTINUITY_FILE)
+    review = pd.read_csv(WIP_REVIEW_FILE)
+
+    required_columns = {
+        "item_master": {"planning_run_id", "wip_item_id", "wip_item_name", "finished_sku", "produced_by_operation_id", "consumed_by_operation_id", "produced_by_workstation_id", "consumed_by_workstation_id", "wip_item_type", "unit_of_measure", "batch_tracking_required_flag", "serial_tracking_required_flag", "quality_check_required_flag", "rework_allowed_flag", "shelf_life_hours", "active_flag", "advisory_only_flag", "notes", "source_phase"},
+        "flow_map": {"planning_run_id", "finished_sku", "wip_item_id", "wip_item_name", "produced_by_operation_id", "produced_by_operation_name", "consumed_by_operation_id", "consumed_by_operation_name", "produced_by_workstation_id", "consumed_by_workstation_id", "routing_edge_id", "parallel_branch_flag", "merge_dependency_flag", "final_assembly_input_flag", "flow_map_status", "source_phase", "advisory_only_flag"},
+        "ledger": {"planning_run_id", "wip_batch_id", "wip_item_id", "wip_item_name", "finished_sku", "source_schedule_candidate_id", "produced_by_operation_id", "next_operation_id", "current_location_type", "current_location_id", "produced_qty", "accepted_qty", "defective_qty", "rework_qty", "scrap_qty", "available_accepted_qty", "blocked_qty", "quality_status", "wip_batch_status", "ready_for_next_operation_flag", "off_production_line_flag", "callable_back_to_line_flag", "note_no_wip_consumption_flag", "source_phase", "advisory_only_flag"},
+        "buffer_status": {"planning_run_id", "wip_buffer_id", "wip_buffer_name", "wip_item_id", "linked_workstation_id", "max_buffer_qty", "target_buffer_qty", "min_buffer_qty", "current_wip_qty", "accepted_wip_qty", "blocked_wip_qty", "available_buffer_capacity_qty", "buffer_utilization_pct", "buffer_status", "upstream_can_continue_flag", "downstream_can_consume_wip_flag", "overflow_risk_flag", "shortage_risk_flag", "source_phase", "advisory_only_flag"},
+        "quality_status": {"planning_run_id", "wip_batch_id", "wip_item_id", "finished_sku", "produced_qty", "accepted_qty", "defective_qty", "rework_qty", "scrap_qty", "quality_review_qty", "quality_status", "quality_balance_check", "quality_balance_status", "rework_allowed_flag", "quality_review_required_flag", "source_phase", "advisory_only_flag"},
+        "continuity": {"planning_run_id", "finished_sku", "blocking_operation_id", "blocking_operation_name", "blocking_reason", "upstream_operation_id", "upstream_operation_name", "upstream_workstation_id", "wip_item_id", "wip_buffer_id", "current_accepted_wip_qty", "target_buffer_qty", "available_buffer_capacity_qty", "upstream_can_continue_flag", "downstream_can_resume_from_wip_flag", "suggested_continuity_action", "maintenance_opportunity_flag", "continuity_status", "source_phase", "advisory_only_flag"},
+        "review": {"review_item_id", "planning_run_id", "wip_batch_id", "wip_item_id", "wip_buffer_id", "operation_id", "issue_type", "issue_severity", "issue_description", "recommended_review_action", "auto_action_allowed", "advisory_only_flag"},
+    }
+    frames = {"item_master": item_master, "flow_map": flow_map, "ledger": ledger, "buffer_status": buffer_status, "quality_status": quality_status, "continuity": continuity, "review": review}
+    for label, columns in required_columns.items():
+        missing = sorted(columns.difference(frames[label].columns))
+        if missing:
+            return _result("wip_batch_tracking", "FAIL", f"{label} missing columns: {missing}")
+
+    if not wip_items["wip_item_id"].is_unique:
+        return _result("wip_batch_tracking", "FAIL", "wip_item_id values must be unique in wip_items.csv.")
+    if not seed["wip_batch_id"].is_unique or not ledger["wip_batch_id"].is_unique:
+        return _result("wip_batch_tracking", "FAIL", "wip_batch_id values must be unique in seed and ledger.")
+    valid_items = set(wip_items["wip_item_id"].astype(str))
+    if not set(ledger["wip_item_id"].astype(str)) <= valid_items:
+        return _result("wip_batch_tracking", "FAIL", "WIP ledger references invalid WIP items.")
+    if not set(wip_buffers["wip_item_id"].astype(str)) <= valid_items:
+        return _result("wip_batch_tracking", "FAIL", "WIP buffers reference invalid WIP items.")
+    nodes = pd.read_csv(ROUTING_GRAPH_NODES_FILE)
+    valid_ops = set(nodes["operation_id"].astype(str))
+    flow_ops = set(flow_map["produced_by_operation_id"].astype(str)) | set(flow_map["consumed_by_operation_id"].astype(str))
+    if not flow_ops <= valid_ops:
+        return _result("wip_batch_tracking", "FAIL", f"WIP flow map references invalid operations: {sorted(flow_ops - valid_ops)}")
+    next_ops = set(ledger["next_operation_id"].dropna().astype(str))
+    if not next_ops <= valid_ops:
+        return _result("wip_batch_tracking", "FAIL", f"WIP ledger references invalid next operations: {sorted(next_ops - valid_ops)}")
+    for frame, columns, label in [
+        (ledger, ["produced_qty", "accepted_qty", "defective_qty", "rework_qty", "scrap_qty", "available_accepted_qty", "blocked_qty"], "ledger"),
+        (buffer_status, ["max_buffer_qty", "target_buffer_qty", "min_buffer_qty", "current_wip_qty", "buffer_utilization_pct"], "buffer_status"),
+    ]:
+        for column in columns:
+            values = pd.to_numeric(frame[column], errors="coerce")
+            if values.isna().any() or (values < 0).any():
+                return _result("wip_batch_tracking", "FAIL", f"{label}.{column} must be numeric and non-negative.")
+    if set(quality_status["quality_balance_status"].dropna().astype(str)) - {"BALANCED", "REVIEW_REQUIRED"}:
+        return _result("wip_batch_tracking", "FAIL", "WIP quality balance status values are invalid.")
+    off_line = ledger[ledger["current_location_type"].astype(str).isin(["WIP_STORAGE", "LINE_SIDE_BUFFER", "QUALITY_HOLD", "REWORK_HOLD"])]
+    if not _to_bool(off_line["off_production_line_flag"]).all():
+        return _result("wip_batch_tracking", "FAIL", "WIP in buffer/storage/hold locations must have off_production_line_flag True.")
+    callable_bad = ledger[_to_bool(ledger["callable_back_to_line_flag"]) & ~ledger["quality_status"].astype(str).isin(["ACCEPTED", "PARTIAL_ACCEPTED"])]
+    if not callable_bad.empty:
+        return _result("wip_batch_tracking", "FAIL", "Callable WIP must be accepted or partially accepted.")
+    if not _all_true(ledger, "note_no_wip_consumption_flag"):
+        return _result("wip_batch_tracking", "FAIL", "No-WIP-consumption flag must be True for all ledger rows.")
+    for label, frame in frames.items():
+        if not _all_true(frame, "advisory_only_flag"):
+            return _result("wip_batch_tracking", "FAIL", f"{label} must be advisory-only.")
+    if not _all_false(review, "auto_action_allowed"):
+        return _result("wip_batch_tracking", "FAIL", "WIP review queue must not allow automatic action.")
+    return _result(
+        "wip_batch_tracking",
+        "PASS",
+        f"Step 8C WIP tracking valid; items={len(item_master)}, batches={len(ledger)}, buffers={len(buffer_status)}, continuity_rows={len(continuity)}.",
     )
 
 
