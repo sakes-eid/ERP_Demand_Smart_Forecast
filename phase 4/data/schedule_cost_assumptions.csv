@@ -1,0 +1,6 @@
+cost_component_id,cost_component_name,rate_value,rate_unit,cost_classification,source_file,source_field,confidence,assumption_flag,notes,active_flag,advisory_only_flag
+LABOR_STANDARD_HOURLY_WAGE,Production labor standard wage,labor_resources.hourly_wage,EUR_PER_HOUR,VALIDATED_REAL_COST,phase 4/data/labor_resources.csv,hourly_wage,MEDIUM,False,Traceable production labor cost.,True,True
+MACHINE_HOURLY_COST,Machine hourly cost,machines.hourly_machine_cost,EUR_PER_HOUR,VALIDATED_REAL_COST,phase 4/data/machines.csv,hourly_machine_cost,MEDIUM,False,Traceable machine cost.,True,True
+ASSUMED_SETUP_SUPPORT_RATE,Assumed setup support rate,20,EUR_PER_HOUR,ASSUMED_MONETARY_RATE,,,LOW,True,"Used only in assumed monetary cost, not validated real cost.",True,True
+PROXY_LATE_DEMAND,Late demand proxy penalty,80,POINTS_PER_UNIT,PROXY_PENALTY,,,LOW,True,"Proxy score only, not euros.",True,True
+PROXY_CUSTOMER_DISSATISFACTION,Customer dissatisfaction proxy,45,POINTS_PER_UNIT,PROXY_PENALTY,,,LOW,True,"Proxy score only, not euros.",True,True

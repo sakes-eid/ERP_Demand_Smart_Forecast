@@ -1,4 +1,4 @@
-"""Create a clean Phase 4 Step 8E setup/changeover review bundle."""
+"""Create a clean Phase 4 Step 8F final closure review bundle."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 PHASE4_OUTPUTS = PROJECT_ROOT / "phase 4" / "outputs"
-ZIP_PATH = PROJECT_ROOT / "phase4_step8e_setup_changeover_review_bundle.zip"
+ZIP_PATH = PROJECT_ROOT / "phase4_step8f_final_closure_review_bundle.zip"
 MANIFEST_PATH = PHASE4_OUTPUTS / "phase4_review_bundle_manifest.txt"
 
 REQUIRED_RELATIVE_FILES = [
@@ -100,6 +100,7 @@ REQUIRED_RELATIVE_FILES = [
     "phase 4/data/setup_families.csv",
     "phase 4/data/setup_changeover_matrix.csv",
     "phase 4/data/workstation_setup_rules.csv",
+    "phase 4/data/schedule_cost_assumptions.csv",
     "phase 4/core/bom_explosion_bridge.py",
     "phase 4/core/component_inventory_bridge.py",
     "phase 4/core/component_supplier_bridge.py",
@@ -118,6 +119,7 @@ REQUIRED_RELATIVE_FILES = [
     "phase 4/core/wip_batch_tracking.py",
     "phase 4/core/wip_aware_schedule_feasibility.py",
     "phase 4/core/setup_changeover_rules.py",
+    "phase 4/core/finite_capacity_schedule_alternatives.py",
     "phase 4/outputs/phase4_master_production_schedule.csv",
     "phase 4/outputs/phase4_bom_component_requirements.csv",
     "phase 4/outputs/phase4_mrp_net_component_requirements.csv",
@@ -203,6 +205,20 @@ REQUIRED_RELATIVE_FILES = [
     "phase 4/outputs/phase4_setup_sequence_impact_analysis.csv",
     "phase 4/outputs/phase4_setup_manager_review_queue.csv",
     "phase 4/outputs/phase4_setup_changeover_validation.csv",
+    "phase 4/outputs/phase4_schedule_alternative_master.csv",
+    "phase 4/outputs/phase4_schedule_alternative_operation_detail.csv",
+    "phase 4/outputs/phase4_schedule_alternative_operation_segments.csv",
+    "phase 4/outputs/phase4_schedule_alternative_quantity_flow.csv",
+    "phase 4/outputs/phase4_schedule_alternative_shadow_wip_ledger.csv",
+    "phase 4/outputs/phase4_schedule_alternative_maintenance_window_check.csv",
+    "phase 4/outputs/phase4_schedule_alternative_capacity_impact.csv",
+    "phase 4/outputs/phase4_schedule_alternative_wip_impact.csv",
+    "phase 4/outputs/phase4_schedule_alternative_setup_impact.csv",
+    "phase 4/outputs/phase4_schedule_alternative_maintenance_impact.csv",
+    "phase 4/outputs/phase4_schedule_alternative_cost_score.csv",
+    "phase 4/outputs/phase4_schedule_alternative_recommendations.csv",
+    "phase 4/outputs/phase4_schedule_alternative_manager_review_queue.csv",
+    "phase 4/outputs/phase4_schedule_alternative_validation.csv",
     "phase 4/outputs/phase4_initialization_validation.json",
     "phase 4/outputs/phase4_initialization_validation_report.txt",
     "phase 4/outputs/phase4_review_bundle_manifest.txt",
@@ -247,6 +263,7 @@ OPTIONAL_RELATIVE_FILES = {
 def main() -> None:
     PHASE4_OUTPUTS.mkdir(parents=True, exist_ok=True)
     generated_at = datetime.now(UTC).isoformat(timespec="seconds")
+    cleanup_info = _cleanup_obsolete_review_bundles()
     included, missing, excluded = _collect_files()
 
     provisional = _build_manifest(
@@ -256,19 +273,22 @@ def main() -> None:
         excluded=excluded,
         verification_status="PENDING",
         verification_messages=["Verification pending until zip is written."],
+        cleanup_info=cleanup_info,
     )
     MANIFEST_PATH.write_text(provisional, encoding="utf-8")
     if MANIFEST_PATH.relative_to(PROJECT_ROOT).as_posix() not in included:
         included.append(MANIFEST_PATH.relative_to(PROJECT_ROOT).as_posix())
         missing = [item for item in missing if item != MANIFEST_PATH.relative_to(PROJECT_ROOT).as_posix()]
 
-    if ZIP_PATH.exists():
-        ZIP_PATH.unlink()
     with zipfile.ZipFile(ZIP_PATH, "w", compression=zipfile.ZIP_DEFLATED) as archive:
         for rel_path in included:
             archive.write(PROJECT_ROOT / rel_path, arcname=rel_path)
 
     verification_status, verification_messages = _verify_zip()
+    remaining = sorted(path.name for path in _matching_review_bundle_zips())
+    cleanup_info["matching_remaining_count"] = len(remaining)
+    cleanup_info["matching_remaining_files"] = remaining
+    cleanup_info["cleanup_status"] = "PASS" if verification_status == "PASS" and remaining == [ZIP_PATH.name] else "FAIL"
     final_manifest = _build_manifest(
         generated_at=generated_at,
         included=included,
@@ -276,6 +296,7 @@ def main() -> None:
         excluded=excluded,
         verification_status=verification_status,
         verification_messages=verification_messages,
+        cleanup_info=cleanup_info,
     )
     MANIFEST_PATH.write_text(final_manifest, encoding="utf-8")
     _replace_manifest_in_zip()
@@ -286,10 +307,39 @@ def main() -> None:
     print(f"Included file count: {len(included)}")
     print(f"Missing file count: {len(missing)}")
     print(f"Verification status: {verification_status}")
+    print(f"Cleanup status: {cleanup_info['cleanup_status']}")
     if missing:
         print("Missing files:")
         for item in missing:
             print(f"- {item}")
+
+
+def _matching_review_bundle_zips() -> list[Path]:
+    matches = set(PROJECT_ROOT.glob("phase4_step*.zip"))
+    matches.update(PROJECT_ROOT.glob("phase4_*review_bundle*.zip"))
+    return sorted(path for path in matches if path.is_file() and path.parent == PROJECT_ROOT)
+
+
+def _cleanup_obsolete_review_bundles() -> dict:
+    matching = _matching_review_bundle_zips()
+    unrelated = [
+        path for path in PROJECT_ROOT.glob("*.zip")
+        if path.is_file() and path.parent == PROJECT_ROOT and path not in set(matching)
+    ]
+    deleted = []
+    for path in matching:
+        path.unlink()
+        deleted.append(path.name)
+    return {
+        "cleanup_directory": str(PROJECT_ROOT),
+        "obsolete_found_count": len(matching),
+        "obsolete_deleted_count": len(deleted),
+        "deleted_files": deleted,
+        "matching_remaining_count": 0,
+        "matching_remaining_files": [],
+        "unrelated_zip_preserved_count": len(unrelated),
+        "cleanup_status": "PENDING",
+    }
 
 
 def _collect_files() -> tuple[list[str], list[str], list[str]]:
@@ -326,6 +376,9 @@ def _verify_zip() -> tuple[str, list[str]]:
     with zipfile.ZipFile(ZIP_PATH, "r") as archive:
         names = archive.namelist()
     name_set = set(names)
+    if ZIP_PATH.name in name_set or any(name.lower().endswith(".zip") for name in names):
+        status = "FAIL"
+        messages.append("Review bundle must not include itself or any zip artifact.")
 
     required_checks = {
         "shared/data/spare_parts_master.csv": "Shared spare-parts master data exists inside the zip",
@@ -464,6 +517,22 @@ def _verify_zip() -> tuple[str, list[str]]:
         "phase 4/outputs/phase4_setup_sequence_impact_analysis.csv": "Phase 4 setup sequence impact output exists inside the zip",
         "phase 4/outputs/phase4_setup_manager_review_queue.csv": "Phase 4 setup manager review queue exists inside the zip",
         "phase 4/outputs/phase4_setup_changeover_validation.csv": "Phase 4 setup/changeover validation output exists inside the zip",
+        "phase 4/data/schedule_cost_assumptions.csv": "Phase 4 schedule cost assumptions data exists inside the zip",
+        "phase 4/core/finite_capacity_schedule_alternatives.py": "Phase 4 finite-capacity schedule alternatives module exists inside the zip",
+        "phase 4/outputs/phase4_schedule_alternative_master.csv": "Phase 4 schedule alternative master output exists inside the zip",
+        "phase 4/outputs/phase4_schedule_alternative_operation_detail.csv": "Phase 4 schedule alternative operation detail output exists inside the zip",
+        "phase 4/outputs/phase4_schedule_alternative_operation_segments.csv": "Phase 4 schedule alternative operation segments output exists inside the zip",
+        "phase 4/outputs/phase4_schedule_alternative_quantity_flow.csv": "Phase 4 schedule alternative quantity-flow output exists inside the zip",
+        "phase 4/outputs/phase4_schedule_alternative_shadow_wip_ledger.csv": "Phase 4 schedule alternative shadow WIP ledger exists inside the zip",
+        "phase 4/outputs/phase4_schedule_alternative_maintenance_window_check.csv": "Phase 4 schedule alternative maintenance window check exists inside the zip",
+        "phase 4/outputs/phase4_schedule_alternative_capacity_impact.csv": "Phase 4 schedule alternative capacity impact output exists inside the zip",
+        "phase 4/outputs/phase4_schedule_alternative_wip_impact.csv": "Phase 4 schedule alternative WIP impact output exists inside the zip",
+        "phase 4/outputs/phase4_schedule_alternative_setup_impact.csv": "Phase 4 schedule alternative setup impact output exists inside the zip",
+        "phase 4/outputs/phase4_schedule_alternative_maintenance_impact.csv": "Phase 4 schedule alternative maintenance impact output exists inside the zip",
+        "phase 4/outputs/phase4_schedule_alternative_cost_score.csv": "Phase 4 schedule alternative cost score output exists inside the zip",
+        "phase 4/outputs/phase4_schedule_alternative_recommendations.csv": "Phase 4 schedule alternative recommendations output exists inside the zip",
+        "phase 4/outputs/phase4_schedule_alternative_manager_review_queue.csv": "Phase 4 schedule alternative manager review queue exists inside the zip",
+        "phase 4/outputs/phase4_schedule_alternative_validation.csv": "Phase 4 schedule alternative validation output exists inside the zip",
         "phase 4/core/production_flow_view.py": "Phase 4 production flow view module exists inside the zip",
         "phase 4/outputs/phase4_production_flow_view.csv": "Phase 4 production flow view exists inside the zip",
         "phase 4/outputs/phase4_flow_step_risk_summary.csv": "Phase 4 flow-step risk summary exists inside the zip",
@@ -565,10 +634,11 @@ def _build_manifest(
     excluded: list[str],
     verification_status: str,
     verification_messages: list[str],
+    cleanup_info: dict,
 ) -> str:
     zip_size_mb = ZIP_PATH.stat().st_size / (1024 * 1024) if ZIP_PATH.exists() else 0.0
     lines = [
-        "Phase 4 Step 8E Setup and Changeover Review Bundle Manifest",
+        "Phase 4 Step 8F Final Closure Review Bundle Manifest",
         f"Generated zip path: {ZIP_PATH}",
         f"Generated timestamp UTC: {generated_at}",
         f"Included file count: {len(included)}",
@@ -576,10 +646,20 @@ def _build_manifest(
         f"Excluded file count: {len(excluded)}",
         f"Final zip size MB: {zip_size_mb:.3f}",
         f"Verification status: {verification_status}",
+        f"ZIP cleanup directory: {cleanup_info['cleanup_directory']}",
+        f"Obsolete review-bundle ZIP files found: {cleanup_info['obsolete_found_count']}",
+        f"Obsolete review-bundle ZIP files deleted: {cleanup_info['obsolete_deleted_count']}",
+        f"Matching Phase 4 review-bundle ZIP files remaining: {cleanup_info['matching_remaining_count']}",
+        f"Unrelated ZIP files preserved count: {cleanup_info['unrelated_zip_preserved_count']}",
+        f"Cleanup status: {cleanup_info['cleanup_status']}",
         "",
         "Verification messages:",
     ]
     lines.extend(f"- {message}" for message in verification_messages)
+    lines.extend(["", "Deleted obsolete review-bundle ZIP files:"])
+    lines.extend(f"- {item}" for item in cleanup_info["deleted_files"]) if cleanup_info["deleted_files"] else lines.append("- none")
+    lines.extend(["", "Remaining matching Phase 4 review-bundle ZIP files:"])
+    lines.extend(f"- {item}" for item in cleanup_info["matching_remaining_files"]) if cleanup_info["matching_remaining_files"] else lines.append("- none")
     lines.extend(["", "Missing files:"])
     lines.extend(f"- {item}" for item in missing) if missing else lines.append("- none")
     lines.extend(["", "Excluded files:"])

@@ -101,6 +101,17 @@ from core.setup_changeover_rules import SETUP_VALIDATION_OUTPUT_FILE
 from core.setup_changeover_rules import WIP_ACCESS_RULES_OUTPUT_FILE
 from core.setup_changeover_rules import WIP_ACCESS_VALIDATION_OUTPUT_FILE
 from core.setup_changeover_rules import build_setup_changeover_outputs
+from core.finite_capacity_schedule_alternatives import ALTERNATIVE_CAPACITY_IMPACT_OUTPUT_FILE
+from core.finite_capacity_schedule_alternatives import ALTERNATIVE_COST_SCORE_OUTPUT_FILE
+from core.finite_capacity_schedule_alternatives import ALTERNATIVE_MAINTENANCE_IMPACT_OUTPUT_FILE
+from core.finite_capacity_schedule_alternatives import ALTERNATIVE_MANAGER_REVIEW_OUTPUT_FILE
+from core.finite_capacity_schedule_alternatives import ALTERNATIVE_MASTER_OUTPUT_FILE
+from core.finite_capacity_schedule_alternatives import ALTERNATIVE_OPERATION_DETAIL_OUTPUT_FILE
+from core.finite_capacity_schedule_alternatives import ALTERNATIVE_RECOMMENDATIONS_OUTPUT_FILE
+from core.finite_capacity_schedule_alternatives import ALTERNATIVE_SETUP_IMPACT_OUTPUT_FILE
+from core.finite_capacity_schedule_alternatives import ALTERNATIVE_VALIDATION_OUTPUT_FILE
+from core.finite_capacity_schedule_alternatives import ALTERNATIVE_WIP_IMPACT_OUTPUT_FILE
+from core.finite_capacity_schedule_alternatives import build_schedule_alternative_outputs
 from shared.core.workforce_master_data import CREW_CAPACITY_CONTEXT_FILE
 from shared.core.workforce_master_data import MACHINE_AUTH_CONTEXT_FILE as WORKFORCE_MACHINE_AUTH_CONTEXT_FILE
 from shared.core.workforce_master_data import MANAGER_REVIEW_QUEUE_FILE as WORKFORCE_MANAGER_REVIEW_QUEUE_FILE
@@ -189,6 +200,7 @@ def run_initialization() -> None:
     wip_items, wip_flow_map, wip_ledger, wip_buffer_status, wip_quality_status, wip_continuity, wip_review, wip_validation = build_wip_batch_tracking_outputs()
     wip_aware_feasibility, wip_supply_demand, wip_buffer_impact, wip_continuity_recommendations, wip_maintenance_opportunity, wip_aware_review, wip_aware_validation = build_wip_aware_schedule_feasibility_outputs()
     wip_access_rules, wip_access_validation, setup_family_master, setup_changeover_matrix, operation_setup_profile, setup_sequence_impact, setup_review, setup_validation = build_setup_changeover_outputs()
+    schedule_alternative_master, schedule_alternative_operation_detail, schedule_alternative_capacity_impact, schedule_alternative_wip_impact, schedule_alternative_setup_impact, schedule_alternative_maintenance_impact, schedule_alternative_cost_score, schedule_alternative_recommendations, schedule_alternative_review, schedule_alternative_validation = build_schedule_alternative_outputs()
     print("Phase 4 initialization bridge completed.")
     print(f"MPS rows: {len(mps)}")
     print(f"MPS output written to: {MPS_OUTPUT_FILE}")
@@ -434,6 +446,26 @@ def run_initialization() -> None:
     print(f"Setup manager review output written to: {SETUP_MANAGER_REVIEW_OUTPUT_FILE}")
     print(f"Setup/changeover validation rows: {len(setup_validation)}")
     print(f"Setup/changeover validation output written to: {SETUP_VALIDATION_OUTPUT_FILE}")
+    print(f"Schedule alternative master rows: {len(schedule_alternative_master)}")
+    print(f"Schedule alternative master output written to: {ALTERNATIVE_MASTER_OUTPUT_FILE}")
+    print(f"Schedule alternative operation detail rows: {len(schedule_alternative_operation_detail)}")
+    print(f"Schedule alternative operation detail output written to: {ALTERNATIVE_OPERATION_DETAIL_OUTPUT_FILE}")
+    print(f"Schedule alternative capacity impact rows: {len(schedule_alternative_capacity_impact)}")
+    print(f"Schedule alternative capacity impact output written to: {ALTERNATIVE_CAPACITY_IMPACT_OUTPUT_FILE}")
+    print(f"Schedule alternative WIP impact rows: {len(schedule_alternative_wip_impact)}")
+    print(f"Schedule alternative WIP impact output written to: {ALTERNATIVE_WIP_IMPACT_OUTPUT_FILE}")
+    print(f"Schedule alternative setup impact rows: {len(schedule_alternative_setup_impact)}")
+    print(f"Schedule alternative setup impact output written to: {ALTERNATIVE_SETUP_IMPACT_OUTPUT_FILE}")
+    print(f"Schedule alternative maintenance impact rows: {len(schedule_alternative_maintenance_impact)}")
+    print(f"Schedule alternative maintenance impact output written to: {ALTERNATIVE_MAINTENANCE_IMPACT_OUTPUT_FILE}")
+    print(f"Schedule alternative cost score rows: {len(schedule_alternative_cost_score)}")
+    print(f"Schedule alternative cost score output written to: {ALTERNATIVE_COST_SCORE_OUTPUT_FILE}")
+    print(f"Schedule alternative recommendation rows: {len(schedule_alternative_recommendations)}")
+    print(f"Schedule alternative recommendations output written to: {ALTERNATIVE_RECOMMENDATIONS_OUTPUT_FILE}")
+    print(f"Schedule alternative manager review rows: {len(schedule_alternative_review)}")
+    print(f"Schedule alternative manager review output written to: {ALTERNATIVE_MANAGER_REVIEW_OUTPUT_FILE}")
+    print(f"Schedule alternative validation rows: {len(schedule_alternative_validation)}")
+    print(f"Schedule alternative validation output written to: {ALTERNATIVE_VALIDATION_OUTPUT_FILE}")
 
 
 if __name__ == "__main__":

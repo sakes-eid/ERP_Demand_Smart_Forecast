@@ -159,6 +159,21 @@ Current initialization scope:
 - Phase 3 can produce an advisory inventory availability check using component-period MRP summary when available.
 - Phase 2 preserves the component-period basis in advisory supplier coverage checks.
 - Phase 4 validation writes JSON evidence and a text report under `outputs/`.
+- `core/finite_capacity_schedule_alternatives.py` creates advisory WIP- and setup-aware finite-capacity schedule alternatives using a transparent greedy finite-capacity heuristic, not MILP, simulation, or production-order release.
+- Step 8F inputs include MPS/MRP demand and material context, Step 8A routing graph and critical path, Step 8B candidate operations, Step 8C WIP items/buffers, Step 8D WIP-aware feasibility, Step 8E WIP access and setup/changeover rules, resource calendars, maintenance context, bottleneck/queue evidence, and cost assumptions.
+- Step 8F outputs include alternative master, operation detail, operation segments, quantity flow, shadow WIP ledger, capacity impact, WIP impact, setup impact, maintenance impact, cost score, recommendations, manager review queue, maintenance-window checks, and validation evidence.
+- Step 8F respects routing precedence, parallel branches, merge dependencies, strict WIP buffer access, accepted WIP availability, finite WIP buffer capacity, setup/changeover time, workstation/machine/labor capacity, maintenance review signals, bottleneck/queue risk, and full-route demand completion.
+- Scheduled operation placements use real advisory calendar dates, shift IDs, start/end datetimes, and window IDs. Operations can split across multiple dated segments; any remaining quantity is represented as a final unscheduled remainder.
+- Parallel-authorized workstations use explicit advisory machine-unit and labor-unit lanes. Final Assembly, Quality Control, and Packaging remain single-lane because their master-data parallel flags are disabled.
+- The quantity-flow ledger prevents successors and merge operations from processing more than completed predecessor output plus valid direct accepted WIP. Merge inputs are checked independently.
+- The alternative-specific shadow WIP ledger is time-causal and lot-level. FIFO draws consume the oldest available lot by availability datetime and stable lot ID, never before availability, and never more than the lot balance. The Step 8C WIP ledger is not changed.
+- Destination WIP buffer capacity is checked at the production completion datetime before finite capacity is committed. Buffer-blocked output remains unscheduled and does not consume workstation, machine, labor, setup, or buffer capacity.
+- Sequence setup time is applied only to the first scheduled segment of an uninterrupted operation; continuation segments receive zero additional setup minutes. Daily restart setup persistence remains a future policy decision.
+- Dated maintenance downtime is separate from maintenance risk/review signals. Production is blocked only by explicit dated conflicts or machine-unavailable evidence; no maintenance orders are created.
+- Step 8F costs scheduled work from allocated operation segments only. Validated real costs, assumed monetary costs, and proxy penalties remain separated in `data/schedule_cost_assumptions.csv` and cost-score outputs.
+- Demand coverage is calculated from completed full-route finished-product quantity, not fixed scenario bonuses or partial operation completion.
+- Final closure validation recalculates quantity, segment/detail, timing, FIFO, buffer, capacity, setup, maintenance, demand coverage, cost, recommendation, and forbidden-output checks from detailed evidence. Current Step 8F final status is `CLOSED_WITH_REVIEW` because the alternatives are internally valid but remain partial finite schedules.
+- Next step: Step 8G manager decision layer should use the Step 8F alternatives, closure status, recommendation evidence, and review queue to support manager approval or scenario selection without creating execution outputs.
 
 Run order:
 
@@ -185,8 +200,9 @@ Run order:
 21. Build advisory Phase 4 WIP batch tracking and buffer foundation.
 22. Build advisory Phase 4 WIP-aware schedule feasibility.
 23. Build advisory Phase 4 strict WIP buffer access and setup/changeover foundation.
-24. Run Phase 3 component inventory checks.
-25. Run Phase 2 component supplier checks.
+24. Build advisory Phase 4 WIP- and setup-aware finite-capacity schedule alternatives.
+25. Run Phase 3 component inventory checks.
+26. Run Phase 2 component supplier checks.
 
 The Phase 4 bridges are optional-safe. If a bridge file is missing or fails, Phase 2 and Phase 3 print a warning and continue their existing core pipelines.
 
@@ -202,6 +218,10 @@ Guardrails:
 - WIP tracking is advisory only; no WIP or component inventory is consumed or reserved.
 - WIP-aware schedule feasibility is advisory only and does not create WIP transactions or confirmed schedules.
 - Setup/changeover analysis is advisory only and does not reorder candidate schedules.
+- Schedule alternatives are advisory only and remain candidate alternatives for manager review.
+- Step 8F alternatives are not confirmed schedules; proposed windows are advisory feasibility evidence only.
+- Schedule alternative WIP projections do not change the WIP ledger and do not consume inventory.
+- Step 8F does not create released production orders, confirmed schedules, dispatch, WIP transactions, WIP/component consumption, reservations, purchase orders, maintenance work orders, applied capacity reductions, or simulation outputs.
 - Simulation is a separate future phase.
 - Future production release flags should default to `production_order_release_allowed = False`.
 
@@ -225,5 +245,5 @@ Next likely Phase 4 feature:
 
 Review bundle:
 
-- `create_phase4_review_bundle.py` generates `phase4_step8e_setup_changeover_review_bundle.zip` at the project root for external review.
+- `create_phase4_review_bundle.py` generates `phase4_step8f_final_closure_review_bundle.zip` at the project root for external review.
 - The bundle preserves project-relative folder structure and excludes cache, bytecode, virtual environment, and zip artifacts.

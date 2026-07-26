@@ -78,6 +78,18 @@ PHASE4_OUTPUTS = {
     "setup_changeover_matrix": PHASE4_DIR / "outputs" / "phase4_setup_changeover_matrix.csv",
     "operation_setup_profile": PHASE4_DIR / "outputs" / "phase4_operation_setup_profile.csv",
     "setup_sequence_impact_analysis": PHASE4_DIR / "outputs" / "phase4_setup_sequence_impact_analysis.csv",
+    "schedule_alternative_master": PHASE4_DIR / "outputs" / "phase4_schedule_alternative_master.csv",
+    "schedule_alternative_operation_detail": PHASE4_DIR / "outputs" / "phase4_schedule_alternative_operation_detail.csv",
+    "schedule_alternative_operation_segments": PHASE4_DIR / "outputs" / "phase4_schedule_alternative_operation_segments.csv",
+    "schedule_alternative_quantity_flow": PHASE4_DIR / "outputs" / "phase4_schedule_alternative_quantity_flow.csv",
+    "schedule_alternative_shadow_wip_ledger": PHASE4_DIR / "outputs" / "phase4_schedule_alternative_shadow_wip_ledger.csv",
+    "schedule_alternative_maintenance_window_check": PHASE4_DIR / "outputs" / "phase4_schedule_alternative_maintenance_window_check.csv",
+    "schedule_alternative_capacity_impact": PHASE4_DIR / "outputs" / "phase4_schedule_alternative_capacity_impact.csv",
+    "schedule_alternative_wip_impact": PHASE4_DIR / "outputs" / "phase4_schedule_alternative_wip_impact.csv",
+    "schedule_alternative_setup_impact": PHASE4_DIR / "outputs" / "phase4_schedule_alternative_setup_impact.csv",
+    "schedule_alternative_maintenance_impact": PHASE4_DIR / "outputs" / "phase4_schedule_alternative_maintenance_impact.csv",
+    "schedule_alternative_cost_score": PHASE4_DIR / "outputs" / "phase4_schedule_alternative_cost_score.csv",
+    "schedule_alternative_recommendations": PHASE4_DIR / "outputs" / "phase4_schedule_alternative_recommendations.csv",
     "component_inventory_check": PROJECT_ROOT / "phase 3" / "outputs" / "phase4_component_inventory_check.csv",
     "component_supplier_check": PROJECT_ROOT / "phase 2" / "outputs" / "phase4_component_supplier_check.csv",
 }
@@ -270,6 +282,20 @@ OPERATION_SETUP_PROFILE_FILE = PHASE4_DIR / "outputs" / "phase4_operation_setup_
 SETUP_SEQUENCE_IMPACT_FILE = PHASE4_DIR / "outputs" / "phase4_setup_sequence_impact_analysis.csv"
 SETUP_REVIEW_FILE = PHASE4_DIR / "outputs" / "phase4_setup_manager_review_queue.csv"
 SETUP_VALIDATION_FILE = PHASE4_DIR / "outputs" / "phase4_setup_changeover_validation.csv"
+SCHEDULE_ALTERNATIVE_MASTER_FILE = PHASE4_DIR / "outputs" / "phase4_schedule_alternative_master.csv"
+SCHEDULE_ALTERNATIVE_OPERATION_DETAIL_FILE = PHASE4_DIR / "outputs" / "phase4_schedule_alternative_operation_detail.csv"
+SCHEDULE_ALTERNATIVE_OPERATION_SEGMENTS_FILE = PHASE4_DIR / "outputs" / "phase4_schedule_alternative_operation_segments.csv"
+SCHEDULE_ALTERNATIVE_QUANTITY_FLOW_FILE = PHASE4_DIR / "outputs" / "phase4_schedule_alternative_quantity_flow.csv"
+SCHEDULE_ALTERNATIVE_SHADOW_WIP_LEDGER_FILE = PHASE4_DIR / "outputs" / "phase4_schedule_alternative_shadow_wip_ledger.csv"
+SCHEDULE_ALTERNATIVE_MAINTENANCE_WINDOW_CHECK_FILE = PHASE4_DIR / "outputs" / "phase4_schedule_alternative_maintenance_window_check.csv"
+SCHEDULE_ALTERNATIVE_CAPACITY_IMPACT_FILE = PHASE4_DIR / "outputs" / "phase4_schedule_alternative_capacity_impact.csv"
+SCHEDULE_ALTERNATIVE_WIP_IMPACT_FILE = PHASE4_DIR / "outputs" / "phase4_schedule_alternative_wip_impact.csv"
+SCHEDULE_ALTERNATIVE_SETUP_IMPACT_FILE = PHASE4_DIR / "outputs" / "phase4_schedule_alternative_setup_impact.csv"
+SCHEDULE_ALTERNATIVE_MAINTENANCE_IMPACT_FILE = PHASE4_DIR / "outputs" / "phase4_schedule_alternative_maintenance_impact.csv"
+SCHEDULE_ALTERNATIVE_COST_SCORE_FILE = PHASE4_DIR / "outputs" / "phase4_schedule_alternative_cost_score.csv"
+SCHEDULE_ALTERNATIVE_RECOMMENDATIONS_FILE = PHASE4_DIR / "outputs" / "phase4_schedule_alternative_recommendations.csv"
+SCHEDULE_ALTERNATIVE_REVIEW_FILE = PHASE4_DIR / "outputs" / "phase4_schedule_alternative_manager_review_queue.csv"
+SCHEDULE_ALTERNATIVE_VALIDATION_FILE = PHASE4_DIR / "outputs" / "phase4_schedule_alternative_validation.csv"
 
 
 def main() -> None:
@@ -322,6 +348,7 @@ def main() -> None:
     checks.append(_check_wip_batch_tracking())
     checks.append(_check_wip_aware_schedule_feasibility())
     checks.append(_check_setup_changeover_rules())
+    checks.append(_check_schedule_alternatives())
     checks.append(_check_phase3_inventory_check())
     checks.append(_check_phase2_supplier_check())
     checks.append(_check_phase4_run_id_consistency())
@@ -2254,6 +2281,413 @@ def _check_setup_changeover_rules() -> dict:
     )
 
 
+def _check_schedule_alternatives() -> dict:
+    required_files = [
+        (SCHEDULE_ALTERNATIVE_MASTER_FILE, "schedule alternative master"),
+        (SCHEDULE_ALTERNATIVE_OPERATION_DETAIL_FILE, "schedule alternative operation detail"),
+        (SCHEDULE_ALTERNATIVE_OPERATION_SEGMENTS_FILE, "schedule alternative operation segments"),
+        (SCHEDULE_ALTERNATIVE_QUANTITY_FLOW_FILE, "schedule alternative quantity flow"),
+        (SCHEDULE_ALTERNATIVE_SHADOW_WIP_LEDGER_FILE, "schedule alternative shadow WIP ledger"),
+        (SCHEDULE_ALTERNATIVE_MAINTENANCE_WINDOW_CHECK_FILE, "schedule alternative maintenance window check"),
+        (SCHEDULE_ALTERNATIVE_CAPACITY_IMPACT_FILE, "schedule alternative capacity impact"),
+        (SCHEDULE_ALTERNATIVE_WIP_IMPACT_FILE, "schedule alternative WIP impact"),
+        (SCHEDULE_ALTERNATIVE_SETUP_IMPACT_FILE, "schedule alternative setup impact"),
+        (SCHEDULE_ALTERNATIVE_MAINTENANCE_IMPACT_FILE, "schedule alternative maintenance impact"),
+        (SCHEDULE_ALTERNATIVE_COST_SCORE_FILE, "schedule alternative cost score"),
+        (SCHEDULE_ALTERNATIVE_RECOMMENDATIONS_FILE, "schedule alternative recommendations"),
+        (SCHEDULE_ALTERNATIVE_REVIEW_FILE, "schedule alternative manager review queue"),
+        (SCHEDULE_ALTERNATIVE_VALIDATION_FILE, "schedule alternative validation"),
+    ]
+    for path, label in required_files:
+        if not path.exists():
+            return _result("schedule_alternatives", "FAIL", f"{label} file is missing: {path}")
+        if pd.read_csv(path).empty:
+            return _result("schedule_alternatives", "FAIL", f"{label} file has no rows: {path}")
+
+    validation = pd.read_csv(SCHEDULE_ALTERNATIVE_VALIDATION_FILE)
+    fail_count = int((validation["status"].astype(str).str.upper() == "FAIL").sum()) if "status" in validation.columns else len(validation)
+    if fail_count:
+        return _result("schedule_alternatives", "FAIL", f"Schedule alternative validation contains FAIL rows: {fail_count}")
+
+    master = pd.read_csv(SCHEDULE_ALTERNATIVE_MASTER_FILE)
+    detail = pd.read_csv(SCHEDULE_ALTERNATIVE_OPERATION_DETAIL_FILE)
+    segments = pd.read_csv(SCHEDULE_ALTERNATIVE_OPERATION_SEGMENTS_FILE)
+    quantity_flow = pd.read_csv(SCHEDULE_ALTERNATIVE_QUANTITY_FLOW_FILE)
+    shadow_wip = pd.read_csv(SCHEDULE_ALTERNATIVE_SHADOW_WIP_LEDGER_FILE)
+    maintenance_windows = pd.read_csv(SCHEDULE_ALTERNATIVE_MAINTENANCE_WINDOW_CHECK_FILE)
+    capacity = pd.read_csv(SCHEDULE_ALTERNATIVE_CAPACITY_IMPACT_FILE)
+    wip = pd.read_csv(SCHEDULE_ALTERNATIVE_WIP_IMPACT_FILE)
+    setup = pd.read_csv(SCHEDULE_ALTERNATIVE_SETUP_IMPACT_FILE)
+    maintenance = pd.read_csv(SCHEDULE_ALTERNATIVE_MAINTENANCE_IMPACT_FILE)
+    cost = pd.read_csv(SCHEDULE_ALTERNATIVE_COST_SCORE_FILE)
+    recommendations = pd.read_csv(SCHEDULE_ALTERNATIVE_RECOMMENDATIONS_FILE)
+    review = pd.read_csv(SCHEDULE_ALTERNATIVE_REVIEW_FILE)
+
+    required_columns = {
+        "master": {
+            "planning_run_id", "alternative_id", "alternative_type", "alternative_name", "alternative_description", "finished_sku_count",
+            "schedule_candidate_count", "operation_count", "planned_demand_qty", "covered_demand_qty", "uncovered_demand_qty",
+            "demand_coverage_pct", "on_time_completed_qty", "late_completed_qty", "unscheduled_qty", "lateness_days_weighted",
+            "demand_coverage_calculation_basis", "hard_feasibility_status", "total_real_cost", "validated_real_cost_total",
+            "assumed_monetary_cost_total", "total_proxy_penalty", "total_advisory_schedule_score",
+            "cost_basis", "cost_confidence", "recommendation_rank", "recommendation_status", "source_phase", "advisory_only_flag",
+        },
+        "detail": {
+            "planning_run_id", "alternative_id", "alternative_type", "schedule_candidate_id", "finished_sku", "operation_id",
+            "operation_name", "operation_sequence", "workstation_id", "machine_id", "candidate_schedule_period", "candidate_schedule_day",
+            "candidate_schedule_shift", "proposed_schedule_period", "proposed_schedule_day", "proposed_schedule_shift",
+            "proposed_schedule_date", "proposed_shift_id", "proposed_start_datetime", "proposed_end_datetime", "proposed_window_id",
+            "predecessor_operation_ids", "successor_operation_ids", "critical_path_flag", "merge_operation_flag", "parallel_branch_flag",
+            "required_input_wip_item_id", "output_wip_item_id", "wip_buffer_id", "setup_family_id", "estimated_processing_time_minutes",
+            "estimated_setup_time_minutes", "estimated_total_time_minutes", "requested_production_qty", "quantity_supported_before_capacity",
+            "scheduling_target_qty", "capacity_scheduled_qty", "final_reconciled_scheduled_qty", "post_schedule_quantity_adjustment_qty",
+            "post_schedule_quantity_adjustment_flag", "input_quantity_availability_datetime", "quantity_support_status",
+            "quantity_support_blocker_reason", "resource_reserved_for_supported_qty_flag", "schedulable_production_qty",
+            "processing_minutes_per_unit", "processing_minutes_total", "actual_sequence_setup_minutes", "total_required_minutes",
+            "required_hours_total", "workload_calculation_basis", "effective_parallel_lane_count", "parallel_capacity_applied_flag",
+            "assigned_machine_unit_ids", "assigned_labor_unit_ids", "resource_bundle_change_count",
+            "resource_bundle_assignment_status", "mandatory_predecessor_count", "ready_predecessor_count",
+            "predecessor_quantity_ready_flag", "predecessor_ready_datetime", "merge_supported_qty", "precedence_check_status",
+            "merge_input_completion_status", "independently_calculated_precedence_status", "precedence_violation_flag", "operation_hard_feasibility_status",
+            "operation_schedule_status", "schedule_blocker_reason", "source_phase", "advisory_only_flag",
+        },
+        "segments": {
+            "planning_run_id", "alternative_id", "operation_segment_id", "schedule_candidate_id", "finished_sku", "operation_id",
+            "operation_name", "segment_sequence", "requested_operation_qty", "quantity_available_from_predecessors",
+            "quantity_supported_before_capacity", "scheduling_target_qty", "segment_scheduled_qty", "cumulative_scheduled_qty",
+            "remaining_unscheduled_qty", "proposed_schedule_date",
+            "proposed_shift_id", "proposed_window_id", "proposed_start_datetime", "proposed_end_datetime", "workstation_id",
+            "machine_id", "labor_skill_id", "processing_minutes_per_unit", "segment_processing_minutes", "segment_setup_minutes",
+            "segment_total_minutes", "setup_applied_flag", "parallel_capacity_applied_flag", "effective_parallel_lane_count",
+            "parallel_lane_id", "assigned_machine_unit_ids", "assigned_labor_unit_ids", "required_machine_count",
+            "required_worker_count", "workstation_parallel_authorized_flag", "labor_parallel_authorized_flag",
+            "resource_bundle_status", "continuation_resource_bundle_changed_flag", "segment_predecessor_ready_datetime", "segment_capacity_status",
+            "input_quantity_availability_datetime", "resource_reserved_for_supported_qty_flag", "segment_maintenance_status",
+            "segment_schedule_status", "advisory_only_flag",
+        },
+        "quantity_flow": {
+            "planning_run_id", "alternative_id", "schedule_candidate_id", "finished_sku", "operation_id", "operation_name",
+            "predecessor_operation_id", "direct_input_wip_item_id", "direct_input_wip_buffer_id", "required_input_qty_per_output_unit",
+            "quantity_ratio_basis", "requested_output_qty", "predecessor_completed_qty_available", "starting_accepted_wip_available",
+            "advisory_wip_produced_available", "advisory_wip_already_drawn", "total_input_qty_available", "maximum_supported_output_qty",
+            "scheduled_output_qty", "unscheduled_output_qty", "quantity_flow_status", "quantity_balance_check",
+            "quantity_balance_status", "advisory_only_flag",
+        },
+        "shadow_wip": {
+            "planning_run_id", "alternative_id", "shadow_wip_event_id", "event_sequence", "event_datetime", "schedule_candidate_id",
+            "operation_segment_id", "finished_sku", "wip_item_id", "wip_buffer_id", "producer_operation_id", "consumer_operation_id",
+            "shadow_event_type", "shadow_beginning_qty", "advisory_produced_qty", "advisory_drawn_qty", "advisory_blocked_qty",
+            "shadow_ending_qty", "buffer_max_qty", "buffer_overflow_qty", "shadow_balance_status",
+            "note_no_actual_wip_consumption_flag", "advisory_only_flag",
+        },
+        "maintenance_windows": {
+            "planning_run_id", "alternative_id", "machine_id", "workstation_id", "maintenance_plan_id", "production_operation_segment_id",
+            "production_start_datetime", "production_end_datetime", "maintenance_window_id", "maintenance_start_datetime",
+            "maintenance_end_datetime", "maintenance_window_source", "maintenance_window_selected_flag", "dated_overlap_flag",
+            "machine_state_unavailable_flag", "maintenance_risk_level", "maintenance_window_check_status",
+            "maintenance_avoidance_applied_flag", "maintenance_avoidance_evidence", "note_no_maintenance_order_created_flag",
+            "advisory_only_flag",
+        },
+        "capacity": {
+            "planning_run_id", "alternative_id", "schedule_candidate_id", "operation_id", "final_operation_segment_ids",
+            "workstation_id", "machine_id", "labor_skill_id", "proposed_schedule_period",
+            "proposed_schedule_day", "proposed_schedule_shift", "proposed_schedule_date", "proposed_shift_id", "proposed_window_id",
+            "available_minutes", "net_minutes_per_resource_unit", "effective_parallel_lane_count", "aggregate_workstation_capacity_minutes",
+            "aggregate_machine_capacity_minutes", "aggregate_labor_capacity_minutes", "scheduled_minutes_by_machine_unit",
+            "scheduled_minutes_by_labor_unit", "total_scheduled_workload_minutes", "remaining_aggregate_capacity_minutes",
+            "workstation_utilization_pct", "machine_utilization_pct", "labor_utilization_pct", "workstation_utilization_percentage",
+            "machine_utilization_percentage", "labor_utilization_percentage", "binding_resource_type",
+            "previously_allocated_minutes", "requested_minutes", "newly_allocated_minutes", "remaining_minutes",
+            "overload_minutes", "required_processing_hours", "required_setup_hours", "total_required_hours",
+            "available_hours_reference", "utilization_pct", "quality_adjusted_utilization_pct", "capacity_feasibility_status",
+            "capacity_overload_hours", "capacity_overload_penalty", "underutilization_hours", "underutilization_penalty",
+            "note_no_capacity_change_flag", "source_phase", "advisory_only_flag",
+        },
+        "wip": {
+            "planning_run_id", "alternative_id", "finished_sku", "operation_id", "required_input_wip_item_id", "output_wip_item_id",
+            "wip_buffer_id", "accepted_wip_available_qty", "required_wip_qty", "projected_wip_build_qty",
+            "projected_wip_draw_qty_advisory", "projected_wip_ending_qty_advisory", "wip_shortage_qty", "wip_overflow_qty",
+            "wip_impact_status", "wip_shortage_penalty", "wip_overflow_penalty", "note_no_wip_consumption_flag", "source_phase",
+            "advisory_only_flag",
+        },
+        "setup": {
+            "planning_run_id", "alternative_id", "schedule_candidate_id", "operation_id", "workstation_id", "machine_id", "proposed_schedule_period", "proposed_schedule_day",
+            "proposed_schedule_shift", "operation_sequence_position", "previous_operation_id", "previous_setup_family_id",
+            "current_setup_family_id", "changeover_time_minutes", "actual_changeover_minutes", "setup_switch_flag",
+            "baseline_changeover_minutes", "setup_minutes_saved_vs_baseline", "setup_saving_supported_flag",
+            "changeover_complexity", "setup_capacity_loss_minutes", "setup_changeover_cost", "batching_applied_flag",
+            "batching_opportunity_flag", "setup_impact_status", "source_phase", "advisory_only_flag",
+        },
+        "maintenance": {
+            "planning_run_id", "alternative_id", "workstation_id", "machine_id", "operation_id", "proposed_schedule_period",
+            "proposed_schedule_day", "proposed_schedule_shift", "maintenance_feasibility_status", "breakdown_risk_level",
+            "maintenance_conflict_flag", "maintenance_conflict_penalty", "breakdown_risk_penalty", "maintenance_avoidance_applied_flag",
+            "original_maintenance_conflict_flag", "selected_window_maintenance_conflict_flag", "selected_window_maintenance_status",
+            "maintenance_conflict_avoided_flag", "maintenance_avoidance_evidence", "note_no_maintenance_order_created_flag",
+            "source_phase", "advisory_only_flag",
+        },
+        "cost": {
+            "planning_run_id", "alternative_id", "alternative_type", "real_setup_cost", "real_processing_cost", "real_labor_cost",
+            "real_quality_cost", "real_maintenance_cost", "real_wip_holding_cost", "validated_real_cost_total",
+            "assumed_monetary_cost_total", "proxy_late_demand_penalty",
+            "proxy_customer_dissatisfaction_penalty", "proxy_capacity_overload_penalty", "proxy_maintenance_conflict_penalty",
+            "proxy_breakdown_risk_penalty", "proxy_wip_shortage_penalty", "proxy_wip_overflow_penalty", "proxy_bottleneck_queue_penalty",
+            "proxy_underutilization_penalty", "infeasibility_penalty", "review_required_penalty", "total_real_cost",
+            "total_proxy_penalty", "total_advisory_schedule_score", "cost_basis", "cost_confidence", "assumption_flag",
+            "scheduled_processing_minutes", "scheduled_setup_minutes", "scheduled_labor_minutes", "unscheduled_quantity",
+            "scheduled_cost_calculation_basis", "unscheduled_penalty_calculation_basis", "source_phase", "advisory_only_flag",
+        },
+        "recommendations": {
+            "recommendation_id", "planning_run_id", "alternative_id", "alternative_type", "recommendation_rank", "recommendation_status",
+            "recommendation_summary", "demand_coverage_pct", "total_real_cost", "validated_real_cost_total",
+            "assumed_monetary_cost_total", "total_proxy_penalty", "total_advisory_schedule_score",
+            "main_benefit", "main_risk", "remaining_blocker_summary", "recommended_manager_action", "implementation_readiness_status",
+            "auto_action_allowed", "advisory_only_flag",
+        },
+        "review": {
+            "review_item_id", "planning_run_id", "alternative_id", "schedule_candidate_id", "finished_sku", "operation_id", "issue_type",
+            "issue_severity", "issue_description", "recommended_review_action", "auto_action_allowed", "advisory_only_flag",
+        },
+    }
+    frames = {
+        "master": master,
+        "detail": detail,
+        "segments": segments,
+        "quantity_flow": quantity_flow,
+        "shadow_wip": shadow_wip,
+        "maintenance_windows": maintenance_windows,
+        "capacity": capacity,
+        "wip": wip,
+        "setup": setup,
+        "maintenance": maintenance,
+        "cost": cost,
+        "recommendations": recommendations,
+        "review": review,
+    }
+    for label, columns in required_columns.items():
+        missing = sorted(columns.difference(frames[label].columns))
+        if missing:
+            return _result("schedule_alternatives", "FAIL", f"{label} missing columns: {missing}")
+
+    expected_types = {
+        "BASELINE_FROM_STEP_8B",
+        "BOTTLENECK_CRITICAL_PATH_PRIORITY",
+        "SETUP_REDUCTION_BATCHING",
+        "WIP_PROTECTED_CONTINUITY",
+        "MAINTENANCE_AWARE_SHIFTING",
+        "LEAST_RISK_COMBINED",
+    }
+    if set(master["alternative_type"].astype(str)) != expected_types:
+        return _result("schedule_alternatives", "FAIL", "Not all expected Step 8F alternative types are present.")
+    alt_ids = set(master["alternative_id"].astype(str))
+    for label, frame in frames.items():
+        if "alternative_id" in frame.columns and not set(frame["alternative_id"].dropna().astype(str)) <= alt_ids:
+            return _result("schedule_alternatives", "FAIL", f"{label} references invalid alternative IDs.")
+    if not set(detail["schedule_candidate_id"].astype(str)) <= set(pd.read_csv(PRODUCTION_SCHEDULE_CANDIDATES_FILE)["schedule_candidate_id"].astype(str)):
+        return _result("schedule_alternatives", "FAIL", "Schedule alternatives reference invalid Step 8B schedule candidate IDs.")
+    if not _to_bool(detail["parallel_branch_flag"]).any() or not _to_bool(detail["merge_operation_flag"]).any():
+        return _result("schedule_alternatives", "FAIL", "Parallel branch and merge operation flags must be preserved.")
+    if not _all_true(wip, "note_no_wip_consumption_flag"):
+        return _result("schedule_alternatives", "FAIL", "WIP impact must keep note_no_wip_consumption_flag True.")
+    if not _all_true(capacity, "note_no_capacity_change_flag"):
+        return _result("schedule_alternatives", "FAIL", "Capacity impact must keep note_no_capacity_change_flag True.")
+    if not _all_true(maintenance, "note_no_maintenance_order_created_flag"):
+        return _result("schedule_alternatives", "FAIL", "Maintenance impact must keep note_no_maintenance_order_created_flag True.")
+    if "MAINTENANCE_REVIEW_REQUIRED" in set(capacity["capacity_feasibility_status"].astype(str)):
+        return _result("schedule_alternatives", "FAIL", "Capacity feasibility must remain separate from maintenance feasibility.")
+    validation_passed = set(validation["check_id"].astype(str)[validation["status"].astype(str).str.upper() == "PASS"]) if {"check_id", "status"} <= set(validation.columns) else set()
+    required_strict_checks = {
+        "VALID_CALENDAR_WINDOWS",
+        "NO_PLACEHOLDER_WINDOWS",
+        "NO_MACHINE_OVERLAP",
+        "CUMULATIVE_RESOURCE_CAPACITY_RECONCILES",
+        "TOTAL_WORKLOAD_USES_PRODUCTION_QUANTITY",
+        "QUANTITY_SUPPORT_CALCULATED_BEFORE_CAPACITY",
+        "ZERO_SUPPORTED_QUANTITY_RESERVES_NO_CAPACITY",
+        "SCHEDULING_TARGET_DOES_NOT_EXCEED_INPUT_SUPPORT",
+        "RESOURCE_RESERVATION_MATCHES_SCHEDULING_TARGET",
+        "NO_MATERIAL_POST_HOC_QUANTITY_TRIMMING",
+        "NO_PHANTOM_CAPACITY_RESERVATION",
+        "CAPACITY_IMPACT_RECONCILES_TO_FINAL_SEGMENTS",
+        "SEGMENT_JSON_RECONCILES_TO_FINAL_SEGMENTS",
+        "LIVE_SHADOW_WIP_CONSERVES",
+        "SHADOW_EVENT_SEQUENCE_NOT_CHRONOLOGICAL",
+        "DRAW_USES_FUTURE_WIP",
+        "CHRONOLOGICAL_SHADOW_BALANCE_NEGATIVE",
+        "INPUT_LOT_QUANTITY_REUSED",
+        "FIFO_SEQUENCE_VIOLATION",
+        "NEWER_LOT_USED_BEFORE_OLDER_AVAILABLE_LOT",
+        "WIP_DRAW_BEFORE_AVAILABILITY",
+        "WIP_LOT_QUANTITY_REUSED",
+        "LOT_LEDGER_RECONCILIATION_FAILURE",
+        "EXPIRY_APPLIED_TO_NON_SHELF_LIFE_ITEM",
+        "SHELF_LIFE_ENABLED_WITHOUT_VALID_CONFIGURATION",
+        "INPUT_DRAW_EQUALS_SCHEDULED_OUTPUT_REQUIREMENT",
+        "OUTPUT_WIP_EQUALS_FINAL_SCHEDULED_QUANTITY",
+        "MANAGER_REVIEW_BUFFER_OVERFLOW",
+        "UNCONFIGURED_TEMPORARY_OVERFLOW_USED",
+        "BUFFER_BALANCE_EXCEEDS_ALLOWED_CAPACITY",
+        "OUTPUT_PRODUCTION_EXCEEDS_AVAILABLE_SPACE",
+        "BUFFER_BLOCKED_QTY_RESERVED_CAPACITY",
+        "BUFFER_CAPACITY_POST_HOC_TRIMMING",
+        "SHADOW_LEDGER_BUFFER_CAPACITY_MISMATCH",
+        "BUFFER_BALANCE_BEFORE_PRODUCTION_MISMATCH",
+        "STATIC_BUFFER_SNAPSHOT_USED",
+        "AVAILABLE_LATER_BUFFER_SPACE_NOT_SEARCHED",
+        "BUFFER_RESERVATION_DOUBLE_BOOKED",
+        "PRODUCTION_COMPLETION_EXCEEDS_BUFFER_CAPACITY",
+        "BUFFER_RETRY_RESOURCE_RESERVATION_LEAK",
+        "MULTI_OUTPUT_BUFFER_SPACE_NOT_SIMULTANEOUS",
+        "SUCCESSOR_START_RESPECTS_INPUT_AVAILABILITY",
+        "SUCCESSOR_STARTS_BEFORE_REQUIRED_INPUT_AVAILABLE",
+        "MERGE_INPUT_NOT_AVAILABLE_AT_START",
+        "LOT_LEDGER_DOES_NOT_RECONCILE_TO_SHADOW_OUTPUT",
+        "MERGE_INPUT_SUPPORT_RECONCILES_BEFORE_CAPACITY",
+        "PROVISIONAL_AND_FINAL_CAPACITY_TOTALS_MATCH",
+        "DEMAND_COVERAGE_RECONCILES_AFTER_LIVE_QUANTITY_SCHEDULING",
+        "FINAL_CLOSURE_QUANTITY_RECONCILIATION",
+        "FINAL_CLOSURE_SEGMENT_OPERATION_DETAIL_RECONCILIATION",
+        "FINAL_CLOSURE_PRECEDENCE_AND_TIMING",
+        "FINAL_CLOSURE_FIFO_AND_SHADOW_WIP",
+        "FINAL_CLOSURE_FINITE_BUFFER_CAPACITY",
+        "FINAL_CLOSURE_RESOURCE_CAPACITY",
+        "FINAL_CLOSURE_SETUP_RECONCILIATION",
+        "FINAL_CLOSURE_MAINTENANCE_EVIDENCE",
+        "FINAL_CLOSURE_FULL_ROUTE_DEMAND_COVERAGE",
+        "FINAL_CLOSURE_COST_SEPARATION",
+        "FINAL_CLOSURE_RECOMMENDATION_TRACEABILITY",
+        "FINAL_CLOSURE_FORBIDDEN_OUTPUTS",
+        "STEP8F_FINAL_CLOSURE_STATUS",
+        "FULL_ROUTE_DEMAND_COVERAGE_RECONCILES",
+        "SETUP_SAVING_HAS_SEQUENCE_EVIDENCE",
+        "MAINTENANCE_AVOIDANCE_HAS_WINDOW_EVIDENCE",
+        "REAL_COST_SOURCE_TRACEABILITY",
+        "BLOCKED_ALTERNATIVE_NOT_MARKED_FEASIBLE",
+        "QUANTITY_FLOW_CONSERVES_ACROSS_ROUTE",
+        "MERGE_INPUTS_RECONCILE_INDEPENDENTLY",
+        "FINAL_COMPLETED_QTY_EQUALS_FULL_ROUTE_MINIMUM",
+        "SHADOW_WIP_NEVER_NEGATIVE",
+        "SHADOW_WIP_NOT_REUSED",
+        "SHADOW_WIP_BUFFER_CAPACITY_RESPECTED",
+        "OPERATION_REMAINDER_ACCOUNTED_FOR",
+        "SEGMENTS_USE_VALID_CALENDAR_WINDOWS",
+        "NO_MACHINE_SEGMENT_OVERLAP",
+        "PARALLEL_RESOURCE_MASTER_RECONCILES",
+        "PARALLEL_WORKSTATION_CAPACITY_APPLIED",
+        "RESOURCE_UNIT_ASSIGNMENT_COMPLETE",
+        "NO_MACHINE_UNIT_OVERLAP",
+        "NO_LABOR_UNIT_OVERLAP",
+        "NONPARALLEL_WORKSTATION_NO_OVERLAP",
+        "PARALLEL_LANE_CONCURRENCY_WITHIN_LIMIT",
+        "SIMULTANEOUS_RESOURCE_BUNDLE_VALID",
+        "RESOURCE_UNIT_SEGMENTS_WITHIN_CALENDAR",
+        "AGGREGATE_CAPACITY_RECONCILES_TO_UNIT_CALENDARS",
+        "PARALLEL_CAPACITY_NOT_MODELED_AS_EXTENDED_DAY",
+        "CONTINUATION_RESOURCE_ASSIGNMENT_RECONCILES",
+        "MULTI_WINDOW_SEGMENTATION_PRESENT",
+        "MULTI_WINDOW_REQUIRED_OPERATION_NOT_TRUNCATED",
+        "SEGMENT_SEQUENCE_VALID",
+        "SEGMENT_QUANTITY_RECONCILES",
+        "SEGMENT_TIME_AND_CAPACITY_RECONCILES",
+        "SETUP_APPLIED_ONCE_PER_OPERATION",
+        "OPERATION_DETAIL_RECONCILES_TO_SEGMENTS",
+        "UNSCHEDULED_REMAINDER_CREATED_ONLY_AFTER_WINDOW_EXHAUSTION",
+        "SEGMENT_PRECEDENCE_RECALCULATED",
+        "DATED_MAINTENANCE_OVERLAP_RECALCULATED",
+        "MAINTENANCE_RISK_NOT_TREATED_AS_HORIZON_DOWNTIME",
+        "SCHEDULED_COST_RECONCILES_TO_SEGMENTS",
+        "UNSCHEDULED_WORK_NOT_CHARGED_AS_SCHEDULED_COST",
+        "DEMAND_COVERAGE_RECONCILES_TO_FULL_ROUTE",
+        "DEMAND_COVERAGE_RECONCILES_AFTER_MULTI_WINDOW_ALLOCATION",
+        "DEMAND_COVERAGE_RECONCILES_AFTER_PARALLEL_CAPACITY",
+        "PARTIAL_SCHEDULE_NOT_MARKED_FULLY_FEASIBLE",
+    }
+    if not required_strict_checks <= validation_passed:
+        return _result("schedule_alternatives", "FAIL", f"Strict Step 8F validation checks are missing or not PASS: {sorted(required_strict_checks - validation_passed)}")
+    scheduled_detail = detail[detail["proposed_schedule_date"].notna() & (detail["proposed_schedule_date"].astype(str).str.strip() != "")]
+    placeholder_pattern = "ADVISORY_NEXT_WINDOW|ADVISORY_REVIEW_WINDOW|PLACEHOLDER"
+    if scheduled_detail[["proposed_schedule_date", "proposed_window_id", "proposed_schedule_period", "proposed_schedule_day"]].astype(str).apply(lambda col: col.str.contains(placeholder_pattern, case=False, regex=True)).any().any():
+        return _result("schedule_alternatives", "FAIL", "Step 8F proposed windows must not contain placeholder strings.")
+    for _, row in scheduled_detail.iterrows():
+        try:
+            start_dt = pd.to_datetime(row["proposed_start_datetime"])
+            end_dt = pd.to_datetime(row["proposed_end_datetime"])
+            pd.to_datetime(row["proposed_schedule_date"], format="%Y-%m-%d")
+        except Exception:
+            return _result("schedule_alternatives", "FAIL", "Scheduled Step 8F rows must use valid ISO dates/datetimes.")
+        if pd.isna(start_dt) or pd.isna(end_dt) or end_dt <= start_dt or str(row["proposed_shift_id"]).strip() == "":
+            return _result("schedule_alternatives", "FAIL", "Scheduled Step 8F rows must have shift and end after start.")
+    if _to_bool(detail["precedence_violation_flag"]).any():
+        return _result("schedule_alternatives", "FAIL", "Step 8F contains a routing precedence or merge violation.")
+    if _to_bool(segments.get("precedence_violation_flag", pd.Series(False, index=segments.index))).any():
+        return _result("schedule_alternatives", "FAIL", "Step 8F operation segments contain a routing precedence violation.")
+    if not _all_true(shadow_wip, "note_no_actual_wip_consumption_flag"):
+        return _result("schedule_alternatives", "FAIL", "Shadow WIP ledger must keep note_no_actual_wip_consumption_flag True.")
+    if not _all_true(maintenance_windows, "note_no_maintenance_order_created_flag"):
+        return _result("schedule_alternatives", "FAIL", "Maintenance window checks must keep note_no_maintenance_order_created_flag True.")
+    if _to_bool(maintenance_windows["dated_overlap_flag"]).any() or _to_bool(maintenance_windows["machine_state_unavailable_flag"]).any():
+        return _result("schedule_alternatives", "FAIL", "Scheduled production must not overlap selected dated maintenance or unavailable machine windows.")
+    if (pd.to_numeric(shadow_wip["shadow_ending_qty"], errors="coerce") < -0.0001).any():
+        return _result("schedule_alternatives", "FAIL", "Shadow WIP ledger cannot draw WIP below zero.")
+    if (pd.to_numeric(quantity_flow["scheduled_output_qty"], errors="coerce") > pd.to_numeric(quantity_flow["maximum_supported_output_qty"], errors="coerce") + 0.0001).any():
+        return _result("schedule_alternatives", "FAIL", "Scheduled output quantity cannot exceed supported predecessor/direct WIP supply.")
+    if (pd.to_numeric(quantity_flow["quantity_balance_check"], errors="coerce").abs() > 0.0001).any():
+        return _result("schedule_alternatives", "FAIL", "Step 8F quantity-flow balance checks must reconcile.")
+    partial_bad = master[
+        (master["hard_feasibility_status"].astype(str) == "HARD_FEASIBLE")
+        & (pd.to_numeric(master["covered_demand_qty"], errors="coerce") + 0.0001 < pd.to_numeric(master["planned_demand_qty"], errors="coerce"))
+    ]
+    if not partial_bad.empty:
+        return _result("schedule_alternatives", "FAIL", "Partial finite schedules cannot be marked HARD_FEASIBLE.")
+    cap_status_allowed = {"FINITE_CAPACITY_FEASIBLE", "FINITE_CAPACITY_HIGH_UTILIZATION", "FINITE_CAPACITY_PARTIAL_QUANTITY", "FINITE_CAPACITY_BLOCKED", "REVIEW_REQUIRED"}
+    if not set(capacity["capacity_feasibility_status"].astype(str)) <= cap_status_allowed:
+        return _result("schedule_alternatives", "FAIL", "Step 8F capacity statuses must use finite-capacity values.")
+    if not ((pd.to_numeric(capacity["newly_allocated_minutes"], errors="coerce") + pd.to_numeric(capacity["overload_minutes"], errors="coerce") - pd.to_numeric(capacity["requested_minutes"], errors="coerce")).abs() < 0.01).all():
+        return _result("schedule_alternatives", "FAIL", "Step 8F cumulative capacity ledger does not reconcile requested/allocation/overload minutes.")
+    if not ((pd.to_numeric(master["covered_demand_qty"], errors="coerce") + pd.to_numeric(master["uncovered_demand_qty"], errors="coerce") - pd.to_numeric(master["planned_demand_qty"], errors="coerce")).abs() < 0.01).all():
+        return _result("schedule_alternatives", "FAIL", "Step 8F demand coverage must reconcile to planned demand.")
+    if (pd.to_numeric(cost["total_real_cost"], errors="coerce") != pd.to_numeric(cost["validated_real_cost_total"], errors="coerce")).any():
+        return _result("schedule_alternatives", "FAIL", "Step 8F total_real_cost must contain validated real cost only.")
+    if (pd.to_numeric(cost["assumed_monetary_cost_total"], errors="coerce") > 0).any() and not _all_true(cost, "assumption_flag"):
+        return _result("schedule_alternatives", "FAIL", "Step 8F assumed monetary costs must keep assumption_flag True.")
+    numeric_checks = [
+        (detail, ["estimated_processing_time_minutes", "estimated_setup_time_minutes", "estimated_total_time_minutes", "requested_production_qty", "quantity_supported_before_capacity", "scheduling_target_qty", "capacity_scheduled_qty", "final_reconciled_scheduled_qty", "post_schedule_quantity_adjustment_qty", "schedulable_production_qty", "processing_minutes_per_unit", "processing_minutes_total", "actual_sequence_setup_minutes", "total_required_minutes", "required_hours_total"], "detail"),
+        (segments, ["requested_operation_qty", "quantity_available_from_predecessors", "quantity_supported_before_capacity", "scheduling_target_qty", "segment_scheduled_qty", "cumulative_scheduled_qty", "remaining_unscheduled_qty", "processing_minutes_per_unit", "segment_processing_minutes", "segment_setup_minutes", "segment_total_minutes"], "segments"),
+        (quantity_flow, ["required_input_qty_per_output_unit", "requested_output_qty", "predecessor_completed_qty_available", "starting_accepted_wip_available", "advisory_wip_produced_available", "advisory_wip_already_drawn", "total_input_qty_available", "maximum_supported_output_qty", "scheduled_output_qty", "unscheduled_output_qty"], "quantity_flow"),
+        (shadow_wip, ["event_sequence", "shadow_beginning_qty", "advisory_produced_qty", "advisory_drawn_qty", "advisory_blocked_qty", "shadow_ending_qty", "buffer_max_qty", "buffer_overflow_qty"], "shadow_wip"),
+        (capacity, ["available_minutes", "previously_allocated_minutes", "requested_minutes", "newly_allocated_minutes", "remaining_minutes", "overload_minutes", "required_processing_hours", "required_setup_hours", "total_required_hours", "available_hours_reference", "utilization_pct", "capacity_overload_hours"], "capacity"),
+        (wip, ["accepted_wip_available_qty", "required_wip_qty", "projected_wip_build_qty", "projected_wip_draw_qty_advisory", "projected_wip_ending_qty_advisory", "wip_shortage_qty", "wip_overflow_qty"], "wip"),
+        (setup, ["changeover_time_minutes", "actual_changeover_minutes", "baseline_changeover_minutes", "setup_minutes_saved_vs_baseline", "setup_capacity_loss_minutes", "setup_changeover_cost"], "setup"),
+        (maintenance, ["maintenance_conflict_penalty", "breakdown_risk_penalty"], "maintenance"),
+        (cost, ["total_real_cost", "validated_real_cost_total", "assumed_monetary_cost_total", "total_proxy_penalty", "total_advisory_schedule_score"], "cost"),
+    ]
+    for frame, columns, label in numeric_checks:
+        for column in columns:
+            values = pd.to_numeric(frame[column], errors="coerce")
+            if values.isna().any() or (values < 0).any():
+                return _result("schedule_alternatives", "FAIL", f"{label}.{column} must be numeric and non-negative.")
+    if master["recommendation_rank"].duplicated().any() or recommendations["recommendation_rank"].duplicated().any():
+        return _result("schedule_alternatives", "FAIL", "Recommendation rank must be unique.")
+    infeasible_bad = master[
+        (master["hard_feasibility_status"].astype(str).isin(["HARD_INFEASIBLE", "NO_COMPLETE_SCHEDULE"]))
+        & master["recommendation_status"].astype(str).isin(["RECOMMENDED_ADVISORY_ALTERNATIVE", "LEAST_RISK_ALTERNATIVE", "FEASIBLE_WITH_REVIEW"])
+    ]
+    if not infeasible_bad.empty:
+        return _result("schedule_alternatives", "FAIL", "Hard infeasible alternatives must not be recommended as feasible.")
+    if not _all_true(cost, "assumption_flag") or not set(cost["cost_confidence"].astype(str)).issubset({"LOW", "REVIEW_REQUIRED"}):
+        return _result("schedule_alternatives", "FAIL", "Proxy penalties must be assumption-flagged with LOW/REVIEW_REQUIRED confidence.")
+    if not _all_false(recommendations, "auto_action_allowed") or not _all_false(review, "auto_action_allowed"):
+        return _result("schedule_alternatives", "FAIL", "Step 8F recommendations and review queue must not allow automatic action.")
+    for label, frame in frames.items():
+        if not _all_true(frame, "advisory_only_flag"):
+            return _result("schedule_alternatives", "FAIL", f"{label} contains non-advisory rows.")
+    return _result(
+        "schedule_alternatives",
+        "PASS",
+        f"Step 8F schedule alternatives valid; alternatives={len(master)}, operation_rows={len(detail)}, segment_rows={len(segments)}, quantity_flow_rows={len(quantity_flow)}, review_rows={len(review)}.",
+    )
+
+
 def _check_routing_master_data() -> dict:
     missing_files = [name for name, path in ROUTING_DATA_FILES.items() if not path.exists()]
     if missing_files:
@@ -3576,7 +4010,7 @@ def _result(name: str, status: str, message: str) -> dict:
 
 def _format_report(evidence: dict) -> str:
     lines = [
-        "Phase 4 Initialization Validation with Step 7E Maintenance Crew Capacity and Repair Queue Risk",
+        "Phase 4 Initialization Validation with Step 8F WIP- and Setup-Aware Schedule Alternatives",
         f"Generated at UTC: {evidence['generated_at_utc']}",
         f"Overall status: {evidence['overall_status']}",
         f"Fail count: {evidence['fail_count']}",

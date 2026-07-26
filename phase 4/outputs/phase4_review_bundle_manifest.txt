@@ -1,11 +1,17 @@
-Phase 4 Step 8E Setup and Changeover Review Bundle Manifest
-Generated zip path: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase4_step8e_setup_changeover_review_bundle.zip
-Generated timestamp UTC: 2026-07-11T14:15:44+00:00
-Included file count: 214
+Phase 4 Step 8F Final Closure Review Bundle Manifest
+Generated zip path: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project\phase4_step8f_final_closure_review_bundle.zip
+Generated timestamp UTC: 2026-07-21T17:05:31+00:00
+Included file count: 230
 Missing file count: 0
 Excluded file count: 0
-Final zip size MB: 0.521
+Final zip size MB: 0.957
 Verification status: PASS
+ZIP cleanup directory: C:\Users\iTECH\OneDrive - Beirut Arab University\Desktop\apps i made\SC project
+Obsolete review-bundle ZIP files found: 1
+Obsolete review-bundle ZIP files deleted: 1
+Matching Phase 4 review-bundle ZIP files remaining: 1
+Unrelated ZIP files preserved count: 0
+Cleanup status: PASS
 
 Verification messages:
 - PASS: Shared spare-parts master data exists inside the zip
@@ -144,6 +150,22 @@ Verification messages:
 - PASS: Phase 4 setup sequence impact output exists inside the zip
 - PASS: Phase 4 setup manager review queue exists inside the zip
 - PASS: Phase 4 setup/changeover validation output exists inside the zip
+- PASS: Phase 4 schedule cost assumptions data exists inside the zip
+- PASS: Phase 4 finite-capacity schedule alternatives module exists inside the zip
+- PASS: Phase 4 schedule alternative master output exists inside the zip
+- PASS: Phase 4 schedule alternative operation detail output exists inside the zip
+- PASS: Phase 4 schedule alternative operation segments output exists inside the zip
+- PASS: Phase 4 schedule alternative quantity-flow output exists inside the zip
+- PASS: Phase 4 schedule alternative shadow WIP ledger exists inside the zip
+- PASS: Phase 4 schedule alternative maintenance window check exists inside the zip
+- PASS: Phase 4 schedule alternative capacity impact output exists inside the zip
+- PASS: Phase 4 schedule alternative WIP impact output exists inside the zip
+- PASS: Phase 4 schedule alternative setup impact output exists inside the zip
+- PASS: Phase 4 schedule alternative maintenance impact output exists inside the zip
+- PASS: Phase 4 schedule alternative cost score output exists inside the zip
+- PASS: Phase 4 schedule alternative recommendations output exists inside the zip
+- PASS: Phase 4 schedule alternative manager review queue exists inside the zip
+- PASS: Phase 4 schedule alternative validation output exists inside the zip
 - PASS: Phase 4 production flow view module exists inside the zip
 - PASS: Phase 4 production flow view exists inside the zip
 - PASS: Phase 4 flow-step risk summary exists inside the zip
@@ -198,6 +220,12 @@ Verification messages:
 - PASS: no duplicate flattened root-level main.py found.
 - PASS: no __pycache__ or .pyc files found.
 - PASS: no duplicate archive names found.
+
+Deleted obsolete review-bundle ZIP files:
+- phase4_step8f_patch9_fifo_wip_consumption_review_bundle.zip
+
+Remaining matching Phase 4 review-bundle ZIP files:
+- phase4_step8f_final_closure_review_bundle.zip
 
 Missing files:
 - none
@@ -294,6 +322,7 @@ Included files:
 - phase 4/data/setup_families.csv
 - phase 4/data/setup_changeover_matrix.csv
 - phase 4/data/workstation_setup_rules.csv
+- phase 4/data/schedule_cost_assumptions.csv
 - phase 4/core/bom_explosion_bridge.py
 - phase 4/core/component_inventory_bridge.py
 - phase 4/core/component_supplier_bridge.py
@@ -312,6 +341,7 @@ Included files:
 - phase 4/core/wip_batch_tracking.py
 - phase 4/core/wip_aware_schedule_feasibility.py
 - phase 4/core/setup_changeover_rules.py
+- phase 4/core/finite_capacity_schedule_alternatives.py
 - phase 4/outputs/phase4_master_production_schedule.csv
 - phase 4/outputs/phase4_bom_component_requirements.csv
 - phase 4/outputs/phase4_mrp_net_component_requirements.csv
@@ -397,6 +427,20 @@ Included files:
 - phase 4/outputs/phase4_setup_sequence_impact_analysis.csv
 - phase 4/outputs/phase4_setup_manager_review_queue.csv
 - phase 4/outputs/phase4_setup_changeover_validation.csv
+- phase 4/outputs/phase4_schedule_alternative_master.csv
+- phase 4/outputs/phase4_schedule_alternative_operation_detail.csv
+- phase 4/outputs/phase4_schedule_alternative_operation_segments.csv
+- phase 4/outputs/phase4_schedule_alternative_quantity_flow.csv
+- phase 4/outputs/phase4_schedule_alternative_shadow_wip_ledger.csv
+- phase 4/outputs/phase4_schedule_alternative_maintenance_window_check.csv
+- phase 4/outputs/phase4_schedule_alternative_capacity_impact.csv
+- phase 4/outputs/phase4_schedule_alternative_wip_impact.csv
+- phase 4/outputs/phase4_schedule_alternative_setup_impact.csv
+- phase 4/outputs/phase4_schedule_alternative_maintenance_impact.csv
+- phase 4/outputs/phase4_schedule_alternative_cost_score.csv
+- phase 4/outputs/phase4_schedule_alternative_recommendations.csv
+- phase 4/outputs/phase4_schedule_alternative_manager_review_queue.csv
+- phase 4/outputs/phase4_schedule_alternative_validation.csv
 - phase 4/outputs/phase4_initialization_validation.json
 - phase 4/outputs/phase4_initialization_validation_report.txt
 - phase 4/outputs/phase4_review_bundle_manifest.txt

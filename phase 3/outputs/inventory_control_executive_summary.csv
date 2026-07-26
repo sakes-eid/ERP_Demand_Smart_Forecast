@@ -4,37 +4,37 @@ INVENTORY_STATUS,stockout_skus,2.0,count,SKUs currently in stockout.,SKUs curren
 INVENTORY_STATUS,zero_stock_skus,1.0,count,SKUs with zero stock.,SKUs with zero stock.
 INVENTORY_STATUS,critical_low_stock_skus,13.0,count,SKUs below safety protection.,SKUs below safety protection.
 INVENTORY_STATUS,reorder_now_skus,1.0,count,SKUs at or below reorder point.,SKUs at or below reorder point.
-INVENTORY_STATUS,overstock_skus,14.0,count,SKUs carrying excess inventory.,SKUs carrying excess inventory.
+INVENTORY_STATUS,overstock_skus,13.0,count,SKUs carrying excess inventory.,SKUs carrying excess inventory.
 INVENTORY_STATUS,healthy_skus,0.0,count,SKUs with healthy inventory position.,SKUs with healthy inventory position.
 FINAL_DECISIONS,urgent_decisions,19.0,count,URGENT final decision count.,URGENT final decision count.
-FINAL_DECISIONS,high_priority_decisions,11.0,count,HIGH final decision count.,HIGH final decision count.
-FINAL_DECISIONS,medium_priority_decisions,2.0,count,MEDIUM final decision count.,MEDIUM final decision count.
+FINAL_DECISIONS,high_priority_decisions,10.0,count,HIGH final decision count.,HIGH final decision count.
+FINAL_DECISIONS,medium_priority_decisions,3.0,count,MEDIUM final decision count.,MEDIUM final decision count.
 FINAL_DECISIONS,low_priority_decisions,0.0,count,LOW final decision count.,LOW final decision count.
 FINAL_DECISIONS,no_action_decisions,0.0,count,NO_ACTION final decision count.,NO_ACTION final decision count.
 FINAL_DECISIONS,take_action_now_count,1.0,count,TAKE_ACTION_NOW final decision count.,TAKE_ACTION_NOW final decision count.
-FINAL_DECISIONS,review_before_action_count,30.0,count,REVIEW_BEFORE_ACTION final decision count.,REVIEW_BEFORE_ACTION final decision count.
-FINAL_DECISIONS,monitor_count,1.0,count,MONITOR final decision count.,MONITOR final decision count.
+FINAL_DECISIONS,review_before_action_count,29.0,count,REVIEW_BEFORE_ACTION final decision count.,REVIEW_BEFORE_ACTION final decision count.
+FINAL_DECISIONS,monitor_count,2.0,count,MONITOR final decision count.,MONITOR final decision count.
 FINAL_DECISIONS,no_action_required_count,0.0,count,NO_ACTION_REQUIRED final decision count.,NO_ACTION_REQUIRED final decision count.
 FINAL_DECISIONS,ready_to_act_count,1.0,count,READY_TO_ACT final decision count.,READY_TO_ACT final decision count.
-FINAL_DECISIONS,advisory_review_recommended_count,1.0,count,ADVISORY_REVIEW_RECOMMENDED final decision count.,ADVISORY_REVIEW_RECOMMENDED final decision count.
-HUMAN_REVIEW,mandatory_review_required_count,30.0,count,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.
-HUMAN_REVIEW,advisory_review_required_count,2.0,count,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.
+FINAL_DECISIONS,advisory_review_recommended_count,2.0,count,ADVISORY_REVIEW_RECOMMENDED final decision count.,ADVISORY_REVIEW_RECOMMENDED final decision count.
+HUMAN_REVIEW,mandatory_review_required_count,29.0,count,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.
+HUMAN_REVIEW,advisory_review_required_count,3.0,count,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.
 HUMAN_REVIEW,info_warning_only_count,0.0,count,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.
 HUMAN_REVIEW,no_review_required_count,0.0,count,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.
 HUMAN_REVIEW,multi_department_review_count,6.0,count,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.
 HUMAN_REVIEW,primary_procurement_review_count,0.0,count,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.
-HUMAN_REVIEW,primary_supplier_review_count,2.0,count,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.
+HUMAN_REVIEW,primary_supplier_review_count,3.0,count,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.
 HUMAN_REVIEW,primary_warehouse_review_count,11.0,count,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.
-HUMAN_REVIEW,primary_expiry_review_count,2.0,count,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.
+HUMAN_REVIEW,primary_expiry_review_count,1.0,count,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.
 HUMAN_REVIEW,primary_policy_review_count,17.0,count,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.
 HUMAN_REVIEW,primary_phase4_review_count,0.0,count,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.
 HUMAN_REVIEW,primary_finance_review_count,0.0,count,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.,Mandatory review blocks action; advisory review is non-blocking; info warnings are trace-only.
-OPTIMIZATION_RESULTS,total_baseline_operational_cost,249078.05,value,Optimization result metric.,Optimization result metric.
-OPTIMIZATION_RESULTS,total_selected_operational_cost,118393.04,value,Optimization result metric.,Optimization result metric.
-OPTIMIZATION_RESULTS,total_operational_saving,130685.01,value,Optimization result metric.,Optimization result metric.
-OPTIMIZATION_RESULTS,total_baseline_penalty_adjusted_cost,365428.05,value,Optimization result metric.,Optimization result metric.
-OPTIMIZATION_RESULTS,total_selected_penalty_adjusted_cost,166143.04,value,Optimization result metric.,Optimization result metric.
-OPTIMIZATION_RESULTS,total_penalty_adjusted_saving,199285.01,value,Optimization result metric.,Optimization result metric.
+OPTIMIZATION_RESULTS,total_baseline_operational_cost,250947.17,value,Optimization result metric.,Optimization result metric.
+OPTIMIZATION_RESULTS,total_selected_operational_cost,119259.06,value,Optimization result metric.,Optimization result metric.
+OPTIMIZATION_RESULTS,total_operational_saving,131688.11,value,Optimization result metric.,Optimization result metric.
+OPTIMIZATION_RESULTS,total_baseline_penalty_adjusted_cost,367297.17,value,Optimization result metric.,Optimization result metric.
+OPTIMIZATION_RESULTS,total_selected_penalty_adjusted_cost,167009.06,value,Optimization result metric.,Optimization result metric.
+OPTIMIZATION_RESULTS,total_penalty_adjusted_saving,200288.11,value,Optimization result metric.,Optimization result metric.
 OPTIMIZATION_RESULTS,operational_saving_sku_count,4.0,value,Optimization result metric.,Optimization result metric.
 OPTIMIZATION_RESULTS,penalty_avoidance_sku_count,11.0,value,Optimization result metric.,Optimization result metric.
 OPTIMIZATION_RESULTS,review_required_sku_count,17.0,value,Optimization result metric.,Optimization result metric.
@@ -44,8 +44,8 @@ WAREHOUSE,warehouse_review_skus,11.0,count,Warehouse risk/action indicator.,Ware
 WAREHOUSE,travel_or_slot_review_skus,0.0,count,Warehouse risk/action indicator.,Warehouse risk/action indicator.
 WAREHOUSE,z_level_warning_skus,0.0,count,Warehouse risk/action indicator.,Warehouse risk/action indicator.
 EXPIRY_AND_DEAD_STOCK,expired_stock_skus,2.0,count,Expiry/dead-stock action indicator.,Expiry/dead-stock action indicator.
-EXPIRY_AND_DEAD_STOCK,near_expiry_skus,1.0,count,Expiry/dead-stock action indicator.,Expiry/dead-stock action indicator.
-EXPIRY_AND_DEAD_STOCK,dead_stock_or_non_moving_skus,25.0,count,Expiry/dead-stock action indicator.,Expiry/dead-stock action indicator.
+EXPIRY_AND_DEAD_STOCK,near_expiry_skus,0.0,count,Expiry/dead-stock action indicator.,Expiry/dead-stock action indicator.
+EXPIRY_AND_DEAD_STOCK,dead_stock_or_non_moving_skus,26.0,count,Expiry/dead-stock action indicator.,Expiry/dead-stock action indicator.
 EXPIRY_AND_DEAD_STOCK,markdown_or_liquidation_action_skus,1.0,count,Expiry/dead-stock action indicator.,Expiry/dead-stock action indicator.
 EXPIRY_AND_DEAD_STOCK,quarantine_or_scrap_action_skus,0.0,count,Expiry/dead-stock action indicator.,Expiry/dead-stock action indicator.
 SCENARIO_SELECTION,selected_lowest_feasible_cost_count,0.0,count,Selected scenario quality indicator.,Selected scenario quality indicator.
@@ -60,5 +60,5 @@ ACTION_CLARITY,split_delivery_action_count,13.0,count,Separates blocking review 
 ACTION_CLARITY,proposed_liquidation_action_count,5.0,count,Separates blocking review from proposed operational execution.,Separates blocking review from proposed operational execution.
 ACTION_CLARITY,proposed_buffer_change_action_count,0.0,count,Separates blocking review from proposed operational execution.,Separates blocking review from proposed operational execution.
 ACTION_CLARITY,proposed_supplier_change_action_count,0.0,count,Separates blocking review from proposed operational execution.,Separates blocking review from proposed operational execution.
-ACTION_CLARITY,ready_to_execute_after_review_count,30.0,count,Separates blocking review from proposed operational execution.,Separates blocking review from proposed operational execution.
-ACTION_CLARITY,advisory_not_blocking_count,2.0,count,Separates blocking review from proposed operational execution.,Separates blocking review from proposed operational execution.
+ACTION_CLARITY,ready_to_execute_after_review_count,29.0,count,Separates blocking review from proposed operational execution.,Separates blocking review from proposed operational execution.
+ACTION_CLARITY,advisory_not_blocking_count,3.0,count,Separates blocking review from proposed operational execution.,Separates blocking review from proposed operational execution.
