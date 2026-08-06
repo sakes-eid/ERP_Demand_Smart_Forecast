@@ -1,0 +1,21 @@
+planning_run_id,check_id,check_name,status,message,affected_rows,advisory_only_flag
+PHASE4-MPS-20260726202343,STEP8G-A-001,OUTPUTS_NOT_EMPTY,PASS,Step 8G-A outputs exist and are non-empty.,40,True
+PHASE4-MPS-20260726202343,STEP8G-A-002,ONE_SUMMARY_ROW_PER_ALTERNATIVE,PASS,One summary row per Step 8F alternative.,6,True
+PHASE4-MPS-20260726202343,STEP8G-A-003,METRICS_TRACE_TO_STEP8F,PASS,Summary metrics reconcile to Step 8F master/cost/segment/WIP/setup evidence.,6,True
+PHASE4-MPS-20260726202343,STEP8G-A-004,RECOMMENDATION_RANKING_RECALCULATES,PASS,"Recommendation ranking recalculates from coverage, risk, cost, setup, and penalty exposure.",1,True
+PHASE4-MPS-20260726202343,STEP8G-A-005,EQUIVALENT_ALTERNATIVES_DETECTED,PASS,"Equivalent alternatives are detected, including ALT-BASELINE and ALT-MAINT for this run.",1,True
+PHASE4-MPS-20260726202343,STEP8G-A-006,COSTS_REMAIN_SEPARATE,PASS,Validated real cost remains separate from assumed/proxy exposure.,6,True
+PHASE4-MPS-20260726202343,STEP8G-A-007,UPSTREAM_WARNINGS_ATTRIBUTED,PASS,Upstream warnings remain attributed to their source phase.,24,True
+PHASE4-MPS-20260726202343,STEP8G-A-008,ADVISORY_ONLY_FLAGS,PASS,All Step 8G-A outputs are advisory-only.,40,True
+PHASE4-MPS-20260726202343,STEP8G-A-009,NO_AUTO_ACTIONS,PASS,No automatic action or release is authorized.,34,True
+PHASE4-MPS-20260726202343,STEP8G-A-010,NO_FORBIDDEN_EXECUTION_OUTPUTS,PASS,"No production orders, dispatch, reservations, transactions, or execution outputs exist.",0,True
+PHASE4-MPS-20260726202343,STEP8G-A-011,TRADEOFF_OUTPUTS_NOT_EMPTY,PASS,Step 8G-B trade-off analysis exists and is non-empty.,6,True
+PHASE4-MPS-20260726202343,STEP8G-A-012,TRADEOFF_METRICS_TRACE_TO_SUMMARY,PASS,Trade-off deltas reconcile to Step 8G-A summary and therefore Step 8F evidence.,6,True
+PHASE4-MPS-20260726202343,STEP8G-A-013,EQUIVALENT_TRADEOFFS_HANDLED,PASS,Equivalent alternatives are clearly marked without claiming meaningful differences.,1,True
+PHASE4-MPS-20260726202343,STEP8G-A-014,DECISION_RISKS_NOT_EMPTY,PASS,Step 8G-B decision risk rows exist.,35,True
+PHASE4-MPS-20260726202343,STEP8G-A-015,UPSTREAM_RISKS_ATTRIBUTED,PASS,Upstream risks remain attributed to Phase 2/Phase 3 sources.,23,True
+PHASE4-MPS-20260726202343,STEP8G-A-016,RELEASE_READINESS_BLOCKED,PASS,Release readiness is blocked and production release is not allowed.,9,True
+PHASE4-MPS-20260726202343,STEP8G-A-017,STEP8G_B_ADVISORY_ONLY_FLAGS,PASS,All Step 8G-B outputs are advisory-only.,50,True
+PHASE4-MPS-20260726202343,STEP8G-A-018,STEP8G_B_NO_AUTO_ACTIONS,PASS,Step 8G-B does not approve release or allow automatic actions.,44,True
+PHASE4-MPS-20260726202343,STEP8G-A-019,STEP8G_FINAL_STATUS_CLOSED_WITH_REVIEW,PASS,Formal Step 8G closure status is CLOSED_WITH_REVIEW.,1,True
+PHASE4-MPS-20260726202343,STEP8G-A-020,UPSTREAM_WARNINGS_BLOCK_RELEASE_READINESS,PASS,"Unresolved Phase 2, Phase 3, or integrated warnings block release readiness.",9,True

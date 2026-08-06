@@ -173,7 +173,8 @@ Current initialization scope:
 - Step 8F costs scheduled work from allocated operation segments only. Validated real costs, assumed monetary costs, and proxy penalties remain separated in `data/schedule_cost_assumptions.csv` and cost-score outputs.
 - Demand coverage is calculated from completed full-route finished-product quantity, not fixed scenario bonuses or partial operation completion.
 - Final closure validation recalculates quantity, segment/detail, timing, FIFO, buffer, capacity, setup, maintenance, demand coverage, cost, recommendation, and forbidden-output checks from detailed evidence. Current Step 8F final status is `CLOSED_WITH_REVIEW` because the alternatives are internally valid but remain partial finite schedules.
-- Next step: Step 8G manager decision layer should use the Step 8F alternatives, closure status, recommendation evidence, and review queue to support manager approval or scenario selection without creating execution outputs.
+- Step 8G-A builds a concise manager decision dataset from finalized Step 8F outputs. It summarizes each alternative, separates validated real cost from assumed/proxy exposure, carries upstream warnings as source-attributed review items, detects equivalent alternatives, and recommends a reference alternative for manager review only.
+- Step 8G-A does not rerun scheduling, approve release, create production orders, reserve inventory, dispatch workers, or create execution transactions.
 
 Run order:
 
@@ -201,8 +202,9 @@ Run order:
 22. Build advisory Phase 4 WIP-aware schedule feasibility.
 23. Build advisory Phase 4 strict WIP buffer access and setup/changeover foundation.
 24. Build advisory Phase 4 WIP- and setup-aware finite-capacity schedule alternatives.
-25. Run Phase 3 component inventory checks.
-26. Run Phase 2 component supplier checks.
+25. Build Step 8G-A manager decision summary, recommendation, and review queue from Step 8F evidence.
+26. Run Phase 3 component inventory checks.
+27. Run Phase 2 component supplier checks.
 
 The Phase 4 bridges are optional-safe. If a bridge file is missing or fails, Phase 2 and Phase 3 print a warning and continue their existing core pipelines.
 
@@ -222,6 +224,7 @@ Guardrails:
 - Step 8F alternatives are not confirmed schedules; proposed windows are advisory feasibility evidence only.
 - Schedule alternative WIP projections do not change the WIP ledger and do not consume inventory.
 - Step 8F does not create released production orders, confirmed schedules, dispatch, WIP transactions, WIP/component consumption, reservations, purchase orders, maintenance work orders, applied capacity reductions, or simulation outputs.
+- Step 8G-A recommendation status is `RECOMMENDED_FOR_REVIEW`; it is not an approval, release, or execution authorization.
 - Simulation is a separate future phase.
 - Future production release flags should default to `production_order_release_allowed = False`.
 

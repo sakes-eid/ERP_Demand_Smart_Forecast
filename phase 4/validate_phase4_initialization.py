@@ -90,6 +90,13 @@ PHASE4_OUTPUTS = {
     "schedule_alternative_maintenance_impact": PHASE4_DIR / "outputs" / "phase4_schedule_alternative_maintenance_impact.csv",
     "schedule_alternative_cost_score": PHASE4_DIR / "outputs" / "phase4_schedule_alternative_cost_score.csv",
     "schedule_alternative_recommendations": PHASE4_DIR / "outputs" / "phase4_schedule_alternative_recommendations.csv",
+    "step8g_alternative_summary": PHASE4_DIR / "outputs" / "phase4_step8g_alternative_summary.csv",
+    "step8g_recommendation": PHASE4_DIR / "outputs" / "phase4_step8g_recommendation.csv",
+    "step8g_manager_review_queue": PHASE4_DIR / "outputs" / "phase4_step8g_manager_review_queue.csv",
+    "step8g_tradeoff_analysis": PHASE4_DIR / "outputs" / "phase4_step8g_tradeoff_analysis.csv",
+    "step8g_decision_risks": PHASE4_DIR / "outputs" / "phase4_step8g_decision_risks.csv",
+    "step8g_release_readiness": PHASE4_DIR / "outputs" / "phase4_step8g_release_readiness.csv",
+    "step8g_validation": PHASE4_DIR / "outputs" / "phase4_step8g_validation.csv",
     "component_inventory_check": PROJECT_ROOT / "phase 3" / "outputs" / "phase4_component_inventory_check.csv",
     "component_supplier_check": PROJECT_ROOT / "phase 2" / "outputs" / "phase4_component_supplier_check.csv",
 }
@@ -296,6 +303,13 @@ SCHEDULE_ALTERNATIVE_COST_SCORE_FILE = PHASE4_DIR / "outputs" / "phase4_schedule
 SCHEDULE_ALTERNATIVE_RECOMMENDATIONS_FILE = PHASE4_DIR / "outputs" / "phase4_schedule_alternative_recommendations.csv"
 SCHEDULE_ALTERNATIVE_REVIEW_FILE = PHASE4_DIR / "outputs" / "phase4_schedule_alternative_manager_review_queue.csv"
 SCHEDULE_ALTERNATIVE_VALIDATION_FILE = PHASE4_DIR / "outputs" / "phase4_schedule_alternative_validation.csv"
+STEP8G_ALTERNATIVE_SUMMARY_FILE = PHASE4_DIR / "outputs" / "phase4_step8g_alternative_summary.csv"
+STEP8G_RECOMMENDATION_FILE = PHASE4_DIR / "outputs" / "phase4_step8g_recommendation.csv"
+STEP8G_MANAGER_REVIEW_FILE = PHASE4_DIR / "outputs" / "phase4_step8g_manager_review_queue.csv"
+STEP8G_TRADEOFF_FILE = PHASE4_DIR / "outputs" / "phase4_step8g_tradeoff_analysis.csv"
+STEP8G_DECISION_RISKS_FILE = PHASE4_DIR / "outputs" / "phase4_step8g_decision_risks.csv"
+STEP8G_RELEASE_READINESS_FILE = PHASE4_DIR / "outputs" / "phase4_step8g_release_readiness.csv"
+STEP8G_VALIDATION_FILE = PHASE4_DIR / "outputs" / "phase4_step8g_validation.csv"
 
 
 def main() -> None:
@@ -349,6 +363,7 @@ def main() -> None:
     checks.append(_check_wip_aware_schedule_feasibility())
     checks.append(_check_setup_changeover_rules())
     checks.append(_check_schedule_alternatives())
+    checks.append(_check_step8g_manager_decision_dataset())
     checks.append(_check_phase3_inventory_check())
     checks.append(_check_phase2_supplier_check())
     checks.append(_check_phase4_run_id_consistency())
@@ -2688,6 +2703,186 @@ def _check_schedule_alternatives() -> dict:
     )
 
 
+def _check_step8g_manager_decision_dataset() -> dict:
+    required_files = [
+        (STEP8G_ALTERNATIVE_SUMMARY_FILE, "Step 8G-A alternative summary"),
+        (STEP8G_RECOMMENDATION_FILE, "Step 8G-A recommendation"),
+        (STEP8G_MANAGER_REVIEW_FILE, "Step 8G-A manager review queue"),
+        (STEP8G_TRADEOFF_FILE, "Step 8G-B trade-off analysis"),
+        (STEP8G_DECISION_RISKS_FILE, "Step 8G-B decision risks"),
+        (STEP8G_RELEASE_READINESS_FILE, "Step 8G-B release readiness"),
+        (STEP8G_VALIDATION_FILE, "Step 8G-A validation"),
+    ]
+    for path, label in required_files:
+        if not path.exists():
+            return _result("step8g_manager_decision_dataset", "FAIL", f"{label} file is missing: {path}")
+        if pd.read_csv(path).empty:
+            return _result("step8g_manager_decision_dataset", "FAIL", f"{label} file has no rows: {path}")
+
+    summary = pd.read_csv(STEP8G_ALTERNATIVE_SUMMARY_FILE)
+    recommendation = pd.read_csv(STEP8G_RECOMMENDATION_FILE)
+    review = pd.read_csv(STEP8G_MANAGER_REVIEW_FILE)
+    tradeoff = pd.read_csv(STEP8G_TRADEOFF_FILE)
+    risks = pd.read_csv(STEP8G_DECISION_RISKS_FILE)
+    readiness = pd.read_csv(STEP8G_RELEASE_READINESS_FILE)
+    validation = pd.read_csv(STEP8G_VALIDATION_FILE)
+    master = pd.read_csv(SCHEDULE_ALTERNATIVE_MASTER_FILE)
+    segments = pd.read_csv(SCHEDULE_ALTERNATIVE_OPERATION_SEGMENTS_FILE)
+    cost = pd.read_csv(SCHEDULE_ALTERNATIVE_COST_SCORE_FILE)
+    wip = pd.read_csv(SCHEDULE_ALTERNATIVE_WIP_IMPACT_FILE)
+
+    required_columns = {
+        "summary": {
+            "planning_run_id", "alternative_id", "alternative_name", "alternative_type", "step8f_status",
+            "planned_demand_qty", "completed_full_route_qty", "demand_coverage_pct", "unscheduled_qty",
+            "scheduled_processing_minutes", "setup_minutes", "setup_switch_count", "main_bottleneck_workstation",
+            "buffer_blocked_qty", "wip_blocked_qty", "maintenance_review_count", "validated_real_cost",
+            "assumed_cost_or_penalty", "cost_confidence_level", "upstream_warning_count", "recommendation_rank",
+            "source_phase", "advisory_only_flag",
+        },
+        "recommendation": {
+            "planning_run_id", "recommended_alternative_id", "recommended_alternative_name", "recommendation_status",
+            "recommendation_reason", "equivalent_result_group", "step8g_final_status", "step8g_decision_state",
+            "selected_as_reference_flag", "approval_status", "release_authorized_flag", "source_phase", "advisory_only_flag",
+        },
+        "review": {
+            "review_item_id", "planning_run_id", "alternative_id", "issue_type", "issue_severity",
+            "business_impact", "source_file", "recommended_manager_action", "auto_action_allowed",
+            "advisory_only_flag",
+        },
+        "validation": {"planning_run_id", "check_id", "check_name", "status", "message", "affected_rows", "advisory_only_flag"},
+        "tradeoff": {
+            "planning_run_id", "baseline_alternative_id", "compared_alternative_id", "equivalent_to_baseline_flag",
+            "meaningful_difference_flag", "demand_coverage_delta_pct", "completed_quantity_delta",
+            "unscheduled_quantity_delta", "validated_cost_delta", "assumed_penalty_delta", "setup_minutes_delta",
+            "setup_switch_delta", "buffer_blocked_quantity_delta", "wip_blocked_quantity_delta",
+            "bottleneck_exposure_change", "maintenance_review_count_delta", "tradeoff_summary",
+            "source_phase", "advisory_only_flag",
+        },
+        "risks": {
+            "risk_item_id", "planning_run_id", "risk_type", "severity", "business_impact",
+            "affected_alternative_or_resource", "source_phase_reference", "source_file",
+            "recommended_manager_action", "auto_action_allowed", "advisory_only_flag",
+        },
+        "readiness": {
+            "readiness_item_id", "planning_run_id", "readiness_row_type", "readiness_check_type",
+            "readiness_check_name", "readiness_status", "release_readiness_status", "production_release_allowed",
+            "evidence_source_file", "evidence_summary", "recommended_manager_action", "auto_action_allowed",
+            "advisory_only_flag",
+        },
+    }
+    frames = {
+        "summary": summary,
+        "recommendation": recommendation,
+        "review": review,
+        "validation": validation,
+        "tradeoff": tradeoff,
+        "risks": risks,
+        "readiness": readiness,
+    }
+    for label, columns in required_columns.items():
+        missing = sorted(columns.difference(frames[label].columns))
+        if missing:
+            return _result("step8g_manager_decision_dataset", "FAIL", f"{label} missing columns: {missing}")
+
+    fail_count = int((validation["status"].astype(str).str.upper() == "FAIL").sum())
+    if fail_count:
+        return _result("step8g_manager_decision_dataset", "FAIL", f"Step 8G-A validation contains FAIL rows: {fail_count}")
+    if len(summary) != len(master) or set(summary["alternative_id"].astype(str)) != set(master["alternative_id"].astype(str)):
+        return _result("step8g_manager_decision_dataset", "FAIL", "Step 8G-A must have one summary row per Step 8F alternative.")
+    if len(recommendation) != 1:
+        return _result("step8g_manager_decision_dataset", "FAIL", "Step 8G-A must produce exactly one recommendation row.")
+    if str(recommendation.iloc[0]["recommendation_status"]) != "RECOMMENDED_FOR_REVIEW":
+        return _result("step8g_manager_decision_dataset", "FAIL", "Step 8G-A recommendation must remain manager-review only.")
+    if str(recommendation.iloc[0]["step8g_final_status"]) != "CLOSED_WITH_REVIEW":
+        return _result("step8g_manager_decision_dataset", "FAIL", "Formal Step 8G final status must be CLOSED_WITH_REVIEW.")
+    if _to_bool(recommendation["release_authorized_flag"]).any():
+        return _result("step8g_manager_decision_dataset", "FAIL", "Step 8G-A must not authorize release.")
+    if not _all_false(review, "auto_action_allowed"):
+        return _result("step8g_manager_decision_dataset", "FAIL", "Step 8G-A manager review queue must not allow automatic action.")
+    for label, frame in frames.items():
+        if not _all_true(frame, "advisory_only_flag"):
+            return _result("step8g_manager_decision_dataset", "FAIL", f"{label} contains non-advisory rows.")
+    if not _all_false(risks, "auto_action_allowed") or not _all_false(readiness, "auto_action_allowed"):
+        return _result("step8g_manager_decision_dataset", "FAIL", "Step 8G-B risk/readiness rows must not allow automatic action.")
+    if _to_bool(readiness["production_release_allowed"]).any():
+        return _result("step8g_manager_decision_dataset", "FAIL", "Step 8G-B must keep production_release_allowed False.")
+    overall_ready = readiness[readiness["readiness_row_type"].astype(str) == "OVERALL"]
+    if overall_ready.empty or str(overall_ready.iloc[0]["release_readiness_status"]) != "NOT_READY_FOR_RELEASE":
+        return _result("step8g_manager_decision_dataset", "FAIL", "Step 8G-B release readiness must be NOT_READY_FOR_RELEASE for the current run.")
+    upstream_ready = readiness[readiness["readiness_check_type"].astype(str) == "UPSTREAM_WARNINGS_RESOLVED"]
+    if not upstream_ready.empty:
+        evidence = str(upstream_ready.iloc[0]["evidence_summary"])
+        has_warnings = any(token not in evidence for token in ["Phase 2 warnings=0", "Phase 3 warnings=0", "integrated warnings=0"])
+        if has_warnings and str(upstream_ready.iloc[0]["readiness_status"]) == "PASS":
+            return _result("step8g_manager_decision_dataset", "FAIL", "Upstream warnings cannot be marked resolved while Phase 2, Phase 3, or integrated warnings remain.")
+
+    master_idx = master.set_index("alternative_id")
+    cost_idx = cost.set_index("alternative_id")
+    for _, row in summary.iterrows():
+        alt_id = str(row["alternative_id"])
+        if alt_id not in master_idx.index or alt_id not in cost_idx.index:
+            return _result("step8g_manager_decision_dataset", "FAIL", f"Summary alternative does not trace to Step 8F: {alt_id}")
+        master_row = master_idx.loc[alt_id]
+        cost_row = cost_idx.loc[alt_id]
+        scheduled_segments = segments[(segments["alternative_id"].astype(str) == alt_id) & (segments["segment_scheduled_qty"].map(_num) > 0)]
+        scheduled_processing = scheduled_segments["segment_processing_minutes"].map(_num).sum()
+        setup_minutes = scheduled_segments["segment_setup_minutes"].map(_num).sum()
+        if abs(_num(row["completed_full_route_qty"]) - _num(master_row["covered_demand_qty"])) > 0.01:
+            return _result("step8g_manager_decision_dataset", "FAIL", f"Completed quantity does not trace to Step 8F master for {alt_id}.")
+        if abs(_num(row["planned_demand_qty"]) - _num(master_row["planned_demand_qty"])) > 0.01:
+            return _result("step8g_manager_decision_dataset", "FAIL", f"Planned demand does not trace to Step 8F master for {alt_id}.")
+        if abs(_num(row["demand_coverage_pct"]) - _num(master_row["demand_coverage_pct"])) > 0.01:
+            return _result("step8g_manager_decision_dataset", "FAIL", f"Demand coverage does not trace to Step 8F master for {alt_id}.")
+        if abs(_num(row["scheduled_processing_minutes"]) - scheduled_processing) > 0.05:
+            return _result("step8g_manager_decision_dataset", "FAIL", f"Scheduled processing minutes do not trace to Step 8F segments for {alt_id}.")
+        if abs(_num(row["setup_minutes"]) - setup_minutes) > 0.05:
+            return _result("step8g_manager_decision_dataset", "FAIL", f"Setup minutes do not trace to Step 8F segments for {alt_id}.")
+        if abs(_num(row["validated_real_cost"]) - _num(cost_row["validated_real_cost_total"])) > 0.01:
+            return _result("step8g_manager_decision_dataset", "FAIL", f"Validated real cost does not trace to Step 8F cost score for {alt_id}.")
+
+    if "ALT-BASELINE" in set(summary["alternative_id"].astype(str)) and "ALT-MAINT" in set(summary["alternative_id"].astype(str)):
+        equivalent_text = str(recommendation.iloc[0]["equivalent_result_group"])
+        if "ALT-BASELINE" not in equivalent_text or "ALT-MAINT" not in equivalent_text:
+            return _result("step8g_manager_decision_dataset", "FAIL", "ALT-BASELINE and ALT-MAINT equivalence was not detected.")
+        if str(recommendation.iloc[0]["recommended_alternative_id"]) != "ALT-BASELINE":
+            return _result("step8g_manager_decision_dataset", "FAIL", "Equivalent baseline/maintenance alternatives must use ALT-BASELINE as the reference recommendation.")
+        equivalent_tradeoff = tradeoff[tradeoff["compared_alternative_id"].astype(str).isin(["ALT-BASELINE", "ALT-MAINT"])]
+        if equivalent_tradeoff.empty or not _all_true(equivalent_tradeoff, "equivalent_to_baseline_flag") or _to_bool(equivalent_tradeoff["meaningful_difference_flag"]).any():
+            return _result("step8g_manager_decision_dataset", "FAIL", "Step 8G-B trade-off analysis must mark equivalent baseline/maintenance alternatives without meaningful differences.")
+
+    ranked = summary.copy()
+    ranked["_risk_score"] = (
+        (100.0 - pd.to_numeric(ranked["demand_coverage_pct"], errors="coerce").fillna(0.0)).clip(lower=0.0) * 10
+        + pd.to_numeric(ranked["buffer_blocked_qty"], errors="coerce").fillna(0.0) * 2
+        + pd.to_numeric(ranked["wip_blocked_qty"], errors="coerce").fillna(0.0) * 2
+        + pd.to_numeric(ranked["maintenance_review_count"], errors="coerce").fillna(0.0) * 25
+        + pd.to_numeric(ranked["upstream_warning_count"], errors="coerce").fillna(0.0) * 10
+        + ranked["cost_confidence_level"].astype(str).str.upper().eq("LOW").astype(int) * 50
+    )
+    ranked = ranked.sort_values(
+        ["demand_coverage_pct", "_risk_score", "validated_real_cost", "setup_minutes", "assumed_cost_or_penalty", "alternative_id"],
+        ascending=[False, True, True, True, True, True],
+    )
+    expected_recommended = str(ranked.iloc[0]["alternative_id"])
+    if "ALT-BASELINE" in str(recommendation.iloc[0]["equivalent_result_group"]) and expected_recommended in str(recommendation.iloc[0]["equivalent_result_group"]):
+        expected_recommended = "ALT-BASELINE"
+    if str(recommendation.iloc[0]["recommended_alternative_id"]) != expected_recommended:
+        return _result("step8g_manager_decision_dataset", "FAIL", "Step 8G-A recommendation ranking does not recalculate correctly.")
+
+    if not wip.empty and "alternative_id" in wip.columns and not set(wip["alternative_id"].dropna().astype(str)) <= set(summary["alternative_id"].astype(str)):
+        return _result("step8g_manager_decision_dataset", "FAIL", "Step 8G-A WIP metrics do not trace to Step 8F alternatives.")
+    if set(tradeoff["compared_alternative_id"].astype(str)) != set(summary["alternative_id"].astype(str)):
+        return _result("step8g_manager_decision_dataset", "FAIL", "Step 8G-B trade-off rows must compare every alternative.")
+    if not risks["risk_type"].astype(str).isin(["UPSTREAM_PHASE2_WARNINGS", "UPSTREAM_PHASE3_WARNINGS"]).any() and (summary["upstream_warning_count"].map(_num) > 0).any():
+        return _result("step8g_manager_decision_dataset", "FAIL", "Step 8G-B risks must keep upstream warnings attributed to their source phase.")
+    return _result(
+        "step8g_manager_decision_dataset",
+        "PASS",
+        f"Step 8G manager decision dataset valid; alternatives={len(summary)}, tradeoffs={len(tradeoff)}, risks={len(risks)}, readiness_rows={len(readiness)}, recommendation={recommendation.iloc[0]['recommended_alternative_id']}.",
+    )
+
+
 def _check_routing_master_data() -> dict:
     missing_files = [name for name, path in ROUTING_DATA_FILES.items() if not path.exists()]
     if missing_files:
@@ -3995,6 +4190,15 @@ def _split_ids(value: object) -> list[str]:
 
 def _to_bool(series: pd.Series) -> pd.Series:
     return series.astype(str).str.strip().str.lower().isin({"true", "1", "yes", "y"})
+
+
+def _num(value) -> float:
+    try:
+        if pd.isna(value):
+            return 0.0
+        return float(value)
+    except (TypeError, ValueError):
+        return 0.0
 
 
 def _is_blank_value(value: object) -> bool:

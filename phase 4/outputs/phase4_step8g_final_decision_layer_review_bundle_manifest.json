@@ -1,0 +1,70 @@
+{
+  "manifest_title": "Phase 4 Step 8G Final Decision Layer Review Bundle Manifest",
+  "bundle_name": "phase4_step8g_final_decision_layer_review_bundle.zip",
+  "verification_expected": "PASS",
+  "step8g_final_status": "CLOSED_WITH_REVIEW",
+  "release_readiness_status": "NOT_READY_FOR_RELEASE",
+  "production_release_allowed": false,
+  "files": [
+    {
+      "relative_path": "phase 4/outputs/phase4_step8g_alternative_summary.csv",
+      "description": "Step 8G-A alternative summary"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_step8g_recommendation.csv",
+      "description": "Step 8G-A manager recommendation"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_step8g_manager_review_queue.csv",
+      "description": "Step 8G-A manager review queue"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_step8g_tradeoff_analysis.csv",
+      "description": "Step 8G-B trade-off analysis versus baseline"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_step8g_decision_risks.csv",
+      "description": "Step 8G-B decision risks"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_step8g_release_readiness.csv",
+      "description": "Step 8G-B release readiness"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_step8g_validation.csv",
+      "description": "Step 8G validation"
+    },
+    {
+      "relative_path": "phase 4/core/production_manager_decision_dataset.py",
+      "description": "Step 8G core module"
+    },
+    {
+      "relative_path": "phase 4/main.py",
+      "description": "Phase 4 pipeline entry point"
+    },
+    {
+      "relative_path": "phase 4/validate_phase4_initialization.py",
+      "description": "Phase 4 umbrella validation script"
+    },
+    {
+      "relative_path": "phase 4/README.md",
+      "description": "Phase 4 documentation"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_initialization_validation.json",
+      "description": "Phase 4 validation JSON evidence"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_initialization_validation_report.txt",
+      "description": "Phase 4 validation text report"
+    },
+    {
+      "relative_path": "phase 4/outputs/STEP8G_SUMMARY.md",
+      "description": "Concise Step 8G completion summary"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_step8g_final_decision_layer_review_bundle_manifest.json",
+      "description": "Review bundle manifest"
+    }
+  ]
+}
