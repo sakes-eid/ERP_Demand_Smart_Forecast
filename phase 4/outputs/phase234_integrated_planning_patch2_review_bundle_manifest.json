@@ -1,0 +1,203 @@
+﻿{
+    "bundle_name":  "phase234_integrated_planning_patch2_review_bundle.zip",
+    "generated_at":  "2026-08-06T20:14:47",
+    "manifest_note":  "Manifest lists source review files. Manifest file itself is included in the ZIP but excluded from hash list to avoid self-referential hash mutation.",
+    "included_files":  [
+                           {
+                               "relative_path":  "phase 4/data/phase4_component_operation_consumption_map.csv",
+                               "size_bytes":  3007,
+                               "sha256":  "4c78c1e33c0e692f52f2c46136b1461e7b33dc2ca97890b9dc7caecec4a93439"
+                           },
+                           {
+                               "relative_path":  "phase 4/core/integrated_phase234_planning_refresh.py",
+                               "size_bytes":  39241,
+                               "sha256":  "34127ee947b2eef82370a6e5e161cf4bd31bd2fb068fa6cddc083a0fefdfe18a"
+                           },
+                           {
+                               "relative_path":  "phase 4/outputs/integrated_phase234_material_readiness.csv",
+                               "size_bytes":  126645,
+                               "sha256":  "3e7979eb1597919f92e6ff8bdae904d43e1cc22a1ed79f32b64fcdcc136ad63b"
+                           },
+                           {
+                               "relative_path":  "phase 4/outputs/integrated_phase234_shortage_timeline.csv",
+                               "size_bytes":  43381,
+                               "sha256":  "f9096c76650c6798aaf1f36b73d0c488506dc2b59ce1d33e776a8403edf24e90"
+                           },
+                           {
+                               "relative_path":  "phase 4/outputs/integrated_phase234_schedule_impact.csv",
+                               "size_bytes":  32318,
+                               "sha256":  "a3837281213e0dce2efb115a1c989d31e11d76fe99ad30dfe72f525da327da5b"
+                           },
+                           {
+                               "relative_path":  "phase 4/outputs/integrated_phase234_recommendation_check.csv",
+                               "size_bytes":  860,
+                               "sha256":  "f0cf4cc828e25d442deb56974279ac666f47011486c3b89cbff5b5ded41e41a9"
+                           },
+                           {
+                               "relative_path":  "phase 4/outputs/integrated_phase234_validation.csv",
+                               "size_bytes":  3243,
+                               "sha256":  "7dc92331eedce58c2aef0911ca359f19697233e8a01e65af9c3cbb19941917f0"
+                           },
+                           {
+                               "relative_path":  "phase 4/outputs/integrated_phase234_graph_nodes.csv",
+                               "size_bytes":  62120,
+                               "sha256":  "2761a714f7b1ff57d39370b17bc14c3822b70c9b3b45f7b471072e29dcb6764c"
+                           },
+                           {
+                               "relative_path":  "phase 4/outputs/integrated_phase234_graph_edges.csv",
+                               "size_bytes":  63795,
+                               "sha256":  "9b4f260204ce711af795f453f5b4476c49ead141f42a9e392359cec819ca9dd3"
+                           },
+                           {
+                               "relative_path":  "phase 4/outputs/PHASE234_INTEGRATION_SUMMARY.md",
+                               "size_bytes":  2729,
+                               "sha256":  "e43c3f12dc3fc3b21a94b9ccf527027ecb3e49e6a8e1bda4e1e2ff6679dcc663"
+                           },
+                           {
+                               "relative_path":  "phase 4/outputs/phase4_initialization_validation.json",
+                               "size_bytes":  10537,
+                               "sha256":  "293c0a50eb567f6ba88fb7354560fbef60d0d8f29bc9ca549e619dbdf6538cab"
+                           },
+                           {
+                               "relative_path":  "phase 4/outputs/phase4_initialization_validation_report.txt",
+                               "size_bytes":  7746,
+                               "sha256":  "0bd288d06d33b1edafeb53dbe8d3cecc1ea733241232936b2c3ed7a7fd998fdf"
+                           },
+                           {
+                               "relative_path":  "phase 4/data/phase4_bom.csv",
+                               "size_bytes":  1441,
+                               "sha256":  "9a25d9b4afbe888dfc8374e13398c2b52244d223f6ebef521e67a85c25f8c565"
+                           },
+                           {
+                               "relative_path":  "phase 4/data/product_routings.csv",
+                               "size_bytes":  3858,
+                               "sha256":  "f347215087b4ad5d33005957b00e76d2f5c806633a773d8ca0c00f5551af5d4d"
+                           },
+                           {
+                               "relative_path":  "phase 4/outputs/phase4_mrp_component_period_summary.csv",
+                               "size_bytes":  37402,
+                               "sha256":  "b497590c4372fbc0a138d9c85769ee488d5d38d2198a935129dc3638f9733d56"
+                           },
+                           {
+                               "relative_path":  "phase 4/outputs/phase4_mrp_pegging_detail.csv",
+                               "size_bytes":  49843,
+                               "sha256":  "cef2f91f23420d4ebf05f9633d1a3b8a13342a1b6a98cc1cbc33573b4b325d21"
+                           },
+                           {
+                               "relative_path":  "phase 4/outputs/phase4_schedule_alternative_operation_detail.csv",
+                               "size_bytes":  2447837,
+                               "sha256":  "f1993aa2ede203baa079e7cf0dbaa9da0b9c205d23d6832d6e2e886f86870934"
+                           },
+                           {
+                               "relative_path":  "phase 4/outputs/phase4_schedule_alternative_capacity_impact.csv",
+                               "size_bytes":  607423,
+                               "sha256":  "81cd3d5f336c59bae8247d00d9407787d59ca36e10bf8962869a6538366b7453"
+                           },
+                           {
+                               "relative_path":  "phase 4/outputs/phase4_schedule_alternative_wip_impact.csv",
+                               "size_bytes":  564493,
+                               "sha256":  "af11ed00325392dbdb146afc96b2fb297bc598a6c073ec71946778ae791ab0fb"
+                           },
+                           {
+                               "relative_path":  "phase 4/outputs/phase4_schedule_alternative_master.csv",
+                               "size_bytes":  3374,
+                               "sha256":  "847890083018c5b547d0e5d9acb81ae60862bcde64085e279641171696c8c4f4"
+                           },
+                           {
+                               "relative_path":  "phase 4/outputs/phase4_step8g_alternative_summary.csv",
+                               "size_bytes":  2375,
+                               "sha256":  "2d040eb530705c40512bee0b23f32fa143e9f6a064ee7fe25d915a4ac21bab60"
+                           },
+                           {
+                               "relative_path":  "phase 4/outputs/phase4_step8g_recommendation.csv",
+                               "size_bytes":  735,
+                               "sha256":  "5fb357b80796947d1c8b6f0e4900c98b0c60887117f3ae44dc7f221a0d2760a8"
+                           },
+                           {
+                               "relative_path":  "phase 4/outputs/phase4_step8g_release_readiness.csv",
+                               "size_bytes":  3170,
+                               "sha256":  "a4b2170110b918624df46524bcc120276c6f13866c6af0b647d629453a743a68"
+                           },
+                           {
+                               "relative_path":  "phase 4/outputs/phase4_step8g_validation.csv",
+                               "size_bytes":  2963,
+                               "sha256":  "fc1f984938dad0e8045af85dcd1cb0b93bce4651303335ddef4200365736f24e"
+                           },
+                           {
+                               "relative_path":  "phase 4/outputs/phase4_routing_graph_nodes.csv",
+                               "size_bytes":  4621,
+                               "sha256":  "90468cc2a907c1c30d023db33b3699907b6c6f922dbbb5708693a37714be8271"
+                           },
+                           {
+                               "relative_path":  "phase 4/outputs/phase4_operation_slack_analysis.csv",
+                               "size_bytes":  3820,
+                               "sha256":  "244cb8c00485e1672fe5f04bf34052e0daf4ac15f464a5f26a8a35b21d8ee5c2"
+                           },
+                           {
+                               "relative_path":  "phase 4/outputs/phase4_bottleneck_visibility_summary.csv",
+                               "size_bytes":  4492,
+                               "sha256":  "8c7b1d5bfdb3d390be48528b8c9a530af0d4978c060a9106ed045f63f149d60a"
+                           },
+                           {
+                               "relative_path":  "phase 4/outputs/phase4_wip_buffer_status.csv",
+                               "size_bytes":  3740,
+                               "sha256":  "3dc2be55ea5ad79623c0a6da6627435ed3167111537fae66321ff59207e8c24f"
+                           },
+                           {
+                               "relative_path":  "phase 3/outputs/phase4_component_inventory_check.csv",
+                               "size_bytes":  2956,
+                               "sha256":  "d1b66972729d3b3c244d3fe561c62d61fe2dd1fed7b31faf4c405aa16d6151bb"
+                           },
+                           {
+                               "relative_path":  "phase 2/outputs/phase4_component_supplier_check.csv",
+                               "size_bytes":  2431,
+                               "sha256":  "df4fdc07c6395f8f9d67795a752fea159a7bcb439341b28e232cda9f35764721"
+                           },
+                           {
+                               "relative_path":  "phase 2/outputs/phase2_procurement_capability_context.csv",
+                               "size_bytes":  150069,
+                               "sha256":  "7e3c7c2256edfc18bb45520c2a797dbf77a28b7cb4d01ad362a6951004351816"
+                           },
+                           {
+                               "relative_path":  "shared/outputs/phase2_procurement_allocation_summary.csv",
+                               "size_bytes":  8326,
+                               "sha256":  "bbb63405cddfc782c68e675d69447dc8029bddbf6f6865cdcb754cd5e7f396a4"
+                           },
+                           {
+                               "relative_path":  "phase 4/README.md",
+                               "size_bytes":  29657,
+                               "sha256":  "c349df2b941be4276a2ef0aa3fb73d3899df3a52742e89e8f26f422cb9d7bf8a"
+                           },
+                           {
+                               "relative_path":  "README.md",
+                               "size_bytes":  7028,
+                               "sha256":  "c521cca0d113189c8302688651f14367d04def690f4e3a3de66bf606f58489e4"
+                           },
+                           {
+                               "relative_path":  "phase 4/main.py",
+                               "size_bytes":  43691,
+                               "sha256":  "048ced4feb0bfa13ebb13d6ac44ac22edd0254fc4863e60c0d3f9b0f0225df58"
+                           },
+                           {
+                               "relative_path":  "phase 4/validate_phase4_initialization.py",
+                               "size_bytes":  285026,
+                               "sha256":  "bdd631877e0858236a059d7b8ed811030d745e2a0a8046c032cd4fd141b35986"
+                           },
+                           {
+                               "relative_path":  "planning_orchestrator.py",
+                               "size_bytes":  13367,
+                               "sha256":  "e59e13a7dfa422a99da8d9731b10c23aeb07ad15c12aea1ea952e0611718ec2b"
+                           },
+                           {
+                               "relative_path":  ".gitignore",
+                               "size_bytes":  293,
+                               "sha256":  "4da4e3b13c1548845c03d4dabab0a38178a3dd1a00567a4abb86df448b184bc1"
+                           }
+                       ],
+    "missing_files":  [
+
+                      ],
+    "obsolete_zip_files_deleted":  [
+                                       "phase234_integrated_planning_patch1_review_bundle.zip"
+                                   ]
+}

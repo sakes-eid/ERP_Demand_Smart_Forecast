@@ -175,6 +175,10 @@ Current initialization scope:
 - Final closure validation recalculates quantity, segment/detail, timing, FIFO, buffer, capacity, setup, maintenance, demand coverage, cost, recommendation, and forbidden-output checks from detailed evidence. Current Step 8F final status is `CLOSED_WITH_REVIEW` because the alternatives are internally valid but remain partial finite schedules.
 - Step 8G-A builds a concise manager decision dataset from finalized Step 8F outputs. It summarizes each alternative, separates validated real cost from assumed/proxy exposure, carries upstream warnings as source-attributed review items, detects equivalent alternatives, and recommends a reference alternative for manager review only.
 - Step 8G-A does not rerun scheduling, approve release, create production orders, reserve inventory, dispatch workers, or create execution transactions.
+- The Phase 2-3-4 integrated planning refresh connects Phase 4 component requirements and actual consuming-operation dates with Phase 3 usable inventory evidence and Phase 2 supplier allocation/capability evidence. It creates advisory material readiness, shortage timeline, schedule impact, recommendation-check, validation, and candidate-specific graph-ready files without changing Step 8F/8G scheduling logic.
+- Component requirements are mapped through `phase 4/data/phase4_component_operation_consumption_map.csv`, an explicit planning master derived from the bicycle BOM/routing design. Keyword-based component-name inference is not used; unmapped rows must be marked `CONSUMING_OPERATION_UNMAPPED_REVIEW`.
+- Component-operation mapping and operation dating are separate checks. If the explicit mapping exists but the consuming operation has no proposed start datetime, material timing is marked `REQUIRED_DATE_UNAVAILABLE_REVIEW` with `required_date_source = CONSUMING_OPERATION_NOT_SCHEDULED`; it is not classified as early, on-time, or late inbound.
+- The integrated refresh does not hardcode a reconfirmed recommendation. When material evidence is not alternative-specific, it reports `RECOMMENDATION_NOT_RECALCULABLE_FROM_CURRENT_INTEGRATION` and retains the prior Step 8G recommendation as `PRIOR_RECOMMENDATION_RETAINED_PENDING_REVIEW`, while keeping release blocked when material, inventory, or upstream warnings remain unresolved.
 
 Run order:
 
@@ -203,8 +207,9 @@ Run order:
 23. Build advisory Phase 4 strict WIP buffer access and setup/changeover foundation.
 24. Build advisory Phase 4 WIP- and setup-aware finite-capacity schedule alternatives.
 25. Build Step 8G-A manager decision summary, recommendation, and review queue from Step 8F evidence.
-26. Run Phase 3 component inventory checks.
-27. Run Phase 2 component supplier checks.
+26. Build the Phase 2-3-4 integrated planning refresh and graph-ready assessment files.
+27. Run Phase 3 component inventory checks.
+28. Run Phase 2 component supplier checks.
 
 The Phase 4 bridges are optional-safe. If a bridge file is missing or fails, Phase 2 and Phase 3 print a warning and continue their existing core pipelines.
 
@@ -225,6 +230,7 @@ Guardrails:
 - Schedule alternative WIP projections do not change the WIP ledger and do not consume inventory.
 - Step 8F does not create released production orders, confirmed schedules, dispatch, WIP transactions, WIP/component consumption, reservations, purchase orders, maintenance work orders, applied capacity reductions, or simulation outputs.
 - Step 8G-A recommendation status is `RECOMMENDED_FOR_REVIEW`; it is not an approval, release, or execution authorization.
+- Phase 2-3-4 integrated refresh outputs are advisory only and do not consume inventory, reserve material, create purchase orders, release production, or change schedule alternatives.
 - Simulation is a separate future phase.
 - Future production release flags should default to `production_order_release_allowed = False`.
 

@@ -1,0 +1,238 @@
+﻿{
+    "manifest_title":  "Phase 2-3-4 Integrated Planning Review Bundle Manifest",
+    "bundle_name":  "phase234_integrated_planning_review_bundle.zip",
+    "generated_at_utc":  "2026-08-06T17:49:25Z",
+    "verification_expected":  "PASS",
+    "advisory_only":  true,
+    "self_hash_note":  "The manifest entry uses SHA-256 of this JSON with its own sha256 field redacted to \u003cSELF_REDACTED_SHA256\u003e.",
+    "files":  [
+                  {
+                      "relative_path":  "phase 4/outputs/integrated_phase234_material_readiness.csv",
+                      "size_bytes":  84212,
+                      "sha256":  "ac4a1b60d4c4445a0cdc391d919189e33541cd85aae57c9d26edeb5e9c77e434",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/integrated_phase234_shortage_timeline.csv",
+                      "size_bytes":  25395,
+                      "sha256":  "d430f1a2a5595ea7e9552a61649ab42ff8059b92c8f0eb025b518db6cf38e229",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/integrated_phase234_schedule_impact.csv",
+                      "size_bytes":  7503,
+                      "sha256":  "4984b6cf4f151b0e96cc8b66d653c725be3c97d1518d76a1d56005a0c97eb49f",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/integrated_phase234_recommendation_check.csv",
+                      "size_bytes":  627,
+                      "sha256":  "9873cc85e683f344f5d0ce94c6daa4f7a3b80b12e42b48b7acfcb49187c9c53b",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/integrated_phase234_validation.csv",
+                      "size_bytes":  1570,
+                      "sha256":  "e73cb6fb0b46fc2f5860a17bff824b2e67457c65e6da04291723a9add4411032",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/integrated_phase234_graph_nodes.csv",
+                      "size_bytes":  60282,
+                      "sha256":  "0bbf02ddaf64f9bb1e54908b9ed407445367442593f4e4d084f4d339bb59cb7b",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/integrated_phase234_graph_edges.csv",
+                      "size_bytes":  3272,
+                      "sha256":  "2ddf98a2e50a12b4bcdbf6cba23e4382fe097201cdc084634c6a365945338352",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "phase 4/core/integrated_phase234_planning_refresh.py",
+                      "size_bytes":  28770,
+                      "sha256":  "c85a088a8f0708ce5663ea3ee7057fa9d1bf38ade819432275a44ae27795294f",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "phase 4/core/production_manager_decision_dataset.py",
+                      "size_bytes":  49603,
+                      "sha256":  "9a7be73da845ec1978cee60ccb4acb5b8d98403924e853dda24b65f603eef1cb",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "phase 4/main.py",
+                      "size_bytes":  43691,
+                      "sha256":  "048ced4feb0bfa13ebb13d6ac44ac22edd0254fc4863e60c0d3f9b0f0225df58",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "planning_orchestrator.py",
+                      "size_bytes":  13367,
+                      "sha256":  "e59e13a7dfa422a99da8d9731b10c23aeb07ad15c12aea1ea952e0611718ec2b",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "phase 4/validate_phase4_initialization.py",
+                      "size_bytes":  285026,
+                      "sha256":  "bdd631877e0858236a059d7b8ed811030d745e2a0a8046c032cd4fd141b35986",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "phase 4/README.md",
+                      "size_bytes":  29182,
+                      "sha256":  "153f325e14da8d8091aeca97683ec7dcb9d60d77f8574be90874b379878a6a0f",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "phase 2/outputs/phase4_component_supplier_check.csv",
+                      "size_bytes":  2431,
+                      "sha256":  "df4fdc07c6395f8f9d67795a752fea159a7bcb439341b28e232cda9f35764721",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "phase 2/outputs/phase2_procurement_capability_context.csv",
+                      "size_bytes":  150069,
+                      "sha256":  "7e3c7c2256edfc18bb45520c2a797dbf77a28b7cb4d01ad362a6951004351816",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "shared/outputs/phase2_procurement_allocation_summary.csv",
+                      "size_bytes":  8326,
+                      "sha256":  "bbb63405cddfc782c68e675d69447dc8029bddbf6f6865cdcb754cd5e7f396a4",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "shared/outputs/phase2_procurement_allocation_context.csv",
+                      "size_bytes":  21275,
+                      "sha256":  "eee6d7b22bfb4e6d84a97f0e91a1c4cc964840d2ee1d375ebfea52b0aab7d6ae",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "phase 3/outputs/phase4_component_inventory_check.csv",
+                      "size_bytes":  2956,
+                      "sha256":  "d1b66972729d3b3c244d3fe561c62d61fe2dd1fed7b31faf4c405aa16d6151bb",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/phase4_mrp_component_period_summary.csv",
+                      "size_bytes":  37402,
+                      "sha256":  "b497590c4372fbc0a138d9c85769ee488d5d38d2198a935129dc3638f9733d56",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/phase4_mrp_pegging_detail.csv",
+                      "size_bytes":  49843,
+                      "sha256":  "cef2f91f23420d4ebf05f9633d1a3b8a13342a1b6a98cc1cbc33573b4b325d21",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/phase4_bom_component_requirements.csv",
+                      "size_bytes":  41683,
+                      "sha256":  "3615a412df7277e0c837c66cfc1b7cd98a93f8575a38bfb61e52d0c54b9bb945",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/phase4_schedule_alternative_operation_detail.csv",
+                      "size_bytes":  2447837,
+                      "sha256":  "f1993aa2ede203baa079e7cf0dbaa9da0b9c205d23d6832d6e2e886f86870934",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/phase4_schedule_alternative_operation_segments.csv",
+                      "size_bytes":  1943208,
+                      "sha256":  "a2236935d6e7c695a1bb48d48d0cb49acc0cac5a0def41ac0664612ddc25b55b",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/phase4_step8g_alternative_summary.csv",
+                      "size_bytes":  2375,
+                      "sha256":  "2d040eb530705c40512bee0b23f32fa143e9f6a064ee7fe25d915a4ac21bab60",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/phase4_step8g_recommendation.csv",
+                      "size_bytes":  735,
+                      "sha256":  "5fb357b80796947d1c8b6f0e4900c98b0c60887117f3ae44dc7f221a0d2760a8",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/phase4_step8g_release_readiness.csv",
+                      "size_bytes":  3170,
+                      "sha256":  "a4b2170110b918624df46524bcc120276c6f13866c6af0b647d629453a743a68",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/phase4_step8g_validation.csv",
+                      "size_bytes":  2963,
+                      "sha256":  "fc1f984938dad0e8045af85dcd1cb0b93bce4651303335ddef4200365736f24e",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/phase4_routing_graph_nodes.csv",
+                      "size_bytes":  4621,
+                      "sha256":  "90468cc2a907c1c30d023db33b3699907b6c6f922dbbb5708693a37714be8271",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/phase4_routing_graph_edges.csv",
+                      "size_bytes":  2242,
+                      "sha256":  "761852292bd8d2dfac5f8240ea604cb4dab244e27811d6e3f88db69f5990f411",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/phase4_operation_slack_analysis.csv",
+                      "size_bytes":  3820,
+                      "sha256":  "244cb8c00485e1672fe5f04bf34052e0daf4ac15f464a5f26a8a35b21d8ee5c2",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/phase4_schedule_alternative_capacity_impact.csv",
+                      "size_bytes":  607423,
+                      "sha256":  "81cd3d5f336c59bae8247d00d9407787d59ca36e10bf8962869a6538366b7453",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/phase4_bottleneck_visibility_summary.csv",
+                      "size_bytes":  4492,
+                      "sha256":  "8c7b1d5bfdb3d390be48528b8c9a530af0d4978c060a9106ed045f63f149d60a",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/phase4_schedule_alternative_wip_impact.csv",
+                      "size_bytes":  564493,
+                      "sha256":  "af11ed00325392dbdb146afc96b2fb297bc598a6c073ec71946778ae791ab0fb",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/phase4_wip_buffer_status.csv",
+                      "size_bytes":  3740,
+                      "sha256":  "3dc2be55ea5ad79623c0a6da6627435ed3167111537fae66321ff59207e8c24f",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/phase4_initialization_validation.json",
+                      "size_bytes":  10537,
+                      "sha256":  "6f2815bf7df1828e31a421c0eda8558a05b12e6b6219287f83729bc627d20ed5",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/phase4_initialization_validation_report.txt",
+                      "size_bytes":  7746,
+                      "sha256":  "bf4193684941e78059e3a89fc8f067101a3a7368d08446825094a1bd15bb3a06",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/PHASE234_INTEGRATION_SUMMARY.md",
+                      "size_bytes":  2637,
+                      "sha256":  "c48f8618222ea20d0b96f2d5b92c20b236631b755f438f45786e891767c29667",
+                      "hash_scope":  "FULL_FILE"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/phase234_integrated_planning_review_bundle_manifest.json",
+                      "size_bytes":  13216,
+                      "sha256":  "3dd43ba95d2b743b0261cc749cbe9b45429cd7d287dac85c72d66c17e597ecd3",
+                      "hash_scope":  "SELF_REDACTED_MANIFEST"
+                  }
+              ]
+}

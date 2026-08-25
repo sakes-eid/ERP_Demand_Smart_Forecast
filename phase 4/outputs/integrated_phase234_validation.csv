@@ -1,0 +1,25 @@
+planning_run_id,check_id,check_name,status,message,affected_rows,advisory_only_flag
+PHASE4-MPS-20260726202343,INT234-001,OUTPUTS_NON_EMPTY,PASS,All integrated Phase 2/3/4 outputs are non-empty.,0,True
+PHASE4-MPS-20260726202343,INT234-002,ALL_COMPONENT_REQUIREMENTS_TRACE_TO_PHASE4,PASS,Material readiness rows trace to Phase 4 MRP pegging.,196,True
+PHASE4-MPS-20260726202343,INT234-003,EXPLICIT_COMPONENT_OPERATION_MAP_EXISTS,PASS,Explicit component-to-operation consumption map exists.,0,True
+PHASE4-MPS-20260726202343,INT234-004,NO_KEYWORD_BASED_COMPONENT_MAPPING,PASS,Component mapping does not use keyword/name inference.,0,True
+PHASE4-MPS-20260726202343,INT234-005,COMPONENT_MAPPED_TO_ACTUAL_CONSUMING_OPERATION,PASS,Component requirements are mapped to explicit consuming operations or explicitly marked for review.,0,True
+PHASE4-MPS-20260726202343,INT234-006,REQUIRED_DATE_EQUALS_CONSUMING_OPERATION_START_DATE,PASS,Required material dates equal the consuming operation start date for mapped rows.,0,True
+PHASE4-MPS-20260726202343,INT234-007,NO_LATE_INBOUND_STATUS_WITHOUT_REQUIRED_DATE,PASS,Late inbound review is used only when required date exists.,0,True
+PHASE4-MPS-20260726202343,INT234-008,NO_ON_TIME_FLAG_WITHOUT_REQUIRED_DATE,PASS,Inbound on-time flag is never true without a required date.,0,True
+PHASE4-MPS-20260726202343,INT234-009,UNDATED_OPERATION_MAPPING_PRESERVED,PASS,Explicit mappings with undated operations preserve consuming operation and workstation evidence.,73,True
+PHASE4-MPS-20260726202343,INT234-010,NO_FIRST_OPERATION_FALLBACK_SILENTLY_USED,PASS,No silent first-operation fallback mapping is used.,0,True
+PHASE4-MPS-20260726202343,INT234-011,MAPPED_COMPONENT_REFERENCES_VALID_ROUTING_OPERATION,PASS,Mapped component consuming operations reference valid routing operations.,0,True
+PHASE4-MPS-20260726202343,INT234-012,NO_INVENTORY_REUSE,PASS,Inventory used by requirements does not exceed Phase 3 usable inventory by component.,196,True
+PHASE4-MPS-20260726202343,INT234-013,SUPPLIER_ALLOCATION_CAPACITY_YIELD_RESPECTED,PASS,Supplier allocation is capped by capacity and yield evidence.,196,True
+PHASE4-MPS-20260726202343,INT234-014,INBOUND_NOT_USED_BEFORE_ARRIVAL,PASS,Inbound material is not used before arrival.,0,True
+PHASE4-MPS-20260726202343,INT234-015,SCHEDULE_IMPACT_TRACES_TO_SHORTAGES,PASS,Schedule impacts trace to candidate/operation component shortages.,112,True
+PHASE4-MPS-20260726202343,INT234-016,GRAPH_JOINS_CANDIDATE_SPECIFIC,PASS,Graph edges and nodes use schedule-candidate-specific keys.,196,True
+PHASE4-MPS-20260726202343,INT234-017,GRAPH_EDGE_ENDPOINTS_EXIST,PASS,Every graph edge endpoint references a real node ID.,0,True
+PHASE4-MPS-20260726202343,INT234-018,NODE_STATUS_MATCHES_CANDIDATE_IMPACT,PASS,Graph node material status matches same-candidate operation schedule impact.,0,True
+PHASE4-MPS-20260726202343,INT234-019,NO_CANDIDATE_STATUS_INHERITANCE,PASS,Candidate-specific fields are joined by candidate/operation; non-candidate-specific WIP is marked review.,182,True
+PHASE4-MPS-20260726202343,INT234-020,RECOMMENDATION_CALCULATED_OR_EXPLICITLY_NONRECALCULABLE,PASS,Recommendation is independently recalculated when possible or explicitly marked non-recalculable.,1,True
+PHASE4-MPS-20260726202343,INT234-021,VALIDATION_NOT_HARDCODED_FLAG,PASS,Validation no longer passes by checking the old hardcoded unchanged flag.,1,True
+PHASE4-MPS-20260726202343,INT234-022,RELEASE_REMAINS_BLOCKED,PASS,Release remains blocked.,1,True
+PHASE4-MPS-20260726202343,INT234-023,ADVISORY_ONLY,PASS,All integrated outputs are advisory-only.,0,True
+PHASE4-MPS-20260726202343,INT234-024,NO_FORBIDDEN_EXECUTION_OUTPUTS,PASS,No execution outputs were created.,0,True
