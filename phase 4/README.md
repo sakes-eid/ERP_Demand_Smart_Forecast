@@ -234,6 +234,56 @@ Guardrails:
 - Simulation is a separate future phase.
 - Future production release flags should default to `production_order_release_allowed = False`.
 
+## Phase 4 Manager UI
+
+Phase 4 now includes the first Streamlit manager interface:
+
+```text
+streamlit run "phase 4/app.py"
+```
+
+The current UI includes:
+
+- Manager Overview with the Step 8G recommendation, demand coverage, completed and unscheduled quantity, main bottleneck, integrated material shortage, late inbound rows, ready material rows, and release-readiness status.
+- A compact six-alternative comparison table from `phase4_step8g_alternative_summary.csv`.
+- Interactive Production Flow Graph using `integrated_phase234_graph_nodes.csv` and `integrated_phase234_graph_edges.csv`.
+- Operation nodes with workstation, utilization, scheduled quantity, dates, slack, critical-path treatment, bottleneck badge, material badge, and lightweight maintenance review indicator.
+- The Production Flow Graph is locked to `ALT-BASELINE` because the integrated graph evidence is currently reference-graph data, not alternative-specific graph data.
+- Operation nodes use maintenance window checks when dated evidence exists; risk-only evidence is shown as `DATE UNKNOWN / REVIEW` without invented countdowns.
+- WIP buffer nodes between operations use WIP access rules plus the time-causal shadow-WIP ledger to show projected balance at the relevant transfer timestamp where schedule-specific evidence exists. Generic buffer status is used only as a clearly labeled fallback.
+- A selected-operation detail panel for dates, capacity, slack, material, WIP, maintenance, and blocker evidence.
+- Node-click selection is not enabled in this lightweight HTML graph; the operation detail selector is the supported fallback.
+- BOM & Materials with finished-SKU and schedule-candidate filters, a read-only BOM/component list, material-readiness KPIs, an integrated material table, a component detail panel, and a shortage-focus table.
+- The BOM & Materials page reads `integrated_phase234_material_readiness.csv`, `integrated_phase234_shortage_timeline.csv`, `phase4_bom.csv`, `phase4_bom_component_requirements.csv`, and the explicit `phase4_component_operation_consumption_map.csv`.
+- Component consuming operations and required dates come from the explicit integration evidence. The UI does not infer consuming operations from component names, does not classify inbound supply as late when the required date is unavailable, and does not duplicate inventory or supplier quantities.
+- Production Timeline with finished-SKU and schedule-candidate filters, locked to the `ALT-BASELINE` reference alternative until alternative-specific integrated timeline evidence exists.
+- The timeline has `Product / Route` and `Workstation` modes. Both use `phase4_schedule_alternative_operation_segments.csv` as the dated bar source, so scheduled bars show real segment start/end times, quantities, setup minutes, processing minutes, workstation, and machine/labor unit evidence.
+- The workstation view preserves real parallel-capacity timestamps and individual machine/labor unit IDs in hover/detail evidence instead of aggregating parallel work into fake sequential bars.
+- Unscheduled or partial work is shown in a separate summary table from operation-detail evidence. The UI does not create timeline bars for work that has no real start/end datetime.
+- Timeline overlays can surface critical path, bottleneck, material readiness, buffer delay, setup, and dated maintenance evidence. Maintenance bars are drawn only when valid dated maintenance-window rows exist; risk-only maintenance remains review evidence in hover/detail.
+- Timeline overlay controls are visual-emphasis switches: disabling one removes that status classification from the bars while keeping the underlying real scheduled segments visible.
+- Capacity & WIP with finished-SKU and schedule-candidate filters, locked to `ALT-BASELINE` as the current integrated reference schedule.
+- The Capacity & WIP page reads Step 8F capacity-impact, operation-detail, operation-segment, WIP-impact, WIP-buffer, WIP-access, shadow-WIP, maintenance, machine, labor, workstation, and resource-calendar evidence. It does not recalculate scheduling, capacity policy, or WIP policy.
+- Capacity views show workstation utilization, scheduled and available minutes, remaining capacity, effective parallel lane count, machine/labor utilization, binding resource, blocked quantity, peak concurrency, unit assignments, and maintenance review evidence.
+- WIP views show candidate/SKU-related buffers, projected shadow-ledger balance where available, configured capacity, occupancy percentage, blocked quantity, FIFO validation status, upstream/downstream operations, and chronological shadow-WIP events. Generic buffer status is labeled as fallback when schedule-specific shadow evidence is unavailable.
+- Capacity & WIP projected WIP balances are selected only after filtering shadow-WIP events by `ALT-BASELINE`, finished SKU, selected schedule candidate, and buffer. Candidate-independent opening WIP is included only when explicitly marked as starting accepted WIP.
+- Maintenance with SKU-specific and candidate-specific production-impact filters plus machine/status filters. It reads maintenance readiness, due status, schedule feasibility, production impact, breakdown risk, crew/skill capacity, spare-part readiness, maintenance-window checks, and Step 8F operation evidence.
+- The Maintenance page separates risk-only review from dated maintenance conflict. Dated maintenance bars appear only when valid start/end datetime evidence exists; otherwise the page clearly reports `DATED MAINTENANCE WINDOWS: 0` and shows risk/review evidence without invented dates or countdowns.
+- Maintenance crew/skill and spare-part sections remain source-attributed and read-only. The UI does not assign technicians, reserve spare parts, create purchase orders, create maintenance work orders, or reduce production capacity.
+- Maintenance status keeps `maintenance_level` separate from worker authorization. `authorization_level` is displayed only from explicit workforce machine authorization evidence; when that field is unavailable, the UI labels it `NOT_AVAILABLE / REVIEW` rather than inferring it from maintenance level, skill, crew type, machine, or category.
+- Decision & Release Readiness with the final Step 8G recommendation, equivalent alternatives, demand coverage, completed and unscheduled quantity, overall bottleneck, cost confidence, `CLOSED_WITH_REVIEW` status, and overall release-readiness evidence.
+- The Decision & Release Readiness page reads Step 8G alternative summary, recommendation, trade-off, decision-risk, manager-review, and release-readiness outputs plus integrated material/readiness and maintenance evidence. It shows release blockers, decision risks, review actions, and a cross-phase procurement/inventory/production/maintenance summary without approval or release controls.
+- The Decision & Release Readiness manager-review queue displays `alternative_id` as `Affected Alternative`. It shows affected SKU or workstation only when those fields exist in the Step 8G source evidence, and does not infer either from an alternative ID.
+- Release readiness is labelled as overall when the source output is overall. SKU and candidate filters scope only the supporting cross-phase evidence, so Mountain Bike and Road Bike views do not imply product-specific release authorization unless the source does.
+
+The UI is read-only. It does not rerun scheduling, change Step 8F/8G logic, create production orders, authorize release, dispatch workers, reserve inventory, consume inventory or WIP, create purchase orders, create maintenance work orders, apply capacity reductions, or run simulation.
+
+The UI validation helper writes `phase 4/outputs/phase4_ui_validation.csv` and checks that graph nodes/edges trace to validated integration outputs, edge endpoints are valid, candidate-specific graph keys are present, KPI inputs trace to Step 8G, WIP values trace to WIP outputs, maintenance countdowns are not fabricated, BOM rows trace to BOM source files, component-operation mappings trace to the explicit map, material-status counts and required dates reconcile to integrated evidence, Phase 2/3 quantities remain traceable, timeline bars trace to real Step 8F segments, unscheduled work has no fake dates, route ordering uses operation sequence evidence, workstation mode preserves parallel segment evidence, Capacity & WIP utilization traces to Step 8F capacity evidence, WIP projected balances trace to the shadow ledger, FIFO status traces to Step 8F validation evidence, Maintenance dated indicators require dated source evidence, risk-only rows are separated from conflicts, crew/skill and spare-part readiness trace to maintenance source files, Mountain Bike and Road Bike views render through the same SKU/candidate code paths without cross-SKU leakage, Decision & Release Readiness matches Step 8G recommendation, trade-off, readiness, risk and review evidence, release remains blocked and advisory-only, and source files remain advisory-only.
+
+Final UI closure status is `CLOSED_PASS`: the UI has no unresolved validation failures or warnings. This does not change the production release status, which remains `NOT_READY_FOR_RELEASE` in the Step 8G evidence.
+
+Final presentation cleanup keeps the UI as one coherent manager-facing module. The production-flow graph uses compact operation and WIP cards with detailed evidence moved to the detail panels, Manager Overview separates Decision from Constraints / Readiness, sidebar navigation is grouped by Planning, Materials & Resources, and Decision, and manager-facing tables use readable display labels without changing source columns.
+
 Not implemented yet:
 
 - Full MPS governance beyond the advisory rolling-balance calculation.

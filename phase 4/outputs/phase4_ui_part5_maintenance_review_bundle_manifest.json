@@ -1,0 +1,170 @@
+{
+  "bundle_name": "phase4_ui_part5_maintenance_review_bundle.zip",
+  "bundle_purpose": "Phase 4 UI Part 5 Maintenance Planning and Risk review bundle",
+  "created_at": "2026-08-26T21:24:29Z",
+  "explicit_file_list": true,
+  "files": [
+    {
+      "relative_path": "phase 4/app.py",
+      "size": 113282,
+      "sha256": "fad82cddfa3dfc5c25016ae3119b5427453c2d04ce7516ee345a2c85eb8ba128"
+    },
+    {
+      "relative_path": "phase 4/core/phase4_ui_validation.py",
+      "size": 39141,
+      "sha256": "c38df838de09b672298f32c24824024acb4ab5312f1cbee2e1f8b1db7f50c79e"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_ui_part1_validation.csv",
+      "size": 14813,
+      "sha256": "33cc413e839addadf07d3c57e4de84cb9a10989b57ee601595d98bc3e7bb0673"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_maintenance_readiness_context.csv",
+      "size": 1739,
+      "sha256": "e258cfc7013b05cf4b66aad8632868f23e2273893300ee9fe1380e59d274a924"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_maintenance_schedule_feasibility_context.csv",
+      "size": 1981,
+      "sha256": "9b7f9852170bef03ffa253527eb31dcd7c412f87a5a40f354e933665f636d307"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_maintenance_production_impact_context.csv",
+      "size": 2473,
+      "sha256": "bf8967794c56abde46fdd4e0475bcb56331ce0781f69e28dc362d1b462fb1f1f"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_schedule_alternative_maintenance_impact.csv",
+      "size": 321408,
+      "sha256": "9c2c0ca3b0b707e8c8b7d0853e617a8e4291a8b90c9858c42a57d23f36514634"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_schedule_alternative_maintenance_window_check.csv",
+      "size": 586620,
+      "sha256": "d96c7f64d67a86b329ef88b5960efd582162b22967afab333b73449fba35b97c"
+    },
+    {
+      "relative_path": "shared/outputs/maintenance_schedule_candidate_windows.csv",
+      "size": 89157,
+      "sha256": "7009cd979f548a38812f3743f777fd425c492ff5e67c8603183b2b8ab7b0ef94"
+    },
+    {
+      "relative_path": "shared/outputs/maintenance_due_status_context.csv",
+      "size": 5995,
+      "sha256": "5cf56be29ac03e067cb21259149fcf41ded4af096c42e9c81143f57a4919c93d"
+    },
+    {
+      "relative_path": "shared/outputs/maintenance_calendar_feasibility.csv",
+      "size": 2905,
+      "sha256": "17bb39e4cf8a54bd726b50ead6793e0b321bdf494fdbc78bd3a98933fde8526e"
+    },
+    {
+      "relative_path": "shared/outputs/maintenance_backlog_risk_summary.csv",
+      "size": 496,
+      "sha256": "0f4bc3dec39a1e2a74d84bf461016a5be61df5afb942e11130b1353bc2e1eafe"
+    },
+    {
+      "relative_path": "shared/outputs/maintenance_manager_review_queue.csv",
+      "size": 5770,
+      "sha256": "869827f99b3ceb41e4d99451f8c2cac8875b26ec96c0003ba6676928d97fcb86"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_breakdown_risk_context.csv",
+      "size": 2682,
+      "sha256": "2a3ad1dc50fdacc7a8e34a644d4467a9289c6adbb79d6170a4b5bca379a736ca"
+    },
+    {
+      "relative_path": "shared/outputs/breakdown_risk_forecast.csv",
+      "size": 3028,
+      "sha256": "27ce5f4c87a3e21af064deaa4f558b369571320d9b71e942fe9f278b32d917e6"
+    },
+    {
+      "relative_path": "shared/outputs/breakdown_manager_review_queue.csv",
+      "size": 6567,
+      "sha256": "966ef887d73c24e66ab2a09af710968bb88798204e59c6bbc75d5288dff624fb"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_maintenance_crew_capacity_context.csv",
+      "size": 2569,
+      "sha256": "b3435f516fa56261e0aa72f934232630c88fdb6824ba568821407a8f3d277818"
+    },
+    {
+      "relative_path": "shared/outputs/maintenance_crew_capacity_summary.csv",
+      "size": 1837,
+      "sha256": "139d7b63997c07370755505c1f335b4eaf88772c5c818fb036fa5d5f0800f2ae"
+    },
+    {
+      "relative_path": "shared/outputs/maintenance_workload_by_skill.csv",
+      "size": 2995,
+      "sha256": "a004c41369cb3fee65ba546aaca1da4ef1428d19637573db7527944df8a75df5"
+    },
+    {
+      "relative_path": "shared/outputs/maintenance_crew_capacity_manager_review_queue.csv",
+      "size": 7821,
+      "sha256": "5811278a33a0635d8bad8119b53110f623bdf37c4821ea8afe27b2e40c146e0d"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_spare_part_requirement_context.csv",
+      "size": 3573,
+      "sha256": "ab6a9d0c325efb4a854d1b0de021a3aee7c2bd6209d4e106cd0c3e82fc1e342b"
+    },
+    {
+      "relative_path": "shared/outputs/maintenance_spare_part_requirement_context.csv",
+      "size": 3984,
+      "sha256": "7aa66bc0d04f526c0f343658f8c45a88460eb3411b437f8673e3e319543ffc20"
+    },
+    {
+      "relative_path": "shared/outputs/spare_part_manager_review_queue.csv",
+      "size": 755,
+      "sha256": "4c00328dd1e07eac0c6782c1f2c630988cdfef41ffc77155f9ef458f20e2a2a6"
+    },
+    {
+      "relative_path": "shared/outputs/workforce_machine_authorization_context.csv",
+      "size": 2616,
+      "sha256": "34038524f8c2eeb2c1f68ebff9493c13665b46625a607119fc8f7463fe68f3cb"
+    },
+    {
+      "relative_path": "phase 2/outputs/phase4_spare_part_supplier_check.csv",
+      "size": 1878,
+      "sha256": "447dc9feaa37b4bb6ef388a935e70d3dd89974eea4d77234d99abd9d1efc780a"
+    },
+    {
+      "relative_path": "phase 3/outputs/phase4_spare_part_inventory_check.csv",
+      "size": 1974,
+      "sha256": "ae1ba15e512b327b9b7d8ba9d2e49956be77e7e1185cdaa7ee3efb668181a718"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_schedule_alternative_operation_detail.csv",
+      "size": 2447837,
+      "sha256": "f1993aa2ede203baa079e7cf0dbaa9da0b9c205d23d6832d6e2e886f86870934"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_schedule_alternative_operation_segments.csv",
+      "size": 1943208,
+      "sha256": "a2236935d6e7c695a1bb48d48d0cb49acc0cac5a0def41ac0664612ddc25b55b"
+    },
+    {
+      "relative_path": "phase 4/outputs/integrated_phase234_graph_nodes.csv",
+      "size": 62549,
+      "sha256": "464475805c7bc9f3b3da7d620b87155dde653700394a316556411ca8818e7412"
+    },
+    {
+      "relative_path": "phase 4/outputs/integrated_phase234_schedule_impact.csv",
+      "size": 33020,
+      "sha256": "db4bafa2391147750674137166e653adbb4df6b968c0b46f91ddb801edff3866"
+    },
+    {
+      "relative_path": "phase 4/README.md",
+      "size": 37673,
+      "sha256": "4ab4c81aaed80cfdc3385c25220b3703b19e1792d730db2d5f411eb319833e92"
+    },
+    {
+      "relative_path": "phase 4/outputs/PHASE4_UI_PART5_SUMMARY.md",
+      "size": 2442,
+      "sha256": "c0d08fd54fb88a08b136f4c450fff92bf659b4914d8d69178d61a0583ea3fb77"
+    }
+  ],
+  "required_files_missing_before_zip": [],
+  "note": "Manifest lists payload files with SHA-256 hashes. The manifest itself is included in the ZIP and verified for presence separately."
+}

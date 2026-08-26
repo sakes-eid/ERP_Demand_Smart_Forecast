@@ -1,0 +1,154 @@
+{
+  "bundle_name": "phase4_ui_part6_decision_release_review_bundle.zip",
+  "bundle_purpose": "Phase 4 UI Part 6 Decision & Release Readiness review bundle",
+  "generated_from_explicit_file_list": true,
+  "advisory_only": true,
+  "required_missing_files": [],
+  "files": [
+    {
+      "relative_path": "phase 4/app.py",
+      "size_bytes": 128317,
+      "sha256": "52adc35446dd53f41b7a8c873ee13040a931fdcb224412ec5dd2972eb8c484e9"
+    },
+    {
+      "relative_path": "phase 4/core/phase4_ui_validation.py",
+      "size_bytes": 47870,
+      "sha256": "a35700bad6d27a250dd6ac202aba781a4117a7cacd0c7b604876a8182569f21e"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_ui_part1_validation.csv",
+      "size_bytes": 18557,
+      "sha256": "2cd15e9504f2a8c9907f2e1b52bd2a25d5fe74280dc2d79a92a99b7061cd51cc"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_step8g_alternative_summary.csv",
+      "size_bytes": 2375,
+      "sha256": "2d040eb530705c40512bee0b23f32fa143e9f6a064ee7fe25d915a4ac21bab60"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_step8g_recommendation.csv",
+      "size_bytes": 735,
+      "sha256": "5fb357b80796947d1c8b6f0e4900c98b0c60887117f3ae44dc7f221a0d2760a8"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_step8g_tradeoff_analysis.csv",
+      "size_bytes": 3180,
+      "sha256": "ecde993b376010dd1a2e9e9115d6450b0e94dd21f99f69fa35d550d5e9665a6b"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_step8g_decision_risks.csv",
+      "size_bytes": 9840,
+      "sha256": "0c590d9fa863296b7eca5c9487c681f37272bc1ff65ddb394f71e16795566fb0"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_step8g_manager_review_queue.csv",
+      "size_bytes": 8238,
+      "sha256": "ee6ce99bb5543ef002891bbda75da455beea971658cdc9887222061fcee99f18"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_step8g_release_readiness.csv",
+      "size_bytes": 3170,
+      "sha256": "a4b2170110b918624df46524bcc120276c6f13866c6af0b647d629453a743a68"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_step8g_validation.csv",
+      "size_bytes": 2963,
+      "sha256": "fc1f984938dad0e8045af85dcd1cb0b93bce4651303335ddef4200365736f24e"
+    },
+    {
+      "relative_path": "phase 4/outputs/STEP8G_SUMMARY.md",
+      "size_bytes": 2522,
+      "sha256": "11c1a61362cb0dbddee58e1e13ecc5d5448402156fc5720f8345ac43d00bfb9d"
+    },
+    {
+      "relative_path": "phase 4/outputs/integrated_phase234_material_readiness.csv",
+      "size_bytes": 127448,
+      "sha256": "449271e462401998651ea484908b798cc7c9486b09bc247600640a0e9b648ed3"
+    },
+    {
+      "relative_path": "phase 4/outputs/integrated_phase234_shortage_timeline.csv",
+      "size_bytes": 44330,
+      "sha256": "44eb0c33aa6451dbb8ba32c485595f41b27c408d58c140fd78c7c1c46d098339"
+    },
+    {
+      "relative_path": "phase 4/outputs/integrated_phase234_schedule_impact.csv",
+      "size_bytes": 33020,
+      "sha256": "db4bafa2391147750674137166e653adbb4df6b968c0b46f91ddb801edff3866"
+    },
+    {
+      "relative_path": "phase 4/outputs/integrated_phase234_recommendation_check.csv",
+      "size_bytes": 860,
+      "sha256": "f0cf4cc828e25d442deb56974279ac666f47011486c3b89cbff5b5ded41e41a9"
+    },
+    {
+      "relative_path": "phase 4/outputs/integrated_phase234_validation.csv",
+      "size_bytes": 3730,
+      "sha256": "61db86b7d9f0ba991f397640bca7bb5e5217af85c02789e93bea8b3e2085985a"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_schedule_alternative_master.csv",
+      "size_bytes": 3374,
+      "sha256": "847890083018c5b547d0e5d9acb81ae60862bcde64085e279641171696c8c4f4"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_schedule_alternative_cost_score.csv",
+      "size_bytes": 3459,
+      "sha256": "da3620999bbdb34d7fc7ab2d9e31c24788e09c3761c412b849fcbcf54ed901b1"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_schedule_alternative_recommendations.csv",
+      "size_bytes": 3482,
+      "sha256": "b74dff559993cb1500659da7092ec887e31e27ba07a1a0f3bbeb312a59591c0f"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_schedule_alternative_manager_review_queue.csv",
+      "size_bytes": 259756,
+      "sha256": "1c1222af87ca10cb30b2854247514df07d7cd2e8a7c916b19bdedbd9b2703e96"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_schedule_alternative_operation_detail.csv",
+      "size_bytes": 2447837,
+      "sha256": "f1993aa2ede203baa079e7cf0dbaa9da0b9c205d23d6832d6e2e886f86870934"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_schedule_alternative_capacity_impact.csv",
+      "size_bytes": 607423,
+      "sha256": "81cd3d5f336c59bae8247d00d9407787d59ca36e10bf8962869a6538366b7453"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_maintenance_readiness_context.csv",
+      "size_bytes": 1739,
+      "sha256": "e258cfc7013b05cf4b66aad8632868f23e2273893300ee9fe1380e59d274a924"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_maintenance_schedule_feasibility_context.csv",
+      "size_bytes": 1981,
+      "sha256": "9b7f9852170bef03ffa253527eb31dcd7c412f87a5a40f354e933665f636d307"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_maintenance_production_impact_context.csv",
+      "size_bytes": 2473,
+      "sha256": "bf8967794c56abde46fdd4e0475bcb56331ce0781f69e28dc362d1b462fb1f1f"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_breakdown_risk_context.csv",
+      "size_bytes": 2682,
+      "sha256": "2a3ad1dc50fdacc7a8e34a644d4467a9289c6adbb79d6170a4b5bca379a736ca"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_schedule_alternative_maintenance_window_check.csv",
+      "size_bytes": 586620,
+      "sha256": "d96c7f64d67a86b329ef88b5960efd582162b22967afab333b73449fba35b97c"
+    },
+    {
+      "relative_path": "phase 4/README.md",
+      "size_bytes": 38993,
+      "sha256": "8466c77b8091f8405becb2ecd941d4729a325835cd422a38c290989ae619ab04"
+    },
+    {
+      "relative_path": "phase 4/outputs/PHASE4_UI_PART6_SUMMARY.md",
+      "size_bytes": 1712,
+      "sha256": "86477ca47bc904583f375af5fdabce57ec0b2c9f9ceb4c348d4f9de319aedbc0"
+    }
+  ]
+}

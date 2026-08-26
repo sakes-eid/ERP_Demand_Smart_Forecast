@@ -1,0 +1,319 @@
+{
+  "bundle_name": "phase4_ui_presentation_final_review_bundle.zip",
+  "bundle_purpose": "Phase 4 UI final presentation and usability cleanup review bundle",
+  "generated_from_explicit_file_list": true,
+  "advisory_only": true,
+  "required_missing_files": [],
+  "files": [
+    {
+      "relative_path": "phase 4/app.py",
+      "size_bytes": 131702,
+      "sha256": "fe3bf68978e8e38b8f2964328ed27e0baef73477a49ffbe47baa3dcd87bf43fd"
+    },
+    {
+      "relative_path": "phase 4/core/phase4_ui_validation.py",
+      "size_bytes": 57937,
+      "sha256": "a618a8976e26298a954b7b54a137a059604933ffea9fa582236ae4d2f3bf7b7c"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_ui_validation.csv",
+      "size_bytes": 20650,
+      "sha256": "9c3359951dec78427d8d3ecbadbb4130f5b346548cf1c43d1b6b7f23ee9184c8"
+    },
+    {
+      "relative_path": "phase 4/README.md",
+      "size_bytes": 39636,
+      "sha256": "bfa2916223447b67cc43d18a254bb612646460f6102af06214d12a39f1abb554"
+    },
+    {
+      "relative_path": "phase 4/outputs/PHASE4_UI_FINAL_SUMMARY.md",
+      "size_bytes": 2850,
+      "sha256": "21fd024c831f72eea6cccaabe6880f599ef6893c93fec47a2fe318019e938370"
+    },
+    {
+      "relative_path": "phase 4/outputs/PHASE4_UI_PRESENTATION_SUMMARY.md",
+      "size_bytes": 3557,
+      "sha256": "11e79eb280dfa48def50a806922165e07e3e72874b2bc3531a8f459fbd71e67c"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_step8g_alternative_summary.csv",
+      "size_bytes": 2375,
+      "sha256": "2d040eb530705c40512bee0b23f32fa143e9f6a064ee7fe25d915a4ac21bab60"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_step8g_recommendation.csv",
+      "size_bytes": 735,
+      "sha256": "5fb357b80796947d1c8b6f0e4900c98b0c60887117f3ae44dc7f221a0d2760a8"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_step8g_tradeoff_analysis.csv",
+      "size_bytes": 3180,
+      "sha256": "ecde993b376010dd1a2e9e9115d6450b0e94dd21f99f69fa35d550d5e9665a6b"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_step8g_decision_risks.csv",
+      "size_bytes": 9840,
+      "sha256": "0c590d9fa863296b7eca5c9487c681f37272bc1ff65ddb394f71e16795566fb0"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_step8g_manager_review_queue.csv",
+      "size_bytes": 8238,
+      "sha256": "ee6ce99bb5543ef002891bbda75da455beea971658cdc9887222061fcee99f18"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_step8g_release_readiness.csv",
+      "size_bytes": 3170,
+      "sha256": "a4b2170110b918624df46524bcc120276c6f13866c6af0b647d629453a743a68"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_step8g_validation.csv",
+      "size_bytes": 2963,
+      "sha256": "fc1f984938dad0e8045af85dcd1cb0b93bce4651303335ddef4200365736f24e"
+    },
+    {
+      "relative_path": "phase 4/outputs/integrated_phase234_graph_nodes.csv",
+      "size_bytes": 62549,
+      "sha256": "464475805c7bc9f3b3da7d620b87155dde653700394a316556411ca8818e7412"
+    },
+    {
+      "relative_path": "phase 4/outputs/integrated_phase234_graph_edges.csv",
+      "size_bytes": 62499,
+      "sha256": "26af5e6504ce1bfcad7f89c2658f84b2b424c9d8ae638ac39009ba689d6beff0"
+    },
+    {
+      "relative_path": "phase 4/outputs/integrated_phase234_material_readiness.csv",
+      "size_bytes": 127448,
+      "sha256": "449271e462401998651ea484908b798cc7c9486b09bc247600640a0e9b648ed3"
+    },
+    {
+      "relative_path": "phase 4/outputs/integrated_phase234_schedule_impact.csv",
+      "size_bytes": 33020,
+      "sha256": "db4bafa2391147750674137166e653adbb4df6b968c0b46f91ddb801edff3866"
+    },
+    {
+      "relative_path": "phase 4/outputs/integrated_phase234_recommendation_check.csv",
+      "size_bytes": 860,
+      "sha256": "f0cf4cc828e25d442deb56974279ac666f47011486c3b89cbff5b5ded41e41a9"
+    },
+    {
+      "relative_path": "phase 4/outputs/integrated_phase234_validation.csv",
+      "size_bytes": 3730,
+      "sha256": "61db86b7d9f0ba991f397640bca7bb5e5217af85c02789e93bea8b3e2085985a"
+    },
+    {
+      "relative_path": "phase 4/data/phase4_bom.csv",
+      "size_bytes": 1441,
+      "sha256": "9a25d9b4afbe888dfc8374e13398c2b52244d223f6ebef521e67a85c25f8c565"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_bom_component_requirements.csv",
+      "size_bytes": 41683,
+      "sha256": "3615a412df7277e0c837c66cfc1b7cd98a93f8575a38bfb61e52d0c54b9bb945"
+    },
+    {
+      "relative_path": "phase 4/data/phase4_component_operation_consumption_map.csv",
+      "size_bytes": 3007,
+      "sha256": "4c78c1e33c0e692f52f2c46136b1461e7b33dc2ca97890b9dc7caecec4a93439"
+    },
+    {
+      "relative_path": "phase 4/data/product_routings.csv",
+      "size_bytes": 3858,
+      "sha256": "f347215087b4ad5d33005957b00e76d2f5c806633a773d8ca0c00f5551af5d4d"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_schedule_alternative_operation_detail.csv",
+      "size_bytes": 2447837,
+      "sha256": "f1993aa2ede203baa079e7cf0dbaa9da0b9c205d23d6832d6e2e886f86870934"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_schedule_alternative_operation_segments.csv",
+      "size_bytes": 1943208,
+      "sha256": "a2236935d6e7c695a1bb48d48d0cb49acc0cac5a0def41ac0664612ddc25b55b"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_schedule_alternative_capacity_impact.csv",
+      "size_bytes": 607423,
+      "sha256": "81cd3d5f336c59bae8247d00d9407787d59ca36e10bf8962869a6538366b7453"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_schedule_alternative_wip_impact.csv",
+      "size_bytes": 564493,
+      "sha256": "af11ed00325392dbdb146afc96b2fb297bc598a6c073ec71946778ae791ab0fb"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_schedule_alternative_shadow_wip_ledger.csv",
+      "size_bytes": 454936,
+      "sha256": "af93e770741b5f01dc7e2cefd950e756a0e673adece340749531dcc64ec8e23b"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_schedule_alternative_setup_impact.csv",
+      "size_bytes": 324153,
+      "sha256": "1cc93c864fa06edbd32ba11c52889fbdb68cfc4a3c0618b08b25c0e1a37c0fcc"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_schedule_alternative_maintenance_impact.csv",
+      "size_bytes": 321408,
+      "sha256": "9c2c0ca3b0b707e8c8b7d0853e617a8e4291a8b90c9858c42a57d23f36514634"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_schedule_alternative_maintenance_window_check.csv",
+      "size_bytes": 586620,
+      "sha256": "d96c7f64d67a86b329ef88b5960efd582162b22967afab333b73449fba35b97c"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_schedule_alternative_master.csv",
+      "size_bytes": 3374,
+      "sha256": "847890083018c5b547d0e5d9acb81ae60862bcde64085e279641171696c8c4f4"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_schedule_alternative_validation.csv",
+      "size_bytes": 24967,
+      "sha256": "668a1135ed0e7d5a9159f32e80f1839c5affcf7249a63564e7e79f9b260e05af"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_wip_buffer_status.csv",
+      "size_bytes": 3740,
+      "sha256": "3dc2be55ea5ad79623c0a6da6627435ed3167111537fae66321ff59207e8c24f"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_wip_buffer_access_rules.csv",
+      "size_bytes": 5801,
+      "sha256": "d090ff1a634cda273e62656f3ea2db86cc080f699044dcf17e502895ba989873"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_wip_operation_flow_map.csv",
+      "size_bytes": 4290,
+      "sha256": "b72a600604ad2f8ef9c4d7f56f6fb9fb7199b54b843282b69fa519620637cc39"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_operation_slack_analysis.csv",
+      "size_bytes": 3820,
+      "sha256": "244cb8c00485e1672fe5f04bf34052e0daf4ac15f464a5f26a8a35b21d8ee5c2"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_critical_path_by_product.csv",
+      "size_bytes": 1101,
+      "sha256": "c2a32dbdd2be1c332e532a75450bb90eb214e7be1099b2fb2baf89fc2d753cb4"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_bottleneck_visibility_summary.csv",
+      "size_bytes": 4492,
+      "sha256": "8c7b1d5bfdb3d390be48528b8c9a530af0d4978c060a9106ed045f63f149d60a"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_queue_risk_summary.csv",
+      "size_bytes": 3014,
+      "sha256": "bae55e18d677b5f41b7ee9bb619a7639c2591413ac9dd8d116fa110e0047e54b"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_maintenance_readiness_context.csv",
+      "size_bytes": 1739,
+      "sha256": "e258cfc7013b05cf4b66aad8632868f23e2273893300ee9fe1380e59d274a924"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_maintenance_schedule_feasibility_context.csv",
+      "size_bytes": 1981,
+      "sha256": "9b7f9852170bef03ffa253527eb31dcd7c412f87a5a40f354e933665f636d307"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_maintenance_production_impact_context.csv",
+      "size_bytes": 2473,
+      "sha256": "bf8967794c56abde46fdd4e0475bcb56331ce0781f69e28dc362d1b462fb1f1f"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_breakdown_risk_context.csv",
+      "size_bytes": 2682,
+      "sha256": "2a3ad1dc50fdacc7a8e34a644d4467a9289c6adbb79d6170a4b5bca379a736ca"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_maintenance_crew_capacity_context.csv",
+      "size_bytes": 2569,
+      "sha256": "b3435f516fa56261e0aa72f934232630c88fdb6824ba568821407a8f3d277818"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_spare_part_requirement_context.csv",
+      "size_bytes": 3573,
+      "sha256": "ab6a9d0c325efb4a854d1b0de021a3aee7c2bd6209d4e106cd0c3e82fc1e342b"
+    },
+    {
+      "relative_path": "shared/outputs/maintenance_schedule_candidate_windows.csv",
+      "size_bytes": 89157,
+      "sha256": "7009cd979f548a38812f3743f777fd425c492ff5e67c8603183b2b8ab7b0ef94"
+    },
+    {
+      "relative_path": "shared/outputs/maintenance_due_status_context.csv",
+      "size_bytes": 5995,
+      "sha256": "5cf56be29ac03e067cb21259149fcf41ded4af096c42e9c81143f57a4919c93d"
+    },
+    {
+      "relative_path": "shared/outputs/maintenance_backlog_risk_summary.csv",
+      "size_bytes": 496,
+      "sha256": "0f4bc3dec39a1e2a74d84bf461016a5be61df5afb942e11130b1353bc2e1eafe"
+    },
+    {
+      "relative_path": "shared/outputs/maintenance_crew_capacity_summary.csv",
+      "size_bytes": 1837,
+      "sha256": "139d7b63997c07370755505c1f335b4eaf88772c5c818fb036fa5d5f0800f2ae"
+    },
+    {
+      "relative_path": "shared/outputs/maintenance_workload_by_skill.csv",
+      "size_bytes": 2995,
+      "sha256": "a004c41369cb3fee65ba546aaca1da4ef1428d19637573db7527944df8a75df5"
+    },
+    {
+      "relative_path": "shared/outputs/maintenance_spare_part_requirement_context.csv",
+      "size_bytes": 3984,
+      "sha256": "7aa66bc0d04f526c0f343658f8c45a88460eb3411b437f8673e3e319543ffc20"
+    },
+    {
+      "relative_path": "shared/outputs/spare_part_manager_review_queue.csv",
+      "size_bytes": 755,
+      "sha256": "4c00328dd1e07eac0c6782c1f2c630988cdfef41ffc77155f9ef458f20e2a2a6"
+    },
+    {
+      "relative_path": "shared/outputs/workforce_machine_authorization_context.csv",
+      "size_bytes": 2616,
+      "sha256": "34038524f8c2eeb2c1f68ebff9493c13665b46625a607119fc8f7463fe68f3cb"
+    },
+    {
+      "relative_path": "phase 2/outputs/phase4_component_supplier_check.csv",
+      "size_bytes": 2431,
+      "sha256": "df4fdc07c6395f8f9d67795a752fea159a7bcb439341b28e232cda9f35764721"
+    },
+    {
+      "relative_path": "phase 2/outputs/phase4_spare_part_supplier_check.csv",
+      "size_bytes": 1878,
+      "sha256": "447dc9feaa37b4bb6ef388a935e70d3dd89974eea4d77234d99abd9d1efc780a"
+    },
+    {
+      "relative_path": "phase 3/outputs/phase4_component_inventory_check.csv",
+      "size_bytes": 2956,
+      "sha256": "d1b66972729d3b3c244d3fe561c62d61fe2dd1fed7b31faf4c405aa16d6151bb"
+    },
+    {
+      "relative_path": "phase 3/outputs/phase4_spare_part_inventory_check.csv",
+      "size_bytes": 1974,
+      "sha256": "ae1ba15e512b327b9b7d8ba9d2e49956be77e7e1185cdaa7ee3efb668181a718"
+    },
+    {
+      "relative_path": "phase 4/data/workstations.csv",
+      "size_bytes": 1209,
+      "sha256": "ba0367a3b41d89b607fe8adc49cd3c38291ddc240471cbb1dcda2daf98cd2e75"
+    },
+    {
+      "relative_path": "phase 4/data/machines.csv",
+      "size_bytes": 1246,
+      "sha256": "d7cdb134657836891e55d1186b1d70c9746a459a36049bb6b11248147c214cae"
+    },
+    {
+      "relative_path": "phase 4/data/labor_resources.csv",
+      "size_bytes": 1180,
+      "sha256": "361073f960e16e62f0f36b41741913993cf4ca3f59730806c7ba733ae1f9272a"
+    },
+    {
+      "relative_path": "phase 4/data/resource_calendar.csv",
+      "size_bytes": 3509,
+      "sha256": "83e30909d394fae57a16b38ab51242c601facd280e245306c2da7c527c9b3244"
+    }
+  ]
+}

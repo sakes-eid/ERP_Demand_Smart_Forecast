@@ -1,0 +1,130 @@
+{
+  "bundle_name": "phase4_ui_part4_capacity_wip_review_bundle.zip",
+  "bundle_purpose": "Phase 4 UI Part 4 Capacity and WIP review bundle",
+  "created_at": "2026-08-25T21:14:46Z",
+  "explicit_file_list": true,
+  "files": [
+    {
+      "relative_path": "phase 4/app.py",
+      "size": 91548,
+      "sha256": "396ca65c26879d4ab2fb45f9abda05014856680a581a7c3aff487dfe9d487c71"
+    },
+    {
+      "relative_path": "phase 4/core/phase4_ui_validation.py",
+      "size": 31308,
+      "sha256": "93b27e174835a6b7e7a119a3ee1e59228f6875faf8e483a956f555662f91db51"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_ui_part1_validation.csv",
+      "size": 12051,
+      "sha256": "d7e0e23f6956c89f8e558ee8e175fcdbace5b80b0bed5ee051b279dd27199bd0"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_schedule_alternative_capacity_impact.csv",
+      "size": 607423,
+      "sha256": "81cd3d5f336c59bae8247d00d9407787d59ca36e10bf8962869a6538366b7453"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_capacity_load_by_workstation.csv",
+      "size": 37527,
+      "sha256": "b7beabb17660401d2aef4af7a918932e7df15c1fdec1d7eda41c78cd0dff3397"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_capacity_load_by_machine_type.csv",
+      "size": 25693,
+      "sha256": "92bdd5da384e50c1d763c05565ad4edcfd26fb7e69abb91e441d5706dadbf70f"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_capacity_load_by_labor_skill.csv",
+      "size": 30994,
+      "sha256": "9048df06f4081da3306c00432fdd6b710f35573c9060a2b2b9bc25da4c1d50ea"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_schedule_alternative_operation_detail.csv",
+      "size": 2447837,
+      "sha256": "f1993aa2ede203baa079e7cf0dbaa9da0b9c205d23d6832d6e2e886f86870934"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_schedule_alternative_operation_segments.csv",
+      "size": 1943208,
+      "sha256": "a2236935d6e7c695a1bb48d48d0cb49acc0cac5a0def41ac0664612ddc25b55b"
+    },
+    {
+      "relative_path": "phase 4/data/workstations.csv",
+      "size": 1209,
+      "sha256": "ba0367a3b41d89b607fe8adc49cd3c38291ddc240471cbb1dcda2daf98cd2e75"
+    },
+    {
+      "relative_path": "phase 4/data/machines.csv",
+      "size": 1246,
+      "sha256": "d7cdb134657836891e55d1186b1d70c9746a459a36049bb6b11248147c214cae"
+    },
+    {
+      "relative_path": "phase 4/data/labor_resources.csv",
+      "size": 1180,
+      "sha256": "361073f960e16e62f0f36b41741913993cf4ca3f59730806c7ba733ae1f9272a"
+    },
+    {
+      "relative_path": "phase 4/data/resource_calendar.csv",
+      "size": 3509,
+      "sha256": "83e30909d394fae57a16b38ab51242c601facd280e245306c2da7c527c9b3244"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_wip_buffer_status.csv",
+      "size": 3740,
+      "sha256": "3dc2be55ea5ad79623c0a6da6627435ed3167111537fae66321ff59207e8c24f"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_wip_buffer_access_rules.csv",
+      "size": 5801,
+      "sha256": "d090ff1a634cda273e62656f3ea2db86cc080f699044dcf17e502895ba989873"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_schedule_alternative_shadow_wip_ledger.csv",
+      "size": 454936,
+      "sha256": "af93e770741b5f01dc7e2cefd950e756a0e673adece340749531dcc64ec8e23b"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_schedule_alternative_wip_impact.csv",
+      "size": 564493,
+      "sha256": "af11ed00325392dbdb146afc96b2fb297bc598a6c073ec71946778ae791ab0fb"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_schedule_alternative_validation.csv",
+      "size": 24967,
+      "sha256": "668a1135ed0e7d5a9159f32e80f1839c5affcf7249a63564e7e79f9b260e05af"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_schedule_alternative_maintenance_impact.csv",
+      "size": 321408,
+      "sha256": "9c2c0ca3b0b707e8c8b7d0853e617a8e4291a8b90c9858c42a57d23f36514634"
+    },
+    {
+      "relative_path": "phase 4/outputs/phase4_schedule_alternative_maintenance_window_check.csv",
+      "size": 586620,
+      "sha256": "d96c7f64d67a86b329ef88b5960efd582162b22967afab333b73449fba35b97c"
+    },
+    {
+      "relative_path": "phase 4/outputs/integrated_phase234_graph_nodes.csv",
+      "size": 62549,
+      "sha256": "464475805c7bc9f3b3da7d620b87155dde653700394a316556411ca8818e7412"
+    },
+    {
+      "relative_path": "phase 4/outputs/integrated_phase234_schedule_impact.csv",
+      "size": 33020,
+      "sha256": "db4bafa2391147750674137166e653adbb4df6b968c0b46f91ddb801edff3866"
+    },
+    {
+      "relative_path": "phase 4/README.md",
+      "size": 36216,
+      "sha256": "9d21930f46a99f4d1190656ea3575f3f2388d61b7f5fd5ac5b22370d9d02798f"
+    },
+    {
+      "relative_path": "phase 4/outputs/PHASE4_UI_PART4_SUMMARY.md",
+      "size": 1968,
+      "sha256": "5d150adf187c74eb619ec9aa40ff67c128242ba4f44bef71043b25a60df42a22"
+    }
+  ],
+  "required_files_missing_before_zip": [],
+  "note": "Manifest lists payload files with SHA-256 hashes. The manifest itself is included in the ZIP and verified for presence separately."
+}

@@ -1,0 +1,158 @@
+﻿{
+    "bundle_name":  "phase4_ui_part2_bom_materials_review_bundle.zip",
+    "bundle_purpose":  "Phase 4 UI Part 2 BOM and Materials review bundle",
+    "created_at":  "2026-08-25T20:41:53Z",
+    "root_directory":  "C:\\Users\\iTECH\\OneDrive - Beirut Arab University\\Desktop\\apps i made\\SC project",
+    "explicit_file_list":  true,
+    "files":  [
+                  {
+                      "relative_path":  "phase 4/app.py",
+                      "size":  46373,
+                      "sha256":  "32cf542fa4938afd2322995c511ab94610a242e7925e9d1c37ed08051351940e"
+                  },
+                  {
+                      "relative_path":  "phase 4/core/phase4_ui_validation.py",
+                      "size":  13133,
+                      "sha256":  "03e95b67aefd3021936e811cd60d60f898c96a988938e3e2dd023c25aa6518c9"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/phase4_ui_part1_validation.csv",
+                      "size":  5107,
+                      "sha256":  "b11b6d4d9605399ee9d41832c71822a0adcda8b9357ca96079d82ce9b634ebec"
+                  },
+                  {
+                      "relative_path":  "phase 4/data/phase4_bom.csv",
+                      "size":  1441,
+                      "sha256":  "9a25d9b4afbe888dfc8374e13398c2b52244d223f6ebef521e67a85c25f8c565"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/phase4_bom_component_requirements.csv",
+                      "size":  41683,
+                      "sha256":  "3615a412df7277e0c837c66cfc1b7cd98a93f8575a38bfb61e52d0c54b9bb945"
+                  },
+                  {
+                      "relative_path":  "phase 4/data/phase4_component_operation_consumption_map.csv",
+                      "size":  3007,
+                      "sha256":  "4c78c1e33c0e692f52f2c46136b1461e7b33dc2ca97890b9dc7caecec4a93439"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/integrated_phase234_material_readiness.csv",
+                      "size":  127448,
+                      "sha256":  "449271e462401998651ea484908b798cc7c9486b09bc247600640a0e9b648ed3"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/integrated_phase234_shortage_timeline.csv",
+                      "size":  44330,
+                      "sha256":  "44eb0c33aa6451dbb8ba32c485595f41b27c408d58c140fd78c7c1c46d098339"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/integrated_phase234_schedule_impact.csv",
+                      "size":  33020,
+                      "sha256":  "db4bafa2391147750674137166e653adbb4df6b968c0b46f91ddb801edff3866"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/integrated_phase234_validation.csv",
+                      "size":  3730,
+                      "sha256":  "61db86b7d9f0ba991f397640bca7bb5e5217af85c02789e93bea8b3e2085985a"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/integrated_phase234_graph_nodes.csv",
+                      "size":  62549,
+                      "sha256":  "464475805c7bc9f3b3da7d620b87155dde653700394a316556411ca8818e7412"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/integrated_phase234_graph_edges.csv",
+                      "size":  62499,
+                      "sha256":  "26af5e6504ce1bfcad7f89c2658f84b2b424c9d8ae638ac39009ba689d6beff0"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/phase4_step8g_alternative_summary.csv",
+                      "size":  2375,
+                      "sha256":  "2d040eb530705c40512bee0b23f32fa143e9f6a064ee7fe25d915a4ac21bab60"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/phase4_step8g_recommendation.csv",
+                      "size":  735,
+                      "sha256":  "5fb357b80796947d1c8b6f0e4900c98b0c60887117f3ae44dc7f221a0d2760a8"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/phase4_step8g_release_readiness.csv",
+                      "size":  3170,
+                      "sha256":  "a4b2170110b918624df46524bcc120276c6f13866c6af0b647d629453a743a68"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/phase4_schedule_alternative_operation_detail.csv",
+                      "size":  2447837,
+                      "sha256":  "f1993aa2ede203baa079e7cf0dbaa9da0b9c205d23d6832d6e2e886f86870934"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/phase4_schedule_alternative_operation_segments.csv",
+                      "size":  1943208,
+                      "sha256":  "a2236935d6e7c695a1bb48d48d0cb49acc0cac5a0def41ac0664612ddc25b55b"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/phase4_schedule_alternative_shadow_wip_ledger.csv",
+                      "size":  454936,
+                      "sha256":  "af93e770741b5f01dc7e2cefd950e756a0e673adece340749531dcc64ec8e23b"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/phase4_schedule_alternative_wip_impact.csv",
+                      "size":  564493,
+                      "sha256":  "af11ed00325392dbdb146afc96b2fb297bc598a6c073ec71946778ae791ab0fb"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/phase4_schedule_alternative_maintenance_impact.csv",
+                      "size":  321408,
+                      "sha256":  "9c2c0ca3b0b707e8c8b7d0853e617a8e4291a8b90c9858c42a57d23f36514634"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/phase4_schedule_alternative_maintenance_window_check.csv",
+                      "size":  586620,
+                      "sha256":  "d96c7f64d67a86b329ef88b5960efd582162b22967afab333b73449fba35b97c"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/phase4_wip_buffer_status.csv",
+                      "size":  3740,
+                      "sha256":  "3dc2be55ea5ad79623c0a6da6627435ed3167111537fae66321ff59207e8c24f"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/phase4_wip_buffer_access_rules.csv",
+                      "size":  5801,
+                      "sha256":  "d090ff1a634cda273e62656f3ea2db86cc080f699044dcf17e502895ba989873"
+                  },
+                  {
+                      "relative_path":  "phase 2/outputs/phase4_component_supplier_check.csv",
+                      "size":  2431,
+                      "sha256":  "df4fdc07c6395f8f9d67795a752fea159a7bcb439341b28e232cda9f35764721"
+                  },
+                  {
+                      "relative_path":  "phase 2/outputs/phase2_procurement_capability_context.csv",
+                      "size":  150069,
+                      "sha256":  "7e3c7c2256edfc18bb45520c2a797dbf77a28b7cb4d01ad362a6951004351816"
+                  },
+                  {
+                      "relative_path":  "shared/outputs/phase2_procurement_allocation_summary.csv",
+                      "size":  8326,
+                      "sha256":  "bbb63405cddfc782c68e675d69447dc8029bddbf6f6865cdcb754cd5e7f396a4"
+                  },
+                  {
+                      "relative_path":  "phase 3/outputs/phase4_component_inventory_check.csv",
+                      "size":  2956,
+                      "sha256":  "d1b66972729d3b3c244d3fe561c62d61fe2dd1fed7b31faf4c405aa16d6151bb"
+                  },
+                  {
+                      "relative_path":  "phase 4/README.md",
+                      "size":  33247,
+                      "sha256":  "48865bc9cf782f20c50dd2e86b0d6bd5bf5f513c370be359396c7e168d72fdda"
+                  },
+                  {
+                      "relative_path":  "phase 4/outputs/PHASE4_UI_PART2_SUMMARY.md",
+                      "size":  1884,
+                      "sha256":  "99c4846e448475b22c98e2283344d31c18f4cbbb41ab4e3b61717a7c55b2e597"
+                  }
+              ],
+    "required_files_missing_before_zip":  [
+
+                                          ],
+    "note":  "Manifest lists payload files with SHA-256 hashes. The manifest itself is included in the ZIP and verified for presence separately to avoid self-referential hashing."
+}

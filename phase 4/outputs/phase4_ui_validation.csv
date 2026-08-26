@@ -1,0 +1,111 @@
+planning_run_id,check_name,status,message,affected_rows,source_phase,advisory_only_flag
+PHASE4-MPS-20260726202343,REQUIRED_UI_INPUTS_EXIST,PASS,All required read-only UI inputs exist.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,CONSOLIDATED_UI_VALIDATION_FILE_USED,PASS,The consolidated UI validation output is phase4_ui_validation.csv.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,GRAPH_INPUTS_NON_EMPTY,PASS,Integrated graph node and edge files are non-empty.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,GRAPH_EDGES_REFERENCE_VALID_NODES,PASS,Every integrated graph edge references a visible node.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,GRAPH_NODES_FROM_VALIDATED_INTEGRATION,PASS,Graph nodes come from the integrated Phase 2-3-4 output.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,GRAPH_EDGES_FROM_VALIDATED_INTEGRATION,PASS,Graph edges come from the integrated Phase 2-3-4 output.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,CANDIDATE_SPECIFIC_GRAPH_KEYS,PASS,Graph keys include schedule candidate IDs and node IDs.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,NODE_DATES_AND_QUANTITIES_TRACE_TO_STEP8F,PASS,Graph node details can be traced to Step 8F operation detail.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,MANAGER_KPIS_TRACE_TO_STEP8G,PASS,Manager overview KPI files are Step 8G outputs.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,ALTERNATIVE_COMPARISON_HAS_SIX_ROWS,PASS,Alternative comparison contains the six Step 8F/8G alternatives.,6,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,WIP_VALUES_TRACE_TO_WIP_OUTPUTS,PASS,WIP buffer values trace to Step 8C/8F WIP outputs.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,GRAPH_LOCKED_TO_BASELINE_REFERENCE,PASS,Production Flow Graph is locked to ALT-BASELINE because integrated graph evidence is not alternative-specific.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,WIP_OCCUPANCY_USES_TIME_CAUSAL_SHADOW_LEDGER,PASS,WIP buffer occupancy is derived from the time-causal shadow WIP ledger when schedule-specific evidence exists.,1167,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,NO_ALTERNATIVE_DATA_MIXING_IN_GRAPH,PASS,Graph data comes from the integrated reference graph; non-baseline alternatives are not selectable on the graph.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,PRESENTATION_GRAPH_OPERATION_NODES_SIMPLIFIED,PASS,Graph operation cards keep dates/blockers in the detail panel and show only manager-priority card fields.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,PRESENTATION_WIP_NODES_SIMPLIFIED,PASS,"WIP cards show compact projected quantity, capacity, FIFO, and constraint evidence.",0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,MAINTENANCE_COUNTDOWN_NOT_FABRICATED,PASS,"Maintenance indicator uses dated window evidence or review status, not invented countdowns.",0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,NODE_SELECTION_FALLBACK_DOCUMENTED,PASS,Node detail selection is documented as a selector fallback to avoid a large frontend rewrite.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,BOM_MATERIALS_PAGE_REGISTERED,PASS,BOM & Materials page is registered in Phase 4 manager navigation.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,BOM_ROWS_TRACE_TO_SOURCE,PASS,BOM rows trace to phase4_bom.csv.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,BOM_REQUIREMENTS_TRACE_TO_OUTPUT,PASS,BOM requirement quantities trace to Phase 4 BOM output.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,COMPONENT_OPERATION_MAPPING_MATCHES_EXPLICIT_MAP,PASS,Displayed consuming operations match the explicit component-operation map.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,NO_UI_COMPONENT_DUPLICATION,PASS,"Material page source has one row per candidate, finished SKU, and component.",0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,MATERIAL_STATUS_COUNTS_RECONCILE,PASS,Material status counts reconcile to integrated readiness rows.,196,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,REQUIRED_DATES_MATCH_INTEGRATED_EVIDENCE,PASS,Displayed required dates match integrated consuming-operation start dates.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,INVENTORY_QUANTITIES_TRACE_TO_PHASE3,PASS,Inventory quantities trace to Phase 3 component inventory check.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,SUPPLIER_QUANTITIES_TRACE_TO_PHASE2,PASS,Supplier quantities trace to Phase 2 component supplier check.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,PRODUCTION_TIMELINE_PAGE_REGISTERED,PASS,Production Timeline page is registered in Phase 4 manager navigation.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,TIMELINE_BARS_TRACE_TO_OPERATION_SEGMENTS,PASS,Timeline bars are sourced from real Step 8F operation segments.,1667,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,TIMELINE_START_END_MATCH_SEGMENT_EVIDENCE,PASS,Timeline start/end datetimes are valid segment evidence without placeholder windows.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,TIMELINE_SEGMENTS_TRACE_TO_OPERATION_DETAIL,PASS,Every timeline segment traces to its operation-detail row.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,TIMELINE_LOCKED_TO_BASELINE_REFERENCE,PASS,Production Timeline is locked to ALT-BASELINE and does not expose unsupported alternative selection.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,TIMELINE_ROUTE_ORDER_AVAILABLE,PASS,Product/route timeline can order operations using routing sequence evidence.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,WORKSTATION_VIEW_PRESERVES_PARALLEL_SEGMENTS,PASS,Workstation view uses real segment timestamps with individual machine/labor unit evidence.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,UNSCHEDULED_WORK_HAS_NO_FAKE_DATES,PASS,Unscheduled work remains in the summary table and is not assigned fabricated timeline bars.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,TIMELINE_CRITICAL_FLAGS_TRACE_TO_SLACK_EVIDENCE,PASS,Critical-path flags trace to Step 8A slack/critical-path evidence.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,TIMELINE_CAPACITY_FLAGS_TRACE_TO_STEP8F,PASS,Timeline utilization and capacity context trace to Step 8F capacity impact evidence.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,TIMELINE_MATERIAL_STATUS_TRACE_TO_INTEGRATION,PASS,Timeline material status traces to integrated schedule-impact evidence where component-consuming operations exist.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,TIMELINE_BUFFER_STATUS_TRACE_TO_STEP8F_WIP,PASS,Timeline buffer status traces to WIP/buffer and shadow-ledger evidence.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,TIMELINE_CRITICAL_TOGGLE_FUNCTIONAL,PASS,Critical Path toggle is referenced by timeline visual classification.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,TIMELINE_BOTTLENECK_TOGGLE_FUNCTIONAL,PASS,Bottlenecks toggle is referenced by timeline visual classification.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,TIMELINE_MATERIAL_TOGGLE_FUNCTIONAL,PASS,Material Readiness toggle is referenced by timeline visual classification.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,TIMELINE_BUFFER_TOGGLE_FUNCTIONAL,PASS,Buffer Delays toggle is referenced by timeline visual classification.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,TIMELINE_SETUP_TOGGLE_FUNCTIONAL,PASS,Setup toggle is referenced by timeline visual classification.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,TIMELINE_MAINTENANCE_TOGGLE_FUNCTIONAL,PASS,Maintenance toggle controls dated maintenance-window overlays.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,TIMELINE_PLOTLY_WIDTH_STRETCH,PASS,"Production Timeline Plotly chart uses width=""stretch"" instead of deprecated use_container_width.",0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,CAPACITY_WIP_PAGE_REGISTERED,PASS,Capacity & WIP page is registered in Phase 4 manager navigation.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,CAPACITY_WIP_UTILIZATION_TRACES_TO_STEP8F,PASS,Workstation utilization traces to Step 8F capacity impact evidence.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,CAPACITY_WIP_AVAILABLE_SCHEDULED_REMAINING_RECONCILES,PASS,"Capacity available, scheduled, and remaining minutes reconcile without validated overrun.",0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,CAPACITY_WIP_PARALLEL_LANES_TRACE_TO_STEP8F,PASS,Parallel lane counts are displayed from Step 8F evidence.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,CAPACITY_WIP_RESOURCE_UNITS_TRACE_TO_SEGMENTS,PASS,Machine and labor unit usage traces to Step 8F operation segment evidence.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,CAPACITY_WIP_PROJECTED_BALANCES_TRACE_TO_SHADOW_LEDGER,PASS,WIP projected balances trace to the time-causal shadow ledger.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,CAPACITY_WIP_BUFFER_OCCUPANCY_RECONCILES,PASS,Buffer occupancy reconciles to configured capacity or explicit overflow evidence.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,CAPACITY_WIP_FIFO_STATUS_MATCHES_SOURCE_VALIDATION,PASS,FIFO status uses Step 8F validation evidence and reports violations only from FAIL rows.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,CAPACITY_WIP_BLOCKED_QUANTITIES_TRACE_TO_STEP8F,PASS,Blocked WIP and buffer quantities trace to Step 8F WIP impact output.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,CAPACITY_WIP_LOCKED_TO_BASELINE_NO_ALT_LEAKAGE,PASS,Capacity & WIP is locked to the ALT-BASELINE reference alternative.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,CAPACITY_WIP_BOTTLENECK_LABEL_IS_CANDIDATE_SCOPED,PASS,Capacity & WIP bottleneck KPI is labelled as selected-candidate scope.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,CAPACITY_WIP_NO_OTHER_CANDIDATE_SHADOW_EVENT_USED,PASS,Projected WIP balance filters shadow events to selected candidate plus explicit candidate-independent opening WIP.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,CAPACITY_WIP_SELECTED_CANDIDATE_OCCUPANCY_RECONCILES,PASS,Selected-candidate projected occupancy uses candidate-filtered shadow balance divided by configured capacity.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,CAPACITY_WIP_FIFO_STATUS_CANDIDATE_SPECIFIC,PASS,FIFO status is calculated with selected candidate context.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,CAPACITY_WIP_GENERIC_FALLBACK_EXPLICITLY_LABELLED,PASS,Generic WIP buffer fallback is explicitly labelled when selected-candidate shadow evidence is unavailable.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,MAINTENANCE_PAGE_REGISTERED,PASS,Maintenance page is registered in Phase 4 manager navigation.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,MAINTENANCE_DATED_WINDOWS_REQUIRE_DATETIME_EVIDENCE,PASS,Dated maintenance windows are rendered only from valid start/end datetime evidence.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,MAINTENANCE_NO_COUNTDOWN_WITHOUT_DATE,PASS,Maintenance countdown displays DATE UNKNOWN when no valid dated evidence exists.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,MAINTENANCE_CONFLICT_REQUIRES_REAL_OVERLAP,PASS,Conflict status is based on dated overlap or machine-unavailable evidence.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,MAINTENANCE_RISK_ONLY_NOT_DATED_CONFLICT,PASS,Risk-only maintenance rows are labelled separately from dated conflicts.,1667,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,MAINTENANCE_CREW_SKILL_TRACE_TO_SOURCE,PASS,Crew and skill readiness traces to maintenance workload-by-skill evidence.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,MAINTENANCE_SPARE_PART_TRACE_TO_SOURCE,PASS,Spare-part readiness traces to maintenance spare-part evidence with Phase 2/3 context available where present.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,MAINTENANCE_LEVEL_NOT_USED_AS_AUTHORIZATION,PASS,Maintenance level is displayed separately and is not used as authorization level.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,MAINTENANCE_AUTHORIZATION_TRACES_TO_SOURCE_FIELD,PASS,Displayed authorization traces to workforce_machine_authorization_context.authorization_level.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,MAINTENANCE_AUTHORIZATION_UNAVAILABLE_LABELLED,PASS,Unavailable authorization evidence is explicitly labelled NOT_AVAILABLE / REVIEW.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,MAINTENANCE_MULTI_SKU_FILTERS_AVAILABLE,PASS,Maintenance SKU-dependent production-impact filters support both Mountain Bike and Road Bike without hardcoding candidate lists.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,MAINTENANCE_PRODUCTION_IMPACT_FILTERS_SELECTED_SKU_CANDIDATE,PASS,Production-impact rows trace to the selected SKU and schedule candidate.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,MAINTENANCE_NO_EXECUTION_CONTROLS,PASS,"Maintenance UI contains no work-order, dispatch, purchase-order, reservation, or execution controls.",0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,MULTI_SKU_MB_RB_PAGES_HAVE_EVIDENCE,PASS,"Mountain Bike and Road Bike have source evidence for all SKU-dependent pages. SKU-BIKE-MT-001: candidates=14, graph_nodes=98, graph_edges=112, bom_rows=7, timeline_segments=356 | SKU-BIKE-ROAD-001: candidates=14, graph_nodes=84, graph_edges=84, bom_rows=7, timeline_segments=261",0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,MULTI_SKU_CANDIDATE_LISTS_ARE_SKU_SPECIFIC,PASS,Candidate IDs are not shared across Mountain Bike and Road Bike selected views.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,MULTI_SKU_OPERATION_IDS_ARE_SKU_SPECIFIC,PASS,Operation IDs for MB/RB views stay within the selected SKU route family.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,MULTI_SKU_BOM_ROWS_ARE_SKU_SPECIFIC,PASS,BOM rows remain scoped to the selected finished SKU.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,MULTI_SKU_MATERIAL_ROWS_ARE_SKU_CANDIDATE_SPECIFIC,PASS,Material readiness rows remain scoped to selected SKU and candidate.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,MULTI_SKU_TIMELINE_SEGMENTS_ARE_SKU_CANDIDATE_SPECIFIC,PASS,Timeline segments remain scoped to selected SKU and candidate.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,MULTI_SKU_WIP_BALANCES_ARE_SKU_CANDIDATE_SPECIFIC,PASS,WIP projected balances are filtered by selected SKU/candidate and do not use another SKU's projected events.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,MULTI_SKU_MAINTENANCE_IMPACT_SCOPED,PASS,Maintenance production-impact support remains scoped through the selected SKU/candidate operation evidence.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,DECISION_RELEASE_PAGE_REGISTERED,PASS,Decision & Release Readiness page is registered in Phase 4 manager navigation.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,DECISION_RECOMMENDATION_MATCHES_STEP8G,PASS,Decision page recommendation matches Step 8G recommendation evidence.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,DECISION_EQUIVALENT_ALTERNATIVES_TRACE_TO_STEP8G,PASS,Equivalent alternatives are read from Step 8G recommendation/summary evidence.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,DECISION_TRADEOFF_VALUES_TRACE_TO_SOURCE,PASS,Trade-off values trace to phase4_step8g_tradeoff_analysis.csv.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,DECISION_VALIDATED_AND_ASSUMED_COSTS_SEPARATED,PASS,Decision page keeps validated real cost separate from assumed cost or penalty exposure.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,DECISION_READINESS_CHECKS_MATCH_SOURCE,PASS,Readiness checklist matches Step 8G release-readiness evidence.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,DECISION_PRODUCTION_RELEASE_REMAINS_FALSE,PASS,Decision page preserves production_release_allowed=False from Step 8G evidence.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,DECISION_MANAGER_APPROVAL_NOT_FABRICATED,PASS,Manager approval remains source-driven and is not set by the UI.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,DECISION_BLOCKED_CHECKS_SHOW_SOURCE_REASON,PASS,"Blocked readiness checks display source, reason, business impact, and manager action.",4,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,DECISION_UPSTREAM_WARNING_ATTRIBUTION_PRESERVED,PASS,Upstream warnings remain visible and attributed to their source phase.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,DECISION_MULTI_SKU_FILTERS_NO_LEAKAGE,PASS,Decision page SKU/candidate filters use source finished_sku and schedule_candidate_id values for MB/RB without hardcoding.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,DECISION_NO_EXECUTION_ACTION_AVAILABLE,PASS,"Decision page exposes no release, approval, dispatch, reservation, purchase, work-order, or transaction action.",0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,DECISION_RISKS_AND_REVIEW_QUEUE_AVAILABLE,PASS,Decision risk register and manager review queue are available to the page.,68,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,DECISION_REVIEW_ALTERNATIVE_NOT_PRESENTED_AS_SKU_WORKSTATION,PASS,"Manager review queue presents alternative_id as Affected Alternative, not as SKU/workstation.",0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,DECISION_REVIEW_SKU_WORKSTATION_ONLY_SOURCE_SUPPORTED,PASS,Affected SKU/workstation fields are shown only when genuine source columns exist.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,DECISION_MANAGER_REVIEW_ROW_COUNT_UNCHANGED,PASS,Manager-review row count remains source-driven and unchanged.,33,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,DECISION_RECOMMENDATION_READINESS_VALUES_UNCHANGED,PASS,Recommendation and release-readiness values remain unchanged by the UI correction.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,DECISION_TOUCHED_DATAFRAMES_WIDTH_STRETCH,PASS,"Touched Decision & Release Readiness dataframes use width=""stretch"".",0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,NO_DEPRECATED_USE_CONTAINER_WIDTH_IN_UI,PASS,"Active Streamlit UI code uses width=""stretch""/current width APIs instead of deprecated use_container_width.",0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,MANAGER_OVERVIEW_OVERALL_SCOPE_LABELLED,PASS,Manager Overview labels Step 8G metrics as overall planning metrics.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,FINAL_UI_PAGES_REGISTERED,PASS,All seven completed manager pages are registered.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,NAVIGATION_GROUPS_PRESENT,PASS,"Sidebar navigation is visually grouped into Planning, Materials & Resources, and Decision.",0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,PRESENTATION_ALIASES_DO_NOT_RENAME_SOURCE_COLUMNS,PASS,"Readable table labels are applied only to display copies, not source dataframes.",0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,GRAPH_SOURCE_COUNTS_PRESERVED,PASS,Presentation cleanup preserves validated graph source row counts.,378,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,TIMELINE_SOURCE_COUNTS_PRESERVED,PASS,Presentation cleanup preserves validated timeline segment source row count.,2686,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,NO_PLANNING_LOGIC_RECALCULATED_IN_UI,PASS,UI reads existing outputs and does not call planning builders.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,UI_OUTPUTS_ADVISORY_ONLY,PASS,UI source outputs are advisory-only.,0,PHASE4_UI_FINAL_MANAGER_APP,True
+PHASE4-MPS-20260726202343,NO_EXECUTION_OUTPUTS_CREATED_FOR_UI,PASS,"No production orders, dispatches, reservations, consumption, releases, or transaction outputs exist.",0,PHASE4_UI_FINAL_MANAGER_APP,True
